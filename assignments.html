@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignments &mdash; Human and Machine Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="_style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html">Home</a>
+  <a href="syllabus.html">Syllabus</a>
+  <a href="assignments.html" class="active">Assignments</a>
+  <a href="https://josephausterweil.github.io/probintro/">Textbook</a>
+</nav>
+
+<header class="page-header">
+<div class="eyebrow">Spring 2026</div>  <h1>Assignments</h1>
+<p>Four programming assignments in GenJAX, spread across the semester.</p></header>
+
+<section>
+  <div class="container">
+    <div class="prose">
+<p>All four assignments for SP26 target <strong>GenJAX</strong>. Python/R option from SP25 is dropped.</p>
+<h2>Assignment-to-Week Map</h2>
+<table class="data-table">
+<thead>
+<tr>
+<th>Assignment</th>
+<th>Week</th>
+<th>Weight</th>
+<th>Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clusters</td>
+<td>Week 3 or 5</td>
+<td>7.5%</td>
+<td>Hierarchical/mixture models</td>
+</tr>
+<tr>
+<td>Generalization</td>
+<td>Week 4</td>
+<td>7.5%</td>
+<td>Bayesian generalization</td>
+</tr>
+<tr>
+<td>MC</td>
+<td>Week 8</td>
+<td>10.5%</td>
+<td>Monte Carlo</td>
+</tr>
+<tr>
+<td>RL</td>
+<td>Week 9</td>
+<td>4.5%</td>
+<td>SDT/MDP/RL</td>
+</tr>
+</tbody>
+</table>
+<p>Total assignments block: <strong>30%</strong> of the course grade. See <code>course/week01_intro_basic_bayes/PLAN.md</code> for the full SP26 grading scheme.</p>
+<p>Assignment weight rationale: MC is weighted highest (carries SP25's "assignment 3 is harder" 1.5× logic); RL is lowest because it comes with the most scaffolding code.</p>
+<h2>GenJAX port status</h2>
+<table class="data-table">
+<thead>
+<tr>
+<th>Assignment</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clusters</td>
+<td>✅ <strong>Stencil ready:</strong> <code>clusters/clusters.ipynb</code>. Derived from the textbook GenJAX solution (<code>textbook/notebooks/solution_2_gaussian_clusters.ipynb</code>) with derivations/fills/interpretations stripped per the SP25 stencil convention.</td>
+</tr>
+<tr>
+<td>Generalization</td>
+<td>❌ Full port needed. Existing <code>generalization/generalization.tex</code> is SP25 LaTeX; no GenJAX version exists yet.</td>
+</tr>
+<tr>
+<td>MC</td>
+<td>❌ Full port needed. Existing <code>mc/python/</code> and <code>mc/r/</code> are SP25 implementations.</td>
+</tr>
+<tr>
+<td>RL</td>
+<td>❌ Full port needed. Existing <code>rl/rl_assign_python_stencil.ipynb</code> and <code>rl_assign_r_stencil.R</code> are SP25 implementations.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Next step for the three remaining ports:</strong> a separate planning session to scope each port (depth, corresponding textbook chapter, solution-notebook source if any, sequencing to meet due-week). Don't start porting without that scoping — the clusters port benefited from an existing solution notebook in the textbook repo, and the others may or may not.</p>
+<h2>Additional notes</h2>
+<ul>
+<li><strong>RL assignment:</strong> even setting GenJAX aside, SP25 carryover flags Python/R code modernization and a Julia variant. Fold into the port scoping session.</li>
+<li><strong>Clusters:</strong> the textbook chapter <a href="https://josephausterweil.github.io/probintro/intro2/05_mixture_models/">Tutorial 2, Ch 5 — Mixture Models</a> is the direct reading prep.</li>
+</ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p>Human and Machine Learning &middot; Spring 2026</p>
+      <p style="margin-top:0.25rem;">
+        <a href="https://sds.chibatech.dev/">School of Design &amp; Science</a>
+        &middot;
+        <a href="https://www.chibatech.ac.jp/">Chiba Institute of Technology</a>
+      </p>
+    </div>
+    <div class="footer-links">
+      <a href="https://josephausterweil.github.io/probintro/">Textbook</a>
+      <a href="https://scholar.google.com/citations?user=Jrn-jxQAAAAJ">Scholar</a>
+      <a href="mailto:joseph.austerweil@chibatech.ac.jp">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
