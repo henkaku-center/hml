@@ -2248,33 +2248,27 @@ Appropriate use of time                    0.5
 ~2 min. Email the PDF.
 :::
 
-## Signup — Weeks 4 through 12
+## Signup — a tour of the semester {.smaller}
 
-[9 slots (Weeks 4–12). Pick your top-3 weeks on Slack #hml-2026 by Wed May 13.]{.dim}
+[Pick your top-3 weeks on Slack #hml-2026 by Wed May 13.  Papers below are ONE candidate per week — full list on the readings page.]{.dim}
 
+|  | **week + topic** | **a paper you might present** |
+|:---|:---|:---|
+| W4 (May 22) | Generalization + hierarchical Bayes | **Tenenbaum & Griffiths 2001** — Bayesian generalization: the canonical one |
+| W5 (May 29) | Bayes nets + causal Bayes nets | **Gerstenberg et al 2015** — causal judgments as counterfactuals |
+| W6 (Jun  5) | Markov chains + networks | **Abbott, Austerweil & Griffiths 2012** — memory as random walk |
+| W7 (Jun 12) | Monte Carlo | **Vul et al 2009** — one-and-done sampling in cognition |
+| W8 (Jun 19) | SDT / MDP / RL | **Daw et al 2005** — model-based vs. model-free RL |
+| W9 (Jun 26) | Inverse RL + social cognition | **Baker, Saxe & Tenenbaum 2009** — action understanding as inverse planning |
+| W10 (Jul  3) | Bayesian nonparametrics | **Austerweil & Griffiths 2013** — IBP for feature learning |
+| W11 (Jul 10) | Deep NNs + LLMs | **Lake et al 2017** — building machines that learn like people |
+| W12 (Jul 17) | Ethics + adversarial ML | **Caliskan et al 2017** — human-like bias in word embeddings |
 
-
-&nbsp;&nbsp;Week  4 (May 22)  —  Generalization + hierarchical Bayes
-
-&nbsp;&nbsp;Week  5 (May 29)  —  Bayes nets + causal Bayes nets
-
-&nbsp;&nbsp;Week  6 (Jun  5)  —  Markov chains + networks
-
-&nbsp;&nbsp;Week  7 (Jun 12)  —  Monte Carlo
-
-&nbsp;&nbsp;Week  8 (Jun 19)  —  SDT / MDP / RL
-
-&nbsp;&nbsp;Week  9 (Jun 26)  —  Inverse RL
-
-&nbsp;&nbsp;Week 10 (Jul  3)  —  Bayesian nonparametrics
-
-&nbsp;&nbsp;Week 11 (Jul 10)  —  Deep NNs
-
-&nbsp;&nbsp;[Week 12 (Jul 17)  —  Ethics + adversarial ML + project presentations]{.dim}
+[*Each week has 2–4 candidate papers on the site.  You pick one once assigned.*]{.dim}
 
 
 ::: {.notes}
-~6 min. Signups on the board. Photograph; transcribe into readings_map.yml.
+~6 min. Walk through the tour so students can anchor their ranking. For each week say ONE sentence on what the paper does and why it's in this week. Then signups on the board; transcribe into readings_map.yml after class. Remind: there are 2–4 candidates per week, and the assigned presenter picks one.
 :::
 
 ## Agenda {.agenda}
