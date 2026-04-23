@@ -296,6 +296,8 @@ Slide 3: 'Name the four pieces. You\'ll see these names the rest of the semester
 
 ## The Bayes flow — one diagram, three times today
 
+$$P(H \mid D) \;=\; \frac{P(H)\,P(D \mid H)}{P(D)}$$
+
 ```{mermaid}
 %%| fig-align: center
 flowchart LR
@@ -305,7 +307,7 @@ flowchart LR
   Post["<b>posterior</b><br/>P(H | D)"]
   Prior --> Num
   Lik --> Num
-  Num -->|"÷ evidence P(D)"| Post
+  Num -->|"<b>normalize</b><br/>÷ P(D)<br/><i>evidence</i>"| Post
   classDef in fill:#1A1A2E,stroke:#64B5F6,stroke-width:2px,color:#fff
   classDef mid fill:#1A1A2E,stroke:#FFA726,stroke-width:2px,color:#fff
   classDef out fill:#1A1A2E,stroke:#66BB6A,stroke-width:3px,color:#fff
@@ -1395,6 +1397,8 @@ Key setup image for the continuous-Bayes worked example that follows. 450g sits 
 
 ## The Bayes flow — now with a density
 
+$$P(H \mid D) \;=\; \frac{P(H)\,P(D \mid H)}{P(D)}$$
+
 ```{mermaid}
 %%| fig-align: center
 flowchart LR
@@ -1404,7 +1408,7 @@ flowchart LR
   Post["<b>posterior</b><br/>P(meal | weight)"]
   Prior --> Num
   Lik --> Num
-  Num -->|"÷ evidence"| Post
+  Num -->|"<b>normalize</b><br/>÷ P(D)<br/><i>evidence</i>"| Post
   classDef in fill:#1A1A2E,stroke:#64B5F6,stroke-width:2px,color:#fff
   classDef mid fill:#1A1A2E,stroke:#FFA726,stroke-width:2px,color:#fff
   classDef highlight fill:#1A1A2E,stroke:#FFEB3B,stroke-width:3px,color:#fff
@@ -1787,6 +1791,8 @@ Slide 3: 'Here\'s the trick: when you treat the likelihood N(D|μ,σ²) as a fun
 
 ## The Bayes flow — now everything is a density
 
+$$P(H \mid D) \;=\; \frac{P(H)\,P(D \mid H)}{P(D)}$$
+
 ```{mermaid}
 %%| fig-align: center
 flowchart LR
@@ -1796,7 +1802,7 @@ flowchart LR
   Post["<b>posterior</b><br/>P(μ | D)<br/><i>Gaussian density</i>"]
   Prior --> Num
   Lik --> Num
-  Num -->|"÷ evidence"| Post
+  Num -->|"<b>normalize</b><br/>÷ P(D)<br/><i>evidence</i>"| Post
   classDef highlight fill:#1A1A2E,stroke:#FFEB3B,stroke-width:3px,color:#fff
   classDef mid fill:#1A1A2E,stroke:#FFA726,stroke-width:2px,color:#fff
   classDef out fill:#1A1A2E,stroke:#66BB6A,stroke-width:3px,color:#fff
