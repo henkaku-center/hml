@@ -1397,237 +1397,117 @@ Key setup image for the continuous-Bayes worked example that follows. 450g sits 
 
 ## Bayes with a continuous likelihood — worked
 
-[**Today's observation:   D  =  weight  =  450g.**]{.yellow}
+[**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
+
+**What's $P(\text{meal} \mid \text{weight} = 450)$?**
 
 
 
-What's  P(meal | weight = 450g) ?
+|                                     |  **tonkatsu**  |  **hamburger**  |
+|-------------------------------------|:--------------:|:---------------:|
+| Prior  $P(H)$                       |     $0.7$      |      $0.3$      |
+| Likelihood  $f(D \mid H)$           |       ?        |        ?        |
+| Numerator                           |       ?        |        ?        |
+| Posterior  $P(H \mid D)$            |       ?        |        ?        |
+
+
+
+[*Same 4-row Bayes table as the sick-friend problem — but the likelihood row is now a density value.*]{.dim}
 
 
 ::: {.notes}
-Slide 1: 'New observation: actual weight, 450g. Same Bayesian question.'
+Slide 1: 'Structural mirror of the sick-friend problem from Block 4. Four rows, one column per hypothesis. The ONLY difference: the likelihood row used to be a probability (e.g., 0.90 for cold + cough). Now it\'s a Gaussian density value. Everything else is the same.'
 :::
 
-## Bayes with a continuous likelihood — worked (2/6)
+## Bayes with a continuous likelihood — worked (2/4)
 
-[**Today's observation:   D  =  weight  =  450g.**]{.yellow}
+[**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
 
-
-
-What's  P(meal | weight = 450g) ?
+**What's $P(\text{meal} \mid \text{weight} = 450)$?**
 
 
 
-Prior stays discrete:    P(tonkatsu) = 0.7,   P(hamburger) = 0.3
+|                                     |  **tonkatsu**  |  **hamburger**  |
+|-------------------------------------|:--------------:|:---------------:|
+| Prior  $P(H)$                       |     $0.7$      |      $0.3$      |
+| Likelihood  $f(D \mid H)$           |  **$0.00332$** |  **$0.00044$**  |
+| Numerator                           |       ?        |        ?        |
+| Posterior  $P(H \mid D)$            |       ?        |        ?        |
+
+
+
+[$f_T = N(450 \mid 500, 30^2) \;\approx\; 0.00332$     [(close to the tonkatsu mean of 500)]{.dim}]{.accent}
+
+[$f_H = N(450 \mid 350, 30^2) \;\approx\; 0.00044$     [(100 g above the hamburger mean of 350)]{.dim}]{.accent}
+
+
+
+[*Density values, not probabilities.   $f_T / f_H \approx 7.5$ — the observation is ~7.5× more consistent with tonkatsu.*]{.dim}
 
 
 ::: {.notes}
-Slide 2: 'Prior unchanged — still 0.7/0.3 on meal.'
+Slide 2: 'Fill the likelihood row with Gaussian density values. Show the RATIO explicitly: f_T/f_H ≈ 7.5, meaning 450g is ~7.5× more consistent with the tonkatsu model than the hamburger model — even though 450 is closer to the hamburger mean (350) than to the tonkatsu mean (500)! That counter-intuition (closer mean ≠ higher likelihood when widths differ, and both widths are the same here so it IS distance-based) is worth calling out. Here both σ are 30, so the tighter-to-tonkatsu explanation wins.'
 :::
 
-## Bayes with a continuous likelihood — worked (3/6)
+## Bayes with a continuous likelihood — worked (3/4)
 
-[**Today's observation:   D  =  weight  =  450g.**]{.yellow}
+[**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
 
-
-
-What's  P(meal | weight = 450g) ?
+**What's $P(\text{meal} \mid \text{weight} = 450)$?**
 
 
 
-Prior stays discrete:    P(tonkatsu) = 0.7,   P(hamburger) = 0.3
+|                                     |   **tonkatsu**   |  **hamburger**   |
+|-------------------------------------|:----------------:|:----------------:|
+| Prior  $P(H)$                       |      $0.7$       |      $0.3$       |
+| Likelihood  $f(D \mid H)$           |    $0.00332$     |    $0.00044$     |
+| **Numerator  $P(H) \cdot f(D \mid H)$** | **$0.00232$** | **$0.000132$** |
+| Posterior  $P(H \mid D)$            |        ?         |        ?         |
 
 
 
-Likelihood is a Gaussian density:
-
-$f_T = N(450 \mid 500, 30^2)$
-
-[$\hphantom{f_T}\;=\; \dfrac{1}{\sqrt{2\pi \cdot 900}} \cdot \exp\!\left(-\dfrac{(-50)^2}{1800}\right)$]{.dim}
-
-[**$\hphantom{f_T}\;=\; 0.01330 \cdot \exp(-1.389) \;\approx\; 0.00332$**]{.accent}
-
-[**$f_H = N(450 \mid 350, 30^2) \;\approx\; 0.00044$**]{.accent}
-
-
-
-[*Density values, not probabilities. (Integral → probability.)*]{.dim}
+[**Evidence  $=$  sum of numerators  $=$  $0.00232 + 0.000132$  $=$  $0.00246$**]{.accent}
 
 
 ::: {.notes}
-Slide 3: 'The work: compute each Gaussian density value. I\'m showing the arithmetic for f_T: the normalizer coefficient ≈ 0.0133, the exponent is −(−50)²/1800 = −1.389, exp of that is 0.249, product ≈ 0.00332. f_H comes out to 0.00044 — much smaller because 450 is far from 350.'
+Slide 3: 'Multiply the prior and likelihood columns. Sum for the evidence. Same move as the sick-friend problem.'
 :::
 
-## Bayes with a continuous likelihood — worked (4/6) {.smaller}
+## Bayes with a continuous likelihood — worked (4/4) {.smaller}
 
-[**Today's observation:   D  =  weight  =  450g.**]{.yellow}
+[**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
 
-
-
-What's  P(meal | weight = 450g) ?
+**What's $P(\text{meal} \mid \text{weight} = 450)$?**
 
 
 
-Prior stays discrete:    P(tonkatsu) = 0.7,   P(hamburger) = 0.3
+|                                     |   **tonkatsu**   |  **hamburger**   |
+|-------------------------------------|:----------------:|:----------------:|
+| Prior  $P(H)$                       |      $0.7$       |      $0.3$       |
+| Likelihood  $f(D \mid H)$           |    $0.00332$     |    $0.00044$     |
+| Numerator  $P(H) \cdot f(D \mid H)$ |    $0.00232$     |    $0.000132$    |
+| [**Posterior  $P(H \mid D)$**]{.green} | [**$\approx 0.946$**]{.green} | [**$\approx 0.054$**]{.green} |
 
 
 
-Likelihood is a Gaussian density:
-
-$f_T = N(450 \mid 500, 30^2)$
-
-[$\hphantom{f_T}\;=\; \dfrac{1}{\sqrt{2\pi \cdot 900}} \cdot \exp\!\left(-\dfrac{(-50)^2}{1800}\right)$]{.dim}
-
-[**$\hphantom{f_T}\;=\; 0.01330 \cdot \exp(-1.389) \;\approx\; 0.00332$**]{.accent}
-
-[**$f_H = N(450 \mid 350, 30^2) \;\approx\; 0.00044$**]{.accent}
+[**Prior $\to$ Posterior:**      $0.70 \to 0.946$  (tonkatsu),    $0.30 \to 0.054$  (hamburger).]{.yellow}
 
 
 
-[*Density values, not probabilities. (Integral → probability.)*]{.dim}
-
-
-
-Numerator   =   prior $\cdot$ likelihood:
-
-[tonkatsu:       $0.7 \cdot 0.00332 \;=\; 0.00232$]{}
-
-[hamburger:  $0.3 \cdot 0.00044 \;=\; 0.000132$]{}
-
-
-
-[**Evidence   =   sum   =   $0.00246$**]{.accent}
+[*The prior already favored tonkatsu.  The observation moved belief even further that way — not because 450g is closer to 500 (it isn't), but because it's more consistent with the tonkatsu distribution than the hamburger distribution.*]{.dim}
 
 
 ::: {.notes}
-Slide 4: 'Multiply prior by likelihood. Sum for the evidence.'
-:::
-
-## Bayes with a continuous likelihood — worked (5/6) {.smaller}
-
-[**Today's observation:   D  =  weight  =  450g.**]{.yellow}
-
-
-
-What's  P(meal | weight = 450g) ?
-
-
-
-Prior stays discrete:    P(tonkatsu) = 0.7,   P(hamburger) = 0.3
-
-
-
-Likelihood is a Gaussian density:
-
-$f_T = N(450 \mid 500, 30^2)$
-
-[$\hphantom{f_T}\;=\; \dfrac{1}{\sqrt{2\pi \cdot 900}} \cdot \exp\!\left(-\dfrac{(-50)^2}{1800}\right)$]{.dim}
-
-[**$\hphantom{f_T}\;=\; 0.01330 \cdot \exp(-1.389) \;\approx\; 0.00332$**]{.accent}
-
-[**$f_H = N(450 \mid 350, 30^2) \;\approx\; 0.00044$**]{.accent}
-
-
-
-[*Density values, not probabilities. (Integral → probability.)*]{.dim}
-
-
-
-Numerator   =   prior $\cdot$ likelihood:
-
-[tonkatsu:       $0.7 \cdot 0.00332 \;=\; 0.00232$]{}
-
-[hamburger:  $0.3 \cdot 0.00044 \;=\; 0.000132$]{}
-
-
-
-[**Evidence   =   sum   =   $0.00246$**]{.accent}
-
-
-
-Posterior:
-
-[**$P(\text{tonkatsu} \mid 450\text{g}) \;=\; 0.00232 / 0.00246 \;\approx\; 0.946$**]{.green}
-
-[**$P(\text{hamburger} \mid 450\text{g}) \;=\; 0.000132 / 0.00246 \;\approx\; 0.054$**]{.green}
-
-
-::: {.notes}
-Slide 5: 'Divide. Posterior is 0.95/0.05.'
-:::
-
-## Bayes with a continuous likelihood — worked (6/6) {.smaller}
-
-[**Today's observation:   D  =  weight  =  450g.**]{.yellow}
-
-
-
-What's  P(meal | weight = 450g) ?
-
-
-
-Prior stays discrete:    P(tonkatsu) = 0.7,   P(hamburger) = 0.3
-
-
-
-Likelihood is a Gaussian density:
-
-$f_T = N(450 \mid 500, 30^2)$
-
-[$\hphantom{f_T}\;=\; \dfrac{1}{\sqrt{2\pi \cdot 900}} \cdot \exp\!\left(-\dfrac{(-50)^2}{1800}\right)$]{.dim}
-
-[**$\hphantom{f_T}\;=\; 0.01330 \cdot \exp(-1.389) \;\approx\; 0.00332$**]{.accent}
-
-[**$f_H = N(450 \mid 350, 30^2) \;\approx\; 0.00044$**]{.accent}
-
-
-
-[*Density values, not probabilities. (Integral → probability.)*]{.dim}
-
-
-
-Numerator   =   prior $\cdot$ likelihood:
-
-[tonkatsu:       $0.7 \cdot 0.00332 \;=\; 0.00232$]{}
-
-[hamburger:  $0.3 \cdot 0.00044 \;=\; 0.000132$]{}
-
-
-
-[**Evidence   =   sum   =   $0.00246$**]{.accent}
-
-
-
-Posterior:
-
-[**$P(\text{tonkatsu} \mid 450\text{g}) \;=\; 0.00232 / 0.00246 \;\approx\; 0.946$**]{.green}
-
-[**$P(\text{hamburger} \mid 450\text{g}) \;=\; 0.000132 / 0.00246 \;\approx\; 0.054$**]{.green}
-
-
-
-**Prior → Posterior:      0.70  →  0.946   (tonkatsu)**
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**0.30  →  0.054   (hamburger)**
-
-
-
-[*A weight of 450g is closer to the hamburger mean (350) than the tonkatsu mean (500),*]{.dim}
-
-[*but both likelihoods are nonzero — the prior (0.7 tonkatsu) still tips it back.*]{.dim}
-
-[*Posterior 0.95 tonkatsu: confident, but not certain.*]{.yellow}
-
-
-::: {.notes}
-Slide 6: 'Interpret the posterior. 450g is actually closer to the hamburger mean (350) than the tonkatsu mean (500). But the prior strongly favored tonkatsu (0.7), AND 450 is only about 1.67σ below 500 — still reasonably tonkatsu-like given σ=30. Prior + likelihood together land near 0.95. Prior alone was 0.70; the observation moved belief toward tonkatsu.'
+Slide 4: 'Divide each numerator by the evidence. Posterior 0.95/0.05. Punchline: notice we did the SAME four-row table as the sick-friend problem in Block 4. The only difference: the likelihood row\'s values come from a Gaussian density evaluated at D instead of a discrete probability P(D|H). Bayes\' rule itself doesn\'t care whether the likelihood is a probability or a density — the same multiply-and-normalize moves work.'
 :::
 
 ## Break — 10 minutes {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
+![](images/week2_catpic.jpg){fig-align="center" width="30%" style="max-height: 50vh; margin-top: 2.2em;"}
+
 
 ::: {.notes}
-Hard 10. Block 7 is the highest-stakes block of the session. Come back sharp. Double-check the tonk_hamb.png loaded correctly on the projector.
+Hard 10 minutes. Come back sharp — the Gaussian-Gaussian update is the highest-stakes block of the session. Double-check the tonk_hamb.png loaded correctly on the projector.
 :::
 
 ## Agenda {.agenda}
@@ -2169,11 +2049,11 @@ Slide 3: 'Asymptotic behavior: as N grows, the prior term becomes negligible and
 
 ## Closing the arc — same Bayes, new objects
 
-Block 4:   two discrete variables.   Joint is a 4-cell table;  operations: marginalize, condition, check independence.
+Discrete joint  (Chibany's two meals):        two discrete vars.   Joint is a 4-cell table;  moves: marginalize, condition, check independence.
 
-Block 6:   H discrete, D continuous.   Likelihood is a density;  prior stays discrete.
+Discrete prior + continuous likelihood  (today's bento weight):        $H$ discrete, $D$ continuous.   Likelihood is a density;  prior stays discrete.
 
-Block 7:   H continuous, D continuous.   Prior, likelihood, posterior
+Continuous everywhere  (Gaussian-Gaussian):        $H$ continuous, $D$ continuous.   Prior, likelihood, posterior
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all densities. Updates via precision arithmetic.
 
@@ -2188,11 +2068,11 @@ Slide 1: 'Zoom out. Three flavors of Bayes today. Same rule, progressively more 
 
 ## Closing the arc — same Bayes, new objects (2/2)
 
-Block 4:   two discrete variables.   Joint is a 4-cell table;  operations: marginalize, condition, check independence.
+Discrete joint  (Chibany's two meals):        two discrete vars.   Joint is a 4-cell table;  moves: marginalize, condition, check independence.
 
-Block 6:   H discrete, D continuous.   Likelihood is a density;  prior stays discrete.
+Discrete prior + continuous likelihood  (today's bento weight):        $H$ discrete, $D$ continuous.   Likelihood is a density;  prior stays discrete.
 
-Block 7:   H continuous, D continuous.   Prior, likelihood, posterior
+Continuous everywhere  (Gaussian-Gaussian):        $H$ continuous, $D$ continuous.   Prior, likelihood, posterior
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all densities. Updates via precision arithmetic.
 
@@ -2243,7 +2123,7 @@ Slide 2: 'Named: conjugacy. Today was Gaussian-Gaussian. Week 3 we do it on the 
 
 ## Presentations — why and what
 
-**Enrollment is 6.  Each of you presents ONCE.**
+**Each of you presents ONCE during the semester.**
 
 20 min presentation + 10-15 min discussion you facilitate.
 
@@ -2283,7 +2163,7 @@ Appropriate use of time                    0.5
 
 ## Signup — Weeks 4 through 12
 
-[9 slots, 6 students. Three stay open for contemporary-ML content.]{.dim}
+[9 slots (Weeks 4–12). Pick your top-3 weeks on Slack #hml-2026 by Wed May 13.]{.dim}
 
 
 
@@ -2365,7 +2245,7 @@ Next class:   Friday May 15  —  Week 3: Conjugate Bayes + Topics.
 
 &nbsp;&nbsp;• Textbook T3 Ch 4   (Bayesian learning with Gaussians)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[*— formalizes what we did in Block 7.*]{.dim}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[*— formalizes today's Gaussian-Gaussian update.*]{.dim}
 
 
 
