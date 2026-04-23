@@ -159,7 +159,7 @@ Slide 2: 'Ambient background knowledge — last week the bentos were transparent
 
 ## Marr L3 — what implementation?
 
-Chibany:  neurons, experience, gut feeling.
+Chibany:  neurons, synapses, cortical circuits.
 
 Our simulation:  JAX arrays, floating-point math, Colab.
 
@@ -169,11 +169,19 @@ Our simulation:  JAX arrays, floating-point math, Colab.
 
 [Right L1 + wrong L2 → systematic human biases.]{.accent}
 
-[*(Full L3 treatment: Week 11, Deep NNs.)*]{.dim}
+[*Are deep NNs an L3 model of the brain?  Controversial.*]{.dim}
+
+[*Exact backprop and transformer attention aren't what cortex does,*]{.dim}
+
+[*but biologically plausible approximations  (feedback alignment,*]{.dim}
+
+[*predictive coding, dendritic credit assignment)  are an active*]{.dim}
+
+[*research program — not settled. Week 11 revisits.*]{.dim}
 
 
 ::: {.notes}
-~2 min. FAST. Land the independence point — this is the thread for the rest of the course.
+~2 min. FAST. Land the independence point. Nuance on the NN-as-L3 question: it's genuinely controversial, not a rejected position. The consensus is that exact backprop + standard transformer attention aren't implemented in cortex, but a live research program (Lillicrap et al 2020 Nat Rev Neurosci "Backprop and the brain"; NeuroAI manifesto Zador et al 2023 Nat Commun; Whittington & Bogacz 2017 predictive-coding approximation) argues biologically plausible approximations may realize backprop-like credit assignment. Skeptical counter: Bowers et al 2023 BBS "Deep problems with NN models of human vision." Transformer attention specifically has one L3-ish proposal — Whittington, Warren & Behrens 2022 ICLR — but that is hippocampal, not neocortical. Bottom line for students: a deep NN that fits behavior or neural responses is usually read as an L1/L2 candidate or an engineering tool; whether any part of it maps to L3 is an open question, not a closed one. Week 11 picks up the substrate-and-limits thread.
 :::
 
 ## Check-in — the cab problem
