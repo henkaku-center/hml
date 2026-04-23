@@ -959,6 +959,10 @@ $X \sim \mathrm{Bernoulli}(p)$     means:
 
 [One flip of a weighted coin. One parameter: p.]{.dim}
 
+[*Shift of focus:  last block was about today's LUNCH-and-DINNER (coordinated — dependent).*]{.dim}
+
+[*From here on, one meal at a time — each meal is its own independent Bernoulli(0.7) draw.*]{.dim}
+
 
 ::: {.notes}
 Slide 1: 'Bernoulli. One parameter.'
@@ -973,6 +977,10 @@ $X \sim \mathrm{Bernoulli}(p)$     means:
 
 
 [One flip of a weighted coin. One parameter: p.]{.dim}
+
+[*Shift of focus:  last block was about today's LUNCH-and-DINNER (coordinated — dependent).*]{.dim}
+
+[*From here on, one meal at a time — each meal is its own independent Bernoulli(0.7) draw.*]{.dim}
 
 
 
@@ -996,6 +1004,10 @@ $X \sim \mathrm{Bernoulli}(p)$     means:
 
 
 [One flip of a weighted coin. One parameter: p.]{.dim}
+
+[*Shift of focus:  last block was about today's LUNCH-and-DINNER (coordinated — dependent).*]{.dim}
+
+[*From here on, one meal at a time — each meal is its own independent Bernoulli(0.7) draw.*]{.dim}
 
 
 
@@ -1585,7 +1597,28 @@ Hard 10 minutes. Come back sharp — the Gaussian-Gaussian update is the highest
 
 
 ::: {.notes}
-25 min. THE block of the session. Now with: (a) explicit motivation for inferring μ, (b) a derivation SKETCH (complete the square), (c) a real posterior-curve picture, (d) precision visualized, (e) N-observation generalization given its own build-up.
+25 min. THE block of the session. Now with: (a) a shift-in-what's-hidden pivot, (b) explicit motivation for inferring μ, (c) a derivation SKETCH (complete the square), (d) a real posterior-curve picture, (e) precision visualized, (f) N-observation generalization given its own build-up.
+:::
+
+## Shift in what's hidden
+
+| &nbsp; | **Before** | **Now** |
+|:---|:---:|:---:|
+| Hidden  $H$       | which meal today?  (tonkatsu / hamburger) | what's the tonkatsu mean weight  $\mu$? |
+| Type              | discrete category                    | continuous parameter |
+| Data  $D$         | 450 g                                | 510 g  (and more to come) |
+| Prior  $P(H)$     | 0.7 / 0.3                            | $N(\mu_0, \sigma_0^2)$ |
+| Goal              | classify this one meal               | learn Chibany's model of the world |
+
+
+
+[*Bayes' rule doesn't change.  The OBJECTS plugged into it do.*]{.yellow}
+
+[*This is the pivot to "learning parameters from data" — the foundation of everything in Weeks 3, 4, and 7.*]{.dim}
+
+
+::: {.notes}
+~1 min. CRITICAL slide. Students have spent the whole morning inferring "which meal". Now we shift to inferring "the mean weight OF the tonkatsu model". This is the central conceptual leap from classification to parameter estimation — the foundation of everything coming in Weeks 3 (conjugate Bayes), 4 (hierarchical), 7 (MC approx). Pause here. Let them see the table before introducing μ.
 :::
 
 ## Why would Chibany want to infer μ ?
@@ -2074,7 +2107,7 @@ Slide 4: 'Posterior mean ≈ 503.1. Moved from 500 toward 510 but mostly stayed 
 THE payoff visual. Pause. Red prior, blue likelihood, yellow posterior. The posterior IS tighter than both inputs and lives between them — closer to the prior because the prior is tighter. This one picture replaces 20 minutes of algebra in students\' memory.
 :::
 
-## N observations  —  precisions keep adding
+## Bridge to Week 3 — N observations, precisions keep adding
 
 One observation:   precision added $= 1/\sigma^2$.
 
@@ -2087,7 +2120,7 @@ Two observations: precision added $= 2/\sigma^2$.
 Slide 1: 'Each independent observation adds precision 1/σ². Two observations = 2/σ² added. N observations = N/σ². This is the key property of conjugate updates.'
 :::
 
-## N observations  —  precisions keep adding (2/3)
+## Bridge to Week 3 — N observations, precisions keep adding (2/3)
 
 One observation:   precision added $= 1/\sigma^2$.
 
@@ -2104,7 +2137,7 @@ $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{\sigma_0^2} + \frac{N}{\sigma^
 Slide 2: 'The general formulas. Σ_i D_i is the sum of observed weights.'
 :::
 
-## N observations  —  precisions keep adding (3/3)
+## Bridge to Week 3 — N observations, precisions keep adding (3/3)
 
 One observation:   precision added $= 1/\sigma^2$.
 
@@ -2134,58 +2167,25 @@ As N grows:
 Slide 3: 'Asymptotic behavior: as N grows, the prior term becomes negligible and the posterior mean approaches the sample mean. You recover the frequentist answer in the limit of much data — but with a Bayesian path there, and a well-calibrated posterior variance 'along the way. This formula IS the skeleton of Week 3\'s conjugate updates and Week 4\'s hierarchical models.'
 :::
 
-## Closing the arc — same Bayes, new objects
+## Closing the arc — same flow, three specializations {.smaller}
 
-Discrete joint  (Chibany's two meals):        two discrete vars.   Joint is a 4-cell table;  moves: marginalize, condition, check independence.
-
-Discrete prior + continuous likelihood  (today's bento weight):        $H$ discrete, $D$ continuous.   Likelihood is a density;  prior stays discrete.
-
-Continuous everywhere  (Gaussian-Gaussian):        $H$ continuous, $D$ continuous.   Prior, likelihood, posterior
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all densities. Updates via precision arithmetic.
+|  | **prior** | **likelihood** | **which slide** |
+|:---|:---:|:---:|:---:|
+| Discrete joint  (sick friend, bento lunch & dinner) | discrete  $P(H)$ | discrete  $P(D \mid H)$ | Block: sick-friend table, bento 2×2 |
+| Discrete-prior continuous-likelihood  (today's bento weight) | discrete  $P(H)$ | [**Gaussian density**  $f(D \mid H)$]{.yellow} | Block: 450 g worked example |
+| Continuous everywhere  (Gaussian-Gaussian) | [**Gaussian density**  $P(\mu)$]{.yellow} | [**Gaussian density**  $f(D \mid \mu)$]{.yellow} | Block: this just-ended block |
 
 
 
-[**Same Bayes rule throughout.  The OBJECTS generalized.**]{.accent}
+[**Same Bayes flow throughout.  The boxes stuffed with different objects.**]{.accent}
 
+[**Named payoff:**  $\text{Gaussian} \times \text{Gaussian} = \text{Gaussian}$    →   the posterior stays in the prior's family.   This is **conjugacy**.]{.yellow}
 
-::: {.notes}
-Slide 1: 'Zoom out. Three flavors of Bayes today. Same rule, progressively more general objects.'
-:::
-
-## Closing the arc — same Bayes, new objects (2/2)
-
-Discrete joint  (Chibany's two meals):        two discrete vars.   Joint is a 4-cell table;  moves: marginalize, condition, check independence.
-
-Discrete prior + continuous likelihood  (today's bento weight):        $H$ discrete, $D$ continuous.   Likelihood is a density;  prior stays discrete.
-
-Continuous everywhere  (Gaussian-Gaussian):        $H$ continuous, $D$ continuous.   Prior, likelihood, posterior
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all densities. Updates via precision arithmetic.
-
-
-
-[**Same Bayes rule throughout.  The OBJECTS generalized.**]{.accent}
-
-
-
-[**The named move:   CONJUGACY.**]{.yellow}
-
-
-
-Gaussian × Gaussian  =  Gaussian         (today)
-
-[Beta × Binomial  =  Beta                      (Week 3)]{.accent}
-
-[Dirichlet × Multinomial  =  Dirichlet       (Week 3)]{.accent}
-
-
-
-[*Conjugacy = algebra works out; the posterior stays in the prior's family.*]{.dim}
+[*Week 3 does the same trick on the discrete side:   Beta × Binomial, Dirichlet × Multinomial.*]{.dim}
 
 
 ::: {.notes}
-Slide 2: 'Named: conjugacy. Today was Gaussian-Gaussian. Week 3 we do it on the discrete side (Beta-Binomial, Dirichlet-Multinomial). Beta × Binomial gives Beta — try to see what\'s on your tongue re Bayesian inference on a coin\'s p.'
+~2 min. One consolidated closing slide. The three-flavor comparison as a table (easier to parse than three stacked paragraphs). The conjugacy payoff + Week 3 preview fold in without a second slide. Students see the invariant (the flow) once more. Transition from here directly into Block 8 (paper presentations).
 :::
 
 ## Agenda {.agenda}
