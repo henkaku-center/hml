@@ -624,7 +624,7 @@ Given the joint, sum over the variable you're not asking about.
 Slide 3: 'Named: marginalization. Sum rule. Same move as last week. Next move: conditional — then we use marginal + conditional together to define INDEPENDENCE.'
 :::
 
-## Conditional — restrict and renormalize
+## Conditional — restrict the possibility space
 
 [Chibany learns:   today's DINNER was tonkatsu  (B = T).]{.yellow}
 
@@ -632,16 +632,18 @@ Slide 3: 'Named: marginalization. Sum rule. Same move as last week. Next move: c
 
 
 
-[Same move as Week 1's 2×2 coin-flip grid:]{.dim}
+[*Same move as Week 1's $\Omega = \{HH, HT, TH, TT\}$:*]{.dim}
 
-[*"Restrict to the slice where the observation is true; renormalize."*]{.dim}
+[*"Knowing $B = T$ means $HH$ and $TH$ are impossible. The new possibility*]{.dim}
+
+[*space is $\{HT, TT\}$. Recompute within that restricted space."*]{.dim}
 
 
 ::: {.notes}
-Slide 1: 'Observation arrives about dinner. Ask the conditional question about lunch. Same move as last week\'s coin-flip grid — restrict and renormalize.'
+Slide 1: 'The outcome space was Ω = {HH, HT, TH, TT}. When Chibany learns the dinner was tonkatsu (B=T), two outcomes become impossible — the ones where B=H. So the NEW outcome space is {HT, TT}. Conditioning is NOT a trick about tables — it\'s a change in what\'s possible. Everything else follows from that.'
 :::
 
-## Conditional — restrict and renormalize (2/3)
+## Conditional — restrict the possibility space (2/3)
 
 [Chibany learns:   today's DINNER was tonkatsu  (B = T).]{.yellow}
 
@@ -649,26 +651,26 @@ Slide 1: 'Observation arrives about dinner. Ask the conditional question about l
 
 
 
-[Same move as Week 1's 2×2 coin-flip grid:]{.dim}
+[*"Knowing $B = T$ means $HH$ and $TH$ are impossible.*]{.dim}
 
-[*"Restrict to the slice where the observation is true; renormalize."*]{.dim}
-
-
-
-Step 1:   keep only the "B = T" column of the joint.
-
-&nbsp;&nbsp;&nbsp;[P(A = H, B = T) = 0.43        P(A = T, B = T) = 0.10]{.accent}
+[*The new possibility space is $\{HT, TT\}$."*]{.dim}
 
 
 
-Step 2:   renormalize by P(B = T) = 0.53.
+Step 1:   shrink $\Omega$ to the outcomes consistent with $B = T$:
+
+&nbsp;&nbsp;&nbsp;[$\Omega' = \{HT, TT\}$       with weights $0.43$ and $0.10$]{.accent}
+
+
+
+Step 2:   the weights inside $\Omega'$ no longer sum to 1.  Rescale by $P(B = T) = 0.53$.
 
 
 ::: {.notes}
-Slide 2: 'Two steps. Slice the joint to keep only the column consistent with the observation; renormalize by the marginal of what was observed.'
+Slide 2: 'Two steps. ONE: the new possibility space Ω\' contains only outcomes consistent with what we learned. Its weights — 0.43 and 0.10 — are inherited from the original joint but they now total 0.53, not 1. TWO: rescale so it IS a probability distribution over Ω\'. The rescaler is just the marginal P(B=T).'
 :::
 
-## Conditional — restrict and renormalize (3/3)
+## Conditional — restrict the possibility space (3/3)
 
 [Chibany learns:   today's DINNER was tonkatsu  (B = T).]{.yellow}
 
@@ -676,25 +678,25 @@ Slide 2: 'Two steps. Slice the joint to keep only the column consistent with the
 
 
 
-[Same move as Week 1's 2×2 coin-flip grid:]{.dim}
+[*"Knowing $B = T$ means $HH$ and $TH$ are impossible.*]{.dim}
 
-[*"Restrict to the slice where the observation is true; renormalize."*]{.dim}
-
-
-
-Step 1:   keep only the "B = T" column of the joint.
-
-&nbsp;&nbsp;&nbsp;[P(A = H, B = T) = 0.43        P(A = T, B = T) = 0.10]{.accent}
+[*The new possibility space is $\{HT, TT\}$."*]{.dim}
 
 
 
-Step 2:   renormalize by P(B = T) = 0.53.
+Step 1:   shrink $\Omega$ to the outcomes consistent with $B = T$:
+
+&nbsp;&nbsp;&nbsp;[$\Omega' = \{HT, TT\}$       with weights $0.43$ and $0.10$]{.accent}
 
 
 
-&nbsp;&nbsp;&nbsp;[**P(A = H | B = T)   =  0.43 / 0.53  ≈  0.811**]{.green}
+Step 2:   rescale by $P(B = T) = 0.53$ so the weights over $\Omega'$ sum to 1.
 
-&nbsp;&nbsp;&nbsp;[**P(A = T | B = T)   =  0.10 / 0.53  ≈  0.189**]{.green}
+
+
+[**$P(A = H \mid B = T) = 0.43 / 0.53 \approx 0.811$**]{.green}
+
+[**$P(A = T \mid B = T) = 0.10 / 0.53 \approx 0.189$**]{.green}
 
 
 
@@ -757,23 +759,23 @@ Conditional:     [**P(A = T | B = T)   ≈   0.189**]{.accent}
 Slide 2: 'Concrete check. Marginal says A is T about half the time. Conditional on B=T says A is T only ~19% of the time. Very different — so dependent. Explain WHY: students coordinate (avoid two T, aim for at least one T). Dependence in the data = structure in the world. In an alternative world where students flipped independent Bernoullis, the joint would factor exactly. We\'ll use independence a lot in Weeks 6–8 (conditional independence in PGMs, i.i.d. assumptions in likelihoods).'
 :::
 
-## Summary — four operations on the joint
+## Summary — four moves
 
-Joint                  =  full picture, P(A, B). All cells sum to 1.
+Joint                  =  weights over the full possibility space $\Omega$.   All cells sum to 1.
 
-Marginal            =  sum the joint over the thing you don't care about.
+Marginal            =  sum out the variable you don't care about.
 
-Conditional         =  slice on your observation, renormalize.
+Conditional         =  learning $B$ restricts $\Omega$ to the consistent outcomes; rescale to a probability.
 
-Independence   =  check if  P(A, B)  =  P(A) · P(B)     (equivalently, P(A|B) = P(A)).
+Independence   =  $P(A, B) = P(A) \cdot P(B)$    (equivalently, $P(A \mid B) = P(A)$).
 
 
 
-[**Same Bayes as last week. Now you can SEE it as a table operation.**]{.accent}
+[**Same Bayes as last week. Everything today is a move on the possibility space.**]{.accent}
 
 
 ::: {.notes}
-~1 min. Mental model to carry forward. Four moves on the joint: build it, marginalize, condition, check independence. Everything today (and Week 3, and RL, and PGMs later) is operations on this table — just with more variables and eventually infinitely many cells (continuous).
+~1 min. The unifying idea is that we have a probability distribution over a possibility space Ω, and the three operations are: (a) sum out a variable, (b) restrict Ω to what we just learned, (c) check whether variables factor. Independence is a property of the joint; the other three are moves on it. Everything today — and Week 3, RL, PGMs — is operations on a possibility space. The "table" was just a visualization of the joint for a finite discrete Ω; when Ω is continuous, the same moves still apply (densities instead of cells).
 :::
 
 ## Agenda {.agenda}
