@@ -415,3 +415,17 @@ footer .footer-links { display: flex; gap: 1.5rem; }
 .readings-week ul { margin: 0 0 0.5rem 1.25rem; }
 .readings-week li { margin-bottom: 0.65rem; line-height: 1.4; }
 .readings-week .dim { color: var(--muted); font-size: 0.9em; font-style: italic; }
+
+/* Small PDF pill next to the slide-HTML link in the schedule */
+.schedule-table .tag-slides {
+  font-size: 0.65rem;
+  padding: 0.1em 0.5em;
+  background: var(--accent, #d35400);
+  color: #fff;
+  border-radius: 0.3em;
+  text-decoration: none;
+  margin-left: 0.35em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.schedule-table .tag-slides:hover { filter: brightness(1.15); }

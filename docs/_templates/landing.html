@@ -103,7 +103,10 @@
             <tr>
               <td class="week-num">{{ row.week }}</td>
               <td>{{ row.date }}</td>
-              <td>{% if row.slide_url %}<a href="{{ row.slide_url }}">{{ row.topic }}</a>{% else %}{{ row.topic }}{% endif %}</td>
+              <td>
+                {% if row.slide_html_url %}<a href="{{ row.slide_html_url }}">{{ row.topic }}</a>{% elif row.slide_url %}<a href="{{ row.slide_url }}">{{ row.topic }}</a>{% else %}{{ row.topic }}{% endif %}
+                {% if row.slide_html_url and row.slide_url %} <a href="{{ row.slide_url }}" class="tag tag-slides">PDF</a>{% endif %}
+              </td>
               <td>{% for tag in row.tags %}{% if tag.url %}<a href="{{ tag.url }}" class="tag">{{ tag.label }}</a>{% else %}<span class="tag">{{ tag.label }}</span>{% endif %}{% if not loop.last %} {% endif %}{% endfor %}</td>
             </tr>
             {% endif %}

@@ -20,7 +20,8 @@ node_modules/
 course/**/week*-slides.html
 course/**/week*-slides_files/
 course/**/slides/sp26/preview/
-course/**/slides/sp26/*.pdf
+# Deck PDFs (weekNN.pdf) ARE tracked — the landing-page schedule links to them.
+# Regenerate with course/weekNN/build_slides_*.py or scripts/preview_deck.sh.
 
 # QA scratch
 qa-previews/
@@ -41,3 +42,10 @@ course/week09_inverse_rl/slides/Week09_IRLSocialCog.pdf
 
 # Nested textbook is its own git repo — https://github.com/josephausterweil/probintro
 textbook/
+
+# Built by docs/_build.py on every run — regenerated, not authored
+docs/slides/week*.html
+docs/slides/week*.pdf
+docs/slides/week*_files/
+docs/slides/sds-reveal/
+docs/slides/images/

@@ -226,6 +226,75 @@ def sync_slide_pdf(wk_num: int, wk_dir: Path) -> str:
     return f"slides/week{wk_num:02d}.pdf"
 
 
+def sync_slide_html(wk_num: int, wk_dir: Path) -> str:
+    """Locate a standalone .html deck for this week and publish it under
+    docs/slides/weekNN.html. Supports two sources in order:
+      1. course/weekNN/slides/sp26/weekNN.html  (legacy, self-contained)
+      2. course/weekNN/weekN-slides.html + weekN-slides_files/  (Quarto output)
+    For the Quarto case, the entire companion _files dir is copied alongside.
+    Returns the relative URL or '' if neither source exists."""
+    legacy = wk_dir / "slides" / "sp26" / f"week{wk_num:02d}.html"
+    if legacy.is_file():
+        SLIDES_OUT_DIR.mkdir(parents=True, exist_ok=True)
+        dst = SLIDES_OUT_DIR / f"week{wk_num:02d}.html"
+        if not dst.is_file() or legacy.stat().st_mtime > dst.stat().st_mtime:
+            shutil.copy2(legacy, dst)
+        return f"slides/week{wk_num:02d}.html"
+
+    # Quarto-rendered case: look for any .qmd and its companion .html.
+    for qmd in wk_dir.glob("week*-slides.qmd"):
+        html_src = qmd.with_suffix(".html")
+        files_src = qmd.parent / f"{qmd.stem}_files"
+        if not html_src.is_file():
+            continue
+        SLIDES_OUT_DIR.mkdir(parents=True, exist_ok=True)
+        dst_html = SLIDES_OUT_DIR / f"week{wk_num:02d}.html"
+        if not dst_html.is_file() or html_src.stat().st_mtime > dst_html.stat().st_mtime:
+            # Rewrite the _files/ references from the qmd-stem path to the
+            # published weekNN_files path, so the copied HTML finds its assets.
+            content = html_src.read_text(encoding="utf-8")
+            content = content.replace(
+                f"{qmd.stem}_files/", f"week{wk_num:02d}_files/"
+            )
+            # Also rewrite ../../sds-reveal/ refs → ./sds-reveal/ (same trick
+            # as preview_deck.sh) so the yellow-frame PNGs resolve.
+            content = content.replace("../../sds-reveal/", "sds-reveal/")
+            dst_html.write_text(content, encoding="utf-8")
+        # Copy the _files tree, and also copy sds-reveal/ next to it.
+        if files_src.is_dir():
+            dst_files = SLIDES_OUT_DIR / f"week{wk_num:02d}_files"
+            if dst_files.exists():
+                shutil.rmtree(dst_files)
+            shutil.copytree(files_src, dst_files)
+            # Copy sds-reveal frame + wordmark into the theme dir so
+            # background-image:url(sds_frame.png) in the theme CSS resolves.
+            theme_dir = dst_files / "libs" / "revealjs" / "dist" / "theme"
+            if theme_dir.is_dir():
+                sds_root = REPO_ROOT / "sds-reveal"
+                for asset in ("sds_frame.png", "sds_wordmark.png"):
+                    a = sds_root / asset
+                    if a.is_file():
+                        shutil.copy2(a, theme_dir / asset)
+        # Also copy sds-reveal dir next to the deck so any ./sds-reveal/... refs
+        # in the .qmd (like per-slide background-image attrs) resolve.
+        sds_root = REPO_ROOT / "sds-reveal"
+        if sds_root.is_dir():
+            dst_sds = SLIDES_OUT_DIR / "sds-reveal"
+            if dst_sds.exists():
+                shutil.rmtree(dst_sds)
+            shutil.copytree(sds_root, dst_sds)
+        # Copy images referenced from the qmd dir (e.g., binomial_pmf.png).
+        images_src = qmd.parent / "images"
+        if images_src.is_dir():
+            dst_images = SLIDES_OUT_DIR / "images"
+            if dst_images.exists():
+                shutil.rmtree(dst_images)
+            shutil.copytree(images_src, dst_images)
+        return f"slides/week{wk_num:02d}.html"
+
+    return ""
+
+
 def build_schedule():
     rows = []
     weeks = dict(find_week_dirs())
@@ -239,6 +308,10 @@ def build_schedule():
         topic = TOPIC_OVERRIDES.get(dir_num)
         tags = extract_tags_from_plan(plan)
         slide_url = sync_slide_pdf(dir_num, d)
+        # Only publish the HTML deck if a PDF is also present — that's our
+        # signal that the deck is finalized for that week. Keeps WIP decks
+        # out of the published schedule.
+        slide_html_url = sync_slide_html(dir_num, d) if slide_url else ""
         rows.append({
             "kind": "week",
             "week": WEEK_DISPLAY_NUM[dir_num],
@@ -246,6 +319,7 @@ def build_schedule():
             "topic": topic,
             "tags": tags,
             "slide_url": slide_url,
+            "slide_html_url": slide_html_url,
         })
         # Insert "no class" breaks after Week 2 (May 1 & May 8)
         if dir_num == 2:
