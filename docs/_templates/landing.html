@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block topnav %}{% endblock %}
+
+{% block body %}
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-content">
+    <img src="assets/sds_logo_white.png" alt="Chiba Tech School of Design &amp; Science" class="hero-logo">
+    <h1>Human and<br>Machine Learning</h1>
+    <p class="subtitle">
+      Learn how the mind works by building it &mdash; from Bayesian inference and causal reasoning
+      to reinforcement learning and neural networks, with hands-on probabilistic programming.
+    </p>
+    <div class="hero-meta">
+      <div><strong>Spring 2026</strong></div>
+      <div class="sep">/</div>
+      <div>Fridays, Apr 17 &ndash; Jul 17</div>
+      <div class="sep">/</div>
+      <div><a href="https://scholar.google.com/citations?user=Jrn-jxQAAAAJ">Prof.&nbsp;Joseph Austerweil</a></div>
+    </div>
+  </div>
+</header>
+
+<!-- Secondary nav (on landing, keep below hero so hero's standalone) -->
+<nav class="topnav">
+  <a href="syllabus.html">Syllabus</a>
+  <a href="assignments.html">Assignments</a>
+  <a href="https://josephausterweil.github.io/probintro/">Textbook</a>
+</nav>
+
+<!-- Enrollment -->
+<div class="enroll-banner">
+  <div class="container">
+    <h2>All interested graduate students at Chiba Tech are encouraged to enroll</h2>
+    <div class="enroll-notice">
+      <div class="notice-item">
+        <span class="notice-label">Permission</span>
+        <span>Enrollment is by instructor permission only. Please reach out to <a href="mailto:joseph.austerweil@chibatech.ac.jp" style="color:var(--text);border-bottom:1px solid var(--border-hover);text-decoration:none;">Prof.&nbsp;Austerweil</a> via email if you are interested.</span>
+      </div>
+      <div class="notice-item">
+        <span class="notice-label">Language</span>
+        <span>This course is taught entirely in English. English proficiency is required.</span>
+      </div>
+    </div>
+    <p class="enroll-cta">
+      <a href="mailto:joseph.austerweil@chibatech.ac.jp">joseph.austerweil@chibatech.ac.jp</a>
+    </p>
+  </div>
+</div>
+
+<!-- Highlights -->
+<section>
+  <div class="container">
+    <h2>Course Highlights</h2>
+    <p class="section-sub">A graduate seminar bridging cognitive science, machine learning, and probabilistic programming.</p>
+    <div class="highlights">
+      {% for card in highlights %}
+      <div class="highlight-card">
+        <h3>{{ card.title }}</h3>
+        <p>{{ card.body }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Textbook callout -->
+<section>
+  <div class="container">
+    <div class="callout">
+      <div class="callout-text">
+        <h2>Free Textbook</h2>
+        <p>
+          <em>A Narrative Introduction to Probability</em> covers discrete &amp; continuous probability,
+          Bayesian learning, mixture models, and probabilistic programming with GenJAX &mdash; all with interactive notebooks.
+        </p>
+        <a href="https://josephausterweil.github.io/probintro/" class="btn btn-primary">Read the Textbook</a>
+        <a href="https://github.com/josephausterweil/probintro" class="btn btn-outline">GitHub Repo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Schedule -->
+<section>
+  <div class="container">
+    <h2>Weekly Schedule</h2>
+    <p class="section-sub">12 sessions, Fridays. Topics build cumulatively; GenJAX integration is woven throughout.</p>
+    <div style="overflow-x:auto;">
+      <table class="schedule-table">
+        <thead>
+          <tr><th>Wk</th><th>Date</th><th>Topic</th><th></th></tr>
+        </thead>
+        <tbody>
+          {% for row in schedule %}
+            {% if row.kind == 'break' %}
+            <tr class="break-row">
+              <td></td><td>{{ row.date }}</td><td colspan="2">{{ row.label }}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td class="week-num">{{ row.week }}</td>
+              <td>{{ row.date }}</td>
+              <td>{% if row.slide_url %}<a href="{{ row.slide_url }}">{{ row.topic }}</a>{% else %}{{ row.topic }}{% endif %}</td>
+              <td>{% for tag in row.tags %}{% if tag.url %}<a href="{{ tag.url }}" class="tag">{{ tag.label }}</a>{% else %}<span class="tag">{{ tag.label }}</span>{% endif %}{% if not loop.last %} {% endif %}{% endfor %}</td>
+            </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Info row -->
+<section>
+  <div class="container">
+    <div class="info-row">
+      <div class="info-card">
+        <h3>Assignments</h3>
+        <ul>
+          {% for item in info.assignments %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+        <p style="color:var(--muted);font-size:0.8rem;margin-top:0.75rem;font-weight:300;">All four assignments are completed in GenJAX.</p>
+      </div>
+      <div class="info-card">
+        <h3>Prerequisites</h3>
+        <ul>
+          {% for item in info.prerequisites %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Resources</h3>
+        <ul>
+          {% for item in info.resources %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

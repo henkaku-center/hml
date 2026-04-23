@@ -1,0 +1,47 @@
+\documentclass[11pt]{article}
+\setlength{\textwidth}{6in}
+\setlength{\textheight}{9in}
+\setlength{\evensidemargin}{0in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\footskip}{.5in}
+\setlength{\topmargin}{0in}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\renewcommand{\thesection}{\arabic{section}.}
+
+\usepackage{nopageno,url}
+\usepackage{graphicx, amsmath, amssymb, hyperref}
+
+\begin{document}
+\begin{centering}
+{\large \bf Assignment 2:  Generalization (4 points) \\ BMI/COMPSCI/PSYCH 841: Computational Cognitive Science \\ Prof. Joseph Austerweil \\ Due 03/05, 2025 at 8:59pm \\}
+\end{centering}
+\vspace{1em}
+{\em Bayesian Generalization Framework.} For this assignment, you will create your own Bayesian generalization model for six animals: Cow, Dolphin, Chicken, Seal, Penguin, and Bat. Note that there is no right hypothesis space! Just think of the properties shared by these animals and turn them into hypotheses (the subset of animals that have the property). 
+
+Remember that the Bayesian generalization model is trying to solve the following problem: Given you observe some animal(s) that have a novel property, how likely are other animals to have that novel property? For example, if you learn that a seal has sesamoid bones, is it more likely that a cow or a dolphin also has sesamoid bones? This is the predictive probability (what you solve in question 4). It does so by having a set of hypothesized properties (aka the hypothesis space), figures out how probable it is that each one of them is the novel property (the posterior probability), and then generalizes to the other animals based on the posterior probability of each hypothesis containing the other animal and the observed animals (the predictive probability). Note that ``hypothesis'' and ``property'' are used interchangeably, and that ``observing an animal'' is shorthand for ``observing an animal has the novel property of interest''.  Also note that you are not generalizing to any animals other than the six animals named above.
+
+\begin{enumerate}
+\item (Defining a hypothesis space) Write your hypotheses. For each one (or ones of the same type), have a 1-4 word description of the hypothesis. Remember that a hypothesis is a binary vector of length equal to the number of animals (so six in this case). An element of the vector is 1 if the corresponding animal has the hypothesized property and zero if the animal does not. You can write this out in matrix form or each hypothesis individually. Make sure you include a ``catch-all'' hypothesis that contains every animal. You should have more than four and fewer than 63 hypotheses.  
+
+\item (Prior) Define a prior distribution over hypotheses (a uniform one is fine). Write a 1-2 sentence justification of why you chose this prior.
+
+\item (Posterior) Write code that calculates the posterior probability of the hypotheses, given you know one of the animals has that property. Do this twice, once for weak sampling and once for strong sampling.
+
+Remember that the posterior probability of a hypothesis $h$ in hypothesis space $\mathcal{H}$ given a set of animals ${\bf x}$ that are known to be in the hypothesis, $P(h | {\bf x})$ is:
+ \begin{equation}
+ P(h | {\bf x}) = \frac{P(h) P({\bf x} | h)}{\sum_{h' \in \mathcal{H}} {P(h') P( {\bf x} | h')  }} = \frac{P(h)  \prod_{n=1}^N{P(x_n | h)}}{\sum_{h' \in  \mathcal{H}} { P(h') \prod_{n=1}^N{P(x_n | h')} }}.
+ \end{equation}
+{\em Weak sampling} makes minimal assumptions as to how the data are generated and merely assigns a binary label to each data point: $P(x|h)=1$ if $x \in h$ and $P(x|h) = 0$ if it is not. 
+
+{\em Strong sampling} makes a stronger assumption -- that each data point is generated uniformly at random from the set of data points consistent with the hypothesis. So, according to strong sampling, $P(x|h)=1/|h|$ if $x \in h$ (and $P(x|h)=0$ when it is not) , where $|h|$ is "size" of the hypothesis (number of $x \in h$).
+\begin{enumerate}
+\item For a representative example, describe how the probability distribution over hypotheses changes after observing that a single animal has the property of interest (1-2 sentences). So, the animal is ${\bf x}$. Are there any differences between weak and strong sampling? If so, what are they?
+
+\item Update your code so that it updates the posterior probability of the hypotheses given you know more than one animal has a property. Add two more animals to the single animal and have the model observe that the three animals have a property. Describe how the posterior probability has changed (1-2 sentences) and how that differs for the weak and strong sampling models.
+\end{enumerate}
+
+\item (Prediction) Write code that calculates the predictive distribution (the probability that an animal has a property given a set of animals that you have observed. Remember from class that the predictive distribution is the updated probability distribution over data points after learning a subset of the data points share some property. Formally the probability of the $n$-th data point $x_n$ after observing $n-1$ data points $x_1,\dotsc,x_{n-1}$ is $P(x_n {\rm has property}| x_1,\dotsc,x_{n-1} {\rm have property}) = \sum_{h: x_n \in h}{P(h|x_1,\dotsc,x_{n-1})}$.\footnote{Note this is the probability that animal $x_n$ has the property. Thus there are two options -- it either does or does not have the property. This is NOT the same as predicting the next animal you will observe having the property (this would normalize over the different animals rather than yes or no).} Note that $\sum_{h: x_n\in h}$ means the sum is only over those hypotheses that contain $x_n$ (and not the entire hypothesis space). Plot the predictive distribution (histogram preferred) for the six animals given the one and multiple observations you did previously for both weak and strong sampling (four total histograms). Remember to label your axes and title your graph! Write a paragraph describing the results.\footnote{Note that you are calculating the probability that an animal has the property given the animals you have observed to have the property, not that it will be the next animal you observe to have the property.}
+
+\item (Break your model) Update your hypothesis space, so that it includes all possible hypotheses over six animals (all $2^{6}-1=63$ binary vectors of length 6 --- 1 less because the hypothesis containing all zeros does not do anything). What happens to the posterior and predictive probabilities that you calculated in problem 4 and 5. Write a few sentences describing what happened and why it happened. Relate this to a theorem we covered in class. Note that you do not need to include in your report every single probability calculation in this new hypothesis space, but rather only those that are necessary for your written explanation.
+\end{enumerate}
+\end{document}

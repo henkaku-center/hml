@@ -1,0 +1,37 @@
+project:
+  type: default
+  render:
+    - "course/week*/week*-slides.qmd"
+
+# Default format for every weekN-slides.qmd. Each week inherits these settings
+# and can override per-file in its YAML frontmatter.
+format:
+  revealjs:
+    theme: [dark, sds-reveal/sds.scss]
+    width: 960
+    height: 540
+    margin: 0.04
+    slide-number: false
+    controls: true
+    progress: true
+    history: false
+    hash-type: number
+    transition: none
+    incremental: false
+    code-overflow: wrap
+    center: false
+    # Speaker-notes HTML presenter: press 'S' in browser.
+    # Notes also round-trip into PPTX's native speaker-notes pane.
+  pptx:
+    slide-level: 2
+
+execute:
+  enabled: false          # no live code execution during render; decks are static
+
+# Where rendered outputs land. Each week's files sit next to the .qmd.
+output-dir: _build
+
+# Resources each week's deck may reference (relative paths are resolved from
+# the .qmd file location). The theme assets live at repo root.
+resources:
+  - "sds-reveal/"

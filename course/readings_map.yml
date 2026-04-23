@@ -1,0 +1,297 @@
+# Semester readings for Human and Machine Learning SP26 (Chiba Tech SDS).
+#
+# Source of truth for (a) weekly assigned readings, and (b) paper-presentation
+# assignments. Consumed by the course website generator (docs/_build.py) to
+# publish the reading list per-week.
+#
+# Schema (per week):
+#   number:      Session number (1..12).
+#   date:        Friday ISO date.
+#   theme:       One-line topic for the week.
+#   required:    Readings students must do pre-class. Each entry:
+#                  citation:  plain-text author/year/title.
+#                  pdf:       filename in resources/readings/ (optional)
+#                  url:       external URL (optional; e.g. textbook chapters)
+#                  why:       one-sentence purpose (shows on the website).
+#   optional:    Same shape as `required`; not graded pre-class.
+#   presentation_candidates:
+#                Papers eligible for student paper-presentations in this week's
+#                slot. Each entry is the same shape as `required`. Students
+#                rank their top-3 via Slack (see docs/reading-game-plan.md).
+#   presenter:   Name of the student presenting for this week, or null if
+#                the week has no presenter (Weeks 1–3) or the slot hasn't
+#                been filled yet.
+#   presented:   Paper the presenter chose (one of presentation_candidates),
+#                or null if not yet picked.
+#
+# Paper-presentation policy
+# -------------------------
+# - Weeks 4–12 each have a presentation slot (9 slots, 6 students).
+# - Students sign up for one slot, and for that slot they pick ONE paper from
+#   `presentation_candidates` via a Slack thread in #paper-signups.
+# - The 3 unclaimed slots get filled by instructor short-talks on modern
+#   follow-up papers (LLM / RLHF / alignment / interpretability).
+# - Full guidelines: resources/classPresentationGuidelines.pdf
+#
+# Modernization notes (added for SP26)
+# ------------------------------------
+# - SP25's core paper list is preserved as the backbone (Tenenbaum 1999, Daw
+#   2005, Griffiths 2006, etc.). These are the papers the textbook and slides
+#   are designed around, and they're the right pedagogical choice for an
+#   intro course.
+# - For weeks where a modern companion paper (2023-2026) meaningfully extends
+#   the classic — especially weeks 11 (deep nets -> LLMs) and 12 (ethics ->
+#   AI hyperrealism, conspiracy beliefs in AI) — the modern paper is listed
+#   as an additional presentation candidate, not a replacement for the core.
+
+weeks:
+  - number: 1
+    date: 2026-04-17
+    theme: Intro + Basic Bayes
+    required:
+      - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 1 Ch 1–3 (Goals, Hungry Bayes, Probability by Counting)."
+        url: https://josephausterweil.github.io/probintro/intro/
+        why: "Post-class reinforcement of Week 1's probability foundations."
+      - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 2 Ch 0–1 (Getting Started, Python Basics)."
+        url: https://josephausterweil.github.io/probintro/genjax/
+        why: "Sets up GenJAX on Colab so students can hit the ground running in Week 2."
+    optional: []
+    presentation_candidates: []
+    presenter: null
+    presented: null
+
+  - number: 2
+    date: 2026-04-24
+    theme: Levels of analysis + Bayes continued
+    required:
+      - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 1 Ch 4–5 (Conditional probability, Bayes)."
+        url: https://josephausterweil.github.io/probintro/intro/04_conditional/
+        why: "Consolidates Week 1 foundations with the Chibany/bento framing used in Week 2's worked example."
+      - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 3 Ch 1 (Chibany's Mystery Bentos)."
+        url: https://josephausterweil.github.io/probintro/intro2/01_mystery_bentos/
+        why: "Introduces the bento scenario used in Week 2's Marr-levels walkthrough."
+    optional:
+      - citation: "Marr, D. (1982). Vision, Ch. 1: The Philosophy and the Approach. San Francisco: W. H. Freeman."
+        why: "Founding statement of the three levels of analysis. Not required because no PDF available; read if interested in the framing."
+    presentation_candidates: []
+    presenter: null
+    presented: null
+
+  - number: 3
+    date: 2026-05-15
+    theme: Conjugate Bayes + topic models
+    required:
+      - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 3 Ch 4 (Bayesian Learning with Gaussians)."
+        url: https://josephausterweil.github.io/probintro/intro2/04_bayesian_learning/
+        why: "Picks up exactly where Week 2's Block 7 left off — conjugate Gaussian updates explained in full."
+      - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 1 Ch 6 (Glossary review)."
+        url: https://josephausterweil.github.io/probintro/intro/06_glossary/
+        why: "One-stop reference for the notation and terms Week 3 assumes."
+    optional:
+      - citation: "Griffiths, T. L., & Tenenbaum, J. B. (2001). Randomness and coincidences: Reconciling intuition and probability theory. Proc. CogSci."
+        pdf: Griffiths2001random.pdf
+        why: "SP25 Week 3 companion: how people judge randomness — a nice bridge from conjugate Bayes into cognitive modeling."
+    presentation_candidates: []  # Week 3 has no student presenter (first presentation is Week 4).
+    presenter: null
+    presented: null
+
+  - number: 4
+    date: 2026-05-22
+    theme: Bayesian generalization + hierarchical Bayes
+    required:
+      - citation: "Tenenbaum, J. B., & Griffiths, T. L. (2001). Generalization, similarity, and Bayesian inference. Behavioral and Brain Sciences, 24(4), 629–640."
+        pdf: Tenenbaum99ConcLearn.pdf
+        why: "The canonical Bayesian-generalization paper. This week's math is a worked example of this paper."
+    optional:
+      - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 3 Ch 5 (Mixture models)."
+        url: https://josephausterweil.github.io/probintro/intro2/05_mixture_models/
+        why: "Reading for pre-class: hierarchical Bayes intuition before the lecture."
+    presentation_candidates:
+      - citation: "Tenenbaum, J. B., & Xu, F. (2000). Word learning as Bayesian inference. Proc. CogSci."
+        pdf: TenenbaumXu2000.pdf
+        why: "Classic application of Bayesian generalization to word learning."
+      - citation: "Kemp, C., & Tenenbaum, J. B. (2009). Structured statistical models of inductive reasoning. Psychological Review, 116(1), 20–58."
+        pdf: kempjx09_objectdiscoveryandidentification.pdf
+        why: "Hierarchical Bayes for inductive reasoning — direct extension of the lecture."
+      - citation: "Hornsby, A. N., Evans, T., Riefer, P. S., Prior, R., & Love, B. C. (2020). Conceptual organization is revealed by consumer activity patterns. Computational Brain & Behavior, 3, 162–173."
+        pdf: Hornsby2020_Article_ConceptualOrganizationIsReveal.pdf
+        why: "Recent extension of Bayesian categorization into real consumer data."
+    presenter: null
+    presented: null
+
+  - number: 5
+    date: 2026-05-29
+    theme: Bayes nets + causal Bayes nets
+    required:
+      - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 3 Ch 5 (Mixture models), Ch 6 (DPMM)."
+        url: https://josephausterweil.github.io/probintro/intro2/05_mixture_models/
+        why: "Finishes the hierarchical-Bayes thread from Week 4 before we move to graphical models."
+    optional: []
+    presentation_candidates:
+      - citation: "Gerstenberg, T., Goodman, N. D., Lagnado, D. A., & Tenenbaum, J. B. (2015). How, whether, why: Causal judgments as counterfactual contrasts. Proc. CogSci."
+        pdf: Gerstenberg2015.pdf
+        why: "Causal reasoning via counterfactuals — frames how people use causal Bayes nets."
+      - citation: "Lagnado, D. A., & Sloman, S. (2002). Learning causal structure. Proc. CogSci."
+        pdf: Lagnado2002.pdf
+        why: "Foundational paper on people learning causal Bayes net structure from interventions."
+      - citation: "Tenenbaum, J. B., Kemp, C., Griffiths, T. L., & Goodman, N. D. (2011). How to grow a mind: statistics, structure, and abstraction. Science, 331(6022), 1279–1285."
+        pdf: Tenenbaumetal2011.pdf
+        why: "The 'grow a mind' review — connects Bayes nets to hierarchical Bayesian cognition."
+    presenter: null
+    presented: null
+
+  - number: 6
+    date: 2026-06-05
+    theme: Markov chains + networks
+    required:
+      - citation: "Abbott, J. T., Austerweil, J. L., & Griffiths, T. L. (2012). Human memory search as a random walk in a semantic network. NeurIPS."
+        pdf: abbott_nips2012_randomWalk.pdf
+        why: "Memory retrieval modeled as a random walk — concrete cognitive application of Markov chains on networks."
+    optional: []
+    presentation_candidates:
+      - citation: "Steyvers, M., & Tenenbaum, J. B. (2005). The large-scale structure of semantic networks: Statistical analyses and a model of semantic growth. Cognitive Science, 29(1), 41–78."
+        url: https://doi.org/10.1207/s15516709cog2901_3
+        why: "Small-world structure in semantic networks — sets the network for Abbott et al. 2012."
+      - citation: "Zemla, J. C., & Austerweil, J. L. (2018). Estimating semantic networks of groups and individuals from fluency data. Computational Brain & Behavior, 1, 36–58."
+        pdf: ZemlaAusterweil2018CBB.pdf
+        why: "Extends Abbott 2012 to estimating individual vs. group networks."
+      - citation: "Stella, M. (2018). Cohort and rhyme priming emerge from the multiplex network structure of the mental lexicon. Complexity."
+        pdf: Stella2018.pdf
+        why: "Modern multiplex-network model of mental lexicon priming."
+    presenter: null
+    presented: null
+
+  - number: 7
+    date: 2026-06-12
+    theme: Monte Carlo approximation
+    required:
+      - citation: "Vul, E., Goodman, N. D., Griffiths, T. L., & Tenenbaum, J. B. (2009). One and done? Optimal decisions from very few samples. Proc. CogSci."
+        pdf: VulGoodmanGriffithsTenenbaum-cogsci-2009.pdf
+        why: "Why people may be rational *samplers* even when they look irrational — direct application of MC."
+    optional: []
+    presentation_candidates:
+      - citation: "Sanborn, A. N., & Griffiths, T. L. (2008). Markov chain Monte Carlo with people. NIPS."
+        pdf: SanbornGriffiths2007.pdf
+        why: "MCMC-with-people as a method for measuring perceptual categories."
+      - citation: "Griffiths, T. L., & Tenenbaum, J. B. (2006). Optimal predictions in everyday cognition. Psychological Science, 17(9), 767–773."
+        pdf: Griffiths06-preds.pdf
+        why: "People's predictions match Bayesian posteriors — the paper that argued we're MC samplers."
+      - citation: "de Zoete, J., Sjerps, M., & Morrison, G. S. (2019). Cross-lingual comparison of acoustic features for forensic voice comparison. Speech Communication."
+        pdf: deZote2019.pdf
+        why: "Forensic application of MC-style Bayesian evidence evaluation."
+    presenter: null
+    presented: null
+
+  - number: 8
+    date: 2026-06-19
+    theme: Statistical decision theory, MDPs, and reinforcement learning
+    required:
+      - citation: "Daw, N. D., Niv, Y., & Dayan, P. (2005). Uncertainty-based competition between prefrontal and dorsolateral striatal systems for behavioral control. Nature Neuroscience, 8(12), 1704–1711."
+        pdf: Dawetal2005.pdf
+        why: "Canonical dual-systems RL paper — model-based vs. model-free."
+    optional: []
+    presentation_candidates:
+      - citation: "Schultz, W., Dayan, P., & Montague, P. R. (1997). A neural substrate of prediction and reward. Science, 275(5306), 1593–1599."
+        pdf: Schultz1997.pdf
+        why: "The dopamine-as-TD-error paper — foundational for neuroscience of RL."
+      - citation: "Körding, K. P., & Wolpert, D. M. (2004). Bayesian integration in sensorimotor learning. Nature, 427(6971), 244–247."
+        pdf: KordingWolpert2004.pdf
+        why: "SDT applied to motor control — perception-action Bayesian integration."
+      - citation: "Sims, C. R. (2018). Efficient coding explains the universal law of generalization in human perception. Science, 360(6389), 652–656."
+        pdf: sims2018.pdf
+        why: "Information-theoretic bound on perception — SDT with a capacity constraint."
+    presenter: null
+    presented: null
+
+  - number: 9
+    date: 2026-06-26
+    theme: Inverse RL + social cognition
+    required:
+      - citation: "Baker, C. L., Saxe, R., & Tenenbaum, J. B. (2009). Action understanding as inverse planning. Cognition, 113(3), 329–349."
+        pdf: Bakeretal2007.pdf
+        why: "Foundational IRL-for-social-cognition paper."
+    optional: []
+    presentation_candidates:
+      - citation: "Ho, M. K., Littman, M. L., MacGlashan, J., Cushman, F., & Austerweil, J. L. (2016). Showing versus doing: Teaching by demonstration. NeurIPS."
+        pdf: Hoetal2016NIPS.pdf
+        why: "Teaching-by-demonstration as inverse planning — Prof. Austerweil's own work."
+      - citation: "Ho, M. K., Littman, M. L., Cushman, F., & Austerweil, J. L. (2015). Teaching with rewards and punishments: Reinforcement or communication? Proc. CogSci."
+        pdf: Hoetal2015CogSciProc.pdf
+        why: "Follow-up: reward as signal vs. as reinforcer."
+      - citation: "Ho, M. K., Cushman, F., Littman, M. L., & Austerweil, J. L. (2017). Social is special: A normative framework for teaching with and learning from evaluative feedback. Cognition."
+        pdf: Hoetal2017.pdf
+        why: "Normative framework for teaching — rounds out the Ho trilogy."
+      - citation: "Jara-Ettinger, J. (2019). Theory of mind as inverse reinforcement learning. Current Opinion in Behavioral Sciences, 29, 105–110."
+        url: https://doi.org/10.1016/j.cobeha.2019.04.010
+        why: "Recent review paper framing ToM explicitly as IRL."
+    presenter: null
+    presented: null
+
+  - number: 10
+    date: 2026-07-03
+    theme: Bayesian nonparametrics
+    required:
+      - citation: "Austerweil, J. L., Gershman, S. J., Tenenbaum, J. B., & Griffiths, T. L. (2015). Structure and flexibility in Bayesian models of cognition. Oxford Handbook chapter."
+        pdf: AusterweiletalBayesNPBookChapter2015.pdf
+        why: "Intuitive introduction to Bayesian nonparametrics in cognition — by the instructor."
+    optional: []
+    presentation_candidates:
+      - citation: "Griffiths, T. L., & Ghahramani, Z. (2011). The Indian Buffet Process: An introduction and review. JMLR."
+        url: https://www.jmlr.org/papers/v12/griffiths11a.html
+        why: "Canonical IBP tutorial — best starting point for feature-learning BNP."
+      - citation: "Austerweil, J. L., & Griffiths, T. L. (2013). A nonparametric Bayesian framework for constructing flexible feature representations. Psychological Review, 120(4), 817."
+        pdf: Austerweil2008.pdf
+        why: "IBP applied to feature learning — instructor's own work."
+      - citation: "Gershman, S. J., & Blei, D. M. (2012). A tutorial on Bayesian nonparametric models. Journal of Mathematical Psychology, 56(1), 1–12."
+        pdf: Gershman2010.pdf
+        why: "Accessible tutorial review."
+    presenter: null
+    presented: null
+
+  - number: 11
+    date: 2026-07-10
+    theme: Deep neural networks + large language models
+    required:
+      - citation: "Lake, B. M., Ullman, T. D., Tenenbaum, J. B., & Gershman, S. J. (2017). Building machines that learn and think like people. Behavioral and Brain Sciences, 40, e253."
+        pdf: Lake2017.pdf
+        why: "The 'what's missing from deep learning' position paper — use as the opening frame for NNs vs. structured cognition."
+    optional: []
+    presentation_candidates:
+      - citation: "Mikolov, T., Chen, K., Corrado, G., & Dean, J. (2013). Efficient estimation of word representations in vector space. arXiv:1301.3781."
+        pdf: mikolov2013.pdf
+        why: "Classic word2vec paper — the foundation of modern LLM embeddings."
+      - citation: "Pereira, F., Lou, B., Pritchett, B., Ritter, S., Gershman, S. J., Kanwisher, N., Botvinick, M., & Fedorenko, E. (2018). Toward a universal decoder of linguistic meaning from brain activation. Nature Communications, 9, 963."
+        pdf: "Pereira et al 2018 NatureComms.pdf"
+        why: "Decoding meaning from fMRI with embeddings — bridges NNs and cognition."
+      - citation: "Shulze-Buschoff, L., Akata, Z., Bethge, M., & Schrimpf, M. (2025). Visual cognition in multimodal large language models."
+        pdf: ShuluzeBuschoffetal2025.pdf
+        why: "Very recent (2025) probe of what visual cognition modern multimodal LLMs actually do."
+      - citation: "Costello, T. H., Pennycook, G., & Rand, D. G. (2024). Durably reducing conspiracy beliefs through dialogues with AI. Science."
+        pdf: costello2024ConspiracyBeliefsAI.pdf
+        why: "2024 study on LLMs as persuasive agents — modern case for what deep models DO in the wild."
+    presenter: null
+    presented: null
+
+  - number: 12
+    date: 2026-07-17
+    theme: Ethics, adversarial ML, and project presentations
+    required:
+      - citation: "Caliskan, A., Bryson, J. J., & Narayanan, A. (2017). Semantics derived automatically from language corpora contain human-like biases. Science, 356(6334), 183–186."
+        pdf: "Caliskan et al_2017_Semantics derived automatically from language corpora contain human-like biases.pdf"
+        why: "Foundational paper showing that word embeddings inherit human bias — still urgently relevant."
+    optional: []
+    presentation_candidates:
+      - citation: "Buolamwini, J., & Gebru, T. (2018). Gender shades: Intersectional accuracy disparities in commercial gender classification. PMLR."
+        pdf: buolamwini18a.pdf
+        why: "Canonical paper on disparate accuracy in computer vision systems."
+      - citation: "Ensign, D., Friedler, S. A., Neville, S., Scheidegger, C., & Venkatasubramanian, S. (2018). Runaway feedback loops in predictive policing. PMLR."
+        pdf: ensign18a.pdf
+        why: "Predictive-policing feedback loops — concrete example of ML deployment harm."
+      - citation: "Rahwan, I., Cebrian, M., Obradovich, N. et al. (2019). Machine behaviour. Nature, 568(7753), 477–486."
+        pdf: Rahwan2019.pdf
+        why: "Nature review framing study of machine behavior as its own discipline."
+      - citation: "Miller, E. J., Foo, Y. Z., Mewton, P., & Dawel, A. (2023). AI hyperrealism: Why AI faces are perceived as more real than human ones. Psychological Science."
+        pdf: "miller-et-al-2023-ai-hyperrealism-why-ai-faces-are-perceived-as-more-real-than-human-ones.pdf"
+        why: "2023 paper on uncanny-valley inversion — modern ethical concern around AI-generated faces."
+    presenter: null
+    presented: null

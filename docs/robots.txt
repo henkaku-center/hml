@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /readings/
+Disallow: /readings.html
+Disallow: /reading-game-plan.html

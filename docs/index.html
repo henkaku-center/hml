@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Human and Machine Learning &mdash; Spring 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-content">
+    <img src="assets/sds_logo_white.png" alt="Chiba Tech School of Design &amp; Science" class="hero-logo">
+    <h1>Human and<br>Machine Learning</h1>
+    <p class="subtitle">
+      Learn how the mind works by building it &mdash; from Bayesian inference and causal reasoning
+      to reinforcement learning and neural networks, with hands-on probabilistic programming.
+    </p>
+    <div class="hero-meta">
+      <div><strong>Spring 2026</strong></div>
+      <div class="sep">/</div>
+      <div>Fridays, Apr 17 &ndash; Jul 17</div>
+      <div class="sep">/</div>
+      <div><a href="https://scholar.google.com/citations?user=Jrn-jxQAAAAJ">Prof.&nbsp;Joseph Austerweil</a></div>
+    </div>
+  </div>
+</header>
+
+<!-- Secondary nav (on landing, keep below hero so hero's standalone) -->
+<nav class="topnav">
+  <a href="syllabus.html">Syllabus</a>
+  <a href="assignments.html">Assignments</a>
+  <a href="https://josephausterweil.github.io/probintro/">Textbook</a>
+</nav>
+
+<!-- Enrollment -->
+<div class="enroll-banner">
+  <div class="container">
+    <h2>All interested graduate students at Chiba Tech are encouraged to enroll</h2>
+    <div class="enroll-notice">
+      <div class="notice-item">
+        <span class="notice-label">Permission</span>
+        <span>Enrollment is by instructor permission only. Please reach out to <a href="mailto:joseph.austerweil@chibatech.ac.jp" style="color:var(--text);border-bottom:1px solid var(--border-hover);text-decoration:none;">Prof.&nbsp;Austerweil</a> via email if you are interested.</span>
+      </div>
+      <div class="notice-item">
+        <span class="notice-label">Language</span>
+        <span>This course is taught entirely in English. English proficiency is required.</span>
+      </div>
+    </div>
+    <p class="enroll-cta">
+      <a href="mailto:joseph.austerweil@chibatech.ac.jp">joseph.austerweil@chibatech.ac.jp</a>
+    </p>
+  </div>
+</div>
+
+<!-- Highlights -->
+<section>
+  <div class="container">
+    <h2>Course Highlights</h2>
+    <p class="section-sub">A graduate seminar bridging cognitive science, machine learning, and probabilistic programming.</p>
+    <div class="highlights">
+      <div class="highlight-card">
+        <h3>Bayesian Foundations</h3>
+        <p>Build intuition for probability from counting to conjugate models, hierarchical Bayes, and Bayesian nonparametrics.</p>
+      </div>
+      <div class="highlight-card">
+        <h3>Hands-on GenJAX</h3>
+        <p>Write probabilistic programs from Week 2 onward. Model, condition, and run inference using GenJAX on JAX — no toy examples.</p>
+      </div>
+      <div class="highlight-card">
+        <h3>Cognitive Models That Explain</h3>
+        <p>Causal reasoning, generalization, reinforcement learning, and social cognition — framed as computational-level theories of the mind.</p>
+      </div>
+      <div class="highlight-card">
+        <h3>Contemporary ML Connections</h3>
+        <p>Bridge to transformers, scaling laws, RLHF, and AI alignment — see where classical models meet modern deep learning.</p>
+      </div>
+      <div class="highlight-card">
+        <h3>Living Textbook</h3>
+        <p>A free, open-source textbook on probability and probabilistic computing that grows alongside the course.</p>
+      </div>
+      <div class="highlight-card">
+        <h3>Discussion-Driven</h3>
+        <p>Weekly reflections, in-class exercises, and collaborative problem-solving — not just lectures.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Textbook callout -->
+<section>
+  <div class="container">
+    <div class="callout">
+      <div class="callout-text">
+        <h2>Free Textbook</h2>
+        <p>
+          <em>A Narrative Introduction to Probability</em> covers discrete &amp; continuous probability,
+          Bayesian learning, mixture models, and probabilistic programming with GenJAX &mdash; all with interactive notebooks.
+        </p>
+        <a href="https://josephausterweil.github.io/probintro/" class="btn btn-primary">Read the Textbook</a>
+        <a href="https://github.com/josephausterweil/probintro" class="btn btn-outline">GitHub Repo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Schedule -->
+<section>
+  <div class="container">
+    <h2>Weekly Schedule</h2>
+    <p class="section-sub">12 sessions, Fridays. Topics build cumulatively; GenJAX integration is woven throughout.</p>
+    <div style="overflow-x:auto;">
+      <table class="schedule-table">
+        <thead>
+          <tr><th>Wk</th><th>Date</th><th>Topic</th><th></th></tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="week-num">1</td>
+              <td>Apr 17</td>
+              <td><a href="slides/week01.pdf">Introduction &amp; Basic Bayes</a></td>
+              <td><a href="https://josephausterweil.github.io/probintro/intro/01_goals/" class="tag">T1 Ch 1-3</a> <a href="https://josephausterweil.github.io/probintro/genjax/00_getting_started/" class="tag">T2 Ch 0-1</a></td>
+            </tr>
+            <tr>
+              <td class="week-num">2</td>
+              <td>Apr 24</td>
+              <td>Basic Bayes cont&#39;d</td>
+              <td><a href="https://josephausterweil.github.io/probintro/intro/04_conditional/" class="tag">T1 Ch 4</a> <a href="https://josephausterweil.github.io/probintro/intro2/01_mystery_bentos/" class="tag">T3 Ch 1</a> <a href="https://josephausterweil.github.io/probintro/intro2/02_continuous/" class="tag">T3 Ch 2</a> <a href="https://josephausterweil.github.io/probintro/genjax/00_getting_started/" class="tag">T2 Ch 0</a> <a href="https://josephausterweil.github.io/probintro/genjax/02_first_model/" class="tag">T2 Ch 2</a></td>
+            </tr>
+            <tr class="break-row">
+              <td></td><td>May 1</td><td colspan="2">No class</td>
+            </tr>
+            <tr class="break-row">
+              <td></td><td>May 8</td><td colspan="2">No class (holiday)</td>
+            </tr>
+            <tr>
+              <td class="week-num">3</td>
+              <td>May 15</td>
+              <td>Conjugate Bayes &amp; Topic Models</td>
+              <td><a href="https://josephausterweil.github.io/probintro/intro2/04_bayesian_learning/" class="tag">T3 Ch 4</a> <a href="https://josephausterweil.github.io/probintro/intro/06_glossary/" class="tag">T1 Ch 6</a> <a href="https://josephausterweil.github.io/probintro/genjax/02_first_model/" class="tag">T2 Ch 2</a></td>
+            </tr>
+            <tr>
+              <td class="week-num">4</td>
+              <td>May 22</td>
+              <td>Generalization &amp; Hierarchical Bayes</td>
+              <td><a href="https://josephausterweil.github.io/probintro/intro2/04_bayesian_learning/" class="tag">T3 Ch 4</a> <a href="https://josephausterweil.github.io/probintro/intro2/05_mixture_models/" class="tag">T3 Ch 5</a> <a href="https://josephausterweil.github.io/probintro/genjax/04_conditioning/" class="tag">T2 Ch 4</a></td>
+            </tr>
+            <tr>
+              <td class="week-num">5</td>
+              <td>May 29</td>
+              <td>Hierarchical Bayes &amp; Bayes Nets</td>
+              <td><a href="https://josephausterweil.github.io/probintro/intro2/05_mixture_models/" class="tag">T3 Ch 5</a> <a href="https://josephausterweil.github.io/probintro/genjax/06_building_models/" class="tag">T2 Ch 6</a></td>
+            </tr>
+            <tr>
+              <td class="week-num">6</td>
+              <td>Jun 5</td>
+              <td>Markov Chains &amp; Networks</td>
+              <td><a href="assignments.html" class="tag">GenJAX</a></td>
+            </tr>
+            <tr>
+              <td class="week-num">7</td>
+              <td>Jun 12</td>
+              <td>Monte Carlo Methods</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="week-num">8</td>
+              <td>Jun 19</td>
+              <td>SDT, MDPs &amp; Reinforcement Learning</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="week-num">9</td>
+              <td>Jun 26</td>
+              <td>Inverse Reinforcement Learning</td>
+              <td><a href="assignments.html" class="tag">GenJAX</a></td>
+            </tr>
+            <tr>
+              <td class="week-num">10</td>
+              <td>Jul 3</td>
+              <td>Bayesian Nonparametrics</td>
+              <td><a href="assignments.html" class="tag">GenJAX</a></td>
+            </tr>
+            <tr>
+              <td class="week-num">11</td>
+              <td>Jul 10</td>
+              <td>Deep Neural Networks</td>
+              <td><a href="assignments.html" class="tag">GenJAX</a></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Info row -->
+<section>
+  <div class="container">
+    <div class="info-row">
+      <div class="info-card">
+        <h3>Assignments</h3>
+        <ul>
+<li>Clusters (mixture models)</li><li>Bayesian Generalization</li><li>Monte Carlo Estimation</li><li>Reinforcement Learning</li>        </ul>
+        <p style="color:var(--muted);font-size:0.8rem;margin-top:0.75rem;font-weight:300;">All four assignments are completed in GenJAX.</p>
+      </div>
+      <div class="info-card">
+        <h3>Prerequisites</h3>
+        <ul>
+<li>Graduate standing or instructor consent</li><li>Comfort with basic probability &amp; statistics</li><li>Programming experience (Python preferred)</li><li>Curiosity about how minds compute</li>        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Resources</h3>
+        <ul>
+<li>Free online textbook with Colab notebooks</li><li>Weekly readings from primary literature</li><li>Probability cheatsheet</li><li>GenJAX setup guide &amp; tutorials</li>        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p>Human and Machine Learning &middot; Spring 2026</p>
+      <p style="margin-top:0.25rem;">
+        <a href="https://sds.chibatech.dev/">School of Design &amp; Science</a>
+        &middot;
+        <a href="https://www.chibatech.ac.jp/">Chiba Institute of Technology</a>
+      </p>
+    </div>
+    <div class="footer-links">
+      <a href="https://josephausterweil.github.io/probintro/">Textbook</a>
+      <a href="https://scholar.google.com/citations?user=Jrn-jxQAAAAJ">Scholar</a>
+      <a href="mailto:joseph.austerweil@chibatech.ac.jp">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

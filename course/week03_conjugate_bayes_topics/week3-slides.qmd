@@ -1,0 +1,300 @@
+---
+title: "Week 3 — Conjugate Bayes"
+subtitle: "Friday, May 15, 2026"
+author: "Prof. Joseph Austerweil"
+title-slide-attributes:
+  data-background-image: "../../sds-reveal/sds_frame.png"
+  data-background-size: "cover"
+format:
+  revealjs:
+    theme: [dark, ../../sds-reveal/sds.scss]
+  pptx: default
+---
+
+## Agenda {.agenda}
+
+- Welcome back  [0:00]{.time}
+- Conjugacy as a pattern  [0:10]{.time}
+- Beta-Binomial  [0:20]{.time}
+- Break  [0:55]{.time}
+- Gaussian-Gaussian with N observations  [1:05]{.time}
+- Dirichlet-Multinomial (if time)  [1:35]{.time}
+- Paper presentations  [1:45]{.time}
+- Close  [1:55]{.time}
+
+::: {.notes}
+Two-week gap since Week 2 (no class May 1 or 8). Start by acknowledging the
+gap and resurfacing the Gaussian-Gaussian update from Block 7 — that's the
+anchor we pivot on today. ~2 min agenda overview.
+:::
+
+## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+
+# Conjugacy as a pattern
+
+::: {.notes}
+Block 1 — the framing move. Show that Week 2's Gaussian × Gaussian = Gaussian
+wasn't a coincidence. When the prior and likelihood pair up a certain way, the
+posterior stays in the prior's family. That's the whole point of this week.
+:::
+
+## The move we saw in Week 2
+
+[Prior:]{.accent} $\mu \sim N(500, 20^2)$
+
+[Likelihood:]{.accent} observation $D = 510$, known $\sigma = 30$
+
+[Posterior:]{.accent} $\mu \mid D \sim N(503.3, 16.6^2)$
+
+<br>
+
+[**Notice:** prior is Gaussian → posterior is Gaussian. Same family.]{.yellow}
+
+::: {.notes}
+Quick recall. Spend 30s on this slide. The key observation isn't the numbers,
+it's the closure property. If students groan, remind them: this is exactly
+what we computed at the end of Week 2.
+:::
+
+## What "conjugate" means
+
+A **prior family** $\mathcal{F}$ is **conjugate** to a **likelihood** $\ell$ when:
+
+$$
+p(\theta) \in \mathcal{F} \;\; \Longrightarrow \;\; p(\theta \mid D) \in \mathcal{F}
+$$
+
+<br>
+
+[The posterior has the same functional form as the prior — just with updated parameters.]{.dim}
+
+::: {.notes}
+Slow down here. Two parts: (a) prior and posterior in the SAME family, (b)
+"updated parameters" is the mechanical bit — we'll see the update rules next.
+Conjugacy is closure under the Bayesian update operator.
+:::
+
+## Why conjugacy matters
+
+| Property | Why you care |
+|---|---|
+| Closed-form posterior | No integration, no sampling |
+| Sequential updates | Today's posterior = tomorrow's prior |
+| Interpretable hyperparameters | Prior knowledge as "pseudo-observations" |
+| Fast, exact | Good pedagogy + fast enough to compute on the fly |
+
+::: {.notes}
+This is the "why learn conjugacy at all?" slide. In Week 7 (Monte Carlo)
+we'll see what you do when conjugacy fails. For now, when it works, it's the
+cleanest tool in the box.
+:::
+
+## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+
+# Beta-Binomial
+
+::: {.notes}
+Block 2 — the first new conjugate pair. Frame: we already saw Gaussian-
+Gaussian. Now the same pattern for a totally different likelihood (Binomial).
+:::
+
+## Back to the bentos — but now with counts
+
+Chibany's prior belief about tonkatsu rate:
+
+[70% tonkatsu, 30% hamburger]{.accent} — but how confident?
+
+<br>
+
+This semester's data: **27 tonkatsu out of 40 bentos**.
+
+[What's Chibany's updated belief about $p$?]{.yellow}
+
+::: {.notes}
+Story-frame. Last week we asked about the meal of a single bento. This week
+we ask about the underlying RATE — which is a parameter, not an observation.
+That shift (from meal to rate) is the conceptual payoff of this slide.
+:::
+
+## The Beta distribution
+
+$$
+\text{Beta}(\alpha, \beta) : \quad p(p \mid \alpha, \beta) \propto p^{\alpha - 1} (1-p)^{\beta - 1}
+$$
+
+| $\alpha, \beta$ | Interpretation |
+|---|---|
+| $\alpha = \beta = 1$ | Uniform on $[0,1]$ |
+| $\alpha > \beta$ | Concentrated above $0.5$ |
+| Large $\alpha + \beta$ | Narrow (confident) |
+| Small $\alpha + \beta$ | Wide (uncertain) |
+
+::: {.notes}
+Intuition pump. Don't prove anything about the Beta yet — just plant the shape
+intuition. The hyperparameters behave like "pseudo-counts of successes and
+failures." That's the interpretation that will pay off in the posterior.
+:::
+
+## Beta-Binomial conjugate update
+
+[Prior:]{.accent} $p \sim \text{Beta}(\alpha, \beta)$
+
+[Likelihood:]{.accent} $k$ successes in $n$ trials $\sim$ Binomial$(n, p)$
+
+[Posterior:]{.accent} $p \mid k \sim \text{Beta}(\alpha + k, \; \beta + n - k)$
+
+<br>
+
+[**Just add the counts.** Successes bump $\alpha$, failures bump $\beta$.]{.yellow}
+
+::: {.notes}
+This is the cleanest conjugate-update rule in the course. Resist the urge to
+derive it now (save ~10 min for the workout on the next slide). Emphasize the
+interpretability: posterior hyperparameters are literal pseudo-counts. Frame
+this as "the update rule is just addition."
+:::
+
+## Worked example — Chibany's semester
+
+[Prior:]{.accent} $p \sim \text{Beta}(7, 3)$   ← encodes "70/30 with low confidence"
+
+[Data:]{.accent} 27 tonkatsu in 40 ($k = 27$, $n = 40$)
+
+[Posterior:]{.accent} $p \mid D \sim \text{Beta}(7 + 27, \; 3 + 13) = \text{Beta}(34, 16)$
+
+<br>
+
+[Posterior mean: $34/50 = 0.68$. Prior was $0.70$.]{.dim}
+
+[Posterior is tighter: the data shrank the spread.]{.accent}
+
+::: {.notes}
+Play with the numbers. What if the prior were Beta(70, 30) instead of (7, 3)?
+Then the 40 observations barely move the posterior. That's the prior-strength
+lesson. What if we'd used Beta(1,1)? Then posterior is Beta(28, 14) ≈ 0.67 —
+data dominates. This is the BIG intuition: priors act like pseudo-observations
+and the data:prior ratio determines who wins.
+:::
+
+## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+
+# Break
+
+## Resume — Gaussian-Gaussian with N observations {data-menu-title="Gaussian-N agenda"}
+
+Agenda so far: [Beta-Binomial ✓]{.dim}
+
+[Now: what if Chibany weighs N bentos, not one?]{.accent}
+
+::: {.notes}
+2-min re-grounding after break. Surface the next conceptual move: from
+one observation to many. Week 2 did one observation. Today we generalize.
+:::
+
+## Gaussian-Gaussian — N observations, known σ
+
+[Prior:]{.accent} $\mu \sim N(\mu_0, \sigma_0^2)$
+
+[Data:]{.accent} $D_1, \ldots, D_N \sim N(\mu, \sigma^2)$ (iid)
+
+[Posterior:]{.accent} $\mu \mid D \sim N(\mu_N, \sigma_N^2)$ where
+
+$$
+\frac{1}{\sigma_N^2} = \frac{1}{\sigma_0^2} + \frac{N}{\sigma^2} \qquad
+\mu_N = \sigma_N^2 \left( \frac{\mu_0}{\sigma_0^2} + \frac{\sum_i D_i}{\sigma^2} \right)
+$$
+
+<br>
+
+[**Precisions add.** N observations add N units of data precision.]{.yellow}
+
+::: {.notes}
+Same story as Week 2's single-observation case, but the "1/σ²" term on the
+likelihood side becomes "N/σ²". Everything else — the closed form, the
+precision-weighted average for μ_N — stays intact. Do NOT derive on the slide;
+reference the Week 2 derivation and just generalize the answer.
+:::
+
+## Sequential updating — same rule, no new math
+
+Observations arrive one at a time. Posterior after $k$ observations becomes
+prior for observation $k+1$.
+
+$$
+\text{Beta}(34, 16) \xrightarrow[+1 \text{ hamb}]{\text{see 1 more}} \text{Beta}(34, 17)
+$$
+
+$$
+N(503.3, 16.6^2) \xrightarrow[D = 498]{\text{see 1 more}} N(502.1, \ldots)
+$$
+
+<br>
+
+[This is why conjugacy is useful in practice: online updates, no re-fit.]{.dim}
+
+::: {.notes}
+Forward-pointer to future weeks. In Week 7 we'll see what happens when you
+CAN'T keep the posterior in the family — you have to sample. Today's happy
+story is the exception, not the rule, but it's the one we can reason about
+exactly.
+:::
+
+## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+
+# Dirichlet-Multinomial (if time)
+
+## More than two outcomes
+
+What if Chibany has **three** meals: tonkatsu, hamburger, [curry]{.orange}?
+
+[Prior on rates:]{.accent} $(p_1, p_2, p_3) \sim \text{Dirichlet}(\alpha_1, \alpha_2, \alpha_3)$
+
+[Data:]{.accent} counts $(k_1, k_2, k_3)$ from $n$ observations
+
+[Posterior:]{.accent} Dirichlet$(\alpha_1 + k_1, \; \alpha_2 + k_2, \; \alpha_3 + k_3)$
+
+<br>
+
+[Same move as Beta-Binomial, with more categories.]{.yellow}
+
+::: {.notes}
+Stretch goal — cut if running short. The pattern generalizes: Dirichlet is
+the multivariate Beta, Multinomial is the multivariate Binomial. Just add
+the counts. Same rule.
+:::
+
+## Three conjugate pairs, one pattern
+
+| Prior | Likelihood | Posterior |
+|---|---|---|
+| $\text{Beta}(\alpha, \beta)$ | Binomial$(n, p)$ | $\text{Beta}(\alpha + k, \beta + n - k)$ |
+| $\text{Dirichlet}(\vec{\alpha})$ | Multinomial$(n, \vec{p})$ | $\text{Dirichlet}(\vec{\alpha} + \vec{k})$ |
+| $N(\mu_0, \sigma_0^2)$ | $N(\mu, \sigma^2)$ | $N(\mu_N, \sigma_N^2)$ |
+
+::: {.notes}
+Punchline table. The POINT of this week: conjugacy isn't one trick. It's
+a recurring pattern. Mixture models (later weeks) and hierarchical Bayes
+(Week 4) lean on these closed forms.
+:::
+
+## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+
+# Paper presentations + close
+
+## Next week — Week 4 preview
+
+Ira leads. **Hierarchical Bayes.**
+
+Chibany's bento rate isn't the same across every semester, but semesters
+aren't totally independent either. How do we share information without
+collapsing?
+
+<br>
+
+[Read T3 Ch 5 before class.]{.accent}
+
+::: {.notes}
+~2 min close. Thank students for sitting through the math-heavy day. Set up
+the hierarchical story as "one level up from what we did today." See you
+next Friday.
+:::

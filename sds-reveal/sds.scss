@@ -1,0 +1,270 @@
+/*-- scss:defaults --*/
+
+// Theme color constants — mirror SDSDeck theme so per-slide accents match the
+// prior Python decks exactly.
+$sds-bg-dark:      #111111;
+$sds-bg-section:   #1A1A2E;
+$sds-text-white:   #FFFFFF;
+$sds-text-dim:     #999999;
+$sds-accent:       #64B5F6;  // blue
+$sds-red:          #EF5350;
+$sds-green:        #66BB6A;
+$sds-orange:       #FFA726;
+$sds-yellow:       #FFEB3B;  // body text accent
+$sds-sds-yellow:   #F5E47A;  // frame yellow
+$sds-black-80:     #1A1A1A;
+
+// RevealJS variable overrides
+$body-bg:          $sds-bg-dark !default;
+$body-color:       $sds-text-white !default;
+$presentation-heading-color: $sds-text-white !default;
+$link-color:       $sds-accent !default;
+$selection-bg:     $sds-accent !default;
+
+// Font
+$font-family-sans-serif: "Inter", "Helvetica Neue", Arial, sans-serif !default;
+$presentation-font-size-root: 32px !default;
+$presentation-heading-font: $font-family-sans-serif !default;
+
+/*-- scss:rules --*/
+
+// Base slide
+.reveal {
+  font-family: $font-family-sans-serif;
+  color: $sds-text-white;
+
+  .slide-background { background-color: $sds-bg-dark; }
+
+  // Titles and headings
+  h1, h2, h3, h4 {
+    color: $sds-text-white;
+    font-weight: 700;
+    text-align: left;
+    margin-top: 0;
+    text-transform: none;
+  }
+  h1.title { font-size: 2.1em; }  // title slide
+  h2 { font-size: 1.4em; }        // content-slide title
+  h3 { font-size: 1.1em; }
+
+  // Body text — tight vertical rhythm so multi-paragraph slides fit 540h.
+  p, li, td { font-size: 0.78em; line-height: 1.15; }
+  p { margin: 0 0 0.22em 0; }
+  ul, ol { margin: 0.15em 0 0.25em 0; }
+  li { margin: 0 0 0.1em 0; }
+  h2 + p, h2 + ul, h2 + ol { margin-top: 0.25em; }
+  h2 { margin-bottom: 0.2em; }
+
+  // Opt-in denser slide — apply via { .smaller } on the ## header for
+  // content-heavy slides that don't fit even at default sizing.
+  .slide.smaller {
+    p, li, td { font-size: 0.66em; line-height: 1.1; }
+    p { margin: 0 0 0.12em 0; }
+    ul, ol { margin: 0.08em 0 0.15em 0; }
+    li { margin: 0; }
+    h2 { font-size: 1.2em; margin-bottom: 0.15em; }
+  }
+
+  // Links keep accent
+  a { color: $sds-accent; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  // Emphasis helpers — used via inline spans in .qmd
+  .dim    { color: $sds-text-dim; }
+  .accent { color: $sds-accent; }
+  .yellow { color: $sds-yellow; }
+  .orange { color: $sds-orange; }
+  .red    { color: $sds-red; }
+  .green  { color: $sds-green; }
+
+  // Math
+  .math { color: $sds-text-white; }
+
+  // Tables — the main reason we moved off python-pptx.
+  // HTML tables give us real column alignment.
+  table {
+    border-collapse: collapse;
+    margin: 0.6em auto;
+    font-size: 0.82em;
+    color: $sds-text-white;
+
+    th, td {
+      padding: 0.22em 0.8em;
+      border: 1px solid rgba(255,255,255,0.18);
+      text-align: left;
+    }
+    th {
+      background-color: rgba(100, 181, 246, 0.14);
+      font-weight: 700;
+    }
+    // Numeric-column helper (add class="num" on <td> or use colgroup in the .qmd)
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  }
+
+  // Code blocks — dark-theme friendly
+  pre, code {
+    font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+    background-color: $sds-black-80;
+    color: #E8E8E8;
+  }
+  pre { padding: 0.6em 0.8em; font-size: 0.72em; }
+
+  // Block quotes
+  blockquote {
+    border-left: 3px solid $sds-accent;
+    padding-left: 0.8em;
+    color: $sds-text-dim;
+    font-style: italic;
+  }
+
+  // Slide content wrapper — give a bit more room, left-align.
+  .slide section > * { text-align: left; }
+}
+
+// ==========================================================================
+// Yellow-frame slides: title slide + section-break slides.
+// In the .qmd, add:  `{background-image="sds_frame.png" background-size="cover"}`
+// to a slide header, and apply `.sds-framed` as a class.
+// ==========================================================================
+.reveal .slide.sds-framed {
+  color: $sds-text-white;
+  padding-top: 1.2em;
+
+  h1, h2 {
+    color: $sds-text-white;
+    margin: 0.8em 1.4em 0 1.4em;
+  }
+  p, li { margin-left: 1.8em; margin-right: 1.8em; }
+}
+
+// ==========================================================================
+// Title slide overrides (first slide).
+// Background frame image is set from the .qmd via
+//   title-slide-attributes: { data-background-image: "…/sds_frame.png" }
+// so we only style the text here.
+// ==========================================================================
+// Use high-specificity selectors so we override Quarto's defaults, which live at
+// div.reveal div.slides section.quarto-title-block …
+div.reveal div.slides section.quarto-title-block,
+div.reveal div.slides section.title-slide {
+  // Frame PNG is inset ~5% so keep content inside the yellow frame: ~90px side
+  // padding and ~80px top to clear the top yellow bar.
+  padding: 80px 110px !important;
+  text-align: left !important;
+
+  h1, h1.title {
+    color: $sds-text-white !important;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    margin: 60px 0 16px 0 !important;
+    text-align: left !important;
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
+  }
+  .subtitle, .quarto-title-authors, .date, .author, .quarto-title-author-name {
+    color: $sds-text-dim !important;
+    font-size: 18px !important;
+    text-align: left !important;
+    margin-bottom: 0.4em !important;
+  }
+}
+
+// ==========================================================================
+// Wordmark in bottom-right corner on every slide (can be overridden per-slide)
+// ==========================================================================
+.reveal .slide-number { display: none; } // we don't want RevealJS's default
+
+.reveal .sds-wordmark {
+  position: fixed;
+  right: 1.2em;
+  bottom: 0.8em;
+  width: 120px;
+  height: auto;
+  opacity: 0.85;
+  z-index: 20;
+}
+
+// Auto-insert ChibaTech SDS wordmark via a pseudo-element on .reveal itself.
+// RevealJS print mode positions each slide in its own page, but .reveal is the
+// outermost stage container and its ::after gets painted per page in
+// `?print-pdf` mode (via @page rules).
+.reveal::after {
+  content: "";
+  position: fixed;
+  right: 24px;
+  bottom: 16px;
+  width: 110px;
+  height: 40px;
+  background-image: url("sds_wordmark.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right bottom;
+  opacity: 0.85;
+  z-index: 20;
+  pointer-events: none;
+}
+
+// On framed slides (title, section-break), the yellow frame already carries
+// the branding — dim the wordmark a touch so it doesn't fight the frame.
+// Note: in on-screen Reveal mode only the .present slide is shown, so :has()
+// scopes correctly. In print-pdf mode each slide is a @page, so the fixed
+// wordmark composes once per page regardless.
+.reveal:has(.slides > section.present.title-slide)::after,
+.reveal:has(.slides > section.present.quarto-title-block)::after,
+.reveal:has(.slides > section.present.section-break)::after {
+  opacity: 0.35;
+}
+
+// ==========================================================================
+// Section-break slide: big yellow-framed slide with a single heading.
+// Background frame set from the .qmd via slide header attributes:
+//   ## Section Title {.section-break background-image="…/sds_frame.png"}
+// ==========================================================================
+.reveal .section-break {
+  text-align: center;
+
+  h1, h2 {
+    color: $sds-text-white;
+    font-size: 1.15em;
+    line-height: 1.2;
+    margin: 2.6em auto 0 auto;
+    max-width: 58%;
+    text-align: center;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+// ==========================================================================
+// Agenda slide — two-column timed list
+// ==========================================================================
+.reveal .agenda {
+  ul { list-style: none; padding: 0; margin: 0 auto; max-width: 80%; }
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.18em 0;
+    font-size: 0.95em;
+    gap: 2em;
+    .time { color: $sds-text-dim; font-variant-numeric: tabular-nums; min-width: 3em; text-align: right; }
+    // Highlight may be either on the <li> or on a span inside the label.
+    &.highlight, .highlight { color: $sds-accent; font-weight: 700; }
+    &.highlight .time, .highlight + .time { color: $sds-accent; }
+  }
+}
+
+// ==========================================================================
+// Content-slide course label (small top banner on framed slides)
+// ==========================================================================
+.reveal .course-label {
+  position: fixed;
+  top: 0.6em;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: $sds-text-dim;
+  font-size: 0.5em;
+  opacity: 0.75;
+}

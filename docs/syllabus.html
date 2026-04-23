@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syllabus &mdash; Human and Machine Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html">Home</a>
+  <a href="syllabus.html" class="active">Syllabus</a>
+  <a href="assignments.html">Assignments</a>
+  <a href="readings.html">Readings</a>
+  <a href="https://josephausterweil.github.io/probintro/">Textbook</a>
+</nav>
+
+<header class="page-header">
+<div class="eyebrow">Spring 2026</div>  <h1>Syllabus</h1>
+<p>Human and Machine Learning — Chiba Institute of Technology, School of Design &amp; Science</p></header>
+
+<section>
+  <div class="container">
+    <div class="prose">
+<ul>
+<li><strong>Course:</strong> Human and Machine Learning</li>
+<li><strong>Institution:</strong> Chiba Institute of Technology, School of Design &amp; Science (SDS)</li>
+<li><strong>Instructor:</strong> Prof. Joseph Austerweil</li>
+<li><strong>Term:</strong> Spring 2026 (Apr 17 – Jul 17, 2026; no class May 1 or May 8)</li>
+<li><strong>Format:</strong> Seminar, 12 Friday sessions, 2 hours each</li>
+<li><strong>Enrollment:</strong> ~6 students</li>
+<li><strong>Language:</strong> English</li>
+</ul>
+<hr>
+<h2>Course description</h2>
+<p>A graduate seminar on <em>computational cognitive science</em>: the study of the mind as an information-processing system that performs inference, learning, and decision-making under uncertainty. The course covers Bayesian foundations, hierarchical and causal models, Markov chains and Monte Carlo methods, reinforcement learning and inverse reinforcement learning, Bayesian nonparametrics, and connections to contemporary machine learning (deep neural networks, ethics, adversarial ML). Throughout, we use the probabilistic programming language <a href="https://github.com/ChiSym/genjax">GenJAX</a> to move fluidly between mathematical models and executable code.</p>
+<p>The companion textbook is <a href="https://josephausterweil.github.io/probintro/"><em>A Narrative Introduction to Probability</em></a>, a free, open-source resource written alongside this course.</p>
+<h2>Learning goals</h2>
+<p>Students who successfully complete the course will be able to:</p>
+<ol>
+<li>Understand state-of-the-art machine learning techniques in the context of probabilistic modeling.</li>
+<li>Formulate a probabilistic model of a problem the human mind solves — ideally one relevant to the student's own research interests.</li>
+<li>Analyze how model assumptions (explicit or implicit) enable learning.</li>
+<li>Think critically about the role of computational modeling in explaining human behavior.</li>
+</ol>
+<h2>Prerequisites</h2>
+<ul>
+<li>Graduate standing, or instructor consent.</li>
+<li>Comfort with basic probability and statistics.</li>
+<li>Programming experience. The course uses Python / GenJAX / Colab; prior experience with another language is fine.</li>
+<li>Linear algebra is helpful but not required.</li>
+</ul>
+<h2>Grading scheme</h2>
+<table class="data-table">
+<thead>
+<tr>
+<th>Component</th>
+<th>Weight</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Final project</td>
+<td><strong>50%</strong></td>
+<td>Proposal 5% · In-class presentation 7.5% · Final paper 37.5%</td>
+</tr>
+<tr>
+<td>Programming assignments (4)</td>
+<td><strong>30%</strong></td>
+<td>Clusters 7.5% · Generalization 7.5% · Monte Carlo 10.5% · RL 4.5%. All in GenJAX.</td>
+</tr>
+<tr>
+<td>Weekly written reflections</td>
+<td><strong>12.5%</strong></td>
+<td>~200 words on one assigned reading, pre-class. 6 of 12 required (student's choice). Pass/fail each.</td>
+</tr>
+<tr>
+<td>Paper presentation</td>
+<td><strong>7.5%</strong></td>
+<td>One 20-minute presentation of an assigned reading, followed by ~15 minutes of discussion you facilitate. See the "Paper presentations" section below.</td>
+</tr>
+<tr>
+<td>Quizzes</td>
+<td><strong>0%</strong></td>
+<td>Self-check only, available via the textbook.</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100%</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Assignment weight rationale: the Monte Carlo assignment is weighted highest because it is the most demanding; the reinforcement-learning assignment is lightest because it comes with the most scaffolding code.</p>
+<p>With ~6 students in a seminar, attendance is self-evident and the paper presentation serves as the visible engagement signal — so participation is folded into those two components rather than graded separately.</p>
+<h2>Final project</h2>
+<p>The project is the capstone of the course and the largest single grade component. It is an opportunity to explore a question related to human and machine learning that the student is personally interested in. The project does not need to use a specific topic or technique from class.</p>
+<p>Three (non-exclusive) categories of project:</p>
+<ol>
+<li><strong>Experiment</strong> — conduct a behavioral experiment that tests a prediction of a model from class (or a straightforward extension).</li>
+<li><strong>Modeling / ML</strong> — take some human behavior (from class, from the literature, or from data you scrape) and model it with your own or an advanced ML method.</li>
+<li><strong>Math / theory</strong> — a mathematical analysis of a learning problem or model.</li>
+</ol>
+<p>Project deliverables:</p>
+<ul>
+<li><strong>Proposal</strong> (~1 page, due mid-semester; exact date announced in class): background, question, method, and at least three references. Pass/fail.</li>
+<li><strong>In-class presentation</strong> (late semester): ~10 minutes. Background, question, method, preliminary results.</li>
+<li><strong>Final paper</strong> (~6 pages single-spaced): motivate and present your results clearly. Detailed guidelines will be announced.</li>
+</ul>
+<h2>Weekly written reflections</h2>
+<p>Each week, students write a ~200-word reaction to one of the assigned readings. Reflections are not summaries — they are thoughtful engagements (a point you find compelling, a doubt, a connection to other work). Submit before class. Students choose any 6 of the 12 weeks. Pass/fail each.</p>
+<h2>Paper presentations</h2>
+<p>Each student gives one 20-minute presentation of an assigned reading, followed by 10–15 minutes of discussion that the presenter facilitates. Presentations are slotted across Weeks 4–12; signup happens in Week 2 class.</p>
+<p>The focus of the presentation is <strong>how the mathematical model connects to cognitive science, and the evidence the authors provide for that connection</strong>. Plan to meet with Joe in office hours at least one week before your slot.</p>
+<p>Grading (out of 5 points):</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Understanding of the paper</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>Covering key aspects of the paper</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>Presentation clarity</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Appropriate discussion questions (at least 3)</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>Appropriate use of time</td>
+<td>0.5</td>
+</tr>
+</tbody>
+</table>
+<p>Useful framing questions (adapted from Tom Griffiths — use these to organize your talk):</p>
+<ol>
+<li>What is the cognitive science question the paper explores?</li>
+<li>What is the context — what previous approaches exist?</li>
+<li>What is the underlying computational problem, and how does the paper formulate it?</li>
+<li>What is the solution the paper presents? Explain the core mathematical ideas clearly (intuition over rigor).</li>
+<li>How does the solution connect to human behavior — how does the model compare to human performance?</li>
+<li>What can we conclude? What is your own interpretation?</li>
+</ol>
+<p>See <code>resources/classPresentationGuidelines.pdf</code> for the full SP25 guidelines (reused for SP26).</p>
+<h2>Policies</h2>
+<h3>Late work</h3>
+<ul>
+<li>If you have a serious illness, please contact Joe as soon as possible. Once you are feeling well enough, we will decide togetehr on a set of revise course deadlines. </li>
+<li>You get 3 <em>free</em> late days that can be used across the programming assignments.</li>
+<li>For other coursework, late work is not accepted (except for serious illness or other life emergencies). For weekly written reflections, just do a different week. If you will need to be late, please notify Joe as soon as possible. </li>
+</ul>
+<h3>AI tools</h3>
+<p>You are welcome to use AI tools (ChatGPT, Claude, Copilot, etc.) as a resource for technical problems — debugging, looking up syntax, understanding a new concept. For technical work, banning them would be counterproductive.</p>
+<p>However:</p>
+<ul>
+<li><strong>Do not</strong> ask AI tools to produce answers to quiz or assignment questions directly.</li>
+<li><strong>Your answers must be written primarily in your own words.</strong> AI can inform your answer; it cannot be your answer.</li>
+<li><strong>Document and cite your AI use</strong> in any submitted work. If you used an AI tool in meaningful ways while preparing a reflection, assignment, or project artifact, include a short note at the end: which tool, what for.</li>
+<li>You are responsible for everything you submit. If the AI produces something incorrect and you copy it in, the mistake is yours.</li>
+</ul>
+<h3>Plagiarism</h3>
+<p>All submitted work will be checked. Do not plagiarize. Self-plagiarism (reusing your own work from another class without explicit permission) also counts. Plagiarism cases are handled individually.</p>
+<h3>Email</h3>
+<p>I do my best to respond within 36 hours (48 on weekends). Please keep emails clear and concise.</p>
+<h2>Office hours</h2>
+<p>We are still deciding on whether there will be explicit office hours. If you would like to meet, please email Joe to schedule a 1-1 meeting.</p>
+<h2>Textbook and readings</h2>
+<ul>
+<li><strong>Textbook:</strong> <a href="https://josephausterweil.github.io/probintro/"><em>A Narrative Introduction to Probability</em></a> — free, with interactive notebooks.</li>
+<li><strong>Weekly primary readings</strong> drawn from the computational cognitive science and machine learning literature. The reading list lives in <code>course/readings_map.yml</code> and is published to the course website as it is finalized week by week.</li>
+</ul>
+<h2>Tools</h2>
+<ul>
+<li><strong>Google Colab</strong> for all GenJAX work. No local installation required.</li>
+<li><strong>GenJAX</strong> — a probabilistic programming language on JAX. Introduced Week 2; used throughout.</li>
+<li>The companion textbook includes tutorials for Colab setup and GenJAX basics (Tutorial 2, Chapters 0-1).</li>
+</ul>
+<hr>
+<p><em>This syllabus is provisional and may be adjusted as the semester progresses. Any changes will be announced in class and reflected on the course website.</em></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p>Human and Machine Learning &middot; Spring 2026</p>
+      <p style="margin-top:0.25rem;">
+        <a href="https://sds.chibatech.dev/">School of Design &amp; Science</a>
+        &middot;
+        <a href="https://www.chibatech.ac.jp/">Chiba Institute of Technology</a>
+      </p>
+    </div>
+    <div class="footer-links">
+      <a href="https://josephausterweil.github.io/probintro/">Textbook</a>
+      <a href="https://scholar.google.com/citations?user=Jrn-jxQAAAAJ">Scholar</a>
+      <a href="mailto:joseph.austerweil@chibatech.ac.jp">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Human and Machine Learning &mdash; Spring 2026{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ rel_root }}style.css">
+</head>
+<body>
+
+{% block topnav %}
+<nav class="topnav">
+  <a href="{{ rel_root }}index.html"{% if page_key == 'landing' %} class="active"{% endif %}>Home</a>
+  <a href="{{ rel_root }}syllabus.html"{% if page_key == 'syllabus' %} class="active"{% endif %}>Syllabus</a>
+  <a href="{{ rel_root }}assignments.html"{% if page_key == 'assignments' %} class="active"{% endif %}>Assignments</a>
+  <a href="{{ rel_root }}readings.html"{% if page_key == 'readings' %} class="active"{% endif %}>Readings</a>
+  <a href="https://josephausterweil.github.io/probintro/">Textbook</a>
+</nav>
+{% endblock %}
+
+{% block body %}{% endblock %}
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p>Human and Machine Learning &middot; Spring 2026</p>
+      <p style="margin-top:0.25rem;">
+        <a href="https://sds.chibatech.dev/">School of Design &amp; Science</a>
+        &middot;
+        <a href="https://www.chibatech.ac.jp/">Chiba Institute of Technology</a>
+      </p>
+    </div>
+    <div class="footer-links">
+      <a href="https://josephausterweil.github.io/probintro/">Textbook</a>
+      <a href="https://scholar.google.com/citations?user=Jrn-jxQAAAAJ">Scholar</a>
+      <a href="mailto:joseph.austerweil@chibatech.ac.jp">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,443 @@
+---
+title: 'Psych841: HW 1'
+author: "Joseph Austerweil"
+date: "9/24/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+## Gaussians
+
+In class, we derived (or will derive) the posterior and predictive distributions for a data point generated from a Gaussian-Gaussian model: having a Gaussian likelihood with unknown mean and known variance, and with a Gaussian prior on the mean of the likelihood with known mean and known variance. This model can be written in generative process notation\footnote{I try to use the following convention for variables: scalar variables are lowercase and italics (e.g., $x$), indices tend to be $n$, $t$, $c$ or $k$, the largest index is uppercase (e.g., $N$), vector variables are bold and lowercase (e.g., ${\bf x}$), and matrix variables are bold and uppercase (e.g., ${\bf X}$).} as:
+
+$\mu \sim {\rm N}(\mu_0, \sigma^2_0)$
+$x_1,\dotsc, x_N | \mu, \sigma_x^2 \overset{iid}{\sim} {\rm N}(\mu, \sigma^2_x)$
+
+Remember that $iid$ means {\em independent} and {\em identically distributed} and the generative process notation $x | \mu, \sigma_x^2 \sim {\rm N}(\mu, \sigma_x^2)$ means that given the values of parameters $\mu$ and $\sigma_x^2$, $x$ is normally distributed with mean $\mu$ and variance $\sigma_x^2$. So, this means
+$p(x|\mu,\sigma_x^2) = \frac{1}{\sigma_x \sqrt{2 \pi}} e^{-\frac{1}{2 \sigma_x^2}\left(x-\mu \right)^2}$
+
+Note that it is traditional to use a zero subscript for the parameters for a prior distribution. For this model, there is a closed form solution for the posterior probability, $p(\mu | x_1, \dotsc, x_N)$, and predictive probability, $p(x_{N+1} | x_1,\dotsc,x_N)$. Remember that you can always look up these special models whose posterior distribution is the same form as the prior distribution on Wikipedia [Conjugate Prior](https://en.wikipedia.org/wiki/Conjugate_prior). They are
+
+
+\begin{align*}
+{\rm Posterior:} & &  \mu & | x_1,\dotsc, x_N \sim {\rm N} \left( \frac{\mu_0 \sigma_0^{-2} + \sigma_x^{-2} \sum_{n=1}^N{x_n}   } {\sigma_0^{-2} + N \sigma_x^{-2} }, \left[ \sigma_0^{-2} + N \sigma_x^{-2} \right]^{-1}  \right)  \\
+{\rm Prediction} & & x_{N+1} & | x_1, \dotsc, x_N \sim {\rm N} \left( \frac{ \mu_0 \sigma_0^{-2} + \sigma_x^{-2} \sum_{n=1}^N{x_n}  }{\sigma_0^{-2} + N \sigma_x^{-2} },  \left[ \sigma_0^{-2} + N \sigma_x^{-2} \right]^{-1} + \sigma_x^2 \right)
+\end{align*}
+
+So, the predictive distribution has the same mean as the posterior distribution, but it has larger variance (it is $\sigma_x^2$ larger). For this problem, use $\mu_0=0$ and $\sigma_0^2 = 1$.  In this problem, we will explore how the number of data points and variance of the likelihood affect the posterior and predictive distributions.
+
+### 1. (a) Prior
+
+To provide a baseline, turn in a plot of the prior distribution. Please make sure your plot captures the ``interesting'' part of the distribution (i.e., the two extrema of the x-axis are the tails and the width and maximum of the bell are clearly visible). 
+
+```{r, echo=TRUE}
+#load these libraries or whatever your favorite plotting library is
+library(ggplot2)
+library(dplyr)
+
+#Fill me in with code to create plots here!
+mu_0 <- 0  # Mean of the prior
+sigma_0_sq <- 1  # s.d. 
+
+# Generate x values for the distribution
+x_vals <- seq(mu_0 - 4 * sigma_0_sq, mu_0 + 4 * sigma_0_sq, length.out = 1000)
+
+# Compute the probability density function
+pdf_vals <- dnorm(x_vals, mean = mu_0, sd = sigma_0_sq)
+
+data <- data.frame(x = x_vals, density = pdf_vals)
+
+# Plot the prior distribution
+ggplot(data, aes(x = x, y = density)) +
+  geom_line(color = "blue", linewidth = 1) +
+  geom_vline(xintercept = mu_0, color = "red", linetype = "dashed") +
+  labs(title = "Prior Distribution: N(0,1)", x = "μ", y = "Density") +
+  theme_minimal()
+```
+
+Plotting a Gaussian (normal) distribution with a mean around 0 and variance of 1. 
+
+### 1. (b) One Datum update
+Calculate and plot the posterior and predictive distributions after observing $x_1=2$ for $\sigma_x^2 = 0.25$ and $\sigma_x^2=4$ (that is 4 different distributions: the posterior and predictive for $\sigma_x^2=0.25$ and the posterior and predictive for $\sigma_x^2=4$). How does changing the variance of the likelihood affect the distributions? Are there any differences? Why?
+
+
+```{r, echo=TRUE}
+
+#Fill me in with code to create plots here!
+x1 <- 2  # Observed data point
+
+# Prior parameters
+mu_0 <- 0  # Mean 
+sigma_x_sq_values <- c(0.25, 4)  # s.d.
+
+distributions <- list()
+
+for (sigma_x_sq in sigma_x_sq_values) {
+  # Compute posterior parameters
+  posterior_mean <- (mu_0 / sigma_0_sq + x1 / sigma_x_sq) / (1 / sigma_0_sq + 1 / sigma_x_sq)
+  posterior_variance <- 1 / (1 / sigma_0_sq + 1 / sigma_x_sq)
+  
+  # Compute predictive parameters
+  predictive_mean <- posterior_mean
+  predictive_variance <- posterior_variance + sigma_x_sq
+  
+  # Generate x values for plotting
+  x_vals <- seq(-3, 5, length.out = 1000)
+  
+  # Compute densities
+  posterior_pdf <- dnorm(x_vals, mean = posterior_mean, sd = sqrt(posterior_variance))
+  predictive_pdf <- dnorm(x_vals, mean = predictive_mean, sd = sqrt(predictive_variance))
+  
+  distributions[[paste0("posterior_sigma_", sigma_x_sq)]] <- data.frame(x = x_vals, density = posterior_pdf, type = as.factor(sigma_x_sq))
+  distributions[[paste0("predictive_sigma_", sigma_x_sq)]] <- data.frame(x = x_vals, density = predictive_pdf, type = as.factor(sigma_x_sq))
+}
+
+distribution_data <- do.call(rbind, distributions)
+
+# Separate data for posterior and predictive plots
+posterior_data <- distribution_data[grepl("posterior", rownames(distribution_data)), ]
+predictive_data <- distribution_data[grepl("predictive", rownames(distribution_data)), ]
+
+# Define axis limits
+x_limits <- range(distribution_data$x)
+y_limits <- range(distribution_data$density)
+
+# Plot posterior distributions
+ggplot(posterior_data, aes(x = x, y = density, color = type)) +
+  geom_line(size = 1) +
+  labs(title = "Posterior Distributions", x = "μ", y = "Density", color = expression(sigma[x]^2)) +
+  theme_minimal() +
+  scale_color_manual(values = c("blue", "red")) +
+  xlim(x_limits) + ylim(y_limits)
+
+# Plot predictive distributions
+ggplot(predictive_data, aes(x = x, y = density, color = type)) +
+  geom_line(size = 1) +
+  labs(title = "Predictive Distributions", x = "x", y = "Density", color = expression(sigma[x]^2)) +
+  theme_minimal() +
+  scale_color_manual(values = c("blue", "red")) +
+  xlim(x_limits) + ylim(y_limits)
+
+```
+
+A smaller likelihood variance in the observed data suggested more confident in the observation, resulting to a more concentrated  posterior distribution. Meanwhile, the predictive distribution considers the future uncertainty in the distribution, so it's generally wider than the posterior distributions. A larger variance in the likelihood will lead to a wider posterior distribution and to a even larger magnitude of increase in the predictive uncertainty, because the the predictive uncertainty is the sum of the posterior variance and the likelihood variance. 
+
+### 1. (c) Multiple data update
+Calculate and plot the posterior and predictive distributions given $(x_1,\dotsc, x_5) = (2.1, 2.5, 1.4, 2.2, 1.8)$ for $\sigma_x^2 = 0.25$ and $\sigma_x^2 = 4$. How does this  compare to the previous example? Note that the average of the data points is 2, and so both contribute the same average value. For cases that differ, why do they differ then? For those that do not, why don't they differ?
+
+
+```{r, echo=TRUE}
+
+#Fill me in with code to create plots here!
+
+# Prior parameters
+mu_0 <- 0      # Prior mean
+sigma_0_sq <- 1  # Prior variance
+
+# Observed data points
+x_values <- c(2.1, 2.5, 1.4, 2.2, 1.8)
+
+# Cases for likelihood variance
+sigma_x_sq_values <- c(0.25, 4)
+
+# Initialize storage for distributions
+distributions <- list()
+
+# Iterate over different likelihood variances
+for (sigma_x_sq in sigma_x_sq_values) {
+  
+  # Compute posterior parameters for multiple data points
+  sum_x <- sum(x_values)  # Sum of observed data
+  n <- length(x_values)   # Number of data points
+  
+  posterior_mean <- (mu_0 / sigma_0_sq + sum_x / sigma_x_sq) / (1 / sigma_0_sq + n / sigma_x_sq)
+  posterior_variance <- 1 / (1 / sigma_0_sq + n / sigma_x_sq)
+  
+  # Compute predictive parameters
+  predictive_mean <- posterior_mean
+  predictive_variance <- posterior_variance + sigma_x_sq
+  
+  # Generate x values for plotting
+  x_vals <- seq(-3, 5, length.out = 1000)
+  
+  # Compute densities
+  posterior_pdf <- dnorm(x_vals, mean = posterior_mean, sd = sqrt(posterior_variance))
+  predictive_pdf <- dnorm(x_vals, mean = predictive_mean, sd = sqrt(predictive_variance))
+  
+  # Store results
+  distributions[[paste0("posterior_sigma_", sigma_x_sq)]] <- data.frame(
+    x = x_vals, density = posterior_pdf, type = as.factor(sigma_x_sq), distribution = "Posterior"
+  )
+  
+  distributions[[paste0("predictive_sigma_", sigma_x_sq)]] <- data.frame(
+    x = x_vals, density = predictive_pdf, type = as.factor(sigma_x_sq), distribution = "Predictive"
+  )
+}
+
+# Combine data
+distribution_data <- do.call(rbind, distributions)
+
+# Define axis limits
+x_limits <- range(distribution_data$x)
+y_limits <- range(distribution_data$density)
+
+# Plot Posterior Distributions
+ggplot(distribution_data[distribution_data$distribution == "Posterior", ], 
+       aes(x = x, y = density, color = type)) +
+  geom_line(size = 1) +
+  labs(title = "Posterior Distributions (After Multiple Data Updates)", 
+       x = "μ", y = "Density", color = expression(sigma[x]^2)) +
+  theme_minimal() +
+  scale_color_manual(values = c("blue", "red")) +
+  xlim(x_limits) + ylim(y_limits)
+
+# Plot Predictive Distributions
+ggplot(distribution_data[distribution_data$distribution == "Predictive", ], 
+       aes(x = x, y = density, color = type)) +
+  geom_line(size = 1) +
+  labs(title = "Predictive Distributions (After Multiple Data Updates)", 
+       x = "x", y = "Density", color = expression(sigma[x]^2)) +
+  theme_minimal() +
+  scale_color_manual(values = c("blue", "red")) +
+  xlim(x_limits) + ylim(y_limits)
+
+```
+
+With more observations for both the low and high likelihood variance cases, the effect of priors is now weakened and the posterior distribution shifted towards the observed average of 2. The posterior distribution is also narrower due to the increased confidence given more observations. The predictive distribution seems to be slightly narrower, but not by much due to the new variance introduced from the observations. 
+
+
+## 2 Gaussian - Clusters
+In this problem, we will investigate how to make categorization decisions for two categories, where each is defined as a Gaussian distribution. First, you will derive the probability of an item being in one category or another. Then, we will explore how the variances and prior probability of each category affect the posterior and predictive distributions. 
+
+For this problem, we will assume that data are generated by first picking which of two categories $c=1,2$ it belongs to (according to their prior probability) and then generating the datum according to the corresponding category's likelihood. This results in the following generative process:
+
+
+\begin{align*}
+c_n | \theta \sim {\rm Bernoulli}(\theta)   & \qquad \qquad \qquad & x_n | \mu_{c(n)}, \sigma_{c(n)}^2 \overset{iid}{\sim} {\rm N}(\mu_{c(n)}, \sigma_{c(n)}^2)
+\end{align*}
+
+
+Note that $c(n)$ is the same as $c_n$. I use parentheses rather than a subscript to avoid having something that is 
+``double subscripted.''. In generative process notation, $c_n | \theta \sim {\rm Bernoulli}(\theta)$ means that $c_n$, the category for data point $n$, is a Bernoulli random variable with parameter $\theta$. This means $c_n$ will be $1$ with probability $\theta$ (and so with probability $1-\theta$, $c_n=2$). So, the prior probability of category 1 is $\theta$ ($P(c_n=1)=\theta$). For all of Problem 2, assume $\mu_1=-1$ and $\mu_2=1$.
+
+### a. Derivation: Categorization
+
+ Using Bayes' rule, derive the probability of a single datum being in category 1: $P(c_1=1|x_1)$.\footnote{If you are wondering why $P$ is uppercase here and lowercase in other cases, it has to do with whether it is a probability mass (uppercase) or density (lowercase) function. You do not have to worry about this distinction (I mess it up sometimes too!), but as a general rule, you should use the uppercase $P(\cdot)$ when it is a discrete random variable and the lowercase $p(\cdot)$ when it is a continuous random variable.} You can assume that the values of $\mu_1, \mu_2, \sigma^2_1,$ and $\sigma^2_2$ are given parameters (I didn't put them to the right of the $|$ to save space). Show your work (if you do not know how to create equations on a computer, you can scan your handwritten derivation and include it as an image into your document). 
+ 
+As the next problem depends on this answer, I will give you what your derivation should end up with. It is
+ 
+ \begin{equation*}
+P(c=1|x_1) = \frac{\theta {\rm N}(x_1; \mu_1, \sigma_1^2)}{\theta {\rm N}(x_1; \mu_1, \sigma_1^2) + (1-\theta){\rm N}(x_1; \mu_2, \sigma_2^2)}
+\end{equation*}
+ 
+ 
+where $N(x;\mu,\sigma^2)$ is the probability density of $x$ from a Normal distribution with mean $\mu$ and variance $\sigma^2$.
+
+### answer:
+$$ 
+P(c_1 = 1 | x_1) = \frac{P(x_1 | c_1 = 1) P(c_1 = 1)}{P(x_1)} 
+$$
+$$ 
+P(x_1) = P(x_1 | c_1 = 1) P(c_1 = 1) + P(x_1 | c_1 = 2) P(c_1 = 2) 
+$$
+
+Given Gaussian distribution for: 
+$$ 
+P(x_1 | c_1 = 1) = N(x_1; \mu_1, \sigma_1^2) = \frac{1}{\sqrt{2\pi\sigma_1^2}} e^{-\frac{(x_1 - \mu_1)^2}{2\sigma_1^2}} 
+$$
+$$ 
+P(x_1 | c_1 = 2) = N(x_1; \mu_2, \sigma_2^2) = \frac{1}{\sqrt{2\pi\sigma_2^2}} e^{-\frac{(x_1 - \mu_2)^2}{2\sigma_2^2}} 
+$$
+and marginal Probability of: 
+$$ 
+P(x_1) = P(x_1 | c_1 = 1) P(c_1 = 1) + P(x_1 | c_1 = 2) P(c_1 = 2) 
+$$
+$$ 
+P(x_1) = \theta N(x_1; \mu_1, \sigma_1^2) + (1 - \theta) N(x_1; \mu_2, \sigma_2^2) 
+$$
+Thus, 
+$$ 
+P(c_1 = 1 | x_1) = \frac{\theta N(x_1; \mu_1, \sigma_1^2)}{\theta N(x_1; \mu_1, \sigma_1^2) + (1 - \theta) N(x_1; \mu_2, \sigma_2^2)} 
+$$
+
+
+### 2b. Categorization
+
+Calculate and plot the probability of being in category 1 (so, the x-axis is the $x_1$ value and the y-axis is $P(c_1=1|x_1)$) for $\theta = 0.5$ and for $\theta = 0.75$ with $\sigma_1^2=\sigma_2^2=1$ (remember $\mu_1 = -1$ and $\mu_2=1$). Next, calculate and plot the probability of being in category 1 for $\theta = 0.5$ when $\sigma_1^2=0.5$ and $\sigma_2^2=2$. Do this again, but for $\theta=0.75$. Please make sure all of your plots show all of the interesting behavior (so make sure the range of your x- and y-axes are appropriate). Describe the effect of changing the prior and the variance on categorization decisions. What is the effect of varying them? Do they have the same effect? Why do they or why do they not? 
+
+
+```{r, echo=TRUE}
+
+#Fill me in with code to create plots here!
+
+# Function to compute posterior probability
+posterior_prob <- function(x1, theta, mu1, mu2, sigma1_sq, sigma2_sq) {
+  num <- theta * dnorm(x1, mean = mu1, sd = sqrt(sigma1_sq))
+  denom <- num + (1 - theta) * dnorm(x1, mean = mu2, sd = sqrt(sigma2_sq))
+  return(num / denom)
+}
+
+# Define parameters
+x_vals <- seq(-3, 3, length.out = 1000)
+theta_vals <- c(0.5, 0.75)
+sigma_cases1 <- list(c(1,1))
+sigma_cases2 <- list(c(0.5,2))
+
+data_list1 <- list()
+data_list2 <- list()
+
+for (theta in theta_vals) {
+  for (sigma in sigma_cases1) {
+    p_vals <- posterior_prob(x_vals, theta, -1, 1, sigma[1], sigma[2])
+    data_list1[[paste(theta, sigma[1], sigma[2])]] <- data.frame(
+      x = x_vals, p = p_vals, 
+      theta = as.factor(theta), 
+      sigma = paste(sigma[1], sigma[2], sep = ", "),  # Combine sigma values for legend
+      theta_sigma = paste("θ =", theta, ", σ1 = ", sigma[1], ", σ2 = ", sigma[2])  # Combined label for legend
+    )
+  }
+  for (sigma in sigma_cases2) {
+    p_vals <- posterior_prob(x_vals, theta, -1, 1, sigma[1], sigma[2])
+    data_list2[[paste(theta, sigma[1], sigma[2])]] <- data.frame(
+      x = x_vals, p = p_vals, 
+      theta = as.factor(theta), 
+      sigma = paste(sigma[1], sigma[2], sep = ", "),  # Combine sigma values for legend
+      theta_sigma = paste("θ =", theta, ", σ1 = ", sigma[1], ", σ2 = ", sigma[2])  # Combined label for legend
+    )
+  }
+}
+
+data_plot1 <- do.call(rbind, data_list1)
+data_plot2 <- do.call(rbind, data_list2)
+
+# Plot 1: Same variance case
+ggplot(data_plot1, aes(x = x, y = p, color = theta_sigma)) + 
+  geom_line(size = 1) + 
+  labs(title = "Categorization Probability (Equal Variances)", 
+       x = expression(x[1]), 
+       y = expression(P(c[1] == 1 ~ "|" ~ x[1])), 
+       color = "Parameters") +  # Legend title for combined variables
+  theme_minimal()
+
+# Plot 2: Different variances case
+ggplot(data_plot2, aes(x = x, y = p, color = theta_sigma)) + 
+  geom_line(size = 1) + 
+  labs(title = "Categorization Probability (Different Variances)", 
+       x = expression(x[1]), 
+       y = expression(P(c[1] == 1 ~ "|" ~ x[1])), 
+       color = "Parameters") +  # Legend title for combined variables
+  theme_minimal()
+```
+
+Changing the prior probability (θ) biases the decision boundary. σ controls the spread of each category's likelihood function. For instance, when σ1 = σ2, both categories have equal spread. However, a smaller σ leads to a sharper likelihood distribution, influencing categorization more near the mean (more confident too), while a larger σ leads of a flatter likelihood (more uncertain). 
+
+### 2c. Derivation --- Prediction 
+
+Using Bayes' rule and the {\em Law of Total Probability}, derive the probability of a data point $p(x)$ according to this model (note, this is without any given data). As the next problem depends on this answer, I will give you what your derivation should end up with. It is
+
+
+\begin{equation*}
+p(x_1) = \theta {\rm N}(x_1; \mu_1, \sigma_1^2) + (1-\theta){\rm N}(x_1; \mu_2, \sigma_2^2)
+\end{equation*}
+
+
+### answer:
+
+Using Bayes' rule and the Law of Total Probability:
+$$
+p(x) = P(c_n = 1) p(x | c_n = 1) + P(c_n = 2) p(x | c_n = 2)
+$$
+
+Substituting the prior probabilities \( P(c_n = 1) = \theta \) and \( P(c_n = 2) = 1 - \theta \):
+$$
+p(x) = \theta p(x | c_n = 1) + (1 - \theta) p(x | c_n = 2)
+$$
+
+Since each likelihood is a Gaussian distribution, we have:
+$$
+p(x | c_n = 1) = \mathcal{N}(x; \mu_1, \sigma_1^2),
+\quad p(x | c_n = 2) = \mathcal{N}(x; \mu_2, \sigma_2^2)
+$$
+
+Therefore, the total probability of \( x \) becomes:
+
+$$
+p(x) = \theta \mathcal{N}(x; \mu_1, \sigma_1^2) + (1 - \theta) \mathcal{N}(x; \mu_2, \sigma_2^2)
+$$
+
+With \( \mu_1 = -1 \) and \( \mu_2 = 1 \), we finally have:
+
+$$
+p(x) = \theta \mathcal{N}(x; -1, \sigma_1^2) + (1 - \theta) \mathcal{N}(x; 1, \sigma_2^2)
+$$
+
+### 2d. Prediction
+
+As before, plot $p(x_1)$ for $\theta = 0.5$, and then for $\theta =  0.75$ with $\sigma_1^2=\sigma_2^2=1$. Next, calculate and plot $P(x_1)$ for $\theta = 0.5$ when $\sigma_1^2=0.5$ and $\sigma_2^2=2$. Do this again, but for $\theta=0.75$. How does the prior and variance of the likelihood affect $p(x_1)$?  Please make sure all of your plots show all of the interesting behavior (so make sure the range of your x- and y-axes are appropriate). Describe the effect of changing the prior and the variance on $p(x_1)$. What is the effect of varying them? Do they have the same effect? Why do they or why do they not? 
+
+Note that $p(x_1)$ is sometimes called the *marginal data distribution* and this type of model is called a *mixture model* because it composes a new probability distribution by``mixing'' two (or more) distributions together.
+
+
+```{r, echo=TRUE}
+library(ggplot2)
+library(dplyr)
+
+# Define the Gaussian mixture model function
+gaussian_mixture <- function(x, theta, mu1, mu2, sigma1, sigma2) {
+  p1 <- dnorm(x, mean = mu1, sd = sqrt(sigma1))
+  p2 <- dnorm(x, mean = mu2, sd = sqrt(sigma2))
+  return(theta * p1 + (1 - theta) * p2)
+}
+
+# Define range for x
+x_values <- seq(-5, 5, length.out = 100)
+
+# Define the different parameter values
+theta_values <- c(0.5, 0.75)
+sigma1_values <- c(1, 0.5)  # Ensure sigma1 = 1 is first
+sigma2_values <- c(1, 2)
+mu1 <- -1
+mu2 <- 1
+
+# Create an empty data frame to store all the values
+results <- data.frame()
+
+# Compute p(x) for each combination of theta, sigma1, and sigma2 and store in the data frame
+for (theta in theta_values) {
+  for (i in 1:length(sigma1_values)) {
+    p_x <- gaussian_mixture(x_values, theta, mu1, mu2, sigma1_values[i], sigma2_values[i])
+    
+    temp_df <- data.frame(x = x_values, p_x = p_x, 
+                          theta = factor(theta, levels = theta_values), 
+                          sigma1 = sigma1_values[i], 
+                          sigma2 = sigma2_values[i])
+    
+    results <- rbind(results, temp_df)
+  }
+}
+
+# Ensure the ordering places sigma1 = 1 cases first
+results <- results %>%
+  mutate(facet_label = paste("θ =", theta, ", σ1 =", sigma1, ", σ2 =", sigma2)) %>%
+  arrange(desc(sigma1))  # Sorting ensures sigma1 = 1 appears first
+
+# Find the maximum y-value for consistent y-axis limits
+max_y <- max(results$p_x)
+
+# Plot using ggplot
+ggplot(results, aes(x = x, y = p_x, color = interaction(theta, sigma1, sigma2))) +
+  geom_line(size = 1.5) +
+  facet_wrap(~ factor(facet_label, levels = unique(results$facet_label)), scales = 'free') + 
+  scale_color_manual(values = c('blue', 'red', 'green', 'purple')) +
+  labs(title = 'Gaussian Mixture Model', x = 'x', y = 'p(x)') +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  ylim(0, max_y)  # Set consistent y-axis limits
+
+```
+
+In this case, the prior probability determines the weight assigned to each Gaussian component in the mixture model. The variance σ controls the spread of each Gaussian component, with lower value contributing to a narrower distribution (more confidence), and higher value leading to a broader distribution for that category (less distinguishable). Unequal variances for the two classes resulted in a asymmetric distribution favoring one of the classes. 

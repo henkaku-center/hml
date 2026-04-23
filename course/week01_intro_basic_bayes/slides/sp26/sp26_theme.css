@@ -1,0 +1,335 @@
+/* @theme sp26 */
+/*
+ * Chiba Tech SDS dark theme for Human and Machine Learning, SP26.
+ * Mirrors docs/_style.css: #000 bg, #fff text, #888 muted, Inter font, subtle #2a2a2a borders.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #000000;
+  --surface: #111111;
+  --text: #ffffff;
+  --muted: #888888;
+  --dim: #cccccc;
+  --border: #2a2a2a;
+  --border-hover: #555555;
+  --accent: #ffffff;
+}
+
+section {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 26px;
+  line-height: 1.55;
+  padding: 64px 72px;
+  letter-spacing: 0;
+  position: relative;
+}
+
+/* Page number in the corner */
+section::after {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 400;
+  position: absolute;
+  right: 32px;
+  bottom: 24px;
+}
+
+/* Course footer tag in the corner */
+section footer {
+  color: var(--muted);
+  font-size: 13px;
+  position: absolute;
+  left: 72px;
+  bottom: 24px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4em;
+  color: var(--text);
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5em;
+  color: var(--text);
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 22px;
+  margin-top: 0.8em;
+  margin-bottom: 0.4em;
+  color: var(--text);
+}
+
+h4 {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.8em;
+}
+
+p, ul, ol {
+  color: var(--dim);
+  font-weight: 300;
+  margin-bottom: 0.6em;
+}
+
+ul, ol {
+  padding-left: 1.2em;
+}
+
+li {
+  margin-bottom: 0.25em;
+}
+
+li::marker {
+  color: var(--border-hover);
+}
+
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--dim); font-style: italic; }
+
+a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-hover);
+}
+
+code {
+  font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.1em 0.4em;
+  font-size: 0.85em;
+  color: var(--dim);
+}
+
+pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1em 1.25em;
+  font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--dim);
+  overflow-x: auto;
+  margin: 0.6em 0;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+blockquote {
+  border-left: 2px solid var(--border-hover);
+  padding-left: 1em;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0.6em 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1em 0;
+}
+
+/* KaTeX math: make it fit the dark theme */
+.katex { color: var(--text); font-size: 1.05em; }
+.katex-display { margin: 0.8em 0; }
+
+/* Tables */
+table { border-collapse: collapse; width: 100%; font-size: 22px; }
+th, td {
+  text-align: left;
+  padding: 0.5em 0.85em;
+  border-bottom: 1px solid var(--border);
+  font-weight: 300;
+  color: var(--dim);
+}
+th {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+td strong { color: var(--text); }
+
+/* --- Custom class variants via <!-- _class: NAME --> --- */
+
+/* Title slide */
+section.title {
+  text-align: center;
+  justify-content: center;
+}
+section.title h1 { font-size: 56px; margin-bottom: 0.5em; }
+section.title .subtitle {
+  color: var(--muted);
+  font-weight: 300;
+  font-size: 22px;
+  margin-top: 0;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+section.title .meta {
+  color: var(--muted);
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 2.5em;
+}
+section.title .meta .sep { color: var(--border); margin: 0 0.75em; }
+section.title img[alt*="logo"] {
+  display: block;
+  max-width: 280px;
+  margin: 0 auto 3em;
+}
+
+/* Section-divider slide (big centered title on a minimal background) */
+section.divider {
+  text-align: center;
+  justify-content: center;
+  background: var(--bg);
+}
+section.divider h1 {
+  font-size: 52px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+section.divider .eyebrow {
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-bottom: 0.75em;
+  font-weight: 500;
+}
+
+/* Big centered quote/question slide */
+section.centered {
+  text-align: center;
+  justify-content: center;
+}
+section.centered h1 { font-size: 40px; }
+section.centered p { font-size: 30px; color: var(--text); font-weight: 300; }
+
+/* Two-column layout via <div class="cols"> */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start; }
+.cols.thirds { grid-template-columns: 1fr 1fr 1fr; }
+.cols > div > h3:first-child { margin-top: 0; }
+
+/* Image-focused slide — image on one side, text on the other */
+section.image-left img, section.image-right img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  display: block;
+}
+section.image-full {
+  padding: 0;
+  text-align: center;
+  justify-content: center;
+}
+section.image-full img {
+  max-width: 100%;
+  max-height: 100vh;
+  object-fit: contain;
+}
+
+/* "Board" slide — emphasizes a formula or single key idea */
+section.board {
+  text-align: center;
+  justify-content: center;
+  background: var(--surface);
+}
+section.board h2 { font-size: 28px; color: var(--muted); margin-bottom: 2em; font-weight: 500; }
+section.board .formula { font-size: 36px; color: var(--text); }
+
+/* Check-in slide */
+section.checkin {
+  background: var(--surface);
+  border-left: 4px solid var(--text);
+}
+section.checkin h4 { color: var(--text); }
+
+/* Tag style for inline tags */
+.tag {
+  display: inline-block;
+  font-size: 13px;
+  padding: 0.1em 0.55em;
+  border: 1px solid var(--border);
+  font-weight: 500;
+  color: var(--dim);
+  letter-spacing: 0.02em;
+  margin-left: 0.3em;
+  vertical-align: middle;
+}
+
+/* Cab-problem area diagram (drawn in HTML, not an image) */
+.cab-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 2px;
+  max-width: 520px;
+  margin: 1em auto;
+}
+.cab-cell {
+  aspect-ratio: 1;
+  border: 1px solid var(--border);
+}
+.cab-cell.green { background: #2d5a3d; }
+.cab-cell.blue { background: #1e3a8a; }
+.cab-cell.witness-wrong { outline: 2px solid #d97757; outline-offset: -3px; }
+.cab-cell.witness-right { outline: 2px solid #f0c420; outline-offset: -3px; }
+.cab-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5em;
+  font-size: 16px;
+  color: var(--muted);
+  margin-top: 0.75em;
+}
+.cab-legend .swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 0.4em;
+  vertical-align: middle;
+}
+
+/* Posterior-table for the sick-friend example */
+.posterior-table {
+  width: auto;
+  margin: 1em auto;
+  font-size: 22px;
+}
+.posterior-table td, .posterior-table th { text-align: center; }
+.posterior-table .row-label { text-align: left; }
+.posterior-table .winner { color: var(--text); font-weight: 600; background: var(--surface); }

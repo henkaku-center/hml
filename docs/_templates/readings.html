@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} &mdash; Human and Machine Learning{% endblock %}
+
+{% block body %}
+<header class="page-header">
+  {% if eyebrow %}<div class="eyebrow">{{ eyebrow }}</div>{% endif %}
+  <h1>{{ page_title }}</h1>
+  {% if page_sub %}<p>{{ page_sub }}</p>{% endif %}
+</header>
+
+<section>
+  <div class="container">
+    <div class="prose">
+      <p><strong>Game plan for the semester:</strong> how readings, Slack
+      signups, and discussion posts fit together — see the
+      <a href="reading-game-plan.html">readings &amp; discussion game plan</a>.</p>
+
+      <h2>Weekly reading list</h2>
+
+      {% for w in weeks %}
+      <div class="readings-week" id="week-{{ w.number }}">
+        <h3>Week {{ w.number }} &middot; {{ w.date }} &mdash; {{ w.theme }}</h3>
+
+        {% if w.required %}
+        <h4>Required</h4>
+        <ul>
+          {% for r in w.required %}
+          <li>
+            {% if r.link_href %}<a href="{{ r.link_href }}">{{ r.citation }}</a>{% else %}{{ r.citation }}{% endif %}
+            {% if r.why %}<br><span class="dim">{{ r.why }}</span>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if w.optional %}
+        <h4>Optional</h4>
+        <ul>
+          {% for r in w.optional %}
+          <li>
+            {% if r.link_href %}<a href="{{ r.link_href }}">{{ r.citation }}</a>{% else %}{{ r.citation }}{% endif %}
+            {% if r.why %}<br><span class="dim">{{ r.why }}</span>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if w.candidates %}
+        <h4>Presentation candidates</h4>
+        {% if w.presenter %}
+        <p><strong>Presenter:</strong> {{ w.presenter }}{% if w.presented %} &mdash; presenting <em>{{ w.presented }}</em>{% endif %}</p>
+        {% else %}
+        <p><em>Not yet assigned. Rank your top 3 in Slack <code>#paper-signups</code> (see the game plan).</em></p>
+        {% endif %}
+        <ul>
+          {% for r in w.candidates %}
+          <li>
+            {% if r.link_href %}<a href="{{ r.link_href }}">{{ r.citation }}</a>{% else %}{{ r.citation }}{% endif %}
+            {% if r.why %}<br><span class="dim">{{ r.why }}</span>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

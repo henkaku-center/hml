@@ -1,0 +1,40 @@
+# Secrets
+docs/.readings_pw
+docs/.staticrypt.json
+
+# Big archives — too large for GitHub, contain SP25 Canvas student work.
+# Keep these on the local machine, don't publish.
+old_class_backup.tar.gz
+archive/
+
+# Build / cache
+.quarto/
+_cache/
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
+
+# Per-week rendered outputs (regenerate with preview_deck.sh / build_slides_*.py)
+# HTML is rebuildable from .qmd; the pptx is generated from build_slides_*.py
+course/**/week*-slides.html
+course/**/week*-slides_files/
+course/**/slides/sp26/preview/
+course/**/slides/sp26/*.pdf
+
+# QA scratch
+qa-previews/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Large local authoring artifacts not meant for GitHub
+Day01_APS-I_Spr2026.pptx
+Day01_APS-I_Spr2026.svg
+
+# SP25 reference .pptx / .pdf files (>50MB) — kept locally, not pushed
+course/week09_inverse_rl/slides/Week09_IRLPOMDPSocial.pptx
+course/week09_inverse_rl/slides/Week09_IRLSocialCog.pptx
+course/week09_inverse_rl/slides/Week09_IRLSocialCog.pdf
