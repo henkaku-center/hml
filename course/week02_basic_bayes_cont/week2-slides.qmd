@@ -357,7 +357,36 @@ $$P(H = h \mid D = d) \;=\; \frac{P(D = d \mid H = h) \; P(H = h)}{P(D = d)}$$
 
 
 ::: {.notes}
-Slide 3: 'Name the four pieces. You\'ll see these names the rest of the semester.'
+Slide 3: 'Name the four pieces. You\'ll see these names the rest of the semester. Next slide: one diagram you\'ll see three times today — the Bayes flow.'
+:::
+
+## The Bayes flow — one diagram, three times today
+
+```{mermaid}
+%%| fig-align: center
+flowchart LR
+  Prior["<b>prior</b><br/>P(H)"]
+  Lik["<b>likelihood</b><br/>P(D | H)"]
+  Num["<b>numerator</b><br/>P(H) · P(D | H)"]
+  Post["<b>posterior</b><br/>P(H | D)"]
+  Prior --> Num
+  Lik --> Num
+  Num -->|"÷ evidence P(D)"| Post
+  classDef in fill:#1A1A2E,stroke:#64B5F6,stroke-width:2px,color:#fff
+  classDef mid fill:#1A1A2E,stroke:#FFA726,stroke-width:2px,color:#fff
+  classDef out fill:#1A1A2E,stroke:#66BB6A,stroke-width:3px,color:#fff
+  class Prior,Lik in
+  class Num mid
+  class Post out
+```
+
+[*You'll see this exact shape three times:  discrete–discrete (sick friend, bento joint),*]{.dim}
+
+[*discrete-prior–continuous-likelihood (bento weight), continuous–continuous (Gaussian-Gaussian).*]{.dim}
+
+
+::: {.notes}
+~1 min. The reusable pattern. Every Bayesian inference we do today — and for the rest of the semester — is this same diagram, with different objects plugged into the boxes. Discrete or continuous H, discrete or continuous D, different shapes of P and f — the flow is invariant. Call this out explicitly.
 :::
 
 ## Agenda {.agenda}
@@ -1395,6 +1424,35 @@ Pause. Let them trace the curve and see the shaded bands. The peak height formul
 Key setup image for the continuous-Bayes worked example that follows. 450g sits squarely in the tonkatsu Gaussian, far in the right tail of hamburger. The next slide computes the densities.
 :::
 
+## The Bayes flow — now with a density
+
+```{mermaid}
+%%| fig-align: center
+flowchart LR
+  Prior["<b>prior</b><br/>P(meal)<br/>discrete"]
+  Lik["<b>likelihood</b><br/>f(weight | meal)<br/><i>Gaussian density</i>"]
+  Num["<b>numerator</b><br/>P(meal) · f(weight | meal)"]
+  Post["<b>posterior</b><br/>P(meal | weight)"]
+  Prior --> Num
+  Lik --> Num
+  Num -->|"÷ evidence"| Post
+  classDef in fill:#1A1A2E,stroke:#64B5F6,stroke-width:2px,color:#fff
+  classDef mid fill:#1A1A2E,stroke:#FFA726,stroke-width:2px,color:#fff
+  classDef highlight fill:#1A1A2E,stroke:#FFEB3B,stroke-width:3px,color:#fff
+  classDef out fill:#1A1A2E,stroke:#66BB6A,stroke-width:3px,color:#fff
+  class Prior in
+  class Lik highlight
+  class Num mid
+  class Post out
+```
+
+[*Same flow.  Only the likelihood box changed:*]{.dim}    [*a discrete probability became a Gaussian density evaluated at $D$.*]{.yellow}
+
+
+::: {.notes}
+~45 sec. Pause and point: it\'s the same diagram. The prior box is still a discrete distribution over meal (tonkatsu / hamburger). The posterior box is still a discrete distribution over meal. ONLY the likelihood changed — we evaluate a Gaussian density at the observed weight. Bayes\' rule doesn\'t care whether the likelihood is a probability or a density — the multiply-and-normalize move works identically.
+:::
+
 ## Bayes with a continuous likelihood — worked
 
 [**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
@@ -1735,6 +1793,35 @@ Likelihood:
 
 ::: {.notes}
 Slide 3: 'Here\'s the trick: when you treat the likelihood N(D|μ,σ²) as a function of μ for fixed D, it\'s STILL a Gaussian shape — peaked where μ=D. So we have two Gaussians in μ. Multiplying them is the Bayes step.'
+:::
+
+## The Bayes flow — now everything is a density
+
+```{mermaid}
+%%| fig-align: center
+flowchart LR
+  Prior["<b>prior</b><br/>P(μ)<br/><i>Gaussian density</i>"]
+  Lik["<b>likelihood</b><br/>f(D | μ)<br/><i>Gaussian density</i>"]
+  Num["<b>numerator</b><br/>P(μ) · f(D | μ)"]
+  Post["<b>posterior</b><br/>P(μ | D)<br/><i>Gaussian density</i>"]
+  Prior --> Num
+  Lik --> Num
+  Num -->|"÷ evidence"| Post
+  classDef highlight fill:#1A1A2E,stroke:#FFEB3B,stroke-width:3px,color:#fff
+  classDef mid fill:#1A1A2E,stroke:#FFA726,stroke-width:2px,color:#fff
+  classDef out fill:#1A1A2E,stroke:#66BB6A,stroke-width:3px,color:#fff
+  class Prior,Lik highlight
+  class Num mid
+  class Post out
+```
+
+[*Same flow.  Both boxes are densities now.   Every arrow still works.*]{.yellow}
+
+[*The "magic" next is that multiplying TWO Gaussians gives a Gaussian — so the posterior box stays in the same family. That's conjugacy.*]{.dim}
+
+
+::: {.notes}
+~45 sec. Third appearance of the diagram. Now BOTH the prior and the likelihood are Gaussian densities. The moves are unchanged. The new fact we\'re about to prove: multiplying two Gaussian densities gives a third Gaussian density (up to normalizer). So the posterior lives in the same family as the prior — conjugacy. That\'s the result; the derivation is next.
 :::
 
 ## Why Gaussian × Gaussian = Gaussian  (derivation sketch)
