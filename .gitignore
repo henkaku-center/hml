@@ -38,3 +38,6 @@ Day01_APS-I_Spr2026.svg
 course/week09_inverse_rl/slides/Week09_IRLPOMDPSocial.pptx
 course/week09_inverse_rl/slides/Week09_IRLSocialCog.pptx
 course/week09_inverse_rl/slides/Week09_IRLSocialCog.pdf
+
+# Nested textbook is its own git repo — https://github.com/josephausterweil/probintro
+textbook/
