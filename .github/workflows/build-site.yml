@@ -13,15 +13,19 @@ on:
     paths:
       - 'course/readings_map.yml'
       - 'course/**/PLAN.md'
+      - 'course/**/week*-slides.qmd'
+      - 'course/**/slides/sp26/week*.pdf'
       - 'course/syllabus/SP26_syllabus.md'
       - 'course/assignments/README.md'
       - 'resources/readings/**'
+      - 'sds-reveal/**'
       - 'docs/_build.py'
       - 'docs/_build_site.sh'
       - 'docs/_templates/**'
       - 'docs/style.css'
       - 'docs/assets/**'
       - 'docs/reading-game-plan.md'
+      - '_quarto.yml'
       - '.github/workflows/build-site.yml'
   workflow_dispatch: {}
 
@@ -53,6 +57,17 @@ jobs:
 
       - name: Install staticrypt
         run: npm install -g staticrypt
+
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render Quarto slide decks
+        run: |
+          set -e
+          for qmd in course/week*/week*-slides.qmd; do
+            echo "=== rendering $qmd ==="
+            quarto render "$qmd" --to revealjs
+          done
 
       - name: Run build script
         env:
