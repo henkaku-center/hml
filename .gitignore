@@ -49,3 +49,5 @@ docs/slides/week*.pdf
 docs/slides/week*_files/
 docs/slides/sds-reveal/
 docs/slides/images/
+
+/.quarto/
