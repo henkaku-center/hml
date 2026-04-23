@@ -1,0 +1,89 @@
+name: Build and deploy course site
+
+# Auto-rebuilds docs/ on push to main using _build.py + staticrypt, then
+# deploys docs/ to GitHub Pages. Remote repo layout expects Pages source
+# to be the repo root, so we COPY docs/* to the root of the artifact.
+#
+# Requires repository secret:
+#   READINGS_PW - class-wide password for the encrypted readings pages.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'course/readings_map.yml'
+      - 'course/**/PLAN.md'
+      - 'course/syllabus/SP26_syllabus.md'
+      - 'course/assignments/README.md'
+      - 'resources/readings/**'
+      - 'docs/_build.py'
+      - 'docs/_build_site.sh'
+      - 'docs/_templates/**'
+      - 'docs/style.css'
+      - 'docs/assets/**'
+      - 'docs/reading-game-plan.md'
+      - '.github/workflows/build-site.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python deps
+        run: pip install --quiet markdown jinja2 pyyaml
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install staticrypt
+        run: npm install -g staticrypt
+
+      - name: Run build script
+        env:
+          READINGS_PW: ${{ secrets.READINGS_PW }}
+        run: ./docs/_build_site.sh
+
+      - name: Assemble Pages artifact (docs/* at root)
+        run: |
+          mkdir -p _site
+          # Copy everything in docs/ except build sources and secrets.
+          rsync -a \
+            --exclude='_templates/' \
+            --exclude='_build.py' \
+            --exclude='_build_site.sh' \
+            --exclude='.readings_pw' \
+            --exclude='.staticrypt.json' \
+            --exclude='reading-game-plan.md' \
+            --exclude='README-password-protected-readings.md' \
+            --exclude='README.md' \
+            docs/ _site/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
