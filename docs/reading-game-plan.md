@@ -8,7 +8,7 @@ This is your pocket guide for the semester. Three things happen every week, and 
 
 ## 1. Read before class
 
-**Where to find the readings:** the password-protected course site at `https://josephausterweil.github.io/hml-sp26/readings/` (password on Slack, pinned in `#announcements`).
+**Where to find the readings:** the password-protected course site at `https://hml.chibatech.dev/readings.html` (password on Slack, pinned in `#hml-2026`).
 
 **What's posted per week:**
 - **Required readings** — short, usually 1 textbook chapter, must be done before Friday.
@@ -85,7 +85,7 @@ This is your pocket guide for the semester. Three things happen every week, and 
 
 ## Troubleshooting
 
-- **"I can't access the password-protected site."** Check Slack `#announcements` for the current password. If it's rotated and you missed the message, DM Prof. Austerweil.
+- **"I can't access the password-protected site."** Check Slack `#hml-2026` for the current password. If you can't find it, DM Prof. Austerweil.
 - **"I didn't get my top choice for presentations."** The second-choice slot is usually just as good. If you have a strong reason (conflict, prior expertise), DM Prof. Austerweil in the first 48 hours.
 - **"I missed a reading because the class before me ran over."** One missed reading is fine. More than one week in a row, come to office hours so we can get you caught up.
 - **"I want to present a paper not on the candidate list."** DM Prof. Austerweil your pitch. If it's on-theme for the week and has a plausible connection to the lecture, it's usually a yes.

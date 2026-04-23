@@ -38,7 +38,7 @@ staticrypt readings.html reading-game-plan.html \
     -p "$READINGS_PW" \
     --short \
     --template-title "Readings — SP26" \
-    --template-instructions "Enter the SP26 class password (pinned in Slack #announcements)." \
+    --template-instructions "Enter the SP26 class password (pinned in Slack #hml-2026)." \
     --template-button "Unlock" \
     -d . >/dev/null
 
