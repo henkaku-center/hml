@@ -49,6 +49,9 @@
 - [ ] Phase 4 (optional): GitHub Actions to auto-build on push
 - [ ] Fill in `presenter:` fields in `course/readings_map.yml` after Slack signups close (Fri May 15)
 
+### SP26 New — Slide infrastructure
+- [ ] **Write a Quarto-qmd → pptx converter.** The Quarto deck is now the canonical slide source (week2-slides.qmd, etc.); the hand-written `build_slides_weekN.py` pptx track has diverged and is no longer maintained. Need a single-entry tool that reads the .qmd and emits a python-pptx Office deck preserving speaker notes, math (KaTeX → equation/image), the yellow-frame theme, and section breaks, so the pptx artifact can be regenerated from the canonical source instead of hand-edited in parallel. Until this exists, ignore the per-week `build_slides_weekN.py` scripts.
+
 ### SP26 New — Textbook & GenJAX
 - [ ] Map textbook homework readings to each week's PLAN.md
 - [x] GenJAX setup pointer for students (Week 2 homework — Tutorial 2 Ch 0-1, referenced in Week 1 PLAN.md)

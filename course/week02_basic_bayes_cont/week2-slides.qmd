@@ -72,50 +72,13 @@ Students bring them two bentos a day — lunch and dinner — as offerings.
 Slide 1: 'Before we do math, meet Chibany — the Chiba Tech mascot, our worked example all semester. They hang out at the cafeteria; students offer bentos in the hope Chibany favors them on upcoming tests. Two bentos a day, from two different students — one at lunch, one at dinner. Crucially: Chibany LOVES tonkatsu, which is why meal identity matters. Also the protagonist of the textbook, so T3 Ch 1 tonight tops this up.'
 :::
 
-## Meet Chibany (2/4)
-
-Chibany is the Chiba Tech mascot. They hang out at the cafeteria.
-
-Students bring them two bentos a day — lunch and dinner — as offerings.
-
-[Chibany loves tonkatsu.]{.yellow}
-
-
-
-[Chibany is the protagonist of our textbook,]{.dim}
-
-["A Narrative Introduction to Probability" — Tutorial 3 Ch 1.]{.dim}
-
-
-
-[**The catch this week:   the bento boxes are OPAQUE.**]{.yellow}
-
-
-
-Chibany can't peek — and it would be rude to open one while the student watches.
-
-
-::: {.notes}
-Slide 2: 'The hook: opaque bentos. Last week the boxes were transparent — Chibany could just see the meal. This week, students switched to opaque boxes. Chibany is curious and wants to know if today is a tonkatsu day, but can\'t open it while the student is there. Classic hidden-variable setup — Week 1\'s checkershadow and Heider-Simmel are the same kind of inference-under-incomplete-information move.'
-:::
-
-## Meet Chibany (3/4)
+## Meet Chibany (2/2)
 
 Chibany is the Chiba Tech mascot. Students offer them two bentos a day.
 
 [Chibany loves tonkatsu.]{.yellow}
 
-
-
 [Textbook pointer: T3 Ch 1 — "A Narrative Introduction to Probability."]{.dim}
-
-
-
-[**The catch this week:   the bento boxes are OPAQUE.**]{.yellow}
-
-
-
-Chibany can't peek — and it would be rude to open one while the student watches.
 
 
 
@@ -131,44 +94,7 @@ Chibany can't peek — and it would be rude to open one while the student watche
 
 
 ::: {.notes}
-Slide 3: 'Prior knowledge comes from two sources: (a) last week the bentos were transparent, so Chibany has clean weights for each meal — ~500g tonkatsu, ~350g hamburger; (b) the 70/30 prior is from the overheard-student conversation in T3 Ch 1. Priors come from somewhere — they are knowledge about the world, not guesses out of nowhere.'
-:::
-
-## Meet Chibany (4/4) {.smaller}
-
-Chibany is the Chiba Tech mascot. Students offer them two bentos a day.
-
-[Chibany loves tonkatsu.]{.yellow}
-
-[Textbook pointer: T3 Ch 1 — "A Narrative Introduction to Probability."]{.dim}
-
-[**The catch this week:   the bento boxes are OPAQUE.**]{.yellow}
-
-Chibany can't peek — and it would be rude to open one while the student watches.
-
-**What Chibany knows  (from last week's transparent bentos):**
-
-&nbsp;&nbsp;&nbsp;[• Tonkatsu bentos weigh about 500 g]{.accent}
-
-&nbsp;&nbsp;&nbsp;[• Hamburger bentos weigh about 350 g]{.accent}
-
-&nbsp;&nbsp;&nbsp;[• About 70% of offerings are tonkatsu]{.accent}
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[(overheard two students chatting)]{.dim}
-
-
-
-[**Chibany's plan:   WEIGH THE BENTO.**]{.yellow}
-
-[*"The weight won't tell me for sure if it's tonkatsu,*]{.accent}
-
-&nbsp;[*but it will UPDATE my belief about today's meal."*]{.accent}
-
-[That update is Bayes' rule. Same rule as last week — new anchor.]{.dim}
-
-
-::: {.notes}
-Slide 4: 'Chibany\'s strategy: weigh the bento and update. They care most about "is today tonkatsu?" — their favorite. Same Bayesian move as Week 1\'s sick-friend, just with a bento instead of a patient. Prior belief, observation, posterior. Same rule. New anchor.'
+Slide 2: 'Ambient background knowledge — last week the bentos were transparent, so Chibany has clean weights for each meal (~500g tonkatsu, ~350g hamburger), and the 70/30 prior comes from overheard students. We are NOT yet in an inference problem — this is just what Chibany knows walking in. The opaque-bento hidden-variable setup arrives in Block 6 when we need it for the Gaussian likelihood.'
 :::
 
 ## Agenda {.agenda}
@@ -1143,7 +1069,30 @@ Mode at k=4 (0.360). In Week 3 this PMF becomes the LIKELIHOOD
 
 
 ::: {.notes}
-20 min. Build: PMF→PDF (4 text + 1 image), Gaussian formula (5 text + 1 image), continuous-Bayes worked (6 text + 1 image). The images are the payoff — do NOT speak over them; pause.
+20 min. Build: opaque-bento reveal (1 slide), PMF→PDF (4 text + 1 image), Gaussian formula (5 text + 1 image), continuous-Bayes worked (6 text + 1 image). The images are the payoff — do NOT speak over them; pause.
+:::
+
+## The catch today — bentos are opaque
+
+[**This week the bento boxes are OPAQUE.**]{.yellow}
+
+
+
+Chibany can't peek — and it would be rude to open one while the student watches.
+
+
+
+[**So Chibany's plan:   WEIGH THE BENTO.**]{.accent}
+
+[*"The weight won't tell me for sure if it's tonkatsu,*]{.accent}
+
+&nbsp;[*but it will UPDATE my belief about today's meal."*]{.accent}
+
+[That update is Bayes' rule — now with a continuous observation.]{.dim}
+
+
+::: {.notes}
+Opaque-bento reveal — deliberately placed here, not in the morning intro. Up to now the meal was observable (Block 4 joint tables used A, B directly). The inference problem only kicks in once we hide the meal and leave weight as the observable. This is the hidden-variable pivot — everything after this needs a likelihood p(weight | meal), which is the next four slides (PMF→PDF).
 :::
 
 ## From PMF to PDF — going continuous
