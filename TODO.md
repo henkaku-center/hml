@@ -49,9 +49,11 @@
 - [ ] Phase 4 (optional): GitHub Actions to auto-build on push
 - [ ] Fill in `presenter:` fields in `course/readings_map.yml` after Slack signups close (Fri May 15)
 - [x] **Slide EN↔JA toggle infrastructure.** Built (2026-04-24). `sds-reveal/lang-toggle.{css,js}` + Quarto include wiring. Press `L` to switch; localStorage persists. Authoring pattern documented in CLAUDE.md. Week 2 has 3 slides wrapped as a minimal example.
-- [ ] **Retrofit remaining Week 2 slides with JA translations.** Currently only Meet Chibany, Marr L1, and Quick poll — posterior are bilingual. Wrap the other ~100 slides' prose blocks in `.lang-en` / `.lang-ja` divs and author JA.
+- [x] **Auto-scaffold EN↔JA toggle for every future week deck.** Done 2026-04-24 via project-level `_quarto.yml`: new `course/week*/week*-slides.qmd` files pick up `lang-toggle.css` + `lang-toggle.js` automatically, no per-file frontmatter needed.
+- [ ] **Retrofit remaining Week 2 slides with JA translations.** Currently ~24 concept-introducing slides are bilingual (Meet Chibany, Marr L1/L2/L3/cab-check, Notation 1-3, both polls + Bayes flow, Setup/Joint/Marginal/Conditional/Independence/Summary, EV/Bernoulli/Binomial intros, Shift-in-what's-hidden). The ~75 remaining build-up, numerical-variation, agenda, break, and admin slides are intentionally EN-only. Retrofit them as time and a JA proofreader allow.
 - [ ] **Extend EN↔JA to the course *site* (home, syllabus, assignments, game plan, guidelines).** The slide toggle only covers deck HTML. Site pages are separate Jinja templates and would need their own markup + toggle wiring.
-- [ ] **Extend EN↔JA to Weeks 3-12 slides** as those decks are authored.
+- [ ] **JA translations for Weeks 3-12 slides** as those decks are authored — the infrastructure is auto-wired, just use the `.lang-en` / `.lang-ja` div pattern.
+- [ ] **Native-speaker proof of Week 2 JA translations.** Machine-authored with pedagogical care, but likely has stilted phrasings. Get a bilingual reader to pass through the ~24 wrapped slides before the first lecture where JA matters.
 
 ### SP26 New — Slide infrastructure
 - [ ] **Write a Quarto-qmd → pptx converter.** The Quarto deck is now the canonical slide source (week2-slides.qmd, etc.); the hand-written `build_slides_weekN.py` pptx track has diverged and is no longer maintained. Need a single-entry tool that reads the .qmd and emits a python-pptx Office deck preserving speaker notes, math (KaTeX → equation/image), the yellow-frame theme, and section breaks, so the pptx artifact can be regenerated from the canonical source instead of hand-edited in parallel. Until this exists, ignore the per-week `build_slides_weekN.py` scripts.

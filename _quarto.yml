@@ -22,6 +22,14 @@ format:
     center: false
     # Speaker-notes HTML presenter: press 'S' in browser.
     # Notes also round-trip into PPTX's native speaker-notes pane.
+    # EN↔JA language toggle (press L). Wrap parallel content in
+    # ::: {.lang-en} ... ::: and ::: {.lang-ja} ... ::: divs.
+    # Paths are resolved relative to each .qmd's file location; course
+    # decks live under course/weekNN_*/ so ../../ reaches sds-reveal/.
+    css: ../../sds-reveal/lang-toggle.css
+    include-after-body:
+      text: |
+        <script src="../../sds-reveal/lang-toggle.js"></script>
   pptx:
     slide-level: 2
 

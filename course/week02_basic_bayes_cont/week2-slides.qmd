@@ -9,10 +9,6 @@ format:
   revealjs:
     theme: [dark, ../../sds-reveal/sds.scss]
     html-math-method: katex
-    css: ../../sds-reveal/lang-toggle.css
-    include-after-body:
-      text: |
-        <script src="../../sds-reveal/lang-toggle.js"></script>
   pptx: default
 ---
 
@@ -42,6 +38,8 @@ Crisp start. Today's backbone is the second half: continuous probability, Gaussi
 
 ## Two changes since Week 1
 
+::: {.lang-en}
+
 **Paper presentations are in.**
 
 [Each of you presents one reading once. More at 1:40.]{.dim}
@@ -51,6 +49,22 @@ Crisp start. Today's backbone is the second half: continuous probability, Gaussi
 **Reflections: 6 of 12, not 8 of 13.**
 
 [Class is now 2 h × 12 weeks. More at 1:50.]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+**論文発表を導入します。**
+
+[各自、1回だけ論文を発表してもらいます。詳しくは1:40に。]{.dim}
+
+
+
+**リフレクション：13回中8回ではなく、12回中6回。**
+
+[授業は2時間×12週になりました。詳しくは1:50に。]{.dim}
+
+:::
 
 
 ::: {.notes}
@@ -98,6 +112,8 @@ Slide 1: 'Before we do math, meet Chibany — the Chiba Tech mascot, our worked 
 
 ## Meet Chibany (2/2)
 
+::: {.lang-en}
+
 Chibany is the Chiba Tech mascot. Students offer them two bentos a day.
 
 [Chibany loves tonkatsu.]{.yellow}
@@ -115,6 +131,30 @@ Chibany is the Chiba Tech mascot. Students offer them two bentos a day.
 &nbsp;&nbsp;&nbsp;[• About 70% of offerings are tonkatsu]{.accent}
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[(overheard two students chatting)]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+チバニーは千葉工業大学のマスコット。学生たちは毎日2つのお弁当をお供えします。
+
+[チバニーはとんかつが大好きです。]{.yellow}
+
+[教科書の参照：チュートリアル3 第1章『確率論への物語的入門』。]{.dim}
+
+
+
+**チバニーが知っていること（先週の透明なお弁当から）：**
+
+&nbsp;&nbsp;&nbsp;[• とんかつ弁当は約500グラム]{.accent}
+
+&nbsp;&nbsp;&nbsp;[• ハンバーグ弁当は約350グラム]{.accent}
+
+&nbsp;&nbsp;&nbsp;[• お供えのおよそ70%はとんかつ]{.accent}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[（2人の学生の会話をたまたま聞いた）]{.dim}
+
+:::
 
 
 ::: {.notes}
@@ -182,6 +222,8 @@ Slide 2: 'Ambient background knowledge — last week the bentos were transparent
 
 ## Marr L2 — what algorithm?
 
+::: {.lang-en}
+
 **Same L1 — multiple algorithms:**
 
 
@@ -196,12 +238,34 @@ Slide 2: 'Ambient background knowledge — last week the bentos were transparent
 
 [**Bayes is L1. Algorithms are L2.**]{.accent}
 
+:::
+
+::: {.lang-ja}
+
+**同じL1に対して  —  複数のアルゴリズム：**
+
+
+
+&nbsp;&nbsp;• 列挙する  （今日：2つの仮説、合計して正規化）
+
+&nbsp;&nbsp;• サンプリングする  （第7週：モンテカルロ法）
+
+&nbsp;&nbsp;[• 「いつもとんかつと当てる」  —  これもアルゴリズム。悪いけれど。]{.red}
+
+
+
+[**ベイズはL1。アルゴリズムはL2。**]{.accent}
+
+:::
+
 
 ::: {.notes}
 ~2 min. The bad-algorithm point is important: "always guess tonkatsu" is 70% accurate because of the prior — it's still a well-defined L2, just one that ignores the observation.
 :::
 
 ## Marr L3 — what implementation?
+
+::: {.lang-en}
 
 Chibany:  neurons, synapses, cortical circuits.
 
@@ -223,12 +287,40 @@ Our simulation:  JAX arrays, floating-point math, Colab.
 
 [*research program — not settled. Week 11 revisits.*]{.dim}
 
+:::
+
+::: {.lang-ja}
+
+チバニー：ニューロン、シナプス、皮質の回路。
+
+私たちのシミュレーション：JAXの配列、浮動小数点演算、Colab。
+
+
+
+**3つのレベルは  —  ほぼ独立している。**
+
+[正しいL1 ＋ 間違ったL2  →  人間の系統的なバイアス。]{.accent}
+
+[*深層ニューラルネットは脳のL3モデルか？  議論の余地あり。*]{.dim}
+
+[*正確な誤差逆伝播法もTransformerのAttentionも皮質のやり方ではないが、*]{.dim}
+
+[*生物学的に妥当な近似手法（フィードバックアラインメント、*]{.dim}
+
+[*予測符号化、樹状突起による誤差分配）は活発な研究テーマ  —*]{.dim}
+
+[*まだ決着はついていない。第11週で再訪する。*]{.dim}
+
+:::
+
 
 ::: {.notes}
 ~2 min. FAST. Land the independence point. Nuance on the NN-as-L3 question: it's genuinely controversial, not a rejected position. The consensus is that exact backprop + standard transformer attention aren't implemented in cortex, but a live research program (Lillicrap et al 2020 Nat Rev Neurosci "Backprop and the brain"; NeuroAI manifesto Zador et al 2023 Nat Commun; Whittington & Bogacz 2017 predictive-coding approximation) argues biologically plausible approximations may realize backprop-like credit assignment. Skeptical counter: Bowers et al 2023 BBS "Deep problems with NN models of human vision." Transformer attention specifically has one L3-ish proposal — Whittington, Warren & Behrens 2022 ICLR — but that is hippocampal, not neocortical. Bottom line for students: a deep NN that fits behavior or neural responses is usually read as an L1/L2 candidate or an engineering tool; whether any part of it maps to L3 is an open question, not a closed one. Week 11 picks up the substrate-and-limits thread.
 :::
 
 ## Check-in — the cab problem
+
+::: {.lang-en}
 
 Last week: witness says "blue"; 15% blue cabs;
 
@@ -243,6 +335,26 @@ witness accurate 80%.  Most of you guessed ~80%.
 [*Target: L1 = P(blue | report). Actual L1 answer ≈ 0.41.*]{.dim}
 
 [*80% is a wrong-L2 claim  (ignore the base rate).*]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+先週の問題：目撃者は「青」と言った。街の15%が青いタクシー。
+
+目撃者の正確さは80%。ほとんどの人が約80%と答えた。
+
+
+
+[**間違いはどのレベルで起きた？**]{.yellow}
+
+
+
+[*本来の答え：L1 = P(青 | 報告)。正しいL1の答えは約0.41。*]{.dim}
+
+[*80%という答えはL2の間違い  （基準率を無視している）。*]{.dim}
+
+:::
 
 
 ::: {.notes}
@@ -271,6 +383,8 @@ witness accurate 80%.  Most of you guessed ~80%.
 
 ## Notation — one rule, starting today
 
+::: {.lang-en}
+
 [From today:]{.dim}
 
 
@@ -282,6 +396,24 @@ witness accurate 80%.  Most of you guessed ~80%.
 
 
 [For Chibany:   H = meal,   D = today's observation.]{.accent}
+
+:::
+
+::: {.lang-ja}
+
+[本日から：]{.dim}
+
+
+
+[**H = 仮説  （隠れている — 知りたいこと）**]{.yellow}
+
+[**D = データ  （観測された — 見えるもの）**]{.yellow}
+
+
+
+[チバニーの場合：   H = 食事、   D = 今日の観測。]{.accent}
+
+:::
 
 
 ::: {.notes}
@@ -290,6 +422,8 @@ Slide 1: 'H = hypothesis, D = data. For Chibany, H is the meal — what we want 
 
 ## Notation — one rule, starting today (2/3)
 
+::: {.lang-en}
+
 [From today:]{.dim}
 
 
@@ -301,6 +435,24 @@ Slide 1: 'H = hypothesis, D = data. For Chibany, H is the meal — what we want 
 
 
 [For Chibany:   H = meal,   D = today's observation.]{.accent}
+
+:::
+
+::: {.lang-ja}
+
+[本日から：]{.dim}
+
+
+
+[**H = 仮説  （隠れている — 知りたいこと）**]{.yellow}
+
+[**D = データ  （観測された — 見えるもの）**]{.yellow}
+
+
+
+[チバニーの場合：   H = 食事、   D = 今日の観測。]{.accent}
+
+:::
 
 
 
@@ -313,6 +465,8 @@ Slide 2: 'The formula you saw last week. Same one.'
 
 ## Notation — one rule, starting today (3/3)
 
+::: {.lang-en}
+
 [From today:]{.dim}
 
 
@@ -325,13 +479,37 @@ Slide 2: 'The formula you saw last week. Same one.'
 
 [For Chibany:   H = meal,   D = today's observation.]{.accent}
 
+:::
+
+::: {.lang-ja}
+
+[本日から：]{.dim}
+
+
+
+[**H = 仮説  （隠れている — 知りたいこと）**]{.yellow}
+
+[**D = データ  （観測された — 見えるもの）**]{.yellow}
+
+
+
+[チバニーの場合：   H = 食事、   D = 今日の観測。]{.accent}
+
+:::
+
 
 
 $$P(H = h \mid D = d) \;=\; \frac{P(D = d \mid H = h) \; P(H = h)}{P(D = d)}$$
 
 
 
+::: {.lang-en}
 &nbsp;&nbsp;[posterior     =      likelihood     ·    prior    /   evidence]{.dim}
+:::
+
+::: {.lang-ja}
+&nbsp;&nbsp;[事後確率     =      尤度     ·    事前確率    /   証拠]{.dim}
+:::
 
 
 ::: {.notes}
@@ -379,6 +557,8 @@ Fast poll. Answer: B. Common wrong picks: D (reasonable but it\'s the unnormaliz
 
 ## Quick poll — reveal
 
+::: {.lang-en}
+
 [**B)   the probability of the event given observations.**]{.yellow}
 
 &nbsp;&nbsp;&nbsp;$P(H \mid D)$     — hypothesis, conditioned on what we saw.
@@ -390,6 +570,24 @@ Fast poll. Answer: B. Common wrong picks: D (reasonable but it\'s the unnormaliz
 [*The division by evidence $P(D)$ is what turns the numerator into a valid probability.*]{.dim}
 
 [*(C) is the likelihood, not the posterior.*]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+[**B)   観測された後の事象の確率。**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;$P(H \mid D)$     — 仮説を、見たものに基づいて条件づけしたもの。
+
+
+
+[*(D) — 事前確率 × 尤度 — は分子であって、事後確率ではない。*]{.dim}
+
+[*証拠 $P(D)$ で割ることで初めて、正しい確率になる。*]{.dim}
+
+[*(C) は尤度であって、事後確率ではない。*]{.dim}
+
+:::
 
 
 ::: {.notes}
@@ -418,9 +616,21 @@ flowchart LR
   class Post out
 ```
 
+::: {.lang-en}
+
 [*You'll see this exact shape three times:  discrete–discrete (sick friend, bento joint),*]{.dim}
 
 [*discrete-prior–continuous-likelihood (bento weight), continuous–continuous (Gaussian-Gaussian).*]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+[*この同じ形を今日3回見ます:  離散–離散（風邪の友人、お弁当の同時分布）、*]{.dim}
+
+[*離散的事前分布–連続的尤度（お弁当の重さ）、連続–連続（ガウス–ガウス）。*]{.dim}
+
+:::
 
 
 ::: {.notes}
@@ -529,6 +739,8 @@ Slide 3: 'Divide every numerator by the evidence (0.540) to get the posterior ro
 
 ## Setup — two meals, two variables
 
+::: {.lang-en}
+
 Today Chibany gets two bentos: one for lunch, one for dinner.
 
 
@@ -543,6 +755,26 @@ Today Chibany gets two bentos: one for lunch, one for dinner.
 
 [*Now the "coin" has a biased and asymmetric joint.*]{.dim}
 
+:::
+
+::: {.lang-ja}
+
+今日、チバニーはお弁当を2つもらいます：昼食用と夕食用。
+
+
+
+&nbsp;&nbsp;&nbsp;A  =  昼食のメニュー、    A ∈ {とんかつ, ハンバーグ}
+
+&nbsp;&nbsp;&nbsp;B  =  夕食のメニュー、   B ∈ {とんかつ, ハンバーグ}
+
+
+
+[*第1週の「2回のコイン投げ」と同じ標本空間：* Ω = {HH, HT, TH, TT}。]{.dim}
+
+[*ただし今回は「コイン」に偏りがあり、同時分布も非対称。*]{.dim}
+
+:::
+
 
 ::: {.notes}
 ~1 min. We deliberately stay DISCRETE. Two meals, each in {H, T}. Same Ω as Week 1's grid. Weight doesn't appear until Block 6 — today we're building the operations (joint, marginal, conditional) and the independence/dependence concept on ground students already understand.
@@ -550,9 +782,21 @@ Today Chibany gets two bentos: one for lunch, one for dinner.
 
 ## The joint  P(A, B)  — build the 2×2 table
 
+::: {.lang-en}
+
 Tanaka-san tells Chibany that students coordinate:  they try to bring
 
 at least one tonkatsu, but not two (to keep it special).
+
+:::
+
+::: {.lang-ja}
+
+田中さんから聞いた話：学生たちは互いに示し合わせて、
+
+少なくとも1つはとんかつを用意する  — ただし2つは揃えない（特別感を保つため）。
+
+:::
 
 
 
@@ -622,15 +866,29 @@ Slide 3: 'Sanity check sums to 1. Analogy to last week\'s {HH, HT, TH, TT} — s
 
 ## Marginalization — sum over what you don't care about
 
+::: {.lang-en}
+
 **P(A = T)  =  ?**
-
-
 
 Sum the joint over B:
 
 &nbsp;&nbsp;&nbsp;P(A = T)  =  P(A = T, B = H)  +  P(A = T, B = T)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**=  0.43  +  0.10   =   0.53**]{.accent}
+
+:::
+
+::: {.lang-ja}
+
+**P(A = T)  =  ?**
+
+同時分布をBについて合計する：
+
+&nbsp;&nbsp;&nbsp;P(A = T)  =  P(A = T, B = H)  +  P(A = T, B = T)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**=  0.43  +  0.10   =   0.53**]{.accent}
+
+:::
 
 
 ::: {.notes}
@@ -705,6 +963,8 @@ Next move: conditional — then we use marginal + conditional together to define
 
 ## Conditional — restrict the possibility space
 
+::: {.lang-en}
+
 [Chibany learns:   today's DINNER was tonkatsu  (B = T).]{.yellow}
 
 **What's  P(A | B = T)?     What should Chibany now believe about lunch?**
@@ -716,6 +976,24 @@ Next move: conditional — then we use marginal + conditional together to define
 [*"Knowing $B = T$ means $HH$ and $TH$ are impossible. The new possibility*]{.dim}
 
 [*space is $\{HT, TT\}$. Recompute within that restricted space."*]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+[チバニーは知る：   今日の夕食はとんかつだった  (B = T)。]{.yellow}
+
+**$P(A \mid B = T)$  はいくら？     昼食について、チバニーはどう信じるべき？**
+
+
+
+[*第1週の $\Omega = \{HH, HT, TH, TT\}$ と同じ動き：*]{.dim}
+
+[*「$B = T$ と分かったので、$HH$ と $TH$ はもう起こり得ない。*]{.dim}
+
+[*新しい可能性の空間は $\{HT, TT\}$。その限定された空間の中で計算し直す。」*]{.dim}
+
+:::
 
 
 ::: {.notes}
@@ -790,6 +1068,8 @@ Slide 3: 'Posterior over lunch. Learning dinner was T swings belief about lunch 
 
 ## Independence — definition
 
+::: {.lang-en}
+
 A and B are **independent**    ( written  A ⊥ B )    iff:
 
 
@@ -805,6 +1085,28 @@ A and B are **independent**    ( written  A ⊥ B )    iff:
 Equivalently:     **P(A, B)  =  P(A) · P(B)**
 
 [*The joint factors into the product of marginals.*]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+$A$ と $B$ が**独立**（$A \perp B$ と書く）であるとは、次を満たすこと：
+
+
+
+[**$P(A \mid B)  =  P(A)$        $A, B$ の全ての値について（ただし $P(B) > 0$）**]{.accent}
+
+
+
+[*「$B$ を知っても、$A$ についての信念は変わらない。」*]{.yellow}
+
+
+
+同値な表現：     **$P(A, B)  =  P(A) \cdot P(B)$**
+
+[*同時分布が周辺分布の積に分解される。*]{.dim}
+
+:::
 
 
 ::: {.notes}
@@ -840,6 +1142,8 @@ Slide 2: 'Concrete check. Marginal says A is T about half the time. Conditional 
 
 ## Summary — four moves
 
+::: {.lang-en}
+
 Joint                  =  weights over the full possibility space $\Omega$.   All cells sum to 1.
 
 Marginal            =  sum out the variable you don't care about.
@@ -851,6 +1155,24 @@ Independence   =  $P(A, B) = P(A) \cdot P(B)$    (equivalently, $P(A \mid B) = P
 
 
 [**Same Bayes as last week. Everything today is a move on the possibility space.**]{.accent}
+
+:::
+
+::: {.lang-ja}
+
+同時分布                  =  可能性の空間 $\Omega$ 全体に対する重み。 セルの合計は1。
+
+周辺分布（周辺化）    =  興味のない変数について合計する。
+
+条件付き分布            =  $B$ を知ることで $\Omega$ を整合的な結果に制限し、確率として再正規化する。
+
+独立                       =  $P(A, B) = P(A) \cdot P(B)$    （同値に $P(A \mid B) = P(A)$）。
+
+
+
+[**ベイズは先週と同じ。今日の内容はすべて、可能性の空間に対する操作。**]{.accent}
+
+:::
 
 
 ::: {.notes}
@@ -879,6 +1201,8 @@ Independence   =  $P(A, B) = P(A) \cdot P(B)$    (equivalently, $P(A \mid B) = P
 
 ## Expected value  E[X]
 
+::: {.lang-en}
+
 For a discrete RV X with values {xᵢ} and probabilities {pᵢ}:
 
 
@@ -888,6 +1212,22 @@ $$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
 
 
 [*"Weight each value by its probability, then add."*]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+値 $\{x_i\}$ と確率 $\{p_i\}$ を持つ離散確率変数 $X$ に対して：
+
+
+
+$$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
+
+
+
+[*「各値をその確率で重み付けして、合計する。」*]{.dim}
+
+:::
 
 
 ::: {.notes}
@@ -989,6 +1329,8 @@ Slide 4: 'Mental model: mean = balance point, variance = width. These two number
 
 ## Bernoulli distribution
 
+::: {.lang-en}
+
 $X \sim \mathrm{Bernoulli}(p)$     means:
 
 [**$P(X = 1) = p, \quad P(X = 0) = 1 - p$**]{.accent}
@@ -1000,6 +1342,24 @@ $X \sim \mathrm{Bernoulli}(p)$     means:
 [*Shift of focus:  last block was about today's LUNCH-and-DINNER (coordinated — dependent).*]{.dim}
 
 [*From here on, one meal at a time — each meal is its own independent Bernoulli(0.7) draw.*]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+$X \sim \mathrm{Bernoulli}(p)$     の意味：
+
+[**$P(X = 1) = p, \quad P(X = 0) = 1 - p$**]{.accent}
+
+
+
+[偏ったコインを1回振る。パラメータは1つ：$p$。]{.dim}
+
+[*視点の転換：  前のブロックは、今日の昼食と夕食（互いに関係する — 依存）についてだった。*]{.dim}
+
+[*ここから先は、お弁当を1つずつ扱う — 各お弁当は独立に $\mathrm{Bernoulli}(0.7)$ から引かれる。*]{.dim}
+
+:::
 
 
 ::: {.notes}
@@ -1062,11 +1422,25 @@ Slide 3: 'Define indicator explicitly: a 1/0 random variable tied to an event. S
 
 ## Binomial distribution
 
+::: {.lang-en}
+
 Chibany counts tonkatsu across 5 days.
 
 Each day:  $\mathrm{Bernoulli}(0.7)$, independent.
 
 [**Let $Y$ = total tonkatsu in 5 days.    $Y \sim \mathrm{Binomial}(5, 0.7)$.**]{.accent}
+
+:::
+
+::: {.lang-ja}
+
+チバニーは5日間でとんかつが何回出たかを数える。
+
+各日は独立に  $\mathrm{Bernoulli}(0.7)$。
+
+[**$Y$ = 5日間のとんかつの合計回数と定める。    $Y \sim \mathrm{Binomial}(5, 0.7)$。**]{.accent}
+
+:::
 
 
 ::: {.notes}
@@ -1611,6 +1985,8 @@ Hard 5 minutes. Come back sharp — the Gaussian-Gaussian update is the highest-
 
 ## Shift in what's hidden
 
+::: {.lang-en}
+
 | &nbsp; | **Before** | **Now** |
 |:---|:---:|:---:|
 | Hidden  $H$       | which meal today?  (tonkatsu / hamburger) | what's the tonkatsu mean weight  $\mu$? |
@@ -1624,6 +2000,26 @@ Hard 5 minutes. Come back sharp — the Gaussian-Gaussian update is the highest-
 [*Bayes' rule doesn't change.  The OBJECTS plugged into it do.*]{.yellow}
 
 [*This is the pivot to "learning parameters from data" — the foundation of everything in Weeks 3, 4, and 7.*]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+| &nbsp; | **これまで** | **これから** |
+|:---|:---:|:---:|
+| 隠れた変数  $H$   | 今日の食事は？（とんかつ / ハンバーグ） | とんかつの平均重量 $\mu$ は？ |
+| 型              | 離散的なカテゴリ                     | 連続的なパラメータ |
+| データ  $D$      | 450 g                                | 510 g （これからもっと観測する） |
+| 事前分布  $P(H)$ | 0.7 / 0.3                            | $N(\mu_0, \sigma_0^2)$ |
+| 目標            | 今日の食事を分類する                  | チバニーの世界モデルを学習する |
+
+
+
+[*ベイズの式自体は変わらない。  プラグインする対象が変わっただけ。*]{.yellow}
+
+[*これが「データからパラメータを学習する」への転換点 — 第3週、第4週、第7週の土台。*]{.dim}
+
+:::
 
 
 ::: {.notes}
