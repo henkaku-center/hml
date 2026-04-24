@@ -15,6 +15,18 @@
  * Choice persists via localStorage key `hml-slide-lang`.
  */
 
+/* Load Noto Sans JP as a web font so Japanese renders even on systems
+   without a CJK font installed (headless renderers, minimal Linux). */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+/* Apply Japanese-capable font fallback to .lang-ja content. Browser
+   chooses Noto Sans JP for CJK code points and falls through to the
+   theme font for ASCII. */
+.lang-ja,
+.lang-ja * {
+  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", Inter, sans-serif;
+}
+
 /* Hide the inactive language — works for block divs AND inline spans.
    `display: none` removes the element from layout entirely, so flex
    children, list items, and headings behave correctly regardless of

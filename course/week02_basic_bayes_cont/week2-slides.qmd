@@ -1,7 +1,7 @@
 ---
-title: "Week 2 — Levels of Analysis + Bayes Continued"
-subtitle: "Friday, April 24, 2026"
-author: "Prof. Joseph Austerweil"
+title: '<span class="lang-en">Week 2 — Levels of Analysis + Bayes Continued</span><span class="lang-ja">第2週 — 分析のレベル + ベイズ続き</span>'
+subtitle: '<span class="lang-en">Friday, April 24, 2026</span><span class="lang-ja">2026年4月24日（金）</span>'
+author: '<span class="lang-en">Prof. Joseph Austerweil</span><span class="lang-ja">オウステウェイル　ジョセフ教授</span>'
 title-slide-attributes:
   data-background-image: "../../sds-reveal/sds_frame.png"
   data-background-size: "cover"
@@ -16,7 +16,7 @@ format:
 Crisp start. Today's backbone is the second half: continuous probability, Gaussian, and the Gaussian-Gaussian update. Marr is a 7-min frame; Chibany meets us at the top.
 :::
 
-## Agenda {.agenda}
+## [Agenda]{.lang-en}[アジェンダ]{.lang-ja} {.agenda}
 
 - [[Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja}]{.highlight} [0:00]{.time}
 - [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
@@ -161,7 +161,7 @@ Chibany is the Chiba Tech mascot. Students offer them two bentos a day.
 Slide 2: 'Ambient background knowledge — last week the bentos were transparent, so Chibany has clean weights for each meal (~500g tonkatsu, ~350g hamburger), and the 70/30 prior comes from overheard students. We are NOT yet in an inference problem — this is just what Chibany knows walking in. The opaque-bento hidden-variable setup arrives in Block 6 when we need it for the Gaussian likelihood.'
 :::
 
-## Agenda {.agenda}
+## [Agenda]{.lang-en}[アジェンダ]{.lang-ja} {.agenda}
 
 - [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
 - [[Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja}]{.highlight} [0:08]{.time}
@@ -361,7 +361,7 @@ witness accurate 80%.  Most of you guessed ~80%.
 ~1 min. Fast — elicit the answer. Bridge: "humans systematically use a non-Bayesian L2 on this problem; that gap between L1 and L2 is behavioral economics."
 :::
 
-## Agenda {.agenda}
+## [Agenda]{.lang-en}[アジェンダ]{.lang-ja} {.agenda}
 
 - [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
 - [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
@@ -637,7 +637,7 @@ flowchart LR
 ~1 min. The reusable pattern. Every Bayesian inference we do today — and for the rest of the semester — is this same diagram, with different objects plugged into the boxes. Discrete or continuous H, discrete or continuous D, different shapes of P and f — the flow is invariant. Call this out explicitly.
 :::
 
-## Agenda {.agenda}
+## [Agenda]{.lang-en}[アジェンダ]{.lang-ja} {.agenda}
 
 - [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
 - [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
@@ -1307,7 +1307,7 @@ Independence   =  $P(A, B) = P(A) \cdot P(B)$    (equivalently, $P(A \mid B) = P
 ~1 min. The unifying idea is that we have a probability distribution over a possibility space Ω, and the three operations are: (a) sum out a variable, (b) restrict Ω to what we just learned, (c) check whether variables factor. Independence is a property of the joint; the other three are moves on it. Everything today — and Week 3, RL, PGMs — is operations on a possibility space. The "table" was just a visualization of the joint for a finite discrete Ω; when Ω is continuous, the same moves still apply (densities instead of cells).
 :::
 
-## Agenda {.agenda}
+## [Agenda]{.lang-en}[アジェンダ]{.lang-ja} {.agenda}
 
 - [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
 - [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
@@ -1742,7 +1742,7 @@ Mode at k=4 (0.360). In Week 3 this PMF becomes the LIKELIHOOD
 ~1 min. Real bar chart. Let it sit — students can see the shape. Flag the Week-3 connection: when we don\'t KNOW p, this PMF with an unknown p becomes a function of p, and Beta conjugates nicely with it.
 :::
 
-## Agenda {.agenda}
+## [Agenda]{.lang-en}[アジェンダ]{.lang-ja} {.agenda}
 
 - [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
 - [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
@@ -2455,7 +2455,7 @@ Slide 4: 'Divide each numerator by the evidence. Posterior 0.95/0.05. Punchline:
 Hard 5 minutes. Come back sharp — the Gaussian-Gaussian update is the highest-stakes block of the session. Double-check the tonk_hamb.png loaded correctly on the projector.
 :::
 
-## Agenda {.agenda}
+## [Agenda]{.lang-en}[アジェンダ]{.lang-ja} {.agenda}
 
 - [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
 - [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
@@ -3465,7 +3465,7 @@ Slide 3: 'Asymptotic behavior: as N grows, the prior term becomes negligible and
 ~2 min. One consolidated closing slide. The three-flavor comparison as a table (easier to parse than three stacked paragraphs). The conjugacy payoff + Week 3 preview fold in without a second slide. Students see the invariant (the flow) once more. Transition from here directly into Block 8 (paper presentations).
 :::
 
-## Agenda {.agenda}
+## [Agenda]{.lang-en}[アジェンダ]{.lang-ja} {.agenda}
 
 - [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
 - [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
@@ -3594,7 +3594,7 @@ Appropriate use of time                    0.5
 ~6 min. Walk through the tour so students can anchor their ranking. For each week say ONE sentence on what the paper does and why it's in this week. Then signups on the board; transcribe into readings_map.yml after class. Remind: there are 2–4 candidates per week, and the assigned presenter picks one.
 :::
 
-## Agenda {.agenda}
+## [Agenda]{.lang-en}[アジェンダ]{.lang-ja} {.agenda}
 
 - [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
 - [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
