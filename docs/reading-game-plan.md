@@ -32,17 +32,13 @@ This is your pocket guide for the semester. Three things happen every week, and 
 
 **How signup works:**
 
-1. By **Wed May 13, 2026** (Week 3), **DM Prof. Austerweil on Slack** with:
-   - the week you most want to present (Week 4–12)
-   - **your top-3 papers from that week's presentation candidates list**, ranked
-
-   No need to include a justification — just the week and your ranked top-3.
+1. By **Wed May 13, 2026** (Week 3), **DM Prof. Austerweil on Slack** with **your top-3 papers, ranked**. The three can come from any of Weeks 4–12 — they don't have to be from the same week. Pick papers you're genuinely curious about. No justification needed — just the ranked list.
 
 2. By **Fri May 15** (end of Week 3), final presentation assignments are published on the readings page. You'll have **4+ weeks** between your assignment and your presentation to read carefully and prepare.
 
-**If two students want the same week:** whoever DMs first gets priority; the other picks a different week from their next preference.
+**If two students' top choices overlap:** whoever DMs first gets priority; the other falls to their next preference.
 
-**If you want to present a paper not on the candidate list:** DM Prof. Austerweil your pitch. If it's on-theme for the week and has a plausible connection to the lecture, it's usually a yes.
+**If you want to present a paper not on any candidate list:** DM Prof. Austerweil your pitch. If it's on-theme for some week and has a plausible connection to that lecture, it's usually a yes.
 
 **Meeting before you present:** reach out on Slack to schedule a 1-on-1 meeting with Prof. Austerweil the week before your presentation. The meeting is highly recommended — papers have more in them than you can cover in 15 minutes, and we'll decide together which parts to focus on.
 
