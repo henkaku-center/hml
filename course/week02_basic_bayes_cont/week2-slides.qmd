@@ -71,7 +71,7 @@ Crisp start. Today's backbone is the second half: continuous probability, Gaussi
 State the two facts, move on. If a student asks for detail, say 'I'll get to that at 1:40 / 1:50.' ~1 min.
 :::
 
-## Meet Chibany
+## [Meet Chibany]{.lang-en}[チバニーを紹介します]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -659,13 +659,17 @@ flowchart LR
 
 ## Last week's sick-friend problem, in H/D notation
 
+::: {.lang-en}
 [Last week:   smoker friend, cough heard, three hypotheses.]{.dim}
 
-
-
 In the new notation:     H ∈ { cold, stomach virus, lung cancer },    D = cough.
+:::
 
+::: {.lang-ja}
+[先週の問題：   喫煙者の友人、咳が聞こえた、3つの仮説。]{.dim}
 
+新しい記法で：     H ∈ {風邪, 胃腸風邪, 肺がん}、    D = 咳。
+:::
 
 |                             | **cold** | **stomach virus** | **lung cancer** |
 |:----------------------------|:--------:|:-----------------:|:---------------:|
@@ -681,13 +685,17 @@ Slide 1: 'Re-cast in notation. Three disease hypotheses as columns. Four rows �
 
 ## Last week's sick-friend problem, in H/D notation (2/3)
 
+::: {.lang-en}
 [Last week:   smoker friend, cough heard, three hypotheses.]{.dim}
 
-
-
 In the new notation:     H ∈ { cold, stomach virus, lung cancer },    D = cough.
+:::
 
+::: {.lang-ja}
+[先週の問題：   喫煙者の友人、咳が聞こえた、3つの仮説。]{.dim}
 
+新しい記法で：     H ∈ {風邪, 胃腸風邪, 肺がん}、    D = 咳。
+:::
 
 |                             | **cold** | **stomach virus** | **lung cancer** |
 |:----------------------------|:--------:|:-----------------:|:---------------:|
@@ -697,8 +705,13 @@ In the new notation:     H ∈ { cold, stomach virus, lung cancer },    D = coug
 | Posterior  P(H ∣ D)         |    ?     |         ?         |        ?        |
 
 
-
+::: {.lang-en}
 [**Evidence  P(D) = 0.405 + 0.045 + 0.090 = 0.540**]{.accent}
+:::
+
+::: {.lang-ja}
+[**証拠  P(D) = 0.405 + 0.045 + 0.090 = 0.540**]{.accent}
+:::
 
 
 ::: {.notes}
@@ -707,13 +720,17 @@ Slide 2: 'Fill in prior, likelihood, and their product (numerator of Bayes). Evi
 
 ## Last week's sick-friend problem, in H/D notation (3/3)
 
+::: {.lang-en}
 [Last week:   smoker friend, cough heard, three hypotheses.]{.dim}
 
-
-
 In the new notation:     H ∈ { cold, stomach virus, lung cancer },    D = cough.
+:::
 
+::: {.lang-ja}
+[先週の問題：   喫煙者の友人、咳が聞こえた、3つの仮説。]{.dim}
 
+新しい記法で：     H ∈ {風邪, 胃腸風邪, 肺がん}、    D = 咳。
+:::
 
 |                             | **cold** | **stomach virus** | **lung cancer** |
 |:----------------------------|:--------:|:-----------------:|:---------------:|
@@ -723,14 +740,21 @@ In the new notation:     H ∈ { cold, stomach virus, lung cancer },    D = coug
 | [**Posterior  P(H ∣ D)**]{.accent} | [**0.75**]{.accent} | [**0.083**]{.accent} | [**0.167**]{.accent} |
 
 
-
+::: {.lang-en}
 [**Evidence  P(D) = 0.540**     →     posteriors  =  numerators / evidence.]{.dim}
-
-
 
 [Same answer as last week. Same rule. New layout.]{.yellow}
 
 [Everything we do today uses this SAME structure.]{.dim}
+:::
+
+::: {.lang-ja}
+[**証拠  P(D) = 0.540**     →     事後確率  =  分子 / 証拠。]{.dim}
+
+[先週と同じ答え。同じルール。レイアウトだけが新しい。]{.yellow}
+
+[今日扱う全ては、この同じ構造を使う。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -812,11 +836,17 @@ Slide 1: 'Four combinations of (lunch, dinner). We want the joint probability of
 
 ## The joint  P(A, B)  — build the 2×2 table (2/3)
 
+::: {.lang-en}
 Tanaka-san tells Chibany that students coordinate:  they try to bring
 
 at least one tonkatsu, but not two (to keep it special).
+:::
 
+::: {.lang-ja}
+田中さんから聞いた話：学生たちは互いに示し合わせて、
 
+少なくとも1つはとんかつを用意する  — ただし2つは揃えない（特別感を保つため）。
+:::
 
 |             | B = H | B = T |
 |-------------|:-----:|:-----:|
@@ -824,12 +854,21 @@ at least one tonkatsu, but not two (to keep it special).
 | **A = T**   | 0.43  | 0.10  |
 
 
-
+::: {.lang-en}
 [*HH is rare  (both offerings hamburger).*]{.dim}
 
 [*HT and TH are common  (exactly one tonkatsu).*]{.dim}
 
 [*TT is moderate  (students avoid giving two tonkatsu in a row).*]{.dim}
+:::
+
+::: {.lang-ja}
+[*HH は稀（両方ハンバーグ）。*]{.dim}
+
+[*HT と TH は多い（ちょうど1つがとんかつ）。*]{.dim}
+
+[*TT は中くらい（学生は2つともとんかつにするのを避ける）。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -838,11 +877,17 @@ Slide 2: 'The weighted joint from textbook Ch 4. HH 4%, HT 43%, TH 43%, TT 10%. 
 
 ## The joint  P(A, B)  — build the 2×2 table (3/3)
 
+::: {.lang-en}
 Tanaka-san tells Chibany that students coordinate:  they try to bring
 
 at least one tonkatsu, but not two (to keep it special).
+:::
 
+::: {.lang-ja}
+田中さんから聞いた話：学生たちは互いに示し合わせて、
 
+少なくとも1つはとんかつを用意する  — ただし2つは揃えない。
+:::
 
 |             | B = H | B = T |
 |-------------|:-----:|:-----:|
@@ -850,14 +895,21 @@ at least one tonkatsu, but not two (to keep it special).
 | **A = T**   | 0.43  | 0.10  |
 
 
-
+::: {.lang-en}
 [**Sanity check:   0.04 + 0.43 + 0.43 + 0.10  =  1.00  ✓**]{.green}
-
-
 
 [*Recognize the shape?  Week 1's 2-coin-flip grid had 4 cells too.*]{.dim}
 
 [*Different numbers, same structure.*]{.dim}
+:::
+
+::: {.lang-ja}
+[**確認：   0.04 + 0.43 + 0.43 + 0.10  =  1.00  ✓**]{.green}
+
+[*形に見覚えは？  第1週の2回コイン投げのマス目も4セルだった。*]{.dim}
+
+[*数値は違うが、構造は同じ。*]{.dim}
+:::
 
 
 ::: {.notes}
