@@ -204,12 +204,12 @@ Broken out by block. Each "step" is a slide; titles repeat across a build-up.
 - Title slide (1)
 - Block 1: agenda (1), section-break (1), "two changes" (1) — 3 slides
 - Block 2: agenda (1), section-break (1), L1 (1), L2 (1), L3 (1), check-in (1) — 6 slides
-- Block 3: agenda (1), section-break (1), notation build-up (3) — 5 slides
+- Block 3: agenda (1), section-break (1), notation build-up (3), **poll: posterior definition (prompt + reveal)** — 7 slides
 - Block 4: agenda (1), section-break (1), setup (1), joint build-up (4), marginal build-up (3), conditional build-up (3), close (1) — 14 slides
 - Block 5: agenda (1), section-break (1), E[X] build-up (4), Bernoulli build-up (3), Binomial build-up (4) — 13 slides
-- Block 6: agenda (1), section-break (1), PMF→PDF build-up (4), Gaussian-formula build-up (5), continuous-Bayes build-up (6) — 17 slides
+- Block 6: agenda (1), section-break (1), PMF notation checkpoint (1), PMF→PDF build-up (4, **poll: Derek's density prompt folded before 4/4**), Gaussian-formula build-up (5), continuous-Bayes build-up (6) — 18 slides
 - Break (1)
-- Block 7: agenda (1), section-break (1), setup (2), prior (3), likelihood (3), posterior build-up (7), close (2) — 19 slides
+- Block 7: agenda (1), section-break (1), setup (2), prior (3), likelihood (3), **poll: Jamal's posterior (prompt)**, posterior build-up (7), close (2) — 20 slides
 - Block 8: agenda (1), section-break (1), why (1), rubric (1), signup grid (1) — 5 slides
 - Block 9: agenda (1), section-break (1), syllabus changes (1), Week 3 homework (1), preview (1) — 5 slides
 
@@ -225,3 +225,4 @@ Rough total: ~90 slides. At 2 hours = 120 min this is ~80 seconds per slide on a
 - **Block 7 is the priority**: DO NOT cut this. If something else runs long, cut Block 8 down to 5 min (assign signups by email after class) rather than cutting Block 7.
 - **A student is stuck on a definition from Week 1** (marginalization, conditional): point them at T1 Ch 4–5 for self-study; don't rewind the class. Offer 1:1 in office hours.
 - **Time is short at 1:35**: skip the Block 9 "preview Week 3 and beyond" — the three syllabus changes + Week 3 readings are the priority.
+- **Running over at any block boundary**: the three student polls (posterior / Derek's density / Jamal's posterior) can be shortened by skipping the dedicated reveal slide and just announcing the answer aloud. Each poll is a prompt + reveal pair; combining them saves ~45 sec per poll.

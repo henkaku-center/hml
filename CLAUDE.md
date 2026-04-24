@@ -45,7 +45,17 @@ These show up repeatedly in PLAN TODOs and drive most new work:
 ## Common operations
 
 - **Find SP25 source for a week**: each PLAN.md names the original slide files (e.g. `Week00_BasicBayes.pptx`) and wiki pages. They're already copied into `course/weekNN_…/slides/` and `wiki_pages/`; the originals live in `archive/canvas_export_sp25/web_resources/`.
-- **Find a quiz**: `course/quizzes/README.md` maps week → quiz name. The actual Canvas QTI XML is under `archive/canvas_export_sp25/` as `g<hash>.xml` files — identify by opening and reading the title, not by filename.
+- **Find a quiz**: `course/quizzes/README.md` maps week → quiz name. The actual Canvas QTI XML lives under `archive/canvas_export_sp25/g<hash>/assessment_qti.xml`, with its title in `assessment_meta.xml` — identify by reading the title, not by filename. Every directory `g<hash>/` that has both files is a quiz; the bare-XML `g<hash>.xml` files are Canvas topic/announcement pages, not quizzes.
+
+## Standing rule for lecture authoring
+
+When building or revising any weekly lecture, **mine the SP25 quiz bank for audience-poll / check-in prompts** before declaring the week ready. Concretely:
+1. Look up the week's quiz in `course/quizzes/README.md`. Adjacent weeks' quizzes are also fair game if topically overlapping (e.g. Week 2 lecture pulls from the Week 2–4 quizzes: Intro Probability 1, Intro to Prob Theory 2, Gaussian and Binomial Bayes).
+2. Read the assessment_qti.xml and identify questions that (a) fit as a fast live poll (≤ 4 options, commit-before-reveal), (b) test concepts already covered by that point in the lecture, (c) don't require written prose.
+3. Integrate 2–4 polls per week as paired slides: `prompt` (question + options) → `reveal` (answer + 1-line justification), landed at natural block boundaries. Each pair should cost ≤ 1.5 min.
+4. Record which SP25 quiz item sourced each poll in the speaker notes, so reusing or retiring it is traceable.
+
+Rationale: the SP25 quizzes are already-authored, already-pedagogy-tested concept checks on the exact same material. Recreating poll prompts from scratch is wasted effort, and the archived quizzes surface student misconceptions the SP25 cohort actually hit.
 - **Landing page**: `docs/index.html` is a single-file static site served by GitHub Pages. Assets in `docs/assets/` (Chiba Tech SDS logos) were fetched via pre-approved `curl` commands in `.claude/settings.local.json`.
 - **Readings:** `course/readings_map.yml` is the source of truth for weekly readings and paper-presentation assignments. Weeks 1 and 2 are populated; Weeks 3–12 are stubs to fill in during the readings-modernization planning session.
 

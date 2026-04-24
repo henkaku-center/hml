@@ -24,7 +24,7 @@
 - [ ] **Trim Block 5 redundancy:** collapse EV build-up from 4 → 2 slides and Bernoulli from 3 → 1 slide (students have seen E[X] in T1 Ch 6). Frees ~5 min.
 - [ ] **Trim Block 6 redundancy:** cut the 6-slide "Bayes with continuous likelihoods" sub-block to a 2-slide mini-demo; let Block 7's single-variable Gaussian-Gaussian be the payoff. Frees ~5 min.
 - [ ] Add one "What's changing" contrast slide before Block 7 (three-row table: prior = number / number / distribution over parameter) to make the conceptual leap explicit.
-- [ ] Add one audience-poll prompt per major block ("before I compute: higher or lower?") so students commit before each reveal.
+- [x] Add one audience-poll prompt per major block ("before I compute: higher or lower?") so students commit before each reveal. *(done 2026-04-24; three polls added — posterior definition after Notation lock-in, Derek's density before PMF→PDF 4/4, Jamal's conjugacy before the Gaussian × Gaussian derivation. All sourced from SP25 quiz bank per the new CLAUDE.md standing rule.)*
 - [ ] Reposition the "Two changes since Week 1" slide to the end, under admin — keep the cold open on Chibany.
 - [ ] Acknowledge A/B vs. H/D notation shift on the Block 4 setup slide (one dim line suffices).
 - [ ] After Week 2 class: transcribe paper-presentation signups into `course/readings_map.yml` `presenter:` fields

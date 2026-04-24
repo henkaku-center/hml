@@ -291,7 +291,45 @@ $$P(H = h \mid D = d) \;=\; \frac{P(D = d \mid H = h) \; P(H = h)}{P(D = d)}$$
 
 
 ::: {.notes}
-Slide 3: 'Name the four pieces. You\'ll see these names the rest of the semester. Next slide: one diagram you\'ll see three times today — the Bayes flow.'
+Slide 3: 'Name the four pieces. You\'ll see these names the rest of the semester. Next slide: quick poll to check the names landed, then the Bayes flow diagram.'
+:::
+
+## Quick poll — the posterior is…
+
+[**What is the posterior probability of an event?**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;A) the probability of the event
+
+&nbsp;&nbsp;&nbsp;B) the probability of the event **given observations**
+
+&nbsp;&nbsp;&nbsp;C) the probability of the observations given the event
+
+&nbsp;&nbsp;&nbsp;D) the prior, after being multiplied by the likelihood
+
+[*Hands up when you've picked one. 15 seconds.*]{.dim}
+
+
+::: {.notes}
+Fast poll — sourced from SP25 "Intro Probability Theory 1" (item `Posterior`). Answer: B. Common wrong picks: D (reasonable but it\'s the unnormalized numerator, not the posterior) and C (that\'s the likelihood). Don\'t reveal yet — make them commit before the next slide.
+:::
+
+## Quick poll — reveal
+
+[**B)   the probability of the event given observations.**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;$P(H \mid D)$     — hypothesis, conditioned on what we saw.
+
+
+
+[*(D) — prior × likelihood — is the numerator, not the posterior.*]{.dim}
+
+[*The division by evidence $P(D)$ is what turns the numerator into a valid probability.*]{.dim}
+
+[*(C) is the likelihood, not the posterior.*]{.dim}
+
+
+::: {.notes}
+Reveal. B. The other three options each correspond to a different piece of Bayes\' rule — and students who picked (D) already understand that the posterior is proportional to prior × likelihood, they just haven\'t internalized that normalization is the step that makes it a probability. Good bridge into the next slide (the Bayes flow diagram), which makes the "normalize by P(D)" step visual.
 :::
 
 ## The Bayes flow — one diagram, three times today
@@ -1138,6 +1176,29 @@ Slide 2: 'Bin at 30g. Legit PMF over bins — finite number of bars, heights sum
 Slide 3: 'Same 5000 samples, bin width down to 10g. The envelope of the bars is getting smoother. The y-axis stays in the same units (probability per gram) — only the bars are changing.'
 :::
 
+## Quick poll — Derek's density
+
+[*Derek is implementing a model with a continuous variable.*]{.dim}
+
+[*While debugging, he notices  $f(x)$  sometimes returns a value > 1.*]{.dim}
+
+[**Should Derek be concerned?**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;A) Yes — probabilities cannot be greater than 1.
+
+&nbsp;&nbsp;&nbsp;B) Maybe — it's OK as long as $f$ still integrates to 1.
+
+&nbsp;&nbsp;&nbsp;C) No — density values are always OK to be > 1.
+
+&nbsp;&nbsp;&nbsp;D) No — it's only a problem if $f$ is negative.
+
+[*Commit before the reveal. 15 seconds.*]{.dim}
+
+
+::: {.notes}
+Sourced from SP25 "Continuous Prob and Gaussians" (and "Prob Theory Quiz 2") — item `ContinuousDensityGT1`. Answer: B. This is the single biggest density-vs-probability confusion — the poll forces them to commit before we collapse it to the punchline on the next slide.
+:::
+
 ## From PMF to PDF — going continuous (4/4)
 
 [**Shrink to 2g bins — in the limit, bars become a smooth PDF.**]{.accent}
@@ -1146,11 +1207,13 @@ Slide 3: 'Same 5000 samples, bin width down to 10g. The envelope of the bars is 
 
 $$P(X \in [a, b]) \;=\; \int_a^b f(x)\, dx \qquad \text{``area under the density''}$$
 
+[**Derek's question:  B — density can exceed 1, as long as it integrates to 1.**]{.green}
+
 [*bin width → 0: PMF becomes PDF. The blue curve is the PDF; the bars approach it.*]{.dim}
 
 
 ::: {.notes}
-Slide 4: 'Bin width 2g. In the limit, the bars ARE the PDF (up to integration). Blue curve overlaid is the underlying Gaussian — the same one the data were drawn from. The integral formula is how we RECOVER probabilities from the density: probability is AREA, density is height.
+Slide 4 + Derek-poll reveal: 'Bin width 2g. In the limit, the bars ARE the PDF. Poll answer B: a density is probability PER UNIT — if the unit (bin width) shrinks, heights rise to compensate, and can easily exceed 1. The N(500, 30²) plotted here peaks around 0.013 per gram, but N(0, 0.01) peaks around 40. Area (integral) is what must sum to 1, not height.
 \
 Why P(X = exactly 450) = 0 for continuous X: integrate a density over a single point, you get 0. But P(X in [449.5, 450.5]) ≈ f(450) × 1 — density times interval width.'
 :::
@@ -1741,7 +1804,32 @@ flowchart LR
 ~45 sec. Third appearance of the diagram. Now BOTH the prior and the likelihood are Gaussian densities. The moves are unchanged. The new fact we\'re about to prove: multiplying two Gaussian densities gives a third Gaussian density (up to normalizer). So the posterior lives in the same family as the prior — conjugacy. That\'s the result; the derivation is next.
 :::
 
+## Quick poll — Jamal's posterior
+
+[*Deriving a posterior in μ, Jamal notices the μ-dependent terms*]{.dim}
+
+[*in his numerator have the same functional form as a known distribution.*]{.dim}
+
+[*He drops the constant (in μ) terms and writes down that distribution as his posterior.*]{.dim}
+
+[**Is that OK?**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;A) No — he dropped terms that need to be in the posterior.
+
+&nbsp;&nbsp;&nbsp;B) Only if he multiplies his answer by the terms he dropped.
+
+&nbsp;&nbsp;&nbsp;C) **Yes** — the dropped terms are part of the normalization constant.
+
+&nbsp;&nbsp;&nbsp;D) Yes — you can always drop any terms you want.
+
+
+::: {.notes}
+Sourced from SP25 "Gaussian and Binomial Bayes" (item about Jamal dropping terms). Answer: C. This IS the trick that makes the next 4-slide Gaussian × Gaussian derivation work — we drop anything constant in μ because it\'s absorbed into the 1/P(D) normalizer, match the functional form, and read off the posterior. The poll primes them to expect that move.
+:::
+
 ## Why Gaussian × Gaussian = Gaussian  (derivation sketch)
+
+[**Poll answer: C — dropped terms are absorbed into the normalization constant.**]{.green}
 
 Multiply the two densities (drop the normalizers — collect at end):
 
@@ -1749,9 +1837,11 @@ Multiply the two densities (drop the normalizers — collect at end):
 
 $$P(\mu \mid D) \;\propto\; \exp\!\left(-\frac{(\mu - \mu_0)^2}{2\sigma_0^2}\right) \cdot \exp\!\left(-\frac{(D - \mu)^2}{2\sigma^2}\right)$$
 
+[*The $\propto$ is exactly Jamal's move:  anything constant in $\mu$ is absorbed into the evidence $P(D)$ at the end.*]{.dim}
+
 
 ::: {.notes}
-Slide 1: 'Multiply the two Gaussian densities. Normalizers are constants in μ — we absorb them into the final normalization later.'
+Slide 1 + poll reveal: 'C is right — dropped terms (the 1/√(2πσ²) normalizers of both Gaussians, plus the denominator P(D)) are all constant in μ. We write ∝ instead of = to track that we\'ll renormalize at the end. Now watch the derivation — every line is this move, applied iteratively until we hit a recognizable Gaussian shape in μ.'
 :::
 
 ## Why Gaussian × Gaussian = Gaussian  (derivation sketch) (2/4)
