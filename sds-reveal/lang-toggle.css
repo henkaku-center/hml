@@ -15,6 +15,10 @@
  * Choice persists via localStorage key `hml-slide-lang`.
  */
 
+/* Hide the inactive language — works for block divs AND inline spans.
+   `display: none` removes the element from layout entirely, so flex
+   children, list items, and headings behave correctly regardless of
+   whether the wrapper is a <div> or <span>. */
 .lang-ja {
   display: none;
 }
@@ -23,8 +27,11 @@ body.show-ja .lang-en {
   display: none;
 }
 
+/* Restore the DEFAULT display type when JA is active — this lets spans
+   stay inline and divs stay block, so flex layouts (e.g. the agenda
+   list items) aren't broken by our toggle. */
 body.show-ja .lang-ja {
-  display: block;
+  display: revert;
 }
 
 /* Floating language badge — bottom-right corner, muted */

@@ -18,25 +18,25 @@ Crisp start. Today's backbone is the second half: continuous probability, Gaussi
 
 ## Agenda {.agenda}
 
-- [Welcome + meet Chibany]{.highlight} [0:00]{.time}
-- Marr's three levels [0:08]{.time}
-- Notation lock-in [0:15]{.time}
-- Joint, marginal, conditional, independence [0:18]{.time}
-- Expected value + discrete [0:30]{.time}
-- Continuous prob + Gaussian [0:45]{.time}
-- Break [1:05]{.time}
-- Gaussian-Gaussian update [1:10]{.time}
-- Paper presentations [1:35]{.time}
-- Admin + Week 3 [1:45]{.time}
+- [[Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja}]{.highlight} [0:00]{.time}
+- [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
+- [Notation lock-in]{.lang-en}[記法の確認]{.lang-ja} [0:15]{.time}
+- [Joint, marginal, conditional, independence]{.lang-en}[同時・周辺・条件付き・独立]{.lang-ja} [0:18]{.time}
+- [Expected value + discrete]{.lang-en}[期待値 + 離散分布]{.lang-ja} [0:30]{.time}
+- [Continuous prob + Gaussian]{.lang-en}[連続確率 + ガウス分布]{.lang-ja} [0:45]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja} [1:05]{.time}
+- [Gaussian-Gaussian update]{.lang-en}[ガウス-ガウス更新]{.lang-ja} [1:10]{.time}
+- [Paper presentations]{.lang-en}[論文発表]{.lang-ja} [1:35]{.time}
+- [Admin + Week 3]{.lang-en}[事務連絡 + 第3週]{.lang-ja} [1:45]{.time}
 
-## Welcome back + meet Chibany {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Welcome back + meet Chibany]{.lang-en}[おかえりなさい + チバニー紹介]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 
 ::: {.notes}
 ~8 min. First 3 min: syllabus updates + Week 1 pulse. Next 5 min: introduce Chibany and the bento scenario properly, so the rest of the session has a narrative it can actually lean on.
 :::
 
-## Two changes since Week 1
+## [Two changes since Week 1]{.lang-en}[第1週からの2つの変更点]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -110,7 +110,7 @@ Students bring them two bentos a day — lunch and dinner — as offerings.
 Slide 1: 'Before we do math, meet Chibany — the Chiba Tech mascot, our worked example all semester. They hang out at the cafeteria; students offer bentos in the hope Chibany favors them on upcoming tests. Two bentos a day, from two different students — one at lunch, one at dinner. Crucially: Chibany LOVES tonkatsu, which is why meal identity matters. Also the protagonist of the textbook, so T3 Ch 1 tonight tops this up.'
 :::
 
-## Meet Chibany (2/2)
+## [Meet Chibany (2/2)]{.lang-en}[チバニーを紹介します (2/2)]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -163,25 +163,25 @@ Slide 2: 'Ambient background knowledge — last week the bentos were transparent
 
 ## Agenda {.agenda}
 
-- Welcome + meet Chibany [0:00]{.time}
-- [Marr's three levels]{.highlight} [0:08]{.time}
-- Notation lock-in [0:15]{.time}
-- Joint, marginal, conditional, independence [0:18]{.time}
-- Expected value + discrete [0:30]{.time}
-- Continuous prob + Gaussian [0:45]{.time}
-- Break [1:05]{.time}
-- Gaussian-Gaussian update [1:10]{.time}
-- Paper presentations [1:35]{.time}
-- Admin + Week 3 [1:45]{.time}
+- [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
+- [[Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja}]{.highlight} [0:08]{.time}
+- [Notation lock-in]{.lang-en}[記法の確認]{.lang-ja} [0:15]{.time}
+- [Joint, marginal, conditional, independence]{.lang-en}[同時・周辺・条件付き・独立]{.lang-ja} [0:18]{.time}
+- [Expected value + discrete]{.lang-en}[期待値 + 離散分布]{.lang-ja} [0:30]{.time}
+- [Continuous prob + Gaussian]{.lang-en}[連続確率 + ガウス分布]{.lang-ja} [0:45]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja} [1:05]{.time}
+- [Gaussian-Gaussian update]{.lang-en}[ガウス-ガウス更新]{.lang-ja} [1:10]{.time}
+- [Paper presentations]{.lang-en}[論文発表]{.lang-ja} [1:35]{.time}
+- [Admin + Week 3]{.lang-en}[事務連絡 + 第3週]{.lang-ja} [1:45]{.time}
 
-## Marr's three levels — frame for the whole course {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Marr's three levels — frame for the whole course]{.lang-en}[Marr の3つのレベル — コース全体の枠組み]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 
 ::: {.notes}
 7 min hard cap. Trimmed from the earlier draft to free time for Gaussian visualization. 3 slides (one per level) + check-in. Do NOT let this expand.
 :::
 
-## Marr L1 — what problem is being solved?
+## [Marr L1 — what problem is being solved?]{.lang-en}[Marr L1 — どんな問題を解いているのか？]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -220,7 +220,7 @@ Slide 2: 'Ambient background knowledge — last week the bentos were transparent
 ~2 min. Bayes is the normative answer for 'combine prior + evidence.' Counterfactual: if the goal were 'minimize reaction time,' L1 differs. Choosing L1 IS a modeling move.
 :::
 
-## Marr L2 — what algorithm?
+## [Marr L2 — what algorithm?]{.lang-en}[Marr L2 — どんなアルゴリズム？]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -263,7 +263,7 @@ Slide 2: 'Ambient background knowledge — last week the bentos were transparent
 ~2 min. The bad-algorithm point is important: "always guess tonkatsu" is 70% accurate because of the prior — it's still a well-defined L2, just one that ignores the observation.
 :::
 
-## Marr L3 — what implementation?
+## [Marr L3 — what implementation?]{.lang-en}[Marr L3 — どんな実装？]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -318,7 +318,7 @@ Our simulation:  JAX arrays, floating-point math, Colab.
 ~2 min. FAST. Land the independence point. Nuance on the NN-as-L3 question: it's genuinely controversial, not a rejected position. The consensus is that exact backprop + standard transformer attention aren't implemented in cortex, but a live research program (Lillicrap et al 2020 Nat Rev Neurosci "Backprop and the brain"; NeuroAI manifesto Zador et al 2023 Nat Commun; Whittington & Bogacz 2017 predictive-coding approximation) argues biologically plausible approximations may realize backprop-like credit assignment. Skeptical counter: Bowers et al 2023 BBS "Deep problems with NN models of human vision." Transformer attention specifically has one L3-ish proposal — Whittington, Warren & Behrens 2022 ICLR — but that is hippocampal, not neocortical. Bottom line for students: a deep NN that fits behavior or neural responses is usually read as an L1/L2 candidate or an engineering tool; whether any part of it maps to L3 is an open question, not a closed one. Week 11 picks up the substrate-and-limits thread.
 :::
 
-## Check-in — the cab problem
+## [Check-in — the cab problem]{.lang-en}[確認 — タクシー問題]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -363,25 +363,25 @@ witness accurate 80%.  Most of you guessed ~80%.
 
 ## Agenda {.agenda}
 
-- Welcome + meet Chibany [0:00]{.time}
-- Marr's three levels [0:08]{.time}
-- [Notation lock-in]{.highlight} [0:15]{.time}
-- Joint, marginal, conditional, independence [0:18]{.time}
-- Expected value + discrete [0:30]{.time}
-- Continuous prob + Gaussian [0:45]{.time}
-- Break [1:05]{.time}
-- Gaussian-Gaussian update [1:10]{.time}
-- Paper presentations [1:35]{.time}
-- Admin + Week 3 [1:45]{.time}
+- [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
+- [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
+- [[Notation lock-in]{.lang-en}[記法の確認]{.lang-ja}]{.highlight} [0:15]{.time}
+- [Joint, marginal, conditional, independence]{.lang-en}[同時・周辺・条件付き・独立]{.lang-ja} [0:18]{.time}
+- [Expected value + discrete]{.lang-en}[期待値 + 離散分布]{.lang-ja} [0:30]{.time}
+- [Continuous prob + Gaussian]{.lang-en}[連続確率 + ガウス分布]{.lang-ja} [0:45]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja} [1:05]{.time}
+- [Gaussian-Gaussian update]{.lang-en}[ガウス-ガウス更新]{.lang-ja} [1:10]{.time}
+- [Paper presentations]{.lang-en}[論文発表]{.lang-ja} [1:35]{.time}
+- [Admin + Week 3]{.lang-en}[事務連絡 + 第3週]{.lang-ja} [1:45]{.time}
 
-## Notation lock-in {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Notation lock-in]{.lang-en}[記法の確認]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 
 ::: {.notes}
 3 min. Quick. No theatrical apology.
 :::
 
-## Notation — one rule, starting today
+## [Notation — one rule, starting today]{.lang-en}[記法 — 今日から1つのルール]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -420,7 +420,7 @@ witness accurate 80%.  Most of you guessed ~80%.
 Slide 1: 'H = hypothesis, D = data. For Chibany, H is the meal — what we want to know. D is whatever we observe today; later that\'ll be the bento\'s weight, but for the next block it\'ll just be the other meal.'
 :::
 
-## Notation — one rule, starting today (2/3)
+## [Notation — one rule, starting today (2/3)]{.lang-en}[記法 — 今日から1つのルール (2/3)]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -463,7 +463,7 @@ $$P(H = h \mid D = d) \;=\; \frac{P(D = d \mid H = h) \; P(H = h)}{P(D = d)}$$
 Slide 2: 'The formula you saw last week. Same one.'
 :::
 
-## Notation — one rule, starting today (3/3)
+## [Notation — one rule, starting today (3/3)]{.lang-en}[記法 — 今日から1つのルール (3/3)]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -516,7 +516,7 @@ $$P(H = h \mid D = d) \;=\; \frac{P(D = d \mid H = h) \; P(H = h)}{P(D = d)}$$
 Slide 3: 'Name the four pieces. You\'ll see these names the rest of the semester. Next slide: quick poll to check the names landed, then the Bayes flow diagram.'
 :::
 
-## Quick poll — the posterior is…
+## [Quick poll — the posterior is…]{.lang-en}[クイック投票 — 事後確率とは…]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -555,7 +555,7 @@ Slide 3: 'Name the four pieces. You\'ll see these names the rest of the semester
 Fast poll. Answer: B. Common wrong picks: D (reasonable but it\'s the unnormalized numerator, not the posterior) and C (that\'s the likelihood). Don\'t reveal yet — make them commit before the next slide.
 :::
 
-## Quick poll — reveal
+## [Quick poll — reveal]{.lang-en}[クイック投票 — 答え合わせ]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -594,7 +594,7 @@ Fast poll. Answer: B. Common wrong picks: D (reasonable but it\'s the unnormaliz
 Reveal. B. The other three options each correspond to a different piece of Bayes\' rule — and students who picked (D) already understand that the posterior is proportional to prior × likelihood, they just haven\'t internalized that normalization is the step that makes it a probability. Good bridge into the next slide (the Bayes flow diagram), which makes the "normalize by P(D)" step visual.
 :::
 
-## The Bayes flow — one diagram, three times today
+## [The Bayes flow — one diagram, three times today]{.lang-en}[ベイズの流れ — 1つの図を今日3回]{.lang-ja}
 
 $$P(H \mid D) \;=\; \frac{P(H)\,P(D \mid H)}{P(D)}$$
 
@@ -639,25 +639,25 @@ flowchart LR
 
 ## Agenda {.agenda}
 
-- Welcome + meet Chibany [0:00]{.time}
-- Marr's three levels [0:08]{.time}
-- Notation lock-in [0:15]{.time}
-- [Joint, marginal, conditional, independence]{.highlight} [0:18]{.time}
-- Expected value + discrete [0:30]{.time}
-- Continuous prob + Gaussian [0:45]{.time}
-- Break [1:05]{.time}
-- Gaussian-Gaussian update [1:10]{.time}
-- Paper presentations [1:35]{.time}
-- Admin + Week 3 [1:45]{.time}
+- [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
+- [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
+- [Notation lock-in]{.lang-en}[記法の確認]{.lang-ja} [0:15]{.time}
+- [[Joint, marginal, conditional, independence]{.lang-en}[同時・周辺・条件付き・独立]{.lang-ja}]{.highlight} [0:18]{.time}
+- [Expected value + discrete]{.lang-en}[期待値 + 離散分布]{.lang-ja} [0:30]{.time}
+- [Continuous prob + Gaussian]{.lang-en}[連続確率 + ガウス分布]{.lang-ja} [0:45]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja} [1:05]{.time}
+- [Gaussian-Gaussian update]{.lang-en}[ガウス-ガウス更新]{.lang-ja} [1:10]{.time}
+- [Paper presentations]{.lang-en}[論文発表]{.lang-ja} [1:35]{.time}
+- [Admin + Week 3]{.lang-en}[事務連絡 + 第3週]{.lang-ja} [1:45]{.time}
 
-## Joint, marginalization, conditional, independence {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Joint, marginalization, conditional, independence]{.lang-en}[同時・周辺化・条件付き・独立]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 
 ::: {.notes}
 ~14 min. Build the joint for Chibany\'s two meals, then run the four moves: joint → marginal → conditional → independence check. Same Ω = {HH, HT, TH, TT} from Week 1, now with real weighted probabilities. Still fully discrete — weight appears in Block 6.
 :::
 
-## Last week's sick-friend problem, in H/D notation
+## [Last week's sick-friend problem, in H/D notation]{.lang-en}[先週の病気の友人問題を H/D 記法で]{.lang-ja}
 
 ::: {.lang-en}
 [Last week:   smoker friend, cough heard, three hypotheses.]{.dim}
@@ -683,7 +683,7 @@ In the new notation:     H ∈ { cold, stomach virus, lung cancer },    D = coug
 Slide 1: 'Re-cast in notation. Three disease hypotheses as columns. Four rows — prior, likelihood, numerator, posterior — fill in one row at a time on the next slides. Same problem, new layout.'
 :::
 
-## Last week's sick-friend problem, in H/D notation (2/3)
+## [Last week's sick-friend problem, in H/D notation (2/3)]{.lang-en}[先週の病気の友人問題を H/D 記法で (2/3)]{.lang-ja}
 
 ::: {.lang-en}
 [Last week:   smoker friend, cough heard, three hypotheses.]{.dim}
@@ -718,7 +718,7 @@ In the new notation:     H ∈ { cold, stomach virus, lung cancer },    D = coug
 Slide 2: 'Fill in prior, likelihood, and their product (numerator of Bayes). Evidence is the sum of numerators. Numerators don\'t sum to 1 yet — that\'s what dividing by the evidence fixes. Note: even though smoking-related lung cancer has same likelihood as cold (0.90), cold dominates because its prior is 4.5× higher.'
 :::
 
-## Last week's sick-friend problem, in H/D notation (3/3)
+## [Last week's sick-friend problem, in H/D notation (3/3)]{.lang-en}[先週の病気の友人問題を H/D 記法で (3/3)]{.lang-ja}
 
 ::: {.lang-en}
 [Last week:   smoker friend, cough heard, three hypotheses.]{.dim}
@@ -761,7 +761,7 @@ In the new notation:     H ∈ { cold, stomach virus, lung cancer },    D = coug
 Slide 3: 'Divide every numerator by the evidence (0.540) to get the posterior row. Cold wins despite smoking — 0.75 posterior. Priors matter, likelihoods matter, neither alone is enough. Now today: same structure, but with Chibany.'
 :::
 
-## Setup — two meals, two variables
+## [Setup — two meals, two variables]{.lang-en}[設定 — 2つの食事、2つの変数]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -804,7 +804,7 @@ Today Chibany gets two bentos: one for lunch, one for dinner.
 ~1 min. We deliberately stay DISCRETE. Two meals, each in {H, T}. Same Ω as Week 1's grid. Weight doesn't appear until Block 6 — today we're building the operations (joint, marginal, conditional) and the independence/dependence concept on ground students already understand.
 :::
 
-## The joint  P(A, B)  — build the 2×2 table
+## [The joint  P(A, B)  — build the 2×2 table]{.lang-en}[同時分布  P(A, B)  — 2×2の表を作る]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -834,7 +834,7 @@ at least one tonkatsu, but not two (to keep it special).
 Slide 1: 'Four combinations of (lunch, dinner). We want the joint probability of each. The narrative: students coordinate — this is the grid from textbook T3 Ch 4, the weighted-possibilities example.'
 :::
 
-## The joint  P(A, B)  — build the 2×2 table (2/3)
+## [The joint  P(A, B)  — build the 2×2 table (2/3)]{.lang-en}[同時分布  P(A, B)  — 2×2の表を作る (2/3)]{.lang-ja}
 
 ::: {.lang-en}
 Tanaka-san tells Chibany that students coordinate:  they try to bring
@@ -875,7 +875,7 @@ at least one tonkatsu, but not two (to keep it special).
 Slide 2: 'The weighted joint from textbook Ch 4. HH 4%, HT 43%, TH 43%, TT 10%. Students coordinate to give at least one T, but not two. NOT derived from P(A) times P(B|A) — we\'re given the whole joint from the start, because it isn\'t a product of a prior and a likelihood. This is KEY for the next move: independence.'
 :::
 
-## The joint  P(A, B)  — build the 2×2 table (3/3)
+## [The joint  P(A, B)  — build the 2×2 table (3/3)]{.lang-en}[同時分布  P(A, B)  — 2×2の表を作る (3/3)]{.lang-ja}
 
 ::: {.lang-en}
 Tanaka-san tells Chibany that students coordinate:  they try to bring
@@ -916,7 +916,7 @@ at least one tonkatsu, but not two (to keep it special).
 Slide 3: 'Sanity check sums to 1. Analogy to last week\'s {HH, HT, TH, TT} — same Ω, now with real probabilities attached. Transition: now we have a joint — what can we DO with it?'
 :::
 
-## Marginalization — sum over what you don't care about
+## [Marginalization — sum over what you don't care about]{.lang-en}[周辺化 — 興味のない変数を足し上げる]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -947,7 +947,7 @@ Sum the joint over B:
 Slide 1: 'What\'s P(A = T) unconditionally? Chibany gets tonkatsu for lunch either paired with a hamburger dinner OR with a tonkatsu dinner. Sum across B.'
 :::
 
-## Marginalization — sum over what you don't care about (2/3)
+## [Marginalization — sum over what you don't care about (2/3)]{.lang-en}[周辺化 — 興味のない変数を足し上げる (2/3)]{.lang-ja}
 
 ::: {.lang-en}
 **P(A = T)  =  ?**
@@ -982,7 +982,7 @@ Sum the joint over B:
 Slide 2: 'And P(A = H). Check the marginal sums to 1.'
 :::
 
-## Marginalization — sum over what you don't care about (3/3)
+## [Marginalization — sum over what you don't care about (3/3)]{.lang-en}[周辺化 — 興味のない変数を足し上げる (3/3)]{.lang-ja}
 
 ::: {.lang-en}
 **P(A = T)  =  ?**
@@ -1049,7 +1049,7 @@ For continuous B the sum becomes an integral, same logic — shows up after the 
 Next move: conditional — then we use marginal + conditional together to define INDEPENDENCE.'
 :::
 
-## Conditional — restrict the possibility space
+## [Conditional — restrict the possibility space]{.lang-en}[条件付き分布 — 可能性の空間を制限する]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -1088,7 +1088,7 @@ Next move: conditional — then we use marginal + conditional together to define
 Slide 1: 'The outcome space was Ω = {HH, HT, TH, TT}. When Chibany learns the dinner was tonkatsu (B=T), two outcomes become impossible — the ones where B=H. So the NEW outcome space is {HT, TT}. Conditioning is NOT a trick about tables — it\'s a change in what\'s possible. Everything else follows from that.'
 :::
 
-## Conditional — restrict the possibility space (2/3)
+## [Conditional — restrict the possibility space (2/3)]{.lang-en}[条件付き分布 — 可能性の空間を制限する (2/3)]{.lang-ja}
 
 ::: {.lang-en}
 [Chibany learns:   today's DINNER was tonkatsu  (B = T).]{.yellow}
@@ -1127,7 +1127,7 @@ Step 2:   the weights inside $\Omega'$ no longer sum to 1.  Rescale by $P(B = T)
 Slide 2: 'Two steps. ONE: the new possibility space Ω\' contains only outcomes consistent with what we learned. Its weights — 0.43 and 0.10 — are inherited from the original joint but they now total 0.53, not 1. TWO: rescale so it IS a probability distribution over Ω\'. The rescaler is just the marginal P(B=T).'
 :::
 
-## Conditional — restrict the possibility space (3/3)
+## [Conditional — restrict the possibility space (3/3)]{.lang-en}[条件付き分布 — 可能性の空間を制限する (3/3)]{.lang-ja}
 
 ::: {.lang-en}
 [Chibany learns:   today's DINNER was tonkatsu  (B = T).]{.yellow}
@@ -1182,7 +1182,7 @@ Step 2:   rescale by $P(B = T) = 0.53$ so the weights over $\Omega'$ sum to 1.
 Slide 3: 'Posterior over lunch. Learning dinner was T swings belief about lunch toward H, from 47% up to 81%. The observation about one meal changed beliefs about the OTHER meal. That\'s a clue — set up the next move: are A and B independent?'
 :::
 
-## Independence — definition
+## [Independence — definition]{.lang-en}[独立 — 定義]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -1229,7 +1229,7 @@ $A$ と $B$ が**独立**（$A \perp B$ と書く）であるとは、次を満�
 ~1 min. Two equivalent definitions. Conditional-equals-marginal is the intuitive one ("knowing one tells you nothing about the other"). The product-of-marginals form is the one we USE in practice — it\'s how we check independence on a joint table.
 :::
 
-## Independence — check today's joint
+## [Independence — check today's joint]{.lang-en}[独立 — 今日の同時分布を確認]{.lang-ja}
 
 ::: {.lang-en}
 [Are A (lunch) and B (dinner) independent?]{.dim}
@@ -1268,7 +1268,7 @@ Conditional:     [**P(A = T | B = T)   ≈   0.189**]{.accent}
 Slide 2: 'Concrete check. Marginal says A is T about half the time. Conditional on B=T says A is T only ~19% of the time. Very different — so dependent. Explain WHY: students coordinate (avoid two T, aim for at least one T). Dependence in the data = structure in the world. In an alternative world where students flipped independent Bernoullis, the joint would factor exactly. We\'ll use independence a lot in Weeks 6–8 (conditional independence in PGMs, i.i.d. assumptions in likelihoods).'
 :::
 
-## Summary — four moves
+## [Summary — four moves]{.lang-en}[まとめ — 4つの操作]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -1309,25 +1309,25 @@ Independence   =  $P(A, B) = P(A) \cdot P(B)$    (equivalently, $P(A \mid B) = P
 
 ## Agenda {.agenda}
 
-- Welcome + meet Chibany [0:00]{.time}
-- Marr's three levels [0:08]{.time}
-- Notation lock-in [0:15]{.time}
-- Joint, marginal, conditional, independence [0:18]{.time}
-- [Expected value + discrete]{.highlight} [0:30]{.time}
-- Continuous prob + Gaussian [0:45]{.time}
-- Break [1:05]{.time}
-- Gaussian-Gaussian update [1:10]{.time}
-- Paper presentations [1:35]{.time}
-- Admin + Week 3 [1:45]{.time}
+- [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
+- [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
+- [Notation lock-in]{.lang-en}[記法の確認]{.lang-ja} [0:15]{.time}
+- [Joint, marginal, conditional, independence]{.lang-en}[同時・周辺・条件付き・独立]{.lang-ja} [0:18]{.time}
+- [[Expected value + discrete]{.lang-en}[期待値 + 離散分布]{.lang-ja}]{.highlight} [0:30]{.time}
+- [Continuous prob + Gaussian]{.lang-en}[連続確率 + ガウス分布]{.lang-ja} [0:45]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja} [1:05]{.time}
+- [Gaussian-Gaussian update]{.lang-en}[ガウス-ガウス更新]{.lang-ja} [1:10]{.time}
+- [Paper presentations]{.lang-en}[論文発表]{.lang-ja} [1:35]{.time}
+- [Admin + Week 3]{.lang-en}[事務連絡 + 第3週]{.lang-ja} [1:45]{.time}
 
-## Expected value + discrete distributions {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Expected value + discrete distributions]{.lang-en}[期待値 + 離散分布]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 
 ::: {.notes}
 15 min. E[X] (4 slides), Bernoulli (3 slides), Binomial (4 slides + 1 real PMF image). Bernoulli IS the meal draw; Binomial IS a week.
 :::
 
-## Expected value  E[X]
+## [Expected value  E[X]]{.lang-en}[期待値  E[X]]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -1362,7 +1362,7 @@ $$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
 Slide 1: 'Expected value. Weighted average. The formula is what you\'d naïvely call an average — but weighted by probability instead of counted equally.'
 :::
 
-## Expected value  E[X] (2/4)
+## [Expected value  E[X] (2/4)]{.lang-en}[期待値  E[X] (2/4)]{.lang-ja}
 
 ::: {.lang-en}
 For a discrete RV X with values {xᵢ} and probabilities {pᵢ}:
@@ -1397,7 +1397,7 @@ $$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \t
 Slide 2: 'Expected value of bento weight. 455 g is the long-run average — not a bento that actually shows up (no bento weighs 455 g in this idealization). That\'s the whole point of E[X]: a summary statistic of the distribution, not a realized value.'
 :::
 
-## Expected value  E[X] (3/4)
+## [Expected value  E[X] (3/4)]{.lang-en}[期待値  E[X] (3/4)]{.lang-ja}
 
 ::: {.lang-en}
 For a discrete RV X with values {xᵢ} and probabilities {pᵢ}:
@@ -1436,7 +1436,7 @@ $$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \t
 Slide 3: 'Variance is the expected squared deviation from the mean. Units are squared; standard deviation (sigma) puts us back in grams. The 68.7 g number is the spread you\'d see flipping between tonkatsu and hamburger days — it\'s not the within-meal weight noise we\'ll add in Block 6 (that\'s the Gaussian sigma = 30g). Different sources of variability.'
 :::
 
-## Expected value  E[X] (4/4)
+## [Expected value  E[X] (4/4)]{.lang-en}[期待値  E[X] (4/4)]{.lang-ja}
 
 ::: {.lang-en}
 For a discrete RV X with values {xᵢ} and probabilities {pᵢ}:
@@ -1483,7 +1483,7 @@ $$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \t
 Slide 4: 'Mental model: mean = balance point, variance = width. These two numbers summarize an enormous amount. Every distribution we meet has them. Gaussians are defined by exactly these two numbers.'
 :::
 
-## Bernoulli distribution
+## [Bernoulli distribution]{.lang-en}[ベルヌーイ分布]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -1522,7 +1522,7 @@ $X \sim \mathrm{Bernoulli}(p)$     の意味：
 Slide 1: 'Bernoulli. One parameter.'
 :::
 
-## Bernoulli distribution (2/3)
+## [Bernoulli distribution (2/3)]{.lang-en}[ベルヌーイ分布 (2/3)]{.lang-ja}
 
 ::: {.lang-en}
 $X \sim \mathrm{Bernoulli}(p)$     means:
@@ -1565,7 +1565,7 @@ $X \sim \mathrm{Bernoulli}(p)$     の意味：
 Slide 2: 'The bento meal is Bernoulli(0.7). Every day, a weighted flip.'
 :::
 
-## Bernoulli distribution (3/3)
+## [Bernoulli distribution (3/3)]{.lang-en}[ベルヌーイ分布 (3/3)]{.lang-ja}
 
 ::: {.lang-en}
 $X \sim \mathrm{Bernoulli}(p)$     means:
@@ -1608,7 +1608,7 @@ $$\mathbb{1}\{E\} \;=\; \begin{cases} 1 & \text{if } E \text{ happens} \\ 0 & \t
 Slide 3: 'Define indicator explicitly: a 1/0 random variable tied to an event. Show the indicator of "meal is tonkatsu" is exactly a Bernoulli(0.7) — because the event has probability 0.7. Then the punchline: E[indicator] = P(event). That identity is the bridge between expectations and probabilities that we\'ll use constantly — it\'s how "expected reward" in RL reduces to "probability of goal," how 0/1 loss gives you the error rate, and how hypothesis testing and calibration both become E-of-indicator calculations. Next slide / week: where does p = 0.7 come from? Week 3 puts a prior on p and infers it from counts — the conjugate prior is the Beta distribution.'
 :::
 
-## Binomial distribution
+## [Binomial distribution]{.lang-en}[二項分布]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -1635,7 +1635,7 @@ Each day:  $\mathrm{Bernoulli}(0.7)$, independent.
 Slide 1: 'Zoom out. A single bento is Bernoulli. A WEEK is Binomial. Y counts successes.'
 :::
 
-## Binomial distribution (2/3)
+## [Binomial distribution (2/3)]{.lang-en}[二項分布 (2/3)]{.lang-ja}
 
 ::: {.lang-en}
 Chibany counts tonkatsu across 5 days.
@@ -1686,7 +1686,7 @@ $$P(Y = k) = \binom{n}{k} \, p^{k} \, (1-p)^{n-k}$$
 Slide 2: 'Binomial formula. Name each piece. Binomial coefficient n-choose-k counts orderings of k successes among n trials — the factorial formula is just "pick k slots from n, divide out the k! orderings of the successes themselves and the (n-k)! orderings of the failures." Alternative notation you\'ll see: C(n,k) or ^n C_k. Work one example out loud — 5-choose-2 = 10 — so the notation is not a black box.'
 :::
 
-## Binomial distribution (3/3)
+## [Binomial distribution (3/3)]{.lang-en}[二項分布 (3/3)]{.lang-ja}
 
 ::: {.lang-en}
 [**$Y \sim \mathrm{Binomial}(5, 0.7)$:   plug in a few values of $k$.**]{.accent}
@@ -1721,7 +1721,7 @@ Slide 2: 'Binomial formula. Name each piece. Binomial coefficient n-choose-k cou
 Slide 3: 'Work the table row-by-row. The MODE is k=4, not k=5 — this surprises students who expect the most-probable count to be np=3.5 rounded up. Answer: 5 orderings for k=4 vs 1 ordering for k=5. Combinatorics wins over the extra factor of 0.7. This tiny combinatorial-vs-probabilistic tradeoff drives the whole shape of the Binomial.'
 :::
 
-## Binomial(5, 0.7) — full PMF
+## [Binomial(5, 0.7) — full PMF]{.lang-en}[Binomial(5, 0.7) — 完全な PMF]{.lang-ja}
 
 ![](images/binomial_pmf.png){fig-align="center" width="75%"}
 
@@ -1744,25 +1744,25 @@ Mode at k=4 (0.360). In Week 3 this PMF becomes the LIKELIHOOD
 
 ## Agenda {.agenda}
 
-- Welcome + meet Chibany [0:00]{.time}
-- Marr's three levels [0:08]{.time}
-- Notation lock-in [0:15]{.time}
-- Joint, marginal, conditional, independence [0:18]{.time}
-- Expected value + discrete [0:30]{.time}
-- [Continuous prob + Gaussian]{.highlight} [0:45]{.time}
-- Break [1:05]{.time}
-- Gaussian-Gaussian update [1:10]{.time}
-- Paper presentations [1:35]{.time}
-- Admin + Week 3 [1:45]{.time}
+- [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
+- [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
+- [Notation lock-in]{.lang-en}[記法の確認]{.lang-ja} [0:15]{.time}
+- [Joint, marginal, conditional, independence]{.lang-en}[同時・周辺・条件付き・独立]{.lang-ja} [0:18]{.time}
+- [Expected value + discrete]{.lang-en}[期待値 + 離散分布]{.lang-ja} [0:30]{.time}
+- [[Continuous prob + Gaussian]{.lang-en}[連続確率 + ガウス分布]{.lang-ja}]{.highlight} [0:45]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja} [1:05]{.time}
+- [Gaussian-Gaussian update]{.lang-en}[ガウス-ガウス更新]{.lang-ja} [1:10]{.time}
+- [Paper presentations]{.lang-en}[論文発表]{.lang-ja} [1:35]{.time}
+- [Admin + Week 3]{.lang-en}[事務連絡 + 第3週]{.lang-ja} [1:45]{.time}
 
-## Continuous probability + the Gaussian {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Continuous probability + the Gaussian]{.lang-en}[連続確率 + ガウス分布]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 
 ::: {.notes}
 20 min. Build: opaque-bento reveal (1 slide), PMF→PDF (4 text + 1 image), Gaussian formula (5 text + 1 image), continuous-Bayes worked (6 text + 1 image). The images are the payoff — do NOT speak over them; pause.
 :::
 
-## The catch today — bentos are opaque
+## [The catch today — bentos are opaque]{.lang-en}[今日の仕掛け — お弁当が不透明]{.lang-ja}
 
 ::: {.lang-en}
 [**This week the bento boxes are OPAQUE.**]{.yellow}
@@ -1797,7 +1797,7 @@ Chibany can't peek — and it would be rude to open one while the student watche
 Opaque-bento reveal — deliberately placed here, not in the morning intro. Up to now the meal was observable (Block 4 joint tables used A, B directly). The inference problem only kicks in once we hide the meal and leave weight as the observable. This is the hidden-variable pivot — everything after this needs a likelihood p(weight | meal), which is the next four slides (PMF→PDF).
 :::
 
-## Notation checkpoint — PMF & PDF
+## [Notation checkpoint — PMF & PDF]{.lang-en}[記法の確認 — PMF と PDF]{.lang-ja}
 
 ::: {.lang-en}
 [*Two acronyms we\'ll use constantly from here on:*]{.dim}
@@ -1840,7 +1840,7 @@ Opaque-bento reveal — deliberately placed here, not in the morning intro. Up t
 Lock in both acronyms before we use them. PMF = bars (discrete, heights sum to 1); PDF = curve (continuous, area sums to 1, heights are density — units of probability per unit of x). Common student trap: "why can a PDF exceed 1?" — because density × width = probability, and if width is small, density can be large. e.g. N(0, 0.01) has density ~40 at zero. Integrating gives probability back.
 :::
 
-## From PMF to PDF — going continuous
+## [From PMF to PDF — going continuous]{.lang-en}[PMF から PDF へ — 連続への移行]{.lang-ja}
 
 ::: {.lang-en}
 Chibany's bentos come in all weights — not a finite menu of values, a real number.
@@ -1863,7 +1863,7 @@ Chibany's bentos come in all weights — not a finite menu of values, a real num
 Slide 1: 'Weight is continuous. No finite outcome space. We need a new object — the PDF. Build: the next 3 slides shrink bins of a histogram until the outline becomes a smooth curve.'
 :::
 
-## From PMF to PDF — going continuous (2/4)
+## [From PMF to PDF — going continuous (2/4)]{.lang-en}[PMF から PDF へ — 連続への移行 (2/4)]{.lang-ja}
 
 ::: {.lang-en}
 [**Start coarse — 30g bins. A PMF over bins.**]{.accent}
@@ -1888,7 +1888,7 @@ Slide 1: 'Weight is continuous. No finite outcome space. We need a new object �
 Slide 2: 'Bin at 30g. Legit PMF over bins — finite number of bars, heights sum in an area-weighted way to 1. Pause: point out that what we\'re plotting is probability PER GRAM (the y-axis label). The area of each bar is the probability the weight falls in that bin.'
 :::
 
-## From PMF to PDF — going continuous (3/4)
+## [From PMF to PDF — going continuous (3/4)]{.lang-en}[PMF から PDF へ — 連続への移行 (3/4)]{.lang-ja}
 
 ::: {.lang-en}
 [**Shrink to 10g bins — still a PMF, but the outline is smoother.**]{.accent}
@@ -1913,7 +1913,7 @@ Slide 2: 'Bin at 30g. Legit PMF over bins — finite number of bars, heights sum
 Slide 3: 'Same 5000 samples, bin width down to 10g. The envelope of the bars is getting smoother. The y-axis stays in the same units (probability per gram) — only the bars are changing.'
 :::
 
-## Quick poll — Derek's density
+## [Quick poll — Derek's density]{.lang-en}[クイック投票 — デレクの密度]{.lang-ja}
 
 ::: {.lang-en}
 [*Derek is implementing a model with a continuous variable.*]{.dim}
@@ -1956,7 +1956,7 @@ Slide 3: 'Same 5000 samples, bin width down to 10g. The envelope of the bars is 
 Answer: B. This is the single biggest density-vs-probability confusion — the poll forces them to commit before we collapse it to the punchline on the next slide.
 :::
 
-## From PMF to PDF — going continuous (4/4)
+## [From PMF to PDF — going continuous (4/4)]{.lang-en}[PMF から PDF へ — 連続への移行 (4/4)]{.lang-ja}
 
 ::: {.lang-en}
 [**Shrink to 2g bins — in the limit, bars become a smooth PDF.**]{.accent}
@@ -1989,7 +1989,7 @@ Slide 4 + Derek-poll reveal: 'Bin width 2g. In the limit, the bars ARE the PDF. 
 Why P(X = exactly 450) = 0 for continuous X: integrate a density over a single point, you get 0. But P(X in [449.5, 450.5]) ≈ f(450) × 1 — density times interval width.'
 :::
 
-## The Gaussian (normal) distribution
+## [The Gaussian (normal) distribution]{.lang-en}[ガウス分布（正規分布）]{.lang-ja}
 
 ::: {.lang-en}
 Chibany's bento weights vary — even within one meal type.
@@ -2008,7 +2008,7 @@ Chibany's bento weights vary — even within one meal type.
 Slide 1: 'Real bentos vary. Not every tonkatsu is exactly 500g. The natural distribution for that variation is the Gaussian.'
 :::
 
-## The Gaussian (normal) distribution (2/5)
+## [The Gaussian (normal) distribution (2/5)]{.lang-en}[ガウス分布（正規分布） (2/5)]{.lang-ja}
 
 ::: {.lang-en}
 Chibany's bento weights vary — even within one meal type.
@@ -2030,7 +2030,7 @@ $$N(x \mid \mu, \sigma^2) \;=\; \frac{1}{\sqrt{2\pi\sigma^2}} \; \exp\!\left(-\f
 Slide 2: 'The formula. Don\'t try to hold the whole thing at once — we\'ll name each piece now.'
 :::
 
-## The Gaussian (normal) distribution (3/5)
+## [The Gaussian (normal) distribution (3/5)]{.lang-en}[ガウス分布（正規分布） (3/5)]{.lang-ja}
 
 ::: {.lang-en}
 Chibany's bento weights vary — even within one meal type.
@@ -2077,7 +2077,7 @@ Name each piece:
 Slide 3: 'Four pieces. Mean, variance, the exponential (which does the peaking), and the normalizer (which makes the area equal 1 — 'required of any PDF).'
 :::
 
-## The Gaussian (normal) distribution (4/5)
+## [The Gaussian (normal) distribution (4/5)]{.lang-en}[ガウス分布（正規分布） (4/5)]{.lang-ja}
 
 ::: {.lang-en}
 Chibany's bento weights vary — even within one meal type.
@@ -2140,7 +2140,7 @@ Name each piece:
 Slide 4: 'Shape. Symmetric around μ. SHARPER (smaller σ) → TALLER peak. The 68-95-99.7 rule — most mass within 1, 2, 3 sigma.'
 :::
 
-## The Gaussian (normal) distribution (5/5)
+## [The Gaussian (normal) distribution (5/5)]{.lang-en}[ガウス分布（正規分布） (5/5)]{.lang-ja}
 
 ::: {.lang-en}
 Chibany's bento weights vary — even within one meal type.
@@ -2219,7 +2219,7 @@ Name each piece:
 Slide 5: 'Two Gaussians for Chibany. They overlap in the 380-470 range. Next slide: picture.'
 :::
 
-## The Gaussian — shape and the 68-95 rule
+## [The Gaussian — shape and the 68-95 rule]{.lang-en}[ガウス分布 — 形状と 68-95 ルール]{.lang-ja}
 
 ![](images/gaussian_shape.png){fig-align="center" width="75%"}
 
@@ -2236,7 +2236,7 @@ Slide 5: 'Two Gaussians for Chibany. They overlap in the 380-470 range. Next sli
 Pause. Let them trace the curve and see the shaded bands. The peak height formula 1/√(2πσ²) ≈ 0.013 for σ=30 — visible at the top.
 :::
 
-## Chibany's two bento-weight likelihoods
+## [Chibany's two bento-weight likelihoods]{.lang-en}[チバニーの2つのお弁当重量の尤度]{.lang-ja}
 
 ![](images/tonk_hamb.png){fig-align="center" width="75%"}
 
@@ -2253,7 +2253,7 @@ Pause. Let them trace the curve and see the shaded bands. The peak height formul
 Key setup image for the continuous-Bayes worked example that follows. 450g sits squarely in the tonkatsu Gaussian, far in the right tail of hamburger. The next slide computes the densities.
 :::
 
-## The Bayes flow — now with a density
+## [The Bayes flow — now with a density]{.lang-en}[ベイズの流れ — 密度を使って]{.lang-ja}
 
 $$P(H \mid D) \;=\; \frac{P(H)\,P(D \mid H)}{P(D)}$$
 
@@ -2290,7 +2290,7 @@ flowchart LR
 ~45 sec. Pause and point: it\'s the same diagram. The prior box is still a discrete distribution over meal (tonkatsu / hamburger). The posterior box is still a discrete distribution over meal. ONLY the likelihood changed — we evaluate a Gaussian density at the observed weight. Bayes\' rule doesn\'t care whether the likelihood is a probability or a density — the multiply-and-normalize move works identically.
 :::
 
-## Bayes with a continuous likelihood — worked
+## [Bayes with a continuous likelihood — worked]{.lang-en}[連続尤度でのベイズ — 計算例]{.lang-ja}
 
 ::: {.lang-en}
 [**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
@@ -2326,7 +2326,7 @@ flowchart LR
 Slide 1: 'Structural mirror of the sick-friend problem from Block 4. Four rows, one column per hypothesis. The ONLY difference: the likelihood row used to be a probability (e.g., 0.90 for cold + cough). Now it\'s a Gaussian density value. Everything else is the same.'
 :::
 
-## Bayes with a continuous likelihood — worked (2/4)
+## [Bayes with a continuous likelihood — worked (2/4)]{.lang-en}[連続尤度でのベイズ — 計算例 (2/4)]{.lang-ja}
 
 ::: {.lang-en}
 [**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
@@ -2370,7 +2370,7 @@ Slide 1: 'Structural mirror of the sick-friend problem from Block 4. Four rows, 
 Slide 2: 'Fill the likelihood row with Gaussian density values. Show the RATIO explicitly: f_T/f_H ≈ 7.5, meaning 450g is ~7.5× more consistent with the tonkatsu model than the hamburger model — even though 450 is closer to the hamburger mean (350) than to the tonkatsu mean (500)! That counter-intuition (closer mean ≠ higher likelihood when widths differ, and both widths are the same here so it IS distance-based) is worth calling out. Here both σ are 30, so the tighter-to-tonkatsu explanation wins.'
 :::
 
-## Bayes with a continuous likelihood — worked (3/4)
+## [Bayes with a continuous likelihood — worked (3/4)]{.lang-en}[連続尤度でのベイズ — 計算例 (3/4)]{.lang-ja}
 
 ::: {.lang-en}
 [**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
@@ -2406,7 +2406,7 @@ Slide 2: 'Fill the likelihood row with Gaussian density values. Show the RATIO e
 Slide 3: 'Multiply the prior and likelihood columns. Sum for the evidence. Same move as the sick-friend problem.'
 :::
 
-## Bayes with a continuous likelihood — worked (4/4) {.smaller}
+## [Bayes with a continuous likelihood — worked (4/4)]{.lang-en}[連続尤度でのベイズ — 計算例 (4/4)]{.lang-ja} {.smaller}
 
 ::: {.lang-en}
 [**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
@@ -2457,25 +2457,25 @@ Hard 5 minutes. Come back sharp — the Gaussian-Gaussian update is the highest-
 
 ## Agenda {.agenda}
 
-- Welcome + meet Chibany [0:00]{.time}
-- Marr's three levels [0:08]{.time}
-- Notation lock-in [0:15]{.time}
-- Joint, marginal, conditional, independence [0:18]{.time}
-- Expected value + discrete [0:30]{.time}
-- Continuous prob + Gaussian [0:45]{.time}
-- Break [1:05]{.time}
-- [Gaussian-Gaussian update]{.highlight} [1:15]{.time}
-- Paper presentations [1:35]{.time}
-- Admin + Week 3 [1:45]{.time}
+- [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
+- [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
+- [Notation lock-in]{.lang-en}[記法の確認]{.lang-ja} [0:15]{.time}
+- [Joint, marginal, conditional, independence]{.lang-en}[同時・周辺・条件付き・独立]{.lang-ja} [0:18]{.time}
+- [Expected value + discrete]{.lang-en}[期待値 + 離散分布]{.lang-ja} [0:30]{.time}
+- [Continuous prob + Gaussian]{.lang-en}[連続確率 + ガウス分布]{.lang-ja} [0:45]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja} [1:05]{.time}
+- [[Gaussian-Gaussian update]{.lang-en}[ガウス-ガウス更新]{.lang-ja}]{.highlight} [1:15]{.time}
+- [Paper presentations]{.lang-en}[論文発表]{.lang-ja} [1:35]{.time}
+- [Admin + Week 3]{.lang-en}[事務連絡 + 第3週]{.lang-ja} [1:45]{.time}
 
-## Gaussian-Gaussian update — launching Week 3 {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Gaussian-Gaussian update — launching Week 3]{.lang-en}[ガウス-ガウス更新 — 第3週への橋渡し]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 
 ::: {.notes}
 25 min. THE block of the session. Now with: (a) a shift-in-what's-hidden pivot, (b) explicit motivation for inferring μ, (c) a derivation SKETCH (complete the square), (d) a real posterior-curve picture, (e) precision visualized, (f) N-observation generalization given its own build-up.
 :::
 
-## Shift in what's hidden
+## [Shift in what's hidden]{.lang-en}[隠れた変数の転換]{.lang-ja}
 
 ::: {.lang-en}
 
@@ -2518,7 +2518,7 @@ Hard 5 minutes. Come back sharp — the Gaussian-Gaussian update is the highest-
 ~1 min. CRITICAL slide. Students have spent the whole morning inferring "which meal". Now we shift to inferring "the mean weight OF the tonkatsu model". This is the central conceptual leap from classification to parameter estimation — the foundation of everything coming in Weeks 3 (conjugate Bayes), 4 (hierarchical), 7 (MC approx). Pause here. Let them see the table before introducing μ.
 :::
 
-## Why would Chibany want to infer μ ?
+## [Why would Chibany want to infer μ ?]{.lang-en}[なぜチバニーは μ を推論したい？]{.lang-ja}
 
 ::: {.lang-en}
 So far Chibany asks:  "what's in TODAY's bento?"
@@ -2537,7 +2537,7 @@ So far Chibany asks:  "what's in TODAY's bento?"
 Slide 1: 'Up to now, the question has been about today\'s meal. A discrete hypothesis.'
 :::
 
-## Why would Chibany want to infer μ ? (2/3)
+## [Why would Chibany want to infer μ ? (2/3)]{.lang-en}[なぜチバニーは μ を推論したい？ (2/3)]{.lang-ja}
 
 ::: {.lang-en}
 So far Chibany asks:  "what's in TODAY's bento?"
@@ -2568,7 +2568,7 @@ So far Chibany asks:  "what's in TODAY's bento?"
 Slide 2: 'But we wrote 500g as if we KNEW it. We don\'t really. This term is an unknown PARAMETER. Call it μ.'
 :::
 
-## Why would Chibany want to infer μ ? (3/3)
+## [Why would Chibany want to infer μ ? (3/3)]{.lang-en}[なぜチバニーは μ を推論したい？ (3/3)]{.lang-ja}
 
 ::: {.lang-en}
 So far Chibany asks:  "what's in TODAY's bento?"
@@ -2623,7 +2623,7 @@ So far Chibany asks:  "what's in TODAY's bento?"
 Slide 3: 'So now Bayesian inference is shifting: H = μ, a continuous parameter, not a discrete category. Why not just average the weights? Because Chibany has prior knowledge from past experience, and early in the semester they have very few data points. Averaging is what a frequentist would do and it discards the prior. 'Bayes keeps both.'
 :::
 
-## Step 1 — the prior  μ ~ N(μ₀, σ₀²)
+## [Step 1 — the prior  μ ~ N(μ₀, σ₀²)]{.lang-en}[ステップ1 — 事前分布  μ ~ N(μ₀, σ₀²)]{.lang-ja}
 
 ::: {.lang-en}
 Chibany's belief about μ BEFORE observing any new weights:
@@ -2646,7 +2646,7 @@ Chibany's belief about μ BEFORE observing any new weights:
 Slide 1: 'Prior is a Gaussian over μ. Two hyperparameters: μ₀ and σ₀.'
 :::
 
-## Step 1 — the prior  μ ~ N(μ₀, σ₀²) (2/3)
+## [Step 1 — the prior  μ ~ N(μ₀, σ₀²) (2/3)]{.lang-en}[ステップ1 — 事前分布  μ ~ N(μ₀, σ₀²) (2/3)]{.lang-ja}
 
 ::: {.lang-en}
 Chibany's belief about μ BEFORE observing any new weights:
@@ -2681,7 +2681,7 @@ From last week's memory:
 Slide 2: 'Chibany\'s best guess 500, uncertainty 20. Prior = N(500, 400).'
 :::
 
-## Step 1 — the prior  μ ~ N(μ₀, σ₀²) (3/3)
+## [Step 1 — the prior  μ ~ N(μ₀, σ₀²) (3/3)]{.lang-en}[ステップ1 — 事前分布  μ ~ N(μ₀, σ₀²) (3/3)]{.lang-ja}
 
 ::: {.lang-en}
 Chibany's belief about μ BEFORE observing any new weights:
@@ -2732,7 +2732,7 @@ A prior is a distribution over anything hidden —
 Slide 3: 'THIS IS THE BIG MOVE. The density isn\'t over weights now. 'It\'s over the unknown parameter μ. Priors can live on parameters. In Week 4 we\'ll even put a prior on the PRIOR — hierarchical Bayes.'
 :::
 
-## Step 2 — the likelihood
+## [Step 2 — the likelihood]{.lang-en}[ステップ2 — 尤度]{.lang-ja}
 
 ::: {.lang-en}
 [**Chibany weighs one bento:   D₁ = 510g.**]{.yellow}
@@ -2751,7 +2751,7 @@ Slide 3: 'THIS IS THE BIG MOVE. The density isn\'t over weights now. 'It\'s over
 Slide 1: 'One observation. 510g. We pretend σ is known — only μ is unknown. Week 3 will relax this.'
 :::
 
-## Step 2 — the likelihood (2/3)
+## [Step 2 — the likelihood (2/3)]{.lang-en}[ステップ2 — 尤度 (2/3)]{.lang-ja}
 
 ::: {.lang-en}
 [**Chibany weighs one bento:   D₁ = 510g.**]{.yellow}
@@ -2778,7 +2778,7 @@ Likelihood:
 Slide 2: 'Likelihood is the Gaussian density evaluated at the 'observed weight, as a function of μ.'
 :::
 
-## Step 2 — the likelihood (3/3)
+## [Step 2 — the likelihood (3/3)]{.lang-en}[ステップ2 — 尤度 (3/3)]{.lang-ja}
 
 ::: {.lang-en}
 [**Chibany weighs one bento:   D₁ = 510g.**]{.yellow}
@@ -2825,7 +2825,7 @@ Likelihood:
 Slide 3: 'Here\'s the trick: when you treat the likelihood N(D|μ,σ²) as a function of μ for fixed D, it\'s STILL a Gaussian shape — peaked where μ=D. So we have two Gaussians in μ. Multiplying them is the Bayes step.'
 :::
 
-## The Bayes flow — now everything is a density
+## [The Bayes flow — now everything is a density]{.lang-en}[ベイズの流れ — すべてが密度になった]{.lang-ja}
 
 $$P(H \mid D) \;=\; \frac{P(H)\,P(D \mid H)}{P(D)}$$
 
@@ -2864,7 +2864,7 @@ flowchart LR
 ~45 sec. Third appearance of the diagram. Now BOTH the prior and the likelihood are Gaussian densities. The moves are unchanged. The new fact we\'re about to prove: multiplying two Gaussian densities gives a third Gaussian density (up to normalizer). So the posterior lives in the same family as the prior — conjugacy. That\'s the result; the derivation is next.
 :::
 
-## Quick poll — Jamal's posterior
+## [Quick poll — Jamal's posterior]{.lang-en}[クイック投票 — ジャマルの事後分布]{.lang-ja}
 
 ::: {.lang-en}
 [*Deriving a posterior in μ, Jamal notices the μ-dependent terms*]{.dim}
@@ -2907,7 +2907,7 @@ flowchart LR
 Answer: C. This IS the trick that makes the next 4-slide Gaussian × Gaussian derivation work — we drop anything constant in μ because it\'s absorbed into the 1/P(D) normalizer, match the functional form, and read off the posterior. The poll primes them to expect that move.
 :::
 
-## Why Gaussian × Gaussian = Gaussian  (derivation sketch)
+## [Why Gaussian × Gaussian = Gaussian  (derivation sketch)]{.lang-en}[なぜ Gaussian × Gaussian = Gaussian  （導出スケッチ）]{.lang-ja}
 
 ::: {.lang-en}
 [**Poll answer: C — dropped terms are absorbed into the normalization constant.**]{.green}
@@ -2937,7 +2937,7 @@ $$P(\mu \mid D) \;\propto\; \exp\!\left(-\frac{(\mu - \mu_0)^2}{2\sigma_0^2}\rig
 Slide 1 + poll reveal: 'C is right — dropped terms (the 1/√(2πσ²) normalizers of both Gaussians, plus the denominator P(D)) are all constant in μ. We write ∝ instead of = to track that we\'ll renormalize at the end. Now watch the derivation — every line is this move, applied iteratively until we hit a recognizable Gaussian shape in μ.'
 :::
 
-## Why Gaussian × Gaussian = Gaussian  (derivation sketch) (2/4)
+## [Why Gaussian × Gaussian = Gaussian  (derivation sketch) (2/4)]{.lang-en}[なぜ Gaussian × Gaussian = Gaussian  （導出スケッチ） (2/4)]{.lang-ja}
 
 ::: {.lang-en}
 Multiply the two densities (drop the normalizers — collect at end):
@@ -2976,7 +2976,7 @@ $$\propto \; \exp\!\left(-\left[ \frac{(\mu - \mu_0)^2}{2\sigma_0^2} \;+\; \frac
 Slide 2: 'Expand the squared terms and combine. You get a quadratic in μ. Form: Aμ² − 2Bμ + constants.'
 :::
 
-## Why Gaussian × Gaussian = Gaussian  (derivation sketch) (3/4) {.smaller}
+## [Why Gaussian × Gaussian = Gaussian  (derivation sketch) (3/4)]{.lang-en}[なぜ Gaussian × Gaussian = Gaussian  （導出スケッチ） (3/4)]{.lang-ja} {.smaller}
 
 ::: {.lang-en}
 Multiply the two densities (drop the normalizers — collect at end):
@@ -3027,7 +3027,7 @@ $$\text{Complete the square} \;\longrightarrow\; \exp\!\left(-\frac{(\mu - \mu_{
 Slide 3: 'Complete the square — just like in high school algebra. A quadratic in μ inside an exp is the kernel of a Gaussian. So the posterior IS Gaussian. Not magic — algebra.'
 :::
 
-## Why Gaussian × Gaussian = Gaussian  (derivation sketch) (4/4) {.smaller}
+## [Why Gaussian × Gaussian = Gaussian  (derivation sketch) (4/4)]{.lang-en}[なぜ Gaussian × Gaussian = Gaussian  （導出スケッチ） (4/4)]{.lang-ja} {.smaller}
 
 ::: {.lang-en}
 Multiply the two densities (drop the normalizers — collect at end):
@@ -3096,7 +3096,7 @@ $$\mu_{\text{post}} \;=\; \sigma^2_{\text{post}} \left( \frac{\mu_0}{\sigma_0^2}
 Slide 4: 'The new μ and σ come from matching coefficients. A (coefficient of μ²) gives you 1/σ²_post. B/A (the minimum of the quadratic) gives you μ_post. Full derivation in T3 Ch 4 — read it.'
 :::
 
-## Precision  =  1 / variance  =  "how sharp I am"
+## [Precision  =  1 / variance  =  "how sharp I am"]{.lang-en}[精度  =  1 / 分散  =  「どれくらい鋭いか」]{.lang-ja}
 
 ![](images/precision.png){fig-align="center" width="75%"}
 
@@ -3113,7 +3113,7 @@ Slide 4: 'The new μ and σ come from matching coefficients. A (coefficient of �
 Pause. Two Gaussians, same mean, different widths. The sharp one is more precise — if you\'re that sharp, you\'re very sure, and in a Bayesian update your view gets more weight. Intuition for the precision-sum formula on the next slide.
 :::
 
-## Plug in the numbers  —  posterior  =  prior × likelihood, rescaled
+## [Plug in the numbers  —  posterior  =  prior × likelihood, rescaled]{.lang-en}[数値を代入  —  事後 = 事前 × 尤度、再スケール]{.lang-ja}
 
 ::: {.lang-en}
 **The update formulas  (from the derivation):**
@@ -3140,7 +3140,7 @@ $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{\sigma_0^2} + \frac{1}{\sigma^
 Slide 1: 'The formulas. Precisions add. Posterior mean is precision-weighted average.'
 :::
 
-## Plug in the numbers  —  posterior  =  prior × likelihood, rescaled (2/4)
+## [Plug in the numbers  —  posterior  =  prior × likelihood, rescaled (2/4)]{.lang-en}[数値を代入  —  事後 = 事前 × 尤度、再スケール (2/4)]{.lang-ja}
 
 ::: {.lang-en}
 **The update formulas  (from the derivation):**
@@ -3175,7 +3175,7 @@ $\sigma_0^2 = 400$ （事前分布）、   $\sigma^2 = 900$ （データ）、  
 Slide 2: 'The inputs.'
 :::
 
-## Plug in the numbers  —  posterior  =  prior × likelihood, rescaled (3/4) {.smaller}
+## [Plug in the numbers  —  posterior  =  prior × likelihood, rescaled (3/4)]{.lang-en}[数値を代入  —  事後 = 事前 × 尤度、再スケール (3/4)]{.lang-ja} {.smaller}
 
 ::: {.lang-en}
 **The update formulas  (from the derivation):**
@@ -3236,7 +3236,7 @@ $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{400} + \frac{1}{900} \;=\; \fr
 Slide 3: 'Posterior variance. 1/400 + 1/900 combines on 3600. Gets you 13/3600, so σ²_post ≈ 277, σ_post ≈ 16.6. TIGHTER than either input. Combining information reduces uncertainty — that\'s the whole point of Bayesian updating.'
 :::
 
-## Plug in the numbers  —  posterior  =  prior × likelihood, rescaled (4/4) {.smaller}
+## [Plug in the numbers  —  posterior  =  prior × likelihood, rescaled (4/4)]{.lang-en}[数値を代入  —  事後 = 事前 × 尤度、再スケール (4/4)]{.lang-ja} {.smaller}
 
 ::: {.lang-en}
 **The update formulas  (from the derivation):**
@@ -3315,7 +3315,7 @@ $$\mu_{\text{post}} \;=\; 277 \cdot \left( \frac{500}{400} + \frac{510}{900} \ri
 Slide 4: 'Posterior mean ≈ 503.1. Moved from 500 toward 510 but mostly stayed near the prior. Because the prior was more precise (σ₀=20 vs data σ=30). The more precise source wins.'
 :::
 
-## Prior × Likelihood = Posterior
+## [Prior × Likelihood = Posterior]{.lang-en}[事前 × 尤度 = 事後]{.lang-ja}
 
 ![](images/gg_update.png){fig-align="center" width="75%"}
 
@@ -3332,7 +3332,7 @@ Slide 4: 'Posterior mean ≈ 503.1. Moved from 500 toward 510 but mostly stayed 
 THE payoff visual. Pause. Red prior, blue likelihood, yellow posterior. The posterior IS tighter than both inputs and lives between them — closer to the prior because the prior is tighter. This one picture replaces 20 minutes of algebra in students\' memory.
 :::
 
-## Bridge to Week 3 — N observations, precisions keep adding
+## [Bridge to Week 3 — N observations, precisions keep adding]{.lang-en}[第3週への橋  — N 回の観測、精度が足し上がる]{.lang-ja}
 
 ::: {.lang-en}
 One observation:   precision added $= 1/\sigma^2$.
@@ -3355,7 +3355,7 @@ Two observations: precision added $= 2/\sigma^2$.
 Slide 1: 'Each independent observation adds precision 1/σ². Two observations = 2/σ² added. N observations = N/σ². This is the key property of conjugate updates.'
 :::
 
-## Bridge to Week 3 — N observations, precisions keep adding (2/3)
+## [Bridge to Week 3 — N observations, precisions keep adding (2/3)]{.lang-en}[第3週への橋  — N 回の観測、精度が足し上がる (2/3)]{.lang-ja}
 
 ::: {.lang-en}
 One observation:   precision added $= 1/\sigma^2$.
@@ -3381,7 +3381,7 @@ $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{\sigma_0^2} + \frac{N}{\sigma^
 Slide 2: 'The general formulas. Σ_i D_i is the sum of observed weights.'
 :::
 
-## Bridge to Week 3 — N observations, precisions keep adding (3/3)
+## [Bridge to Week 3 — N observations, precisions keep adding (3/3)]{.lang-en}[第3週への橋  — N 回の観測、精度が足し上がる (3/3)]{.lang-ja}
 
 ::: {.lang-en}
 One observation:   precision added $= 1/\sigma^2$.
@@ -3430,7 +3430,7 @@ N が大きくなるにつれて：
 Slide 3: 'Asymptotic behavior: as N grows, the prior term becomes negligible and the posterior mean approaches the sample mean. You recover the frequentist answer in the limit of much data — but with a Bayesian path there, and a well-calibrated posterior variance 'along the way. This formula IS the skeleton of Week 3\'s conjugate updates and Week 4\'s hierarchical models.'
 :::
 
-## Closing the arc — same flow, three specializations {.smaller}
+## [Closing the arc — same flow, three specializations]{.lang-en}[弧を閉じる  — 同じ流れ、3つの特殊化]{.lang-ja} {.smaller}
 
 ::: {.lang-en}
 |  | **prior** | **likelihood** | **which slide** |
@@ -3467,25 +3467,25 @@ Slide 3: 'Asymptotic behavior: as N grows, the prior term becomes negligible and
 
 ## Agenda {.agenda}
 
-- Welcome + meet Chibany [0:00]{.time}
-- Marr's three levels [0:08]{.time}
-- Notation lock-in [0:15]{.time}
-- Joint, marginal, conditional, independence [0:18]{.time}
-- Expected value + discrete [0:30]{.time}
-- Continuous prob + Gaussian [0:45]{.time}
-- Break [1:05]{.time}
-- Gaussian-Gaussian update [1:10]{.time}
-- [Paper presentations]{.highlight} [1:40]{.time}
-- Admin + Week 3 [1:45]{.time}
+- [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
+- [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
+- [Notation lock-in]{.lang-en}[記法の確認]{.lang-ja} [0:15]{.time}
+- [Joint, marginal, conditional, independence]{.lang-en}[同時・周辺・条件付き・独立]{.lang-ja} [0:18]{.time}
+- [Expected value + discrete]{.lang-en}[期待値 + 離散分布]{.lang-ja} [0:30]{.time}
+- [Continuous prob + Gaussian]{.lang-en}[連続確率 + ガウス分布]{.lang-ja} [0:45]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja} [1:05]{.time}
+- [Gaussian-Gaussian update]{.lang-en}[ガウス-ガウス更新]{.lang-ja} [1:10]{.time}
+- [[Paper presentations]{.lang-en}[論文発表]{.lang-ja}]{.highlight} [1:40]{.time}
+- [Admin + Week 3]{.lang-en}[事務連絡 + 第3週]{.lang-ja} [1:45]{.time}
 
-## Paper presentations — rubric + signup {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Paper presentations — rubric + signup]{.lang-en}[論文発表 — 評価基準 + 申し込み]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 
 ::: {.notes}
 10 min tight.
 :::
 
-## Presentations — why and what
+## [Presentations — why and what]{.lang-en}[発表について — 目的と内容]{.lang-ja}
 
 ::: {.lang-en}
 **Each of you presents ONCE during the semester.**
@@ -3512,7 +3512,7 @@ Slide 3: 'Asymptotic behavior: as N grows, the prior term becomes negligible and
 ~2 min.
 :::
 
-## Rubric — 5 points
+## [Rubric — 5 points]{.lang-en}[評価基準 — 5点満点]{.lang-ja}
 
 ::: {.lang-en}
 Understanding of the paper              1.5
@@ -3551,7 +3551,7 @@ Appropriate use of time                    0.5
 ~2 min. Email the PDF.
 :::
 
-## Signup — a tour of the semester {.smaller}
+## [Signup — a tour of the semester]{.lang-en}[申し込み — 学期の見どころツアー]{.lang-ja} {.smaller}
 
 ::: {.lang-en}
 [Pick your top-3 weeks on Slack #hml-2026 by Wed May 13.  Papers below are ONE candidate per week — full list on the readings page.]{.dim}
@@ -3596,25 +3596,25 @@ Appropriate use of time                    0.5
 
 ## Agenda {.agenda}
 
-- Welcome + meet Chibany [0:00]{.time}
-- Marr's three levels [0:08]{.time}
-- Notation lock-in [0:15]{.time}
-- Joint, marginal, conditional, independence [0:18]{.time}
-- Expected value + discrete [0:30]{.time}
-- Continuous prob + Gaussian [0:45]{.time}
-- Break [1:05]{.time}
-- Gaussian-Gaussian update [1:10]{.time}
-- Paper presentations [1:35]{.time}
-- [Admin + Week 3]{.highlight} [1:50]{.time}
+- [Welcome + meet Chibany]{.lang-en}[ようこそ + チバニー紹介]{.lang-ja} [0:00]{.time}
+- [Marr's three levels]{.lang-en}[Marr の3つのレベル]{.lang-ja} [0:08]{.time}
+- [Notation lock-in]{.lang-en}[記法の確認]{.lang-ja} [0:15]{.time}
+- [Joint, marginal, conditional, independence]{.lang-en}[同時・周辺・条件付き・独立]{.lang-ja} [0:18]{.time}
+- [Expected value + discrete]{.lang-en}[期待値 + 離散分布]{.lang-ja} [0:30]{.time}
+- [Continuous prob + Gaussian]{.lang-en}[連続確率 + ガウス分布]{.lang-ja} [0:45]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja} [1:05]{.time}
+- [Gaussian-Gaussian update]{.lang-en}[ガウス-ガウス更新]{.lang-ja} [1:10]{.time}
+- [Paper presentations]{.lang-en}[論文発表]{.lang-ja} [1:35]{.time}
+- [[Admin + Week 3]{.lang-en}[事務連絡 + 第3週]{.lang-ja}]{.highlight} [1:50]{.time}
 
-## Admin + Week 3 homework {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Admin + Week 3 homework]{.lang-en}[事務連絡 + 第3週の宿題]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 
 ::: {.notes}
 10 min.
 :::
 
-## Syllabus — three things changed
+## [Syllabus — three things changed]{.lang-en}[シラバス — 変更点3つ]{.lang-ja}
 
 ::: {.lang-en}
 **① 12 sessions, not 13.**
@@ -3649,7 +3649,7 @@ Appropriate use of time                    0.5
 ~3 min.
 :::
 
-## Week 3 — readings + homework
+## [Week 3 — readings + homework]{.lang-en}[第3週 — 読み物 + 宿題]{.lang-ja}
 
 ::: {.lang-en}
 Next class:   Friday May 15  —  Week 3: Conjugate Bayes + Topics.
@@ -3684,7 +3684,7 @@ Next class:   Friday May 15  —  Week 3: Conjugate Bayes + Topics.
 ~4 min. T3 Ch 1 is added so Chibany\'s backstory is reinforced; T3 Ch 4 derives what we sketched in Block 7.
 :::
 
-## Preview — the arc from here
+## [Preview — the arc from here]{.lang-en}[先取り — ここから先の流れ]{.lang-ja}
 
 ::: {.lang-en}
 Week 3:  Conjugacy proper.  Beta-Binomial + Gaussian-Gaussian.
