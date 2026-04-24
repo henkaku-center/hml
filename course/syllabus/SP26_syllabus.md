@@ -98,20 +98,16 @@ See `resources/classPresentationGuidelines.pdf` for the full SP25 guidelines (re
 
 ### Late work
 
-- If you have a serious illness, please contact Joe as soon as possible. Once you are feeling well enough, we will decide togetehr on a set of revise course deadlines. 
+- If you have a serious illness, please contact Joe as soon as possible. Once you are feeling well enough, we will decide together on a set of revised course deadlines.
 - You get 3 *free* late days that can be used across the programming assignments.
-- For other coursework, late work is not accepted (except for serious illness or other life emergencies). For weekly written reflections, just do a different week. If you will need to be late, please notify Joe as soon as possible. 
+- For other coursework, late work is not accepted (except for serious illness or other life emergencies). For weekly written reflections, just do a different week. If you will need to be late, please notify Joe as soon as possible.
 
 ### AI tools
 
-You are welcome to use AI tools (ChatGPT, Claude, Copilot, etc.) as a resource for technical problems — debugging, looking up syntax, understanding a new concept. For technical work, banning them would be counterproductive.
+You are welcome to use AI tools (ChatGPT, Claude, Copilot, etc.) as a resource for technical problems — debugging, looking up syntax, understanding a new concept. The real bar is understanding, not provenance:
 
-However:
-
-- **Do not** ask AI tools to produce answers to quiz or assignment questions directly.
-- **Your answers must be written primarily in your own words.** AI can inform your answer; it cannot be your answer.
-- **Document and cite your AI use** in any submitted work. If you used an AI tool in meaningful ways while preparing a reflection, assignment, or project artifact, include a short note at the end: which tool, what for.
-- You are responsible for everything you submit. If the AI produces something incorrect and you copy it in, the mistake is yours.
+- **You must understand everything you submit** well enough to defend and discuss it orally, without AI assistance. If you can't explain what your solution does and why, it isn't really yours yet — keep working on it before submitting.
+- **You are responsible for everything you submit.** If an AI tool produces something incorrect and you turn it in, the mistake is counted as yours.
 
 ### Plagiarism
 
