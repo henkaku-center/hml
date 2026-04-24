@@ -2446,7 +2446,7 @@ Slide 3: 'Multiply the prior and likelihood columns. Sum for the evidence. Same 
 Slide 4: 'Divide each numerator by the evidence. Posterior 0.95/0.05. Punchline: notice we did the SAME four-row table as the sick-friend problem in Block 4. The only difference: the likelihood row\'s values come from a Gaussian density evaluated at D instead of a discrete probability P(D|H). Bayes\' rule itself doesn\'t care whether the likelihood is a probability or a density — the same multiply-and-normalize moves work.'
 :::
 
-## Break — 5 minutes {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Break — 5 minutes]{.lang-en}[休憩 — 5分]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ![](images/week2_catpic.jpg){fig-align="center" width="30%" style="max-height: 50vh; margin-top: 2.2em;"}
 
@@ -3487,15 +3487,25 @@ Slide 3: 'Asymptotic behavior: as N grows, the prior term becomes negligible and
 
 ## Presentations — why and what
 
+::: {.lang-en}
 **Each of you presents ONCE during the semester.**
 
 20 min presentation + 10-15 min discussion you facilitate.
 
 [7.5% of grade.  Reflections dropped 15% → 12.5% to make room.]{.dim}
 
-
-
 [**Meet with me in office hours the week before your slot.**]{.accent}
+:::
+
+::: {.lang-ja}
+**各自、学期中に1回発表します。**
+
+20分の発表 + 10–15分のディスカッション（発表者が進行役）。
+
+[成績の7.5%。リフレクションを15%→12.5%に減らして枠を作った。]{.dim}
+
+[**発表の前の週にオフィスアワーで相談しに来てください。**]{.accent}
+:::
 
 
 ::: {.notes}
@@ -3504,6 +3514,7 @@ Slide 3: 'Asymptotic behavior: as N grows, the prior term becomes negligible and
 
 ## Rubric — 5 points
 
+::: {.lang-en}
 Understanding of the paper              1.5
 
 Covering key aspects                      1.5
@@ -3514,11 +3525,26 @@ Discussion questions (at least 3)        0.5
 
 Appropriate use of time                    0.5
 
-
-
 [*Focus: how the math connects to cognitive science.*]{.dim}
 
 [Full guidelines:  resources/classPresentationGuidelines.pdf  (emailed today).]{.dim}
+:::
+
+::: {.lang-ja}
+論文の理解度                                         1.5
+
+主要な論点のカバー                                 1.5
+
+発表の明瞭さ                                          1.0
+
+ディスカッションの質問（最低3つ）            0.5
+
+時間の適切な使い方                                 0.5
+
+[*焦点：数学と認知科学との結びつき方。*]{.dim}
+
+[ガイドライン全文：  resources/classPresentationGuidelines.pdf  （本日メール送信）。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -3527,6 +3553,7 @@ Appropriate use of time                    0.5
 
 ## Signup — a tour of the semester {.smaller}
 
+::: {.lang-en}
 [Pick your top-3 weeks on Slack #hml-2026 by Wed May 13.  Papers below are ONE candidate per week — full list on the readings page.]{.dim}
 
 |  | **week + topic** | **a paper you might present** |
@@ -3542,6 +3569,25 @@ Appropriate use of time                    0.5
 | W12 (Jul 17) | Ethics + adversarial ML | **Caliskan et al 2017** — human-like bias in word embeddings |
 
 [*Each week has 2–4 candidate papers on the site.  You pick one once assigned.*]{.dim}
+:::
+
+::: {.lang-ja}
+[Slack #hml-2026 で希望週の上位3つを5月13日（水）までに選ぶ。下の論文は各週1つの候補例 — 完全版は readings ページに。]{.dim}
+
+|  | **週 + 話題** | **発表候補の一例** |
+|:---|:---|:---|
+| W4 (5/22) | 一般化 + 階層ベイズ | **Tenenbaum & Griffiths 2001** — ベイズ的一般化の定番 |
+| W5 (5/29) | ベイジアンネット + 因果ベイジアンネット | **Gerstenberg et al 2015** — 反事実としての因果判断 |
+| W6 (6/5) | マルコフ連鎖 + ネットワーク | **Abbott, Austerweil & Griffiths 2012** — ランダムウォークとしての記憶 |
+| W7 (6/12) | モンテカルロ | **Vul et al 2009** — 認知における「1回きりのサンプリング」 |
+| W8 (6/19) | SDT / MDP / RL | **Daw et al 2005** — モデルベース vs. モデルフリーの強化学習 |
+| W9 (6/26) | 逆強化学習 + 社会的認知 | **Baker, Saxe & Tenenbaum 2009** — 行動理解を逆プランニングとして |
+| W10 (7/3) | ベイジアンノンパラメトリクス | **Austerweil & Griffiths 2013** — IBP による特徴学習 |
+| W11 (7/10) | 深層ニューラルネット + LLM | **Lake et al 2017** — 人間のように学習する機械を作る |
+| W12 (7/17) | 倫理 + 敵対的機械学習 | **Caliskan et al 2017** — 単語埋め込みに現れる人間的バイアス |
+
+[*各週には2–4つの候補論文がサイトに掲載されている。  割り当てが決まったら、その中から1つ選ぶ。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -3570,21 +3616,33 @@ Appropriate use of time                    0.5
 
 ## Syllabus — three things changed
 
+::: {.lang-en}
 **① 12 sessions, not 13.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;[No class May 1 AND May 8. Week 3 is Friday May 15.]{.dim}
-
-
 
 **② Reflections: 6 of 12, not 8 of 13.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;[~200 words, pre-class, pass/fail.]{.dim}
 
-
-
 **③ Paper presentations exist → 7.5%.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;[Reflections dropped 15% → 12.5% to make room.]{.dim}
+:::
+
+::: {.lang-ja}
+**① セッションは13回ではなく12回。**
+
+&nbsp;&nbsp;&nbsp;&nbsp;[5月1日と5月8日は休講。第3週は5月15日（金）から。]{.dim}
+
+**② リフレクション：13回中8回ではなく、12回中6回。**
+
+&nbsp;&nbsp;&nbsp;&nbsp;[~200語、授業前、合否のみ。]{.dim}
+
+**③ 論文発表を導入 → 7.5%。**
+
+&nbsp;&nbsp;&nbsp;&nbsp;[その分、リフレクションを15%→12.5%に減らした。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -3593,9 +3651,8 @@ Appropriate use of time                    0.5
 
 ## Week 3 — readings + homework
 
+::: {.lang-en}
 Next class:   Friday May 15  —  Week 3: Conjugate Bayes + Topics.
-
-
 
 **Required reading:**
 
@@ -3605,9 +3662,22 @@ Next class:   Friday May 15  —  Week 3: Conjugate Bayes + Topics.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[*— formalizes today's Gaussian-Gaussian update.*]{.dim}
 
-
-
 [Ungraded self-check: "Intro Probability Theory 1" quiz.]{.dim}
+:::
+
+::: {.lang-ja}
+次回の授業：   5月15日（金）  —  第3週：共役ベイズ + トピックモデル。
+
+**必読：**
+
+&nbsp;&nbsp;• 教科書 T3 第1章   （チバニーの謎のお弁当 — 話の全容）
+
+&nbsp;&nbsp;• 教科書 T3 第4章   （ガウス分布でのベイズ学習）
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[*— 今日のガウス-ガウス更新を正式化する。*]{.dim}
+
+[成績外の自己確認：「Intro Probability Theory 1」クイズ。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -3616,13 +3686,12 @@ Next class:   Friday May 15  —  Week 3: Conjugate Bayes + Topics.
 
 ## Preview — the arc from here
 
+::: {.lang-en}
 Week 3:  Conjugacy proper.  Beta-Binomial + Gaussian-Gaussian.
 
 Week 4:  Hierarchical Bayes.  Chibany's distribution of tonkatsu rates.
 
 Week 5:  Bayes nets + causal.
-
-
 
 [Weeks 6-7:  Markov chains, Monte Carlo  (sampling-based L2).]{.dim}
 
@@ -3630,9 +3699,24 @@ Week 5:  Bayes nets + causal.
 
 [Weeks 11-12:  Deep NNs, ethics  —  contemporary ML.]{.dim}
 
-
-
 [**Thanks — see you May 15.**]{.accent}
+:::
+
+::: {.lang-ja}
+第3週：  共役性をきちんと。  ベータ-二項 + ガウス-ガウス。
+
+第4週：  階層ベイズ。  チバニーのとんかつ率の分布。
+
+第5週：  ベイジアンネット + 因果。
+
+[第6-7週：  マルコフ連鎖、モンテカルロ  （サンプリングベースのL2）。]{.dim}
+
+[第8-10週：  決定理論、RL、逆RL、ノンパラメトリクス。]{.dim}
+
+[第11-12週：  深層NN、倫理  —  現代の機械学習。]{.dim}
+
+[**ありがとう — 5月15日に会いましょう。**]{.accent}
+:::
 
 
 ::: {.notes}
