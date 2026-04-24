@@ -3100,7 +3100,13 @@ Slide 4: 'The new μ and σ come from matching coefficients. A (coefficient of �
 
 ![](images/precision.png){fig-align="center" width="75%"}
 
+::: {.lang-en}
 [Sharper curve = higher precision = more confident (more weight in the update).]{.dim}
+:::
+
+::: {.lang-ja}
+[鋭い曲線 = 高い精度 = 自信が強い（更新時により大きな重み）。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -3109,13 +3115,25 @@ Pause. Two Gaussians, same mean, different widths. The sharp one is more precise
 
 ## Plug in the numbers  —  posterior  =  prior × likelihood, rescaled
 
+::: {.lang-en}
 **The update formulas  (from the derivation):**
+:::
 
+::: {.lang-ja}
+**更新式（導出からの結果）：**
+:::
 
 
 $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{\sigma_0^2} + \frac{1}{\sigma^2} \qquad\qquad \mu_{\text{post}} \;=\; \sigma^2_{\text{post}} \left( \frac{\mu_0}{\sigma_0^2} + \frac{D}{\sigma^2} \right)$$
 
+
+::: {.lang-en}
 [*Intuition:   precisions add.  $\mu_{\text{post}}$ = precision-weighted average.*]{.yellow}
+:::
+
+::: {.lang-ja}
+[*直感：   精度は足し算。  $\mu_{\text{post}}$ = 精度で重み付けした平均。*]{.yellow}
+:::
 
 
 ::: {.notes}
@@ -3124,19 +3142,33 @@ Slide 1: 'The formulas. Precisions add. Posterior mean is precision-weighted ave
 
 ## Plug in the numbers  —  posterior  =  prior × likelihood, rescaled (2/4)
 
+::: {.lang-en}
 **The update formulas  (from the derivation):**
+:::
 
+::: {.lang-ja}
+**更新式（導出からの結果）：**
+:::
 
 
 $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{\sigma_0^2} + \frac{1}{\sigma^2} \qquad\qquad \mu_{\text{post}} \;=\; \sigma^2_{\text{post}} \left( \frac{\mu_0}{\sigma_0^2} + \frac{D}{\sigma^2} \right)$$
 
+
+::: {.lang-en}
 [*Intuition:   precisions add.  $\mu_{\text{post}}$ = precision-weighted average.*]{.yellow}
-
-
 
 Numbers:
 
 $\sigma_0^2 = 400$ (prior),   $\sigma^2 = 900$ (data),   $\mu_0 = 500$,   $D = 510$
+:::
+
+::: {.lang-ja}
+[*直感：   精度は足し算。  $\mu_{\text{post}}$ = 精度で重み付けした平均。*]{.yellow}
+
+数値：
+
+$\sigma_0^2 = 400$ （事前分布）、   $\sigma^2 = 900$ （データ）、   $\mu_0 = 500$、   $D = 510$
+:::
 
 
 ::: {.notes}
@@ -3145,31 +3177,59 @@ Slide 2: 'The inputs.'
 
 ## Plug in the numbers  —  posterior  =  prior × likelihood, rescaled (3/4) {.smaller}
 
+::: {.lang-en}
 **The update formulas  (from the derivation):**
+:::
 
+::: {.lang-ja}
+**更新式（導出からの結果）：**
+:::
 
 
 $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{\sigma_0^2} + \frac{1}{\sigma^2} \qquad\qquad \mu_{\text{post}} \;=\; \sigma^2_{\text{post}} \left( \frac{\mu_0}{\sigma_0^2} + \frac{D}{\sigma^2} \right)$$
 
+
+::: {.lang-en}
 [*Intuition:   precisions add.  $\mu_{\text{post}}$ = precision-weighted average.*]{.yellow}
-
-
 
 Numbers:
 
 $\sigma_0^2 = 400$ (prior),   $\sigma^2 = 900$ (data),   $\mu_0 = 500$,   $D = 510$
+:::
+
+::: {.lang-ja}
+[*直感：   精度は足し算。  $\mu_{\text{post}}$ = 精度で重み付けした平均。*]{.yellow}
+
+数値：
+
+$\sigma_0^2 = 400$ （事前分布）、   $\sigma^2 = 900$ （データ）、   $\mu_0 = 500$、   $D = 510$
+:::
 
 
 
+::: {.lang-en}
 Posterior variance:
+:::
+
+::: {.lang-ja}
+事後分散：
+:::
+
 
 $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{400} + \frac{1}{900} \;=\; \frac{9}{3600} + \frac{4}{3600} \;=\; \frac{13}{3600}$$
 
+
+::: {.lang-en}
 [**$\sigma^2_{\text{post}} \approx 277$,     $\sigma_{\text{post}} \approx 16.6$**]{.accent}
 
-
-
 [*Tighter than both inputs (20 and 30). Adding precisions REDUCES uncertainty.*]{.green}
+:::
+
+::: {.lang-ja}
+[**$\sigma^2_{\text{post}} \approx 277$、     $\sigma_{\text{post}} \approx 16.6$**]{.accent}
+
+[*両方の入力（20 と 30）より狭い。精度を足し合わせることで不確実性が**減る**。*]{.green}
+:::
 
 
 ::: {.notes}
@@ -3178,45 +3238,77 @@ Slide 3: 'Posterior variance. 1/400 + 1/900 combines on 3600. Gets you 13/3600, 
 
 ## Plug in the numbers  —  posterior  =  prior × likelihood, rescaled (4/4) {.smaller}
 
+::: {.lang-en}
 **The update formulas  (from the derivation):**
+:::
 
+::: {.lang-ja}
+**更新式（導出からの結果）：**
+:::
 
 
 $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{\sigma_0^2} + \frac{1}{\sigma^2} \qquad\qquad \mu_{\text{post}} \;=\; \sigma^2_{\text{post}} \left( \frac{\mu_0}{\sigma_0^2} + \frac{D}{\sigma^2} \right)$$
 
+
+::: {.lang-en}
 [*Intuition:   precisions add.  $\mu_{\text{post}}$ = precision-weighted average.*]{.yellow}
-
-
 
 Numbers:
 
 $\sigma_0^2 = 400$ (prior),   $\sigma^2 = 900$ (data),   $\mu_0 = 500$,   $D = 510$
 
-
-
 Posterior variance:
+:::
+
+::: {.lang-ja}
+[*直感：   精度は足し算。  $\mu_{\text{post}}$ = 精度で重み付けした平均。*]{.yellow}
+
+数値：
+
+$\sigma_0^2 = 400$ （事前分布）、   $\sigma^2 = 900$ （データ）、   $\mu_0 = 500$、   $D = 510$
+
+事後分散：
+:::
+
 
 $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{400} + \frac{1}{900} \;=\; \frac{9}{3600} + \frac{4}{3600} \;=\; \frac{13}{3600}$$
 
+
+::: {.lang-en}
 [**$\sigma^2_{\text{post}} \approx 277$,     $\sigma_{\text{post}} \approx 16.6$**]{.accent}
-
-
 
 [*Tighter than both inputs (20 and 30). Adding precisions REDUCES uncertainty.*]{.green}
 
-
-
 Posterior mean:
+:::
+
+::: {.lang-ja}
+[**$\sigma^2_{\text{post}} \approx 277$、     $\sigma_{\text{post}} \approx 16.6$**]{.accent}
+
+[*両方の入力（20 と 30）より狭い。精度を足し合わせることで不確実性が**減る**。*]{.green}
+
+事後平均：
+:::
+
 
 $$\mu_{\text{post}} \;=\; 277 \cdot \left( \frac{500}{400} + \frac{510}{900} \right) \;=\; 277 \cdot (1.250 + 0.567)$$
 
+
+::: {.lang-en}
 [**$\;=\; 277 \cdot 1.817 \;\approx\; 503.1$**]{.accent}
-
-
 
 [*Moved from prior (500) toward data (510), but stayed closer to prior*]{.dim}
 
 [*— because prior precision (1/400) > data precision (1/900).*]{.dim}
+:::
+
+::: {.lang-ja}
+[**$\;=\; 277 \cdot 1.817 \;\approx\; 503.1$**]{.accent}
+
+[*事前分布（500）からデータ（510）の方向に動いたが、事前分布寄りに留まった*]{.dim}
+
+[*— 事前分布の精度 (1/400) > データの精度 (1/900) だから。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -3227,7 +3319,13 @@ Slide 4: 'Posterior mean ≈ 503.1. Moved from 500 toward 510 but mostly stayed 
 
 ![](images/gg_update.png){fig-align="center" width="75%"}
 
+::: {.lang-en}
 [Red = prior. Blue = likelihood. Yellow = posterior (tighter; between both).]{.dim}
+:::
+
+::: {.lang-ja}
+[赤 = 事前分布。青 = 尤度。黄色 = 事後分布（狭く、両者の間）。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -3236,11 +3334,21 @@ THE payoff visual. Pause. Red prior, blue likelihood, yellow posterior. The post
 
 ## Bridge to Week 3 — N observations, precisions keep adding
 
+::: {.lang-en}
 One observation:   precision added $= 1/\sigma^2$.
 
 Two observations: precision added $= 2/\sigma^2$.
 
 [**N observations:    precision added $= N/\sigma^2$.**]{.accent}
+:::
+
+::: {.lang-ja}
+観測1回：   加わる精度 $= 1/\sigma^2$。
+
+観測2回：   加わる精度 $= 2/\sigma^2$。
+
+[**観測N回：    加わる精度 $= N/\sigma^2$。**]{.accent}
+:::
 
 
 ::: {.notes}
@@ -3249,12 +3357,21 @@ Slide 1: 'Each independent observation adds precision 1/σ². Two observations =
 
 ## Bridge to Week 3 — N observations, precisions keep adding (2/3)
 
+::: {.lang-en}
 One observation:   precision added $= 1/\sigma^2$.
 
 Two observations: precision added $= 2/\sigma^2$.
 
 [**N observations:    precision added $= N/\sigma^2$.**]{.accent}
+:::
 
+::: {.lang-ja}
+観測1回：   加わる精度 $= 1/\sigma^2$。
+
+観測2回：   加わる精度 $= 2/\sigma^2$。
+
+[**観測N回：    加わる精度 $= N/\sigma^2$。**]{.accent}
+:::
 
 
 $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{\sigma_0^2} + \frac{N}{\sigma^2} \qquad\qquad \mu_{\text{post}} \;=\; \sigma^2_{\text{post}} \left( \frac{\mu_0}{\sigma_0^2} + \frac{\sum_i D_i}{\sigma^2} \right)$$
@@ -3266,28 +3383,47 @@ Slide 2: 'The general formulas. Σ_i D_i is the sum of observed weights.'
 
 ## Bridge to Week 3 — N observations, precisions keep adding (3/3)
 
+::: {.lang-en}
 One observation:   precision added $= 1/\sigma^2$.
 
 Two observations: precision added $= 2/\sigma^2$.
 
 [**N observations:    precision added $= N/\sigma^2$.**]{.accent}
+:::
 
+::: {.lang-ja}
+観測1回：   加わる精度 $= 1/\sigma^2$。
+
+観測2回：   加わる精度 $= 2/\sigma^2$。
+
+[**観測N回：    加わる精度 $= N/\sigma^2$。**]{.accent}
+:::
 
 
 $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{\sigma_0^2} + \frac{N}{\sigma^2} \qquad\qquad \mu_{\text{post}} \;=\; \sigma^2_{\text{post}} \left( \frac{\mu_0}{\sigma_0^2} + \frac{\sum_i D_i}{\sigma^2} \right)$$
 
 
-
+::: {.lang-en}
 As N grows:
 
 - $1/\sigma^2_{\text{post}} \;\to\; \infty$     (posterior gets sharp)
 - $\mu_{\text{post}} \;\to\;$ mean of observed weights     (data dominates)
 
-
-
 [**More data  →  sharper posterior, pulled toward sample mean.**]{.yellow}
 
 [*This single formula underlies much of Weeks 3 and 4.*]{.dim}
+:::
+
+::: {.lang-ja}
+N が大きくなるにつれて：
+
+- $1/\sigma^2_{\text{post}} \;\to\; \infty$     （事後分布が鋭くなる）
+- $\mu_{\text{post}} \;\to\;$ 観測値の平均     （データが支配する）
+
+[**データが増える  →  事後分布が鋭くなり、サンプル平均に引き寄せられる。**]{.yellow}
+
+[*この1つの式が、第3週と第4週の大部分を支える。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -3296,19 +3432,33 @@ Slide 3: 'Asymptotic behavior: as N grows, the prior term becomes negligible and
 
 ## Closing the arc — same flow, three specializations {.smaller}
 
+::: {.lang-en}
 |  | **prior** | **likelihood** | **which slide** |
 |:---|:---:|:---:|:---:|
 | Discrete joint  (sick friend, bento lunch & dinner) | discrete  $P(H)$ | discrete  $P(D \mid H)$ | Block: sick-friend table, bento 2×2 |
 | Discrete-prior continuous-likelihood  (today's bento weight) | discrete  $P(H)$ | [**Gaussian density**  $f(D \mid H)$]{.yellow} | Block: 450 g worked example |
 | Continuous everywhere  (Gaussian-Gaussian) | [**Gaussian density**  $P(\mu)$]{.yellow} | [**Gaussian density**  $f(D \mid \mu)$]{.yellow} | Block: this just-ended block |
 
-
-
 [**Same Bayes flow throughout.  The boxes stuffed with different objects.**]{.accent}
 
 [**Named payoff:**  $\text{Gaussian} \times \text{Gaussian} = \text{Gaussian}$    →   the posterior stays in the prior's family.   This is **conjugacy**.]{.yellow}
 
 [*Week 3 does the same trick on the discrete side:   Beta × Binomial, Dirichlet × Multinomial.*]{.dim}
+:::
+
+::: {.lang-ja}
+|  | **事前分布** | **尤度** | **該当スライド** |
+|:---|:---:|:---:|:---:|
+| 離散の同時分布  （風邪の友人、昼食と夕食のお弁当） | 離散  $P(H)$ | 離散  $P(D \mid H)$ | ブロック: 風邪の表、お弁当 2×2 |
+| 離散事前・連続尤度  （今日のお弁当の重さ） | 離散  $P(H)$ | [**ガウス密度**  $f(D \mid H)$]{.yellow} | ブロック: 450g の計算例 |
+| すべてが連続  （ガウス-ガウス） | [**ガウス密度**  $P(\mu)$]{.yellow} | [**ガウス密度**  $f(D \mid \mu)$]{.yellow} | ブロック: 今終わったばかりのもの |
+
+[**ずっと同じベイズの流れ。箱に入る中身が変わっただけ。**]{.accent}
+
+[**名前付きの成果物：**  $\text{Gaussian} \times \text{Gaussian} = \text{Gaussian}$    →   事後分布が事前分布と同じファミリーに留まる。   これが**共役性**。]{.yellow}
+
+[*第3週には離散側で同じトリックをやる：   Beta × Binomial、Dirichlet × Multinomial。*]{.dim}
+:::
 
 
 ::: {.notes}
