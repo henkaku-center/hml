@@ -802,17 +802,17 @@ $$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
 
 
 
-Chibany: encode meal numerically.  tonkatsu = 1, hamburger = 0.
+Chibany's idealized bento weight:  500 g if tonkatsu, 350 g if hamburger.
 
-$$\mathbb{E}[\text{meal}] \;=\; 1 \cdot 0.7 \;+\; 0 \cdot 0.3 \;=\; 0.7$$
+$$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
 
 
 
-[The expected value of an indicator IS the probability.]{.yellow}
+[*Average weight over many days — not the weight of any single bento.*]{.dim}
 
 
 ::: {.notes}
-Slide 2: 'Encode meal as 1/0. Then E[meal] equals the probability. Key trick — we use it constantly in RL and in hypothesis testing.'
+Slide 2: 'Expected value of bento weight. 455 g is the long-run average — not a bento that actually shows up (no bento weighs 455 g in this idealization). That\'s the whole point of E[X]: a summary statistic of the distribution, not a realized value.'
 :::
 
 ## Expected value  E[X] (3/4)
@@ -829,25 +829,19 @@ $$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
 
 
 
-Chibany: encode meal numerically.  tonkatsu = 1, hamburger = 0.
+Chibany's idealized bento weight:  500 g if tonkatsu, 350 g if hamburger.
 
-$$\mathbb{E}[\text{meal}] \;=\; 1 \cdot 0.7 \;+\; 0 \cdot 0.3 \;=\; 0.7$$
-
-
-
-[The expected value of an indicator IS the probability.]{.yellow}
+$$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
 
 
 
 Variance:     $\mathrm{Var}[X] \;=\; \mathbb{E}\!\left[(X - \mathbb{E}[X])^2\right] \;=\; \mathbb{E}[X^2] - \mathbb{E}[X]^2$
 
-For $\mathrm{Bernoulli}(p)$:     $\mathrm{Var} = p(1-p)$
-
-**Bento meal:   Var = 0.21,   σ ≈ 0.46**
+**Bento weight:   Var = $(500 - 455)^2 \cdot 0.7 + (350 - 455)^2 \cdot 0.3 = 4725\; \text{g}^2,\;\;\sigma \approx 68.7$ g**
 
 
 ::: {.notes}
-Slide 3: 'Variance. Spread. For Bernoulli(p), it simplifies to p(1-p). Maxed at p=0.5; smaller at the extremes.'
+Slide 3: 'Variance is the expected squared deviation from the mean. Units are squared; standard deviation (sigma) puts us back in grams. The 68.7 g number is the spread you\'d see flipping between tonkatsu and hamburger days — it\'s not the within-meal weight noise we\'ll add in Block 6 (that\'s the Gaussian sigma = 30g). Different sources of variability.'
 :::
 
 ## Expected value  E[X] (4/4)
@@ -864,21 +858,15 @@ $$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
 
 
 
-Chibany: encode meal numerically.  tonkatsu = 1, hamburger = 0.
+Chibany's idealized bento weight:  500 g if tonkatsu, 350 g if hamburger.
 
-$$\mathbb{E}[\text{meal}] \;=\; 1 \cdot 0.7 \;+\; 0 \cdot 0.3 \;=\; 0.7$$
-
-
-
-[The expected value of an indicator IS the probability.]{.yellow}
+$$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
 
 
 
 Variance:     $\mathrm{Var}[X] \;=\; \mathbb{E}\!\left[(X - \mathbb{E}[X])^2\right] \;=\; \mathbb{E}[X^2] - \mathbb{E}[X]^2$
 
-For $\mathrm{Bernoulli}(p)$:     $\mathrm{Var} = p(1-p)$
-
-**Bento meal:   Var = 0.21,   σ ≈ 0.46**
+**Bento weight:   Var $\approx 4725\; \text{g}^2,\;\;\sigma \approx 68.7$ g**
 
 
 
@@ -890,7 +878,7 @@ For $\mathrm{Bernoulli}(p)$:     $\mathrm{Var} = p(1-p)$
 
 
 ::: {.notes}
-Slide 4: 'Mental model: mean = balance point, variance = width.'
+Slide 4: 'Mental model: mean = balance point, variance = width. These two numbers summarize an enormous amount. Every distribution we meet has them. Gaussians are defined by exactly these two numbers.'
 :::
 
 ## Bernoulli distribution
@@ -947,31 +935,23 @@ $X \sim \mathrm{Bernoulli}(p)$     means:
 
 
 
-[One flip of a weighted coin. One parameter: p.]{.dim}
+**The indicator of an event  $E$:**
 
-[*Shift of focus:  last block was about today's LUNCH-and-DINNER (coordinated — dependent).*]{.dim}
+$$\mathbb{1}\{E\} \;=\; \begin{cases} 1 & \text{if } E \text{ happens} \\ 0 & \text{otherwise} \end{cases}$$
 
-[*From here on, one meal at a time — each meal is its own independent Bernoulli(0.7) draw.*]{.dim}
-
-
-
-**Chibany:  $\text{meal}_{\text{today}} \sim \mathrm{Bernoulli}(0.7)$.**
-
-&nbsp;&nbsp;&nbsp;&nbsp;P(meal_today = tonkatsu) = 0.7
-
-&nbsp;&nbsp;&nbsp;&nbsp;P(meal_today = hamburger) = 0.3
+So  $\mathbb{1}\{\text{meal} = \text{tonkatsu}\} \;\sim\; \mathrm{Bernoulli}(0.7)$.
 
 
 
-[Today we treat  p = 0.7  as GIVEN.]{.dim}
+[**$\mathbb{E}\!\left[\mathbb{1}\{E\}\right] \;=\; 1 \cdot P(E) + 0 \cdot P(\text{not } E) \;=\; P(E)$**]{.yellow}
 
-[**Next week: we ask where p comes from, and infer it from data.**]{.accent}
+[The expected value of an indicator IS the probability of the event.]{.dim}
 
-[The conjugate prior on p is the Beta distribution — Week 3.]{.dim}
+[Used constantly downstream — RL rewards, hypothesis testing, loss functions.]{.dim}
 
 
 ::: {.notes}
-Slide 3: 'Flag: in Week 3 we shift gears and INFER p from observed counts. That\'s what conjugacy enables — we\'ll put a prior on p '(Beta distribution) and use Bayes to update.'
+Slide 3: 'Define indicator explicitly: a 1/0 random variable tied to an event. Show the indicator of "meal is tonkatsu" is exactly a Bernoulli(0.7) — because the event has probability 0.7. Then the punchline: E[indicator] = P(event). That identity is the bridge between expectations and probabilities that we\'ll use constantly — it\'s how "expected reward" in RL reduces to "probability of goal," how 0/1 loss gives you the error rate, and how hypothesis testing and calibration both become E-of-indicator calculations. Next slide / week: where does p = 0.7 come from? Week 3 puts a prior on p and infers it from counts — the conjugate prior is the Beta distribution.'
 :::
 
 ## Binomial distribution
