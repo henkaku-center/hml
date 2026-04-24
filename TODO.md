@@ -48,6 +48,7 @@
 - [ ] Phase 3 (Slack): create `#paper-signups` and `#weekly-discussion` channels before Week 3; post per-week threads in `#paper-signups` after Week 2 class
 - [ ] Phase 4 (optional): GitHub Actions to auto-build on push
 - [ ] Fill in `presenter:` fields in `course/readings_map.yml` after Slack signups close (Fri May 15)
+- [ ] **Japanese translation toggle.** Integrate a one-click EN↔JA translation widget for the course site (home, syllabus, assignments, game plan, presentation guidelines). Adapt from Ira's APS lecture source — reuse the same toggle component/approach. Student body at Chiba Tech skews bilingual; this lowers the barrier for students whose English is strong enough for class but who want a quick translation of syllabus/policy details.
 
 ### SP26 New — Slide infrastructure
 - [ ] **Write a Quarto-qmd → pptx converter.** The Quarto deck is now the canonical slide source (week2-slides.qmd, etc.); the hand-written `build_slides_weekN.py` pptx track has diverged and is no longer maintained. Need a single-entry tool that reads the .qmd and emits a python-pptx Office deck preserving speaker notes, math (KaTeX → equation/image), the yellow-frame theme, and section breaks, so the pptx artifact can be regenerated from the canonical source instead of hand-edited in parallel. Until this exists, ignore the per-week `build_slides_weekN.py` scripts.

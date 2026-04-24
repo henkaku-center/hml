@@ -45,7 +45,7 @@ Students who successfully complete the course will be able to:
 
 Assignment weight rationale: the Monte Carlo assignment is weighted highest because it is the most demanding; the reinforcement-learning assignment is lightest because it comes with the most scaffolding code.
 
-With ~6 students in a seminar, attendance is self-evident and the paper presentation serves as the visible engagement signal — so participation is folded into those two components rather than graded separately.
+With a small seminar class, attendance is self-evident and the paper presentation serves as the visible engagement signal — so participation is folded into those two components rather than graded separately.
 
 ## Final project
 
@@ -73,15 +73,15 @@ Each student gives one 20-minute presentation of an assigned reading, followed b
 
 The focus of the presentation is **how the mathematical model connects to cognitive science, and the evidence the authors provide for that connection**. Plan to meet with Joe in office hours at least one week before your slot.
 
-Grading (out of 5 points):
+Grading (out of 7.5 points — matches the 7.5% course weight):
 
 | Criterion | Points |
 |---|---|
-| Understanding of the paper | 1.5 |
-| Covering key aspects of the paper | 1.5 |
-| Presentation clarity | 1.0 |
-| Appropriate discussion questions (at least 3) | 0.5 |
-| Appropriate use of time | 0.5 |
+| Understanding of the paper | 2.25 |
+| Covering key aspects of the paper | 2.25 |
+| Presentation clarity | 1.50 |
+| Appropriate discussion questions (at least 3) | 0.75 |
+| Appropriate use of time | 0.75 |
 
 Useful framing questions (adapted from Tom Griffiths — use these to organize your talk):
 
@@ -92,7 +92,7 @@ Useful framing questions (adapted from Tom Griffiths — use these to organize y
 5. How does the solution connect to human behavior — how does the model compare to human performance?
 6. What can we conclude? What is your own interpretation?
 
-See `resources/classPresentationGuidelines.pdf` for the full SP25 guidelines (reused for SP26).
+See the [presentation guidelines](presentation-guidelines.html) for the full rubric and preparation tips.
 
 ## Policies
 

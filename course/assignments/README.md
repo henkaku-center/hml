@@ -8,12 +8,12 @@ You have **3 free late days** that can be used across the programming assignment
 
 | Assignment | Assigned | Due | Weight | Topic |
 |---|---|---|---|---|
-| [Clusters](https://colab.research.google.com/github/henkaku-center/hml/blob/main/assignments/clusters.ipynb) | Week 3 (May 15) | **Week 5 (May 29)** | 7.5% | Mixture models & categorization |
-| Generalization | Week 4 (May 22) | **Week 6 (Jun 5)** | 7.5% | Bayesian generalization |
-| Monte Carlo | Week 7 (Jun 12) | **Week 9 (Jun 26)** | 10.5% | Monte Carlo methods |
-| Reinforcement Learning | Week 8 (Jun 19) | **Week 10 (Jul 3)** | 4.5% | MDPs & reinforcement learning |
+| [Clusters](https://colab.research.google.com/github/henkaku-center/hml/blob/main/assignments/clusters.ipynb) | Week 3 (May 15) | **Sun Jun 7, 5 PM** | 7.5% | Mixture models & categorization |
+| Generalization | Week 4 (May 22) | **Sun Jun 21, 5 PM** | 7.5% | Bayesian generalization |
+| Monte Carlo | Week 7 (Jun 12) | **Sun Jul 5, 5 PM** | 10.5% | Monte Carlo methods |
+| Reinforcement Learning | Week 8 (Jun 19) | **Sun Jul 12, 5 PM** | 4.5% | MDPs & reinforcement learning |
 
-Total assignments: **30%** of the course grade.
+Total assignments: **30%** of the course grade. The final-project proposal (pass/fail, tracked in the syllabus) is due **Sun Jun 28, 5 PM** — one week after the Generalization assignment.
 
 ## Assignment details
 

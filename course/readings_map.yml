@@ -32,12 +32,14 @@
 #
 # Paper-presentation policy
 # -------------------------
-# - Weeks 4–12 each have a presentation slot (9 slots, 6 students).
-# - Students sign up for one slot, and for that slot they pick ONE paper from
-#   `presentation_candidates` via a Slack thread in #paper-signups.
-# - The 3 unclaimed slots get filled by instructor short-talks on modern
-#   follow-up papers (LLM / RLHF / alignment / interpretability).
-# - Full guidelines: resources/classPresentationGuidelines.pdf
+# - Weeks 4–12 each have a presentation slot (9 slots, 4 students).
+# - Students DM Prof. Austerweil on Slack with (a) the week they want and
+#   (b) their top-3 ranked papers from that week's presentation_candidates.
+#   Deadline: Wed May 13 (Week 3). Assignments published Fri May 15.
+# - Some weeks will have no presenter — that's fine. Those weeks skip
+#   straight from lecture to discussion.
+# - Full guidelines: presentation-guidelines.html (student-facing on the
+#   course site).
 #
 # Modernization notes (added for SP26)
 # ------------------------------------

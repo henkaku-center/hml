@@ -27,6 +27,7 @@
   <a href="syllabus.html">Syllabus</a>
   <a href="assignments.html">Assignments</a>
   <a href="readings.html">Readings</a>
+  <a href="reading-game-plan.html">Game plan</a>
   <a href="https://josephausterweil.github.io/probintro/">Textbook</a>
 </nav>
 
@@ -121,6 +122,13 @@
 <section>
   <div class="container">
     <div class="info-row">
+      <div class="info-card">
+        <h3>Grading</h3>
+        <ul>
+          {% for name, pct in grading %}<li>{{ name }} &mdash; <strong>{{ pct }}</strong></li>{% endfor %}
+        </ul>
+        <p style="color:var(--muted);font-size:0.8rem;margin-top:0.75rem;font-weight:300;">Full breakdown on the <a href="syllabus.html">syllabus</a>.</p>
+      </div>
       <div class="info-card">
         <h3>Assignments</h3>
         <ul>

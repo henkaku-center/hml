@@ -94,6 +94,13 @@ INFO_CARDS = {
     ],
 }
 
+GRADING = [
+    ("Final project", "50%"),
+    ("Programming assignments (4)", "30%"),
+    ("Weekly discussion posts", "12.5%"),
+    ("Paper presentation", "7.5%"),
+]
+
 # Week dates (SP26 calendar: Apr 17 through Jul 17, no class May 1 or May 8)
 # Keys are *directory* week numbers (weekNN_ dirs); values are display dates.
 # Week 6 (Causal Bayes Nets) is dropped from the schedule.
@@ -400,6 +407,7 @@ def render_landing(env):
         highlights=HIGHLIGHTS,
         schedule=schedule,
         info=INFO_CARDS,
+        grading=GRADING,
     )
     (DOCS_DIR / "index.html").write_text(html, encoding="utf-8")
     print(f"  wrote index.html ({len(html):,} bytes)")
@@ -520,6 +528,25 @@ def render_assignments(env):
     print(f"  wrote assignments.html ({len(html):,} bytes)")
 
 
+def render_presentation_guidelines(env):
+    src_path = DOCS_DIR / "presentation-guidelines.md"
+    if not src_path.is_file():
+        return
+    src = src_path.read_text(encoding="utf-8")
+    content = render_assignments_content(src)  # strips H1, turns markdown into HTML
+    template = env.get_template("page.html")
+    html = template.render(
+        page_key="game-plan",
+        rel_root="",
+        page_title="Paper presentation guidelines",
+        eyebrow="Spring 2026",
+        page_sub="How to prepare your 15-minute paper presentation.",
+        content=content,
+    )
+    (DOCS_DIR / "presentation-guidelines.html").write_text(html, encoding="utf-8")
+    print(f"  wrote presentation-guidelines.html ({len(html):,} bytes)")
+
+
 def main():
     global CHAPTER_MAP
     if not TEMPLATES_DIR.is_dir():
@@ -533,6 +560,7 @@ def main():
     render_assignments(env)
     render_readings(env)
     render_game_plan(env)
+    render_presentation_guidelines(env)
     print("Done.")
 
 
