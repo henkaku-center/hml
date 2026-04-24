@@ -149,12 +149,12 @@ weeks:
         why: "Memory retrieval modeled as a random walk — concrete cognitive application of Markov chains on networks."
     optional: []
     presentation_candidates:
-      - citation: "Steyvers, M., & Tenenbaum, J. B. (2005). The large-scale structure of semantic networks: Statistical analyses and a model of semantic growth. Cognitive Science, 29(1), 41–78."
-        url: https://doi.org/10.1207/s15516709cog2901_3
-        why: "Small-world structure in semantic networks — sets the network for Abbott et al. 2012."
-      - citation: "Zemla, J. C., & Austerweil, J. L. (2018). Estimating semantic networks of groups and individuals from fluency data. Computational Brain & Behavior, 1, 36–58."
-        pdf: ZemlaAusterweil2018CBB.pdf
-        why: "Extends Abbott 2012 to estimating individual vs. group networks."
+      - citation: "Griffiths, T. L., Steyvers, M., & Firl, A. (2007). Google and the mind: Predicting fluency with PageRank. Psychological Science, 18(12), 1069–1076."
+        pdf: Griffiths2007.pdf
+        why: "8-page Psych Sci paper that uses the Steyvers-Tenenbaum small-world semantic network and applies PageRank — a random-walk algorithm — to predict fluency. Direct bridge from semantic-network structure to the Abbott 2012 random-walk-on-network model."
+      - citation: "Zemla, J. C., & Austerweil, J. L. (2019). Analyzing knowledge retrieval impairments associated with Alzheimer's disease using network analyses. Complexity, 2019, 4203158."
+        pdf: ZemlaAusterweil2019.pdf
+        why: "13-page paper applying fluency-based semantic-network estimation to Alzheimer's patients — clinical relevance plus instructor's own work. Shorter variant of the 2018 CBB paper."
       - citation: "Stella, M. (2018). Cohort and rhyme priming emerge from the multiplex network structure of the mental lexicon. Complexity."
         pdf: Stella2018.pdf
         why: "Modern multiplex-network model of mental lexicon priming."
