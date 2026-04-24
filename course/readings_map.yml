@@ -13,6 +13,12 @@
 #                  pdf:       filename in resources/readings/ (optional)
 #                  url:       external URL (optional; e.g. textbook chapters)
 #                  why:       one-sentence purpose (shows on the website).
+#                             STUDENT-FACING: describe pedagogical value
+#                             in terms the student can act on. DO NOT
+#                             include curation meta-notes (page counts,
+#                             "instructor's own work", "shorter variant
+#                             of...", "replacement for..."). Those belong
+#                             in commit messages, not in the UI.
 #   optional:    Same shape as `required`; not graded pre-class.
 #   presentation_candidates:
 #                Papers eligible for student paper-presentations in this week's
@@ -112,7 +118,7 @@ weeks:
         why: "Classic application of Bayesian generalization to word learning."
       - citation: "Kemp, C., Perfors, A., & Tenenbaum, J. B. (2007). Learning overhypotheses with hierarchical Bayesian models. Developmental Science, 10(3), 307–321."
         pdf: Kemp07.pdf
-        why: "Canonical hierarchical-Bayes-in-concept-learning paper — 15 pages, Dirichlet-multinomial, accessible from Week 2 machinery. Overhypotheses (shape bias, object/substance kinds) are the textbook example of hierarchical priors in cognition."
+        why: "Canonical hierarchical-Bayes model of concept learning. Overhypotheses (shape bias, object/substance kinds) are the textbook example of hierarchical priors in cognition."
       - citation: "Hornsby, A. N., Evans, T., Riefer, P. S., Prior, R., & Love, B. C. (2020). Conceptual organization is revealed by consumer activity patterns. Computational Brain & Behavior, 3, 162–173."
         pdf: Hornsby2020_Article_ConceptualOrganizationIsReveal.pdf
         why: "Recent extension of Bayesian categorization into real consumer data."
@@ -151,10 +157,10 @@ weeks:
     presentation_candidates:
       - citation: "Griffiths, T. L., Steyvers, M., & Firl, A. (2007). Google and the mind: Predicting fluency with PageRank. Psychological Science, 18(12), 1069–1076."
         pdf: Griffiths2007.pdf
-        why: "8-page Psych Sci paper that uses the Steyvers-Tenenbaum small-world semantic network and applies PageRank — a random-walk algorithm — to predict fluency. Direct bridge from semantic-network structure to the Abbott 2012 random-walk-on-network model."
+        why: "Uses the small-world structure of semantic networks and applies PageRank — a random-walk algorithm — to predict human fluency. A direct bridge from semantic-network structure to the Abbott 2012 random-walk-on-network model."
       - citation: "Zemla, J. C., & Austerweil, J. L. (2019). Analyzing knowledge retrieval impairments associated with Alzheimer's disease using network analyses. Complexity, 2019, 4203158."
         pdf: ZemlaAusterweil2019.pdf
-        why: "13-page paper applying fluency-based semantic-network estimation to Alzheimer's patients — clinical relevance plus instructor's own work. Shorter variant of the 2018 CBB paper."
+        why: "Applies fluency-based semantic-network estimation to Alzheimer's patients — a clinical case for the network-analysis methods introduced this week."
       - citation: "Stella, M. (2018). Cohort and rhyme priming emerge from the multiplex network structure of the mental lexicon. Complexity."
         pdf: Stella2018.pdf
         why: "Modern multiplex-network model of mental lexicon priming."
@@ -209,7 +215,7 @@ weeks:
     required:
       - citation: "Baker, C. L., Tenenbaum, J. B., & Saxe, R. R. (2007). Goal inference as inverse planning. Proc. CogSci."
         pdf: Bakeretal2007.pdf
-        why: "6-page CogSci proceedings version of the inverse-planning framework. Shorter precursor to the 2009 Cognition paper; same core model."
+        why: "Introduces the inverse-planning framework for goal inference: observers invert a probabilistic model of goal-dependent plans to infer what an agent was trying to do."
     optional: []
     presentation_candidates:
       - citation: "Ho, M. K., Littman, M. L., MacGlashan, J., Cushman, F., & Austerweil, J. L. (2016). Showing versus doing: Teaching by demonstration. NeurIPS."
@@ -238,13 +244,13 @@ weeks:
     presentation_candidates:
       - citation: "Gershman, S. J., & Blei, D. M. (2012). A tutorial on Bayesian nonparametric models. Journal of Mathematical Psychology, 56(1), 1–12."
         url: https://doi.org/10.1016/j.jmp.2011.08.004
-        why: "12-page tutorial covering CRP/DPMM and IBP — the short technical primer that pairs with the Oxford Handbook chapter without repeating it."
+        why: "Concise technical tutorial covering CRP/DPMM and the Indian Buffet Process — pairs with the Oxford Handbook chapter to give the formal underpinnings."
       - citation: "Gershman, S. J., Blei, D. M., & Niv, Y. (2010). Context, learning, and extinction. Psychological Review, 117(1), 197–209."
         pdf: Gershman2010.pdf
-        why: "13-page empirical application of the DPMM to Pavlovian conditioning — CRP for inferring latent causes from behavior. Bridges Week 9 (IRL) and Week 10."
+        why: "Applies the DPMM to Pavlovian conditioning — a CRP-based account of how animals infer latent causes from experience."
       - citation: "Austerweil, J. L. (2014). Testing the psychological validity of cluster construction biases. Proc. CogSci."
         pdf: AusterweilCogSci2014.pdf
-        why: "8-page empirical test of CRP/DPMM against human cluster construction using MCMC-with-People — instructor's own work. Direct replacement for the 2013 Psych Review feature paper at 1/4 the length."
+        why: "Empirical test of CRP/DPMM against human cluster construction using the MCMC-with-People method."
     presenter: null
     presented: null
 
