@@ -2520,9 +2520,17 @@ Hard 5 minutes. Come back sharp — the Gaussian-Gaussian update is the highest-
 
 ## Why would Chibany want to infer μ ?
 
+::: {.lang-en}
 So far Chibany asks:  "what's in TODAY's bento?"
 
 &nbsp;&nbsp;&nbsp;[Today's weight, 450g  →  posterior over today's meal.]{.dim}
+:::
+
+::: {.lang-ja}
+これまでチバニーが問うてきたのは：  「今日のお弁当は何？」
+
+&nbsp;&nbsp;&nbsp;[今日の重さ 450g  →  今日の食事についての事後確率。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2531,17 +2539,29 @@ Slide 1: 'Up to now, the question has been about today\'s meal. A discrete hypot
 
 ## Why would Chibany want to infer μ ? (2/3)
 
+::: {.lang-en}
 So far Chibany asks:  "what's in TODAY's bento?"
 
 &nbsp;&nbsp;&nbsp;[Today's weight, 450g  →  posterior over today's meal.]{.dim}
-
-
 
 **But to DO that well, Chibany needs to know:**
 
 &nbsp;&nbsp;&nbsp;[How much DO tonkatsu bentos typically weigh?]{.yellow}
 
 &nbsp;&nbsp;&nbsp;[*(We wrote "500" as if it were known. But is it?)*]{.dim}
+:::
+
+::: {.lang-ja}
+これまでチバニーが問うてきたのは：  「今日のお弁当は何？」
+
+&nbsp;&nbsp;&nbsp;[今日の重さ 450g  →  今日の食事についての事後確率。]{.dim}
+
+**でも、それを**うまく**やるには、チバニーは知る必要がある：**
+
+&nbsp;&nbsp;&nbsp;[とんかつのお弁当は**実際**どれくらいの重さ？]{.yellow}
+
+&nbsp;&nbsp;&nbsp;[*（「500」と書いたが、本当にわかっている？）*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2550,11 +2570,10 @@ Slide 2: 'But we wrote 500g as if we KNEW it. We don\'t really. This term is an 
 
 ## Why would Chibany want to infer μ ? (3/3)
 
+::: {.lang-en}
 So far Chibany asks:  "what's in TODAY's bento?"
 
 &nbsp;&nbsp;&nbsp;[Today's weight, 450g  →  posterior over today's meal.]{.dim}
-
-
 
 **But to DO that well, Chibany needs to know:**
 
@@ -2562,21 +2581,42 @@ So far Chibany asks:  "what's in TODAY's bento?"
 
 &nbsp;&nbsp;&nbsp;[*(We wrote "500" as if it were known. But is it?)*]{.dim}
 
-
-
 **Shift in perspective:**
 
 &nbsp;&nbsp;&nbsp;• Yesterday's Bayes:   H = today's MEAL  (discrete hypothesis)
 
 &nbsp;&nbsp;&nbsp;[• Today's Bayes:        H = tonkatsu's MEAN WEIGHT μ  (continuous parameter)]{.accent}
 
-
-
 *Why Bayesian inference on μ instead of just averaging?*
 
 &nbsp;&nbsp;[Because Chibany has PRIOR knowledge (last week), plus LIMITED data.]{.dim}
 
 &nbsp;&nbsp;[Averaging throws the prior away. Bayes combines both.]{.dim}
+:::
+
+::: {.lang-ja}
+これまでチバニーが問うてきたのは：  「今日のお弁当は何？」
+
+&nbsp;&nbsp;&nbsp;[今日の重さ 450g  →  今日の食事についての事後確率。]{.dim}
+
+**でも、それを**うまく**やるには、チバニーは知る必要がある：**
+
+&nbsp;&nbsp;&nbsp;[とんかつのお弁当は**実際**どれくらいの重さ？]{.yellow}
+
+&nbsp;&nbsp;&nbsp;[*（「500」と書いたが、本当にわかっている？）*]{.dim}
+
+**視点の転換：**
+
+&nbsp;&nbsp;&nbsp;• 昨日までのベイズ：   H = 今日の**食事**  （離散的な仮説）
+
+&nbsp;&nbsp;&nbsp;[• 今日からのベイズ：    H = とんかつの**平均重量** μ  （連続的なパラメータ）]{.accent}
+
+*なぜ単なる平均ではなく、μ のベイズ推論？*
+
+&nbsp;&nbsp;[チバニーには**事前**知識（先週分）がある上に、データが**限られている**から。]{.dim}
+
+&nbsp;&nbsp;[平均は事前知識を捨ててしまう。ベイズは両方を組み合わせる。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2585,15 +2625,21 @@ Slide 3: 'So now Bayesian inference is shifting: H = μ, a continuous parameter,
 
 ## Step 1 — the prior  μ ~ N(μ₀, σ₀²)
 
+::: {.lang-en}
 Chibany's belief about μ BEFORE observing any new weights:
-
-
 
 [**$\mu \;\sim\; N(\mu_0, \sigma_0^2)$**]{.accent}
 
-
-
 [*"I think μ is around μ₀, give or take σ₀."*]{.dim}
+:::
+
+::: {.lang-ja}
+新しい重さを観測する**前**のチバニーの μ についての信念：
+
+[**$\mu \;\sim\; N(\mu_0, \sigma_0^2)$**]{.accent}
+
+[*「μ はだいたい μ₀ くらい、誤差は σ₀ くらい。」*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2602,25 +2648,33 @@ Slide 1: 'Prior is a Gaussian over μ. Two hyperparameters: μ₀ and σ₀.'
 
 ## Step 1 — the prior  μ ~ N(μ₀, σ₀²) (2/3)
 
+::: {.lang-en}
 Chibany's belief about μ BEFORE observing any new weights:
-
-
 
 [**$\mu \;\sim\; N(\mu_0, \sigma_0^2)$**]{.accent}
 
-
-
 [*"I think μ is around μ₀, give or take σ₀."*]{.dim}
-
-
 
 From last week's memory:
 
 **$\mu_0 = 500$  (best guess)     $\sigma_0 = 20$  (uncertainty)**
 
-
-
 [**Prior:   μ  ~  N(500, 20²)**]{.accent}
+:::
+
+::: {.lang-ja}
+新しい重さを観測する**前**のチバニーの μ についての信念：
+
+[**$\mu \;\sim\; N(\mu_0, \sigma_0^2)$**]{.accent}
+
+[*「μ はだいたい μ₀ くらい、誤差は σ₀ くらい。」*]{.dim}
+
+先週の記憶から：
+
+**$\mu_0 = 500$  （最良の推定）     $\sigma_0 = 20$  （不確実性）**
+
+[**事前分布：   μ  ~  N(500, 20²)**]{.accent}
+:::
 
 
 ::: {.notes}
@@ -2629,37 +2683,49 @@ Slide 2: 'Chibany\'s best guess 500, uncertainty 20. Prior = N(500, 400).'
 
 ## Step 1 — the prior  μ ~ N(μ₀, σ₀²) (3/3)
 
+::: {.lang-en}
 Chibany's belief about μ BEFORE observing any new weights:
-
-
 
 [**$\mu \;\sim\; N(\mu_0, \sigma_0^2)$**]{.accent}
 
-
-
 [*"I think μ is around μ₀, give or take σ₀."*]{.dim}
-
-
 
 From last week's memory:
 
 **$\mu_0 = 500$  (best guess)     $\sigma_0 = 20$  (uncertainty)**
 
-
-
 [**Prior:   μ  ~  N(500, 20²)**]{.accent}
 
-
-
 [**The conceptual leap:   priors over PARAMETERS.**]{.yellow}
-
-
 
 The Gaussian is NOT over weights now. It's over μ.
 
 A prior is a distribution over anything hidden —
 
 [**including parameters of OTHER distributions.**]{.accent}
+:::
+
+::: {.lang-ja}
+新しい重さを観測する**前**のチバニーの μ についての信念：
+
+[**$\mu \;\sim\; N(\mu_0, \sigma_0^2)$**]{.accent}
+
+[*「μ はだいたい μ₀ くらい、誤差は σ₀ くらい。」*]{.dim}
+
+先週の記憶から：
+
+**$\mu_0 = 500$  （最良の推定）     $\sigma_0 = 20$  （不確実性）**
+
+[**事前分布：   μ  ~  N(500, 20²)**]{.accent}
+
+[**概念的な跳躍：   **パラメータ**についての事前分布。**]{.yellow}
+
+このガウス分布は、もはや重さについてのものではない。μ についてのもの。
+
+事前分布は、**隠れているもの全て**に対する分布 —
+
+[**他の分布のパラメータも含めて。**]{.accent}
+:::
 
 
 ::: {.notes}
@@ -2668,9 +2734,17 @@ Slide 3: 'THIS IS THE BIG MOVE. The density isn\'t over weights now. 'It\'s over
 
 ## Step 2 — the likelihood
 
+::: {.lang-en}
 [**Chibany weighs one bento:   D₁ = 510g.**]{.yellow}
 
 [(Assume σ = 30 is known — we infer μ only.)]{.dim}
+:::
+
+::: {.lang-ja}
+[**チバニーがお弁当を1つ量る：   D₁ = 510g。**]{.yellow}
+
+[(σ = 30 は既知とする — μ だけを推論する。)]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2679,15 +2753,25 @@ Slide 1: 'One observation. 510g. We pretend σ is known — only μ is unknown. 
 
 ## Step 2 — the likelihood (2/3)
 
+::: {.lang-en}
 [**Chibany weighs one bento:   D₁ = 510g.**]{.yellow}
 
 [(Assume σ = 30 is known — we infer μ only.)]{.dim}
 
-
-
 Likelihood:
 
 &nbsp;&nbsp;&nbsp;[**P(D₁ = 510 | μ)   =   N(510 | μ, 30²)**]{.accent}
+:::
+
+::: {.lang-ja}
+[**チバニーがお弁当を1つ量る：   D₁ = 510g。**]{.yellow}
+
+[(σ = 30 は既知とする — μ だけを推論する。)]{.dim}
+
+尤度：
+
+&nbsp;&nbsp;&nbsp;[**P(D₁ = 510 | μ)   =   N(510 | μ, 30²)**]{.accent}
+:::
 
 
 ::: {.notes}
@@ -2696,29 +2780,45 @@ Slide 2: 'Likelihood is the Gaussian density evaluated at the 'observed weight, 
 
 ## Step 2 — the likelihood (3/3)
 
+::: {.lang-en}
 [**Chibany weighs one bento:   D₁ = 510g.**]{.yellow}
 
 [(Assume σ = 30 is known — we infer μ only.)]{.dim}
-
-
 
 Likelihood:
 
 &nbsp;&nbsp;&nbsp;[**P(D₁ = 510 | μ)   =   N(510 | μ, 30²)**]{.accent}
 
-
-
 **As a function of  μ,  this is ALSO a Gaussian —**
 
 **peaked at  μ = 510,  width σ = 30.**
-
-
 
 [So we have two Gaussian functions of μ:]{.accent}
 
 &nbsp;&nbsp;&nbsp;prior          (peaked at 500, tight)
 
 &nbsp;&nbsp;&nbsp;likelihood   (peaked at 510, broader)
+:::
+
+::: {.lang-ja}
+[**チバニーがお弁当を1つ量る：   D₁ = 510g。**]{.yellow}
+
+[(σ = 30 は既知とする — μ だけを推論する。)]{.dim}
+
+尤度：
+
+&nbsp;&nbsp;&nbsp;[**P(D₁ = 510 | μ)   =   N(510 | μ, 30²)**]{.accent}
+
+**μ の関数として見ても、これは**やはり**ガウス分布 —**
+
+**μ = 510 にピークを持ち、幅 σ = 30。**
+
+[つまり μ の関数としてのガウス分布が2つある：]{.accent}
+
+&nbsp;&nbsp;&nbsp;事前分布      （500 でピーク、狭い）
+
+&nbsp;&nbsp;&nbsp;尤度          （510 でピーク、より広い）
+:::
 
 
 ::: {.notes}
@@ -2747,9 +2847,17 @@ flowchart LR
   class Post out
 ```
 
+::: {.lang-en}
 [*Same flow.  Both boxes are densities now.   Every arrow still works.*]{.yellow}
 
 [*The "magic" next is that multiplying TWO Gaussians gives a Gaussian — so the posterior box stays in the same family. That's conjugacy.*]{.dim}
+:::
+
+::: {.lang-ja}
+[*同じ流れ。両方のボックスが今や密度。矢印はすべて同じように機能する。*]{.yellow}
+
+[*次の「マジック」は、**2つの**ガウス分布を掛け合わせるとまたガウス分布になる — だから事後分布のボックスも同じファミリーに留まる。それが**共役**。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2758,6 +2866,7 @@ flowchart LR
 
 ## Quick poll — Jamal's posterior
 
+::: {.lang-en}
 [*Deriving a posterior in μ, Jamal notices the μ-dependent terms*]{.dim}
 
 [*in his numerator have the same functional form as a known distribution.*]{.dim}
@@ -2773,6 +2882,25 @@ flowchart LR
 &nbsp;&nbsp;&nbsp;C) **Yes** — the dropped terms are part of the normalization constant.
 
 &nbsp;&nbsp;&nbsp;D) Yes — you can always drop any terms you want.
+:::
+
+::: {.lang-ja}
+[*μ についての事後分布を導出中、ジャマルは分子の μ に依存する項が*]{.dim}
+
+[*既知の分布と同じ関数形になっていることに気づく。*]{.dim}
+
+[*彼は（μ について）定数の項を切り落として、その分布を事後分布として書き下す。*]{.dim}
+
+[**これは大丈夫？**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;A) いいえ — 事後分布に必要な項を落としてしまった。
+
+&nbsp;&nbsp;&nbsp;B) 落とした項を後で掛け直すならOK。
+
+&nbsp;&nbsp;&nbsp;C) **はい** — 落とした項は正規化定数の一部。
+
+&nbsp;&nbsp;&nbsp;D) はい — どんな項でもいつでも落としてよい。
+:::
 
 
 ::: {.notes}
@@ -2781,15 +2909,28 @@ Answer: C. This IS the trick that makes the next 4-slide Gaussian × Gaussian de
 
 ## Why Gaussian × Gaussian = Gaussian  (derivation sketch)
 
+::: {.lang-en}
 [**Poll answer: C — dropped terms are absorbed into the normalization constant.**]{.green}
 
 Multiply the two densities (drop the normalizers — collect at end):
+:::
 
+::: {.lang-ja}
+[**ポール回答: C — 落とした項は正規化定数に吸収される。**]{.green}
+
+2つの密度を掛け合わせる（正規化定数は最後にまとめる）：
+:::
 
 
 $$P(\mu \mid D) \;\propto\; \exp\!\left(-\frac{(\mu - \mu_0)^2}{2\sigma_0^2}\right) \cdot \exp\!\left(-\frac{(D - \mu)^2}{2\sigma^2}\right)$$
 
+::: {.lang-en}
 [*The $\propto$ is exactly Jamal's move:  anything constant in $\mu$ is absorbed into the evidence $P(D)$ at the end.*]{.dim}
+:::
+
+::: {.lang-ja}
+[*$\propto$ の記号こそがジャマルがやったこと：  $\mu$ について定数のものは、最後に証拠 $P(D)$ に吸収される。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2798,21 +2939,37 @@ Slide 1 + poll reveal: 'C is right — dropped terms (the 1/√(2πσ²) normali
 
 ## Why Gaussian × Gaussian = Gaussian  (derivation sketch) (2/4)
 
+::: {.lang-en}
 Multiply the two densities (drop the normalizers — collect at end):
+:::
 
+::: {.lang-ja}
+2つの密度を掛け合わせる（正規化定数は最後にまとめる）：
+:::
 
 
 $$P(\mu \mid D) \;\propto\; \exp\!\left(-\frac{(\mu - \mu_0)^2}{2\sigma_0^2}\right) \cdot \exp\!\left(-\frac{(D - \mu)^2}{2\sigma^2}\right)$$
 
 
-
+::: {.lang-en}
 Combine exponents:
+:::
+
+::: {.lang-ja}
+指数部を合体させる：
+:::
+
 
 $$\propto \; \exp\!\left(-\left[ \frac{(\mu - \mu_0)^2}{2\sigma_0^2} \;+\; \frac{(D - \mu)^2}{2\sigma^2} \right]\right)$$
 
 
-
+::: {.lang-en}
 [The thing in brackets is a quadratic in $\mu$ — $A \mu^2 - 2B\mu + \text{const}$.]{.dim}
+:::
+
+::: {.lang-ja}
+[角カッコの中身は $\mu$ についての2次式 — $A \mu^2 - 2B\mu + \text{const}$。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2821,29 +2978,49 @@ Slide 2: 'Expand the squared terms and combine. You get a quadratic in μ. Form:
 
 ## Why Gaussian × Gaussian = Gaussian  (derivation sketch) (3/4) {.smaller}
 
+::: {.lang-en}
 Multiply the two densities (drop the normalizers — collect at end):
+:::
 
+::: {.lang-ja}
+2つの密度を掛け合わせる（正規化定数は最後にまとめる）：
+:::
 
 
 $$P(\mu \mid D) \;\propto\; \exp\!\left(-\frac{(\mu - \mu_0)^2}{2\sigma_0^2}\right) \cdot \exp\!\left(-\frac{(D - \mu)^2}{2\sigma^2}\right)$$
 
 
-
+::: {.lang-en}
 Combine exponents:
+:::
+
+::: {.lang-ja}
+指数部を合体させる：
+:::
+
 
 $$\propto \; \exp\!\left(-\left[ \frac{(\mu - \mu_0)^2}{2\sigma_0^2} \;+\; \frac{(D - \mu)^2}{2\sigma^2} \right]\right)$$
 
 
-
+::: {.lang-en}
 [The thing in brackets is a quadratic in $\mu$ — $A \mu^2 - 2B\mu + \text{const}$.]{.dim}
+:::
 
+::: {.lang-ja}
+[角カッコの中身は $\mu$ についての2次式 — $A \mu^2 - 2B\mu + \text{const}$。]{.dim}
+:::
 
 
 $$\text{Complete the square} \;\longrightarrow\; \exp\!\left(-\frac{(\mu - \mu_{\text{post}})^2}{2\sigma^2_{\text{post}}}\right) \;+\; \text{const.}$$
 
 
-
+::: {.lang-en}
 [**That's the kernel of a Gaussian in μ.  Posterior is Gaussian.**]{.green}
+:::
+
+::: {.lang-ja}
+[**これは μ についてのガウス分布のカーネル。  事後分布はガウス分布。**]{.green}
+:::
 
 
 ::: {.notes}
@@ -2852,34 +3029,53 @@ Slide 3: 'Complete the square — just like in high school algebra. A quadratic 
 
 ## Why Gaussian × Gaussian = Gaussian  (derivation sketch) (4/4) {.smaller}
 
+::: {.lang-en}
 Multiply the two densities (drop the normalizers — collect at end):
+:::
 
+::: {.lang-ja}
+2つの密度を掛け合わせる（正規化定数は最後にまとめる）：
+:::
 
 
 $$P(\mu \mid D) \;\propto\; \exp\!\left(-\frac{(\mu - \mu_0)^2}{2\sigma_0^2}\right) \cdot \exp\!\left(-\frac{(D - \mu)^2}{2\sigma^2}\right)$$
 
 
-
+::: {.lang-en}
 Combine exponents:
+:::
+
+::: {.lang-ja}
+指数部を合体させる：
+:::
+
 
 $$\propto \; \exp\!\left(-\left[ \frac{(\mu - \mu_0)^2}{2\sigma_0^2} \;+\; \frac{(D - \mu)^2}{2\sigma^2} \right]\right)$$
 
 
-
+::: {.lang-en}
 [The thing in brackets is a quadratic in $\mu$ — $A \mu^2 - 2B\mu + \text{const}$.]{.dim}
+:::
 
+::: {.lang-ja}
+[角カッコの中身は $\mu$ についての2次式 — $A \mu^2 - 2B\mu + \text{const}$。]{.dim}
+:::
 
 
 $$\text{Complete the square} \;\longrightarrow\; \exp\!\left(-\frac{(\mu - \mu_{\text{post}})^2}{2\sigma^2_{\text{post}}}\right) \;+\; \text{const.}$$
 
 
-
+::: {.lang-en}
 [**That's the kernel of a Gaussian in μ.  Posterior is Gaussian.**]{.green}
 
-
-
 The new mean and variance come from matching coefficients:
+:::
 
+::: {.lang-ja}
+[**これは μ についてのガウス分布のカーネル。  事後分布はガウス分布。**]{.green}
+
+新しい平均と分散は、係数を合わせることから得られる：
+:::
 
 
 $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{\sigma_0^2} + \frac{1}{\sigma^2} \qquad \text{(coefficient of } \mu^2 \text{)}$$
@@ -2887,8 +3083,13 @@ $$\frac{1}{\sigma^2_{\text{post}}} \;=\; \frac{1}{\sigma_0^2} + \frac{1}{\sigma^
 $$\mu_{\text{post}} \;=\; \sigma^2_{\text{post}} \left( \frac{\mu_0}{\sigma_0^2} + \frac{D}{\sigma^2} \right) \qquad \text{(coefficient of } \mu \text{)}$$
 
 
-
+::: {.lang-en}
 [*Full derivation: textbook T3 Ch 4 — read this week.*]{.dim}
+:::
+
+::: {.lang-ja}
+[*完全な導出：教科書 T3 第4章 — 今週読んでおく。*]{.dim}
+:::
 
 
 ::: {.notes}
