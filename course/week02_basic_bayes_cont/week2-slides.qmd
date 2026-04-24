@@ -949,9 +949,8 @@ Slide 1: 'What\'s P(A = T) unconditionally? Chibany gets tonkatsu for lunch eith
 
 ## Marginalization — sum over what you don't care about (2/3)
 
+::: {.lang-en}
 **P(A = T)  =  ?**
-
-
 
 Sum the joint over B:
 
@@ -959,11 +958,24 @@ Sum the joint over B:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**=  0.43  +  0.10   =   0.53**]{.accent}
 
+[**P(A = H)  =  0.04 + 0.43  =  0.47**]{.accent}
 
+&nbsp;&nbsp;&nbsp;[0.53 + 0.47 = 1 ✓]{.dim}
+:::
+
+::: {.lang-ja}
+**P(A = T)  =  ?**
+
+同時分布をBについて合計する：
+
+&nbsp;&nbsp;&nbsp;P(A = T)  =  P(A = T, B = H)  +  P(A = T, B = T)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**=  0.43  +  0.10   =   0.53**]{.accent}
 
 [**P(A = H)  =  0.04 + 0.43  =  0.47**]{.accent}
 
 &nbsp;&nbsp;&nbsp;[0.53 + 0.47 = 1 ✓]{.dim}
+:::
 
 
 ::: {.notes}
@@ -972,9 +984,8 @@ Slide 2: 'And P(A = H). Check the marginal sums to 1.'
 
 ## Marginalization — sum over what you don't care about (3/3)
 
+::: {.lang-en}
 **P(A = T)  =  ?**
-
-
 
 Sum the joint over B:
 
@@ -982,18 +993,32 @@ Sum the joint over B:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**=  0.43  +  0.10   =   0.53**]{.accent}
 
+[**P(A = H)  =  0.04 + 0.43  =  0.47**]{.accent}
 
+&nbsp;&nbsp;&nbsp;[0.53 + 0.47 = 1 ✓]{.dim}
+
+[**The named move:  MARGINALIZATION   (a.k.a. the sum rule).**]{.yellow}
+:::
+
+::: {.lang-ja}
+**P(A = T)  =  ?**
+
+同時分布をBについて合計する：
+
+&nbsp;&nbsp;&nbsp;P(A = T)  =  P(A = T, B = H)  +  P(A = T, B = T)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**=  0.43  +  0.10   =   0.53**]{.accent}
 
 [**P(A = H)  =  0.04 + 0.43  =  0.47**]{.accent}
 
 &nbsp;&nbsp;&nbsp;[0.53 + 0.47 = 1 ✓]{.dim}
 
-
-
-[**The named move:  MARGINALIZATION   (a.k.a. the sum rule).**]{.yellow}
+[**この操作の名前：  周辺化（MARGINALIZATION）   （別名：和の法則）。**]{.yellow}
+:::
 
 $$P(A) \;=\; \sum_{b} P(A, B = b)\qquad\text{for ANY two random variables  } A, B.$$
 
+::: {.lang-en}
 [*The $\sum$ symbol means "add up one term for each value of the index."*]{.dim}
 
 [*Here $\sum_b$ ranges over the two values of $B$: $\sum_b P(A,B{=}b) = P(A,B{=}H) + P(A,B{=}T)$.*]{.dim}
@@ -1001,6 +1026,17 @@ $$P(A) \;=\; \sum_{b} P(A, B = b)\qquad\text{for ANY two random variables  } A, 
 [*Intuition:  "A happened" means A happened paired with SOME value of B.*]{.accent}
 
 [*The values of B partition the world; summing over them adds up to "A, no matter what B."*]{.dim}
+:::
+
+::: {.lang-ja}
+[*$\sum$ 記号は「インデックスの各値について1項ずつ足し上げる」という意味。*]{.dim}
+
+[*ここで $\sum_b$ は $B$ の2つの値にわたって合計する：$\sum_b P(A,B{=}b) = P(A,B{=}H) + P(A,B{=}T)$。*]{.dim}
+
+[*直感：  「A が起きた」とは、「A が何らかの B の値とペアで起きた」こと。*]{.accent}
+
+[*$B$ の値が世界を分割している；それらを足し合わせれば「$B$ が何であれ $A$」になる。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1054,25 +1090,37 @@ Slide 1: 'The outcome space was Ω = {HH, HT, TH, TT}. When Chibany learns the d
 
 ## Conditional — restrict the possibility space (2/3)
 
+::: {.lang-en}
 [Chibany learns:   today's DINNER was tonkatsu  (B = T).]{.yellow}
 
 **What's  P(A | B = T)?     What should Chibany now believe about lunch?**
-
-
 
 [*"Knowing $B = T$ means $HH$ and $TH$ are impossible.*]{.dim}
 
 [*The new possibility space is $\{HT, TT\}$."*]{.dim}
 
-
-
 Step 1:   shrink $\Omega$ to the outcomes consistent with $B = T$:
 
 &nbsp;&nbsp;&nbsp;[$\Omega' = \{HT, TT\}$       with weights $0.43$ and $0.10$]{.accent}
 
-
-
 Step 2:   the weights inside $\Omega'$ no longer sum to 1.  Rescale by $P(B = T) = 0.53$.
+:::
+
+::: {.lang-ja}
+[チバニーは知る：   今日の夕食はとんかつだった  (B = T)。]{.yellow}
+
+**$P(A \mid B = T)$  はいくら？     昼食について、チバニーはどう信じるべき？**
+
+[*「$B = T$ と分かったので、$HH$ と $TH$ はもう起こり得ない。*]{.dim}
+
+[*新しい可能性の空間は $\{HT, TT\}$。」*]{.dim}
+
+ステップ1：  $\Omega$ を $B = T$ と整合的な結果に縮小する：
+
+&nbsp;&nbsp;&nbsp;[$\Omega' = \{HT, TT\}$       重みは $0.43$ と $0.10$]{.accent}
+
+ステップ2：  $\Omega'$ の中の重みは合計が1にならない。  $P(B = T) = 0.53$ で再スケーリング。
+:::
 
 
 ::: {.notes}
@@ -1081,37 +1129,53 @@ Slide 2: 'Two steps. ONE: the new possibility space Ω\' contains only outcomes 
 
 ## Conditional — restrict the possibility space (3/3)
 
+::: {.lang-en}
 [Chibany learns:   today's DINNER was tonkatsu  (B = T).]{.yellow}
 
 **What's  P(A | B = T)?     What should Chibany now believe about lunch?**
-
-
 
 [*"Knowing $B = T$ means $HH$ and $TH$ are impossible.*]{.dim}
 
 [*The new possibility space is $\{HT, TT\}$."*]{.dim}
 
-
-
 Step 1:   shrink $\Omega$ to the outcomes consistent with $B = T$:
 
 &nbsp;&nbsp;&nbsp;[$\Omega' = \{HT, TT\}$       with weights $0.43$ and $0.10$]{.accent}
 
-
-
 Step 2:   rescale by $P(B = T) = 0.53$ so the weights over $\Omega'$ sum to 1.
-
-
 
 [**$P(A = H \mid B = T) = 0.43 / 0.53 \approx 0.811$**]{.green}
 
 [**$P(A = T \mid B = T) = 0.10 / 0.53 \approx 0.189$**]{.green}
 
-
-
 [*Learning dinner was tonkatsu made Chibany MORE confident lunch was hamburger.*]{.yellow}
 
 [*Makes sense — students avoid two tonkatsu in a row.*]{.dim}
+:::
+
+::: {.lang-ja}
+[チバニーは知る：   今日の夕食はとんかつだった  (B = T)。]{.yellow}
+
+**$P(A \mid B = T)$  はいくら？     昼食について、チバニーはどう信じるべき？**
+
+[*「$B = T$ と分かったので、$HH$ と $TH$ はもう起こり得ない。*]{.dim}
+
+[*新しい可能性の空間は $\{HT, TT\}$。」*]{.dim}
+
+ステップ1：  $\Omega$ を $B = T$ と整合的な結果に縮小する：
+
+&nbsp;&nbsp;&nbsp;[$\Omega' = \{HT, TT\}$       重みは $0.43$ と $0.10$]{.accent}
+
+ステップ2：  $P(B = T) = 0.53$ で再スケーリングして、$\Omega'$ 上の重みの合計を1にする。
+
+[**$P(A = H \mid B = T) = 0.43 / 0.53 \approx 0.811$**]{.green}
+
+[**$P(A = T \mid B = T) = 0.10 / 0.53 \approx 0.189$**]{.green}
+
+[*夕食がとんかつだったと知って、チバニーは「昼食はハンバーグ」への確信を強めた。*]{.yellow}
+
+[*納得できる — 学生はとんかつを2つ続けない。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1167,25 +1231,37 @@ $A$ と $B$ が**独立**（$A \perp B$ と書く）であるとは、次を満�
 
 ## Independence — check today's joint
 
+::: {.lang-en}
 [Are A (lunch) and B (dinner) independent?]{.dim}
-
-
 
 Marginal:        [**P(A = T)   =   0.53**]{.accent}
 
 Conditional:     [**P(A = T | B = T)   ≈   0.189**]{.accent}
 
-
-
 [**0.189  ≠  0.53.    A and B are DEPENDENT:   not ( A ⊥ B ).**]{.yellow}
-
-
 
 [*If students acted independently — flipping a coin each meal for T with some p —*]{.dim}
 
 [*the joint would FACTOR:   P(A, B) = P(A) · P(B).   It doesn't.*]{.dim}
 
 [*The coordination IS the dependence.*]{.dim}
+:::
+
+::: {.lang-ja}
+[A（昼食）と B（夕食）は独立か？]{.dim}
+
+周辺分布：        [**P(A = T)   =   0.53**]{.accent}
+
+条件付き分布：  [**P(A = T | B = T)   ≈   0.189**]{.accent}
+
+[**0.189  ≠  0.53。    A と B は**従属**：   not ( A ⊥ B )。**]{.yellow}
+
+[*もし学生たちが独立に行動していれば — 各食事ごとに確率 p でとんかつのコインを投げるなら —*]{.dim}
+
+[*同時分布は分解される：   P(A, B) = P(A) · P(B)。   しかし、そうなっていない。*]{.dim}
+
+[*示し合わせる行動こそが、従属性の正体。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1288,25 +1364,33 @@ Slide 1: 'Expected value. Weighted average. The formula is what you\'d naïvely 
 
 ## Expected value  E[X] (2/4)
 
+::: {.lang-en}
 For a discrete RV X with values {xᵢ} and probabilities {pᵢ}:
-
-
 
 $$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
 
-
-
 [*"Weight each value by its probability, then add."*]{.dim}
-
-
 
 Chibany's idealized bento weight:  500 g if tonkatsu, 350 g if hamburger.
 
 $$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
 
-
-
 [*Average weight over many days — not the weight of any single bento.*]{.dim}
+:::
+
+::: {.lang-ja}
+値 $\{x_i\}$ と確率 $\{p_i\}$ を持つ離散確率変数 $X$ に対して：
+
+$$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
+
+[*「各値をその確率で重み付けして、合計する。」*]{.dim}
+
+チバニーのお弁当の理想的な重量：  とんかつなら500 g、ハンバーグなら350 g。
+
+$$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
+
+[*多くの日を平均した重さ — どれか1つのお弁当の重さではない。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1315,27 +1399,37 @@ Slide 2: 'Expected value of bento weight. 455 g is the long-run average — not 
 
 ## Expected value  E[X] (3/4)
 
+::: {.lang-en}
 For a discrete RV X with values {xᵢ} and probabilities {pᵢ}:
-
-
 
 $$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
 
-
-
 [*"Weight each value by its probability, then add."*]{.dim}
-
-
 
 Chibany's idealized bento weight:  500 g if tonkatsu, 350 g if hamburger.
 
 $$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
 
-
-
 Variance:     $\mathrm{Var}[X] \;=\; \mathbb{E}\!\left[(X - \mathbb{E}[X])^2\right] \;=\; \mathbb{E}[X^2] - \mathbb{E}[X]^2$
 
 **Bento weight:   Var = $(500 - 455)^2 \cdot 0.7 + (350 - 455)^2 \cdot 0.3 = 4725\; \text{g}^2,\;\;\sigma \approx 68.7$ g**
+:::
+
+::: {.lang-ja}
+値 $\{x_i\}$ と確率 $\{p_i\}$ を持つ離散確率変数 $X$ に対して：
+
+$$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
+
+[*「各値をその確率で重み付けして、合計する。」*]{.dim}
+
+チバニーのお弁当の理想的な重量：  とんかつなら500 g、ハンバーグなら350 g。
+
+$$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
+
+分散：     $\mathrm{Var}[X] \;=\; \mathbb{E}\!\left[(X - \mathbb{E}[X])^2\right] \;=\; \mathbb{E}[X^2] - \mathbb{E}[X]^2$
+
+**お弁当の重さ：   分散 = $(500 - 455)^2 \cdot 0.7 + (350 - 455)^2 \cdot 0.3 = 4725\; \text{g}^2$、  $\sigma \approx 68.7$ g**
+:::
 
 
 ::: {.notes}
@@ -1344,35 +1438,45 @@ Slide 3: 'Variance is the expected squared deviation from the mean. Units are sq
 
 ## Expected value  E[X] (4/4)
 
+::: {.lang-en}
 For a discrete RV X with values {xᵢ} and probabilities {pᵢ}:
-
-
 
 $$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
 
-
-
 [*"Weight each value by its probability, then add."*]{.dim}
-
-
 
 Chibany's idealized bento weight:  500 g if tonkatsu, 350 g if hamburger.
 
 $$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
 
-
-
 Variance:     $\mathrm{Var}[X] \;=\; \mathbb{E}\!\left[(X - \mathbb{E}[X])^2\right] \;=\; \mathbb{E}[X^2] - \mathbb{E}[X]^2$
 
 **Bento weight:   Var $\approx 4725\; \text{g}^2,\;\;\sigma \approx 68.7$ g**
 
-
-
 [**$\mathbb{E}[X]$  =  center of mass.      $\mathrm{Var}[X]$  =  spread.**]{.accent}
 
-
-
 [Two numbers that summarize a lot. Used everywhere downstream.]{.dim}
+:::
+
+::: {.lang-ja}
+値 $\{x_i\}$ と確率 $\{p_i\}$ を持つ離散確率変数 $X$ に対して：
+
+$$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
+
+[*「各値をその確率で重み付けして、合計する。」*]{.dim}
+
+チバニーのお弁当の理想的な重量：  とんかつなら500 g、ハンバーグなら350 g。
+
+$$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
+
+分散：     $\mathrm{Var}[X] \;=\; \mathbb{E}\!\left[(X - \mathbb{E}[X])^2\right] \;=\; \mathbb{E}[X^2] - \mathbb{E}[X]^2$
+
+**お弁当の重さ：   分散 $\approx 4725\; \text{g}^2,\;\;\sigma \approx 68.7$ g**
+
+[**$\mathbb{E}[X]$  =  重心。      $\mathrm{Var}[X]$  =  広がり。**]{.accent}
+
+[この2つの数字が多くを要約する。この後もずっと使う。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1420,11 +1524,10 @@ Slide 1: 'Bernoulli. One parameter.'
 
 ## Bernoulli distribution (2/3)
 
+::: {.lang-en}
 $X \sim \mathrm{Bernoulli}(p)$     means:
 
 [**$P(X = 1) = p, \quad P(X = 0) = 1 - p$**]{.accent}
-
-
 
 [One flip of a weighted coin. One parameter: p.]{.dim}
 
@@ -1432,13 +1535,30 @@ $X \sim \mathrm{Bernoulli}(p)$     means:
 
 [*From here on, one meal at a time — each meal is its own independent Bernoulli(0.7) draw.*]{.dim}
 
-
-
 **Chibany:  $\text{meal}_{\text{today}} \sim \mathrm{Bernoulli}(0.7)$.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;P(meal_today = tonkatsu) = 0.7
 
 &nbsp;&nbsp;&nbsp;&nbsp;P(meal_today = hamburger) = 0.3
+:::
+
+::: {.lang-ja}
+$X \sim \mathrm{Bernoulli}(p)$     の意味：
+
+[**$P(X = 1) = p, \quad P(X = 0) = 1 - p$**]{.accent}
+
+[偏ったコインを1回振る。パラメータは1つ：$p$。]{.dim}
+
+[*視点の転換：  前のブロックは、今日の昼食と夕食（互いに関係する — 依存）についてだった。*]{.dim}
+
+[*ここから先は、お弁当を1つずつ扱う — 各お弁当は独立に $\mathrm{Bernoulli}(0.7)$ から引かれる。*]{.dim}
+
+**チバニー：  $\text{meal}_{\text{today}} \sim \mathrm{Bernoulli}(0.7)$。**
+
+&nbsp;&nbsp;&nbsp;&nbsp;P(meal_today = tonkatsu) = 0.7
+
+&nbsp;&nbsp;&nbsp;&nbsp;P(meal_today = hamburger) = 0.3
+:::
 
 
 ::: {.notes}
@@ -1447,11 +1567,10 @@ Slide 2: 'The bento meal is Bernoulli(0.7). Every day, a weighted flip.'
 
 ## Bernoulli distribution (3/3)
 
+::: {.lang-en}
 $X \sim \mathrm{Bernoulli}(p)$     means:
 
 [**$P(X = 1) = p, \quad P(X = 0) = 1 - p$**]{.accent}
-
-
 
 **The indicator of an event  $E$:**
 
@@ -1459,13 +1578,30 @@ $$\mathbb{1}\{E\} \;=\; \begin{cases} 1 & \text{if } E \text{ happens} \\ 0 & \t
 
 So  $\mathbb{1}\{\text{meal} = \text{tonkatsu}\} \;\sim\; \mathrm{Bernoulli}(0.7)$.
 
-
-
 [**$\mathbb{E}\!\left[\mathbb{1}\{E\}\right] \;=\; 1 \cdot P(E) + 0 \cdot P(\text{not } E) \;=\; P(E)$**]{.yellow}
 
 [The expected value of an indicator IS the probability of the event.]{.dim}
 
 [Used constantly downstream — RL rewards, hypothesis testing, loss functions.]{.dim}
+:::
+
+::: {.lang-ja}
+$X \sim \mathrm{Bernoulli}(p)$     の意味：
+
+[**$P(X = 1) = p, \quad P(X = 0) = 1 - p$**]{.accent}
+
+**事象 $E$ の指示変数：**
+
+$$\mathbb{1}\{E\} \;=\; \begin{cases} 1 & \text{if } E \text{ happens} \\ 0 & \text{otherwise} \end{cases}$$
+
+よって  $\mathbb{1}\{\text{meal} = \text{tonkatsu}\} \;\sim\; \mathrm{Bernoulli}(0.7)$。
+
+[**$\mathbb{E}\!\left[\mathbb{1}\{E\}\right] \;=\; 1 \cdot P(E) + 0 \cdot P(\text{not } E) \;=\; P(E)$**]{.yellow}
+
+[指示変数の期待値は、その事象の確率に等しい。]{.dim}
+
+[この後もずっと使う — RL の報酬、仮説検定、損失関数など。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1501,18 +1637,27 @@ Slide 1: 'Zoom out. A single bento is Bernoulli. A WEEK is Binomial. Y counts su
 
 ## Binomial distribution (2/3)
 
+::: {.lang-en}
 Chibany counts tonkatsu across 5 days.
 
 Each day:  $\mathrm{Bernoulli}(0.7)$, independent.
 
 [**Let $Y$ = total tonkatsu in 5 days.    $Y \sim \mathrm{Binomial}(5, 0.7)$.**]{.accent}
+:::
 
+::: {.lang-ja}
+チバニーは5日間でとんかつが何回出たかを数える。
+
+各日は独立に  $\mathrm{Bernoulli}(0.7)$。
+
+[**$Y$ = 5日間のとんかつの合計回数と定める。    $Y \sim \mathrm{Binomial}(5, 0.7)$。**]{.accent}
+:::
 
 
 $$P(Y = k) = \binom{n}{k} \, p^{k} \, (1-p)^{n-k}$$
 
 
-
+::: {.lang-en}
 &nbsp;&nbsp;&nbsp;[n = 5      (trials)]{.dim}
 
 &nbsp;&nbsp;&nbsp;[k          (count of successes)]{.dim}
@@ -1522,6 +1667,19 @@ $$P(Y = k) = \binom{n}{k} \, p^{k} \, (1-p)^{n-k}$$
 [$\displaystyle \binom{n}{k} \;=\; \frac{n!}{k!\,(n-k)!} \;=\;$ "$n$ choose $k$" $\;=\;$ number of ways to pick $k$ items from $n$.]{.dim}
 
 [*Example:  $\binom{5}{2} = \frac{5!}{2!\,3!} = \frac{120}{2 \cdot 6} = 10$ — ten distinct orderings of 2 successes among 5 trials.*]{.dim}
+:::
+
+::: {.lang-ja}
+&nbsp;&nbsp;&nbsp;[n = 5      （試行数）]{.dim}
+
+&nbsp;&nbsp;&nbsp;[k          （成功の回数）]{.dim}
+
+&nbsp;&nbsp;&nbsp;[p = 0.7   （1回あたりの成功確率）]{.dim}
+
+[$\displaystyle \binom{n}{k} \;=\; \frac{n!}{k!\,(n-k)!} \;=\;$ 「$n$ 個から $k$ 個を選ぶ」 $\;=\;$ $n$ 個から $k$ 個を取り出す場合の数。]{.dim}
+
+[*例：  $\binom{5}{2} = \frac{5!}{2!\,3!} = \frac{120}{2 \cdot 6} = 10$ — 5回の試行中に2回成功する並び方が10通り。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1530,7 +1688,13 @@ Slide 2: 'Binomial formula. Name each piece. Binomial coefficient n-choose-k cou
 
 ## Binomial distribution (3/3)
 
+::: {.lang-en}
 [**$Y \sim \mathrm{Binomial}(5, 0.7)$:   plug in a few values of $k$.**]{.accent}
+:::
+
+::: {.lang-ja}
+[**$Y \sim \mathrm{Binomial}(5, 0.7)$:   $k$ にいくつかの値を代入してみる。**]{.accent}
+:::
 
 | $k$ | $\binom{5}{k}$ | $0.7^{k}\,(1-0.7)^{5-k}$ | $P(Y = k)$ |
 |:-:|:-:|:-:|:-:|
@@ -1538,10 +1702,19 @@ Slide 2: 'Binomial formula. Name each piece. Binomial coefficient n-choose-k cou
 | **4** | **5**  | **$0.7^{4}\cdot 0.3$**   | **$\approx 0.360$  ← MODE** |
 | 3 | 10 | $0.7^{3}\cdot 0.3^{2}$ | $\approx 0.309$ |
 
+::: {.lang-en}
 [**Why is $k{=}4$ more likely than $k{=}5$,  even though $p = 0.7$?**]{.yellow}
 
 [*There are 5 orderings for 4 tonkatsu in 5 days, but only 1 for all 5.*]{.dim}
 [*The orderings outweigh the extra factor of $0.7$.*]{.dim}
+:::
+
+::: {.lang-ja}
+[**なぜ $p = 0.7$ なのに $k{=}4$ の方が $k{=}5$ より確率が高い？**]{.yellow}
+
+[*5日中4回とんかつになる並び方は5通りあるが、5回全部になるのは1通りだけ。*]{.dim}
+[*並び方の多さが、$0.7$ の因子1つ分の差を上回る。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1552,9 +1725,17 @@ Slide 3: 'Work the table row-by-row. The MODE is k=4, not k=5 — this surprises
 
 ![](images/binomial_pmf.png){fig-align="center" width="75%"}
 
+::: {.lang-en}
 Mode at k=4 (0.360). In Week 3 this PMF becomes the LIKELIHOOD
 
 [*for inferring  p  from observed counts. Beta × Binomial = Beta.*]{.dim}
+:::
+
+::: {.lang-ja}
+最頻値は k=4（0.360）。第3週では、この PMF が**尤度**になり、
+
+[*観測したカウントから  p  を推定する際に使う。Beta × Binomial = Beta。*]{.dim}
+:::
 
 
 ::: {.notes}
