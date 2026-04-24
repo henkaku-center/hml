@@ -98,7 +98,7 @@ weeks:
     optional:
       - citation: "Griffiths, T. L., & Tenenbaum, J. B. (2001). Randomness and coincidences: Reconciling intuition and probability theory. Proc. CogSci."
         pdf: Griffiths2001random.pdf
-        why: "SP25 Week 3 companion: how people judge randomness — a nice bridge from conjugate Bayes into cognitive modeling."
+        why: "How people judge randomness — a nice bridge from conjugate Bayes into cognitive modeling."
     presentation_candidates: []  # Week 3 has no student presenter (first presentation is Week 4).
     presenter: null
     presented: null

@@ -57,4 +57,4 @@ End with at least **3 discussion questions** meant to generate 10–15 minutes o
 
 ---
 
-*These guidelines are adapted from the SP25 course; the framing questions come from Tom Griffiths.*
+*The framing questions above are adapted from Tom Griffiths.*

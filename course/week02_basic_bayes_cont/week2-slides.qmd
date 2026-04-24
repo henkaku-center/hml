@@ -310,7 +310,7 @@ Slide 3: 'Name the four pieces. You\'ll see these names the rest of the semester
 
 
 ::: {.notes}
-Fast poll — sourced from SP25 "Intro Probability Theory 1" (item `Posterior`). Answer: B. Common wrong picks: D (reasonable but it\'s the unnormalized numerator, not the posterior) and C (that\'s the likelihood). Don\'t reveal yet — make them commit before the next slide.
+Fast poll. Answer: B. Common wrong picks: D (reasonable but it\'s the unnormalized numerator, not the posterior) and C (that\'s the likelihood). Don\'t reveal yet — make them commit before the next slide.
 :::
 
 ## Quick poll — reveal
@@ -1196,7 +1196,7 @@ Slide 3: 'Same 5000 samples, bin width down to 10g. The envelope of the bars is 
 
 
 ::: {.notes}
-Sourced from SP25 "Continuous Prob and Gaussians" (and "Prob Theory Quiz 2") — item `ContinuousDensityGT1`. Answer: B. This is the single biggest density-vs-probability confusion — the poll forces them to commit before we collapse it to the punchline on the next slide.
+Answer: B. This is the single biggest density-vs-probability confusion — the poll forces them to commit before we collapse it to the punchline on the next slide.
 :::
 
 ## From PMF to PDF — going continuous (4/4)
@@ -1824,7 +1824,7 @@ flowchart LR
 
 
 ::: {.notes}
-Sourced from SP25 "Gaussian and Binomial Bayes" (item about Jamal dropping terms). Answer: C. This IS the trick that makes the next 4-slide Gaussian × Gaussian derivation work — we drop anything constant in μ because it\'s absorbed into the 1/P(D) normalizer, match the functional form, and read off the posterior. The poll primes them to expect that move.
+Answer: C. This IS the trick that makes the next 4-slide Gaussian × Gaussian derivation work — we drop anything constant in μ because it\'s absorbed into the 1/P(D) normalizer, match the functional form, and read off the posterior. The poll primes them to expect that move.
 :::
 
 ## Why Gaussian × Gaussian = Gaussian  (derivation sketch)

@@ -544,7 +544,7 @@ def chibany_day():
 
 <br>
 
-All four assignments are completed in **GenJAX**. Weekly reflections replace the SP25 paper-presentation format (doesn't fit a 2-4 person seminar).
+All four assignments are completed in **GenJAX**. Weekly discussion posts and a single paper presentation per student — right-sized for a small seminar.
 
 ---
 
