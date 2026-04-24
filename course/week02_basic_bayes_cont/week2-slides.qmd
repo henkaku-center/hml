@@ -598,6 +598,7 @@ Reveal. B. The other three options each correspond to a different piece of Bayes
 
 $$P(H \mid D) \;=\; \frac{P(H)\,P(D \mid H)}{P(D)}$$
 
+::: {.lang-en}
 ```{mermaid}
 %%| fig-align: center
 flowchart LR
@@ -615,6 +616,27 @@ flowchart LR
   class Num mid
   class Post out
 ```
+:::
+
+::: {.lang-ja}
+```{mermaid}
+%%| fig-align: center
+flowchart LR
+  Prior["<b>事前分布</b><br/>P(H)"]
+  Lik["<b>尤度</b><br/>P(D | H)"]
+  Num["<b>分子</b><br/>P(H) · P(D | H)"]
+  Post["<b>事後分布</b><br/>P(H | D)"]
+  Prior --> Num
+  Lik --> Num
+  Num -->|"<b>正規化</b><br/>÷ P(D)<br/><i>証拠</i>"| Post
+  classDef in fill:#1A1A2E,stroke:#64B5F6,stroke-width:2px,color:#fff
+  classDef mid fill:#1A1A2E,stroke:#FFA726,stroke-width:2px,color:#fff
+  classDef out fill:#1A1A2E,stroke:#66BB6A,stroke-width:3px,color:#fff
+  class Prior,Lik in
+  class Num mid
+  class Post out
+```
+:::
 
 ::: {.lang-en}
 
@@ -671,12 +693,23 @@ In the new notation:     H ∈ { cold, stomach virus, lung cancer },    D = coug
 新しい記法で：     H ∈ {風邪, 胃腸風邪, 肺がん}、    D = 咳。
 :::
 
+::: {.lang-en}
 |                             | **cold** | **stomach virus** | **lung cancer** |
 |:----------------------------|:--------:|:-----------------:|:---------------:|
 | Prior  P(H)                 |    ?     |         ?         |        ?        |
 | Likelihood  P(D ∣ H)        |    ?     |         ?         |        ?        |
 | Numerator  P(H) · P(D ∣ H)  |    ?     |         ?         |        ?        |
 | Posterior  P(H ∣ D)         |    ?     |         ?         |        ?        |
+:::
+
+::: {.lang-ja}
+|                             | **風邪** | **胃腸風邪** | **肺がん** |
+|:----------------------------|:--------:|:------------:|:----------:|
+| 事前分布  P(H)              |    ?     |      ?       |     ?      |
+| 尤度  P(D ∣ H)              |    ?     |      ?       |     ?      |
+| 分子  P(H) · P(D ∣ H)       |    ?     |      ?       |     ?      |
+| 事後分布  P(H ∣ D)          |    ?     |      ?       |     ?      |
+:::
 
 
 ::: {.notes}
@@ -697,12 +730,23 @@ In the new notation:     H ∈ { cold, stomach virus, lung cancer },    D = coug
 新しい記法で：     H ∈ {風邪, 胃腸風邪, 肺がん}、    D = 咳。
 :::
 
+::: {.lang-en}
 |                             | **cold** | **stomach virus** | **lung cancer** |
 |:----------------------------|:--------:|:-----------------:|:---------------:|
 | Prior  P(H)                 |   0.45   |       0.10        |      0.10       |
 | Likelihood  P(D ∣ H)        |   0.90   |       0.45        |      0.90       |
 | Numerator  P(H) · P(D ∣ H)  |  0.405   |       0.045       |      0.090      |
 | Posterior  P(H ∣ D)         |    ?     |         ?         |        ?        |
+:::
+
+::: {.lang-ja}
+|                             | **風邪** | **胃腸風邪** | **肺がん** |
+|:----------------------------|:--------:|:------------:|:----------:|
+| 事前分布  P(H)              |   0.45   |     0.10     |    0.10    |
+| 尤度  P(D ∣ H)              |   0.90   |     0.45     |    0.90    |
+| 分子  P(H) · P(D ∣ H)       |  0.405   |    0.045     |   0.090    |
+| 事後分布  P(H ∣ D)          |    ?     |      ?       |     ?      |
+:::
 
 
 ::: {.lang-en}
@@ -732,12 +776,23 @@ In the new notation:     H ∈ { cold, stomach virus, lung cancer },    D = coug
 新しい記法で：     H ∈ {風邪, 胃腸風邪, 肺がん}、    D = 咳。
 :::
 
+::: {.lang-en}
 |                             | **cold** | **stomach virus** | **lung cancer** |
 |:----------------------------|:--------:|:-----------------:|:---------------:|
 | Prior  P(H)                 |   0.45   |       0.10        |      0.10       |
 | Likelihood  P(D ∣ H)        |   0.90   |       0.45        |      0.90       |
 | Numerator  P(H) · P(D ∣ H)  |  0.405   |       0.045       |      0.090      |
 | [**Posterior  P(H ∣ D)**]{.accent} | [**0.75**]{.accent} | [**0.083**]{.accent} | [**0.167**]{.accent} |
+:::
+
+::: {.lang-ja}
+|                             | **風邪** | **胃腸風邪** | **肺がん** |
+|:----------------------------|:--------:|:------------:|:----------:|
+| 事前分布  P(H)              |   0.45   |     0.10     |    0.10    |
+| 尤度  P(D ∣ H)              |   0.90   |     0.45     |    0.90    |
+| 分子  P(H) · P(D ∣ H)       |  0.405   |    0.045     |   0.090    |
+| [**事後分布  P(H ∣ D)**]{.accent} | [**0.75**]{.accent} | [**0.083**]{.accent} | [**0.167**]{.accent} |
+:::
 
 
 ::: {.lang-en}
@@ -1387,7 +1442,7 @@ $$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
 
 チバニーのお弁当の理想的な重量：  とんかつなら500 g、ハンバーグなら350 g。
 
-$$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
+$$\mathbb{E}[\text{重さ}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
 
 [*多くの日を平均した重さ — どれか1つのお弁当の重さではない。*]{.dim}
 :::
@@ -1424,7 +1479,7 @@ $$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
 
 チバニーのお弁当の理想的な重量：  とんかつなら500 g、ハンバーグなら350 g。
 
-$$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
+$$\mathbb{E}[\text{重さ}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
 
 分散：     $\mathrm{Var}[X] \;=\; \mathbb{E}\!\left[(X - \mathbb{E}[X])^2\right] \;=\; \mathbb{E}[X^2] - \mathbb{E}[X]^2$
 
@@ -1467,7 +1522,7 @@ $$\mathbb{E}[X] \;=\; \sum_i x_i \, p_i$$
 
 チバニーのお弁当の理想的な重量：  とんかつなら500 g、ハンバーグなら350 g。
 
-$$\mathbb{E}[\text{weight}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
+$$\mathbb{E}[\text{重さ}] \;=\; 500 \cdot 0.7 \;+\; 350 \cdot 0.3 \;=\; 455 \text{ g}$$
 
 分散：     $\mathrm{Var}[X] \;=\; \mathbb{E}\!\left[(X - \mathbb{E}[X])^2\right] \;=\; \mathbb{E}[X^2] - \mathbb{E}[X]^2$
 
@@ -1553,11 +1608,11 @@ $X \sim \mathrm{Bernoulli}(p)$     の意味：
 
 [*ここから先は、お弁当を1つずつ扱う — 各お弁当は独立に $\mathrm{Bernoulli}(0.7)$ から引かれる。*]{.dim}
 
-**チバニー：  $\text{meal}_{\text{today}} \sim \mathrm{Bernoulli}(0.7)$。**
+**チバニー：  $\text{食事}_{\text{今日}} \sim \mathrm{Bernoulli}(0.7)$。**
 
-&nbsp;&nbsp;&nbsp;&nbsp;P(meal_today = tonkatsu) = 0.7
+&nbsp;&nbsp;&nbsp;&nbsp;P(今日の食事 = とんかつ) = 0.7
 
-&nbsp;&nbsp;&nbsp;&nbsp;P(meal_today = hamburger) = 0.3
+&nbsp;&nbsp;&nbsp;&nbsp;P(今日の食事 = ハンバーグ) = 0.3
 :::
 
 
@@ -1592,11 +1647,11 @@ $X \sim \mathrm{Bernoulli}(p)$     の意味：
 
 **事象 $E$ の指示変数：**
 
-$$\mathbb{1}\{E\} \;=\; \begin{cases} 1 & \text{if } E \text{ happens} \\ 0 & \text{otherwise} \end{cases}$$
+$$\mathbb{1}\{E\} \;=\; \begin{cases} 1 & E \text{ が起きたら} \\ 0 & \text{それ以外} \end{cases}$$
 
-よって  $\mathbb{1}\{\text{meal} = \text{tonkatsu}\} \;\sim\; \mathrm{Bernoulli}(0.7)$。
+よって  $\mathbb{1}\{\text{食事} = \text{とんかつ}\} \;\sim\; \mathrm{Bernoulli}(0.7)$。
 
-[**$\mathbb{E}\!\left[\mathbb{1}\{E\}\right] \;=\; 1 \cdot P(E) + 0 \cdot P(\text{not } E) \;=\; P(E)$**]{.yellow}
+[**$\mathbb{E}\!\left[\mathbb{1}\{E\}\right] \;=\; 1 \cdot P(E) + 0 \cdot P(E \text{ でない}) \;=\; P(E)$**]{.yellow}
 
 [指示変数の期待値は、その事象の確率に等しい。]{.dim}
 
@@ -1696,11 +1751,21 @@ Slide 2: 'Binomial formula. Name each piece. Binomial coefficient n-choose-k cou
 [**$Y \sim \mathrm{Binomial}(5, 0.7)$:   $k$ にいくつかの値を代入してみる。**]{.accent}
 :::
 
+::: {.lang-en}
 | $k$ | $\binom{5}{k}$ | $0.7^{k}\,(1-0.7)^{5-k}$ | $P(Y = k)$ |
 |:-:|:-:|:-:|:-:|
 | 5 | 1  | $0.7^{5}$         | $\approx 0.168$ |
 | **4** | **5**  | **$0.7^{4}\cdot 0.3$**   | **$\approx 0.360$  ← MODE** |
 | 3 | 10 | $0.7^{3}\cdot 0.3^{2}$ | $\approx 0.309$ |
+:::
+
+::: {.lang-ja}
+| $k$ | $\binom{5}{k}$ | $0.7^{k}\,(1-0.7)^{5-k}$ | $P(Y = k)$ |
+|:-:|:-:|:-:|:-:|
+| 5 | 1  | $0.7^{5}$         | $\approx 0.168$ |
+| **4** | **5**  | **$0.7^{4}\cdot 0.3$**   | **$\approx 0.360$  ← 最頻値** |
+| 3 | 10 | $0.7^{3}\cdot 0.3^{2}$ | $\approx 0.309$ |
+:::
 
 ::: {.lang-en}
 [**Why is $k{=}4$ more likely than $k{=}5$,  even though $p = 0.7$?**]{.yellow}
@@ -1723,7 +1788,13 @@ Slide 3: 'Work the table row-by-row. The MODE is k=4, not k=5 — this surprises
 
 ## [Binomial(5, 0.7) — full PMF]{.lang-en}[Binomial(5, 0.7) — 完全な PMF]{.lang-ja}
 
+::: {.lang-en}
 ![](images/binomial_pmf.png){fig-align="center" width="75%"}
+:::
+
+::: {.lang-ja}
+![](images/binomial_pmf-ja.png){fig-align="center" width="75%"}
+:::
 
 ::: {.lang-en}
 Mode at k=4 (0.360). In Week 3 this PMF becomes the LIKELIHOOD
@@ -1873,7 +1944,13 @@ Slide 1: 'Weight is continuous. No finite outcome space. We need a new object �
 [**まずは粗く — 30g の区間。区間に対する PMF。**]{.accent}
 :::
 
+::: {.lang-en}
 ![](images/pmf_to_pdf_30g.png){fig-align="center" width="70%"}
+:::
+
+::: {.lang-ja}
+![](images/pmf_to_pdf_30g-ja.png){fig-align="center" width="70%"}
+:::
 
 ::: {.lang-en}
 [*Bar heights give probability per gram — each bar\'s AREA is the probability of landing in its bin.*]{.dim}
@@ -1898,7 +1975,13 @@ Slide 2: 'Bin at 30g. Legit PMF over bins — finite number of bars, heights sum
 [**10g の区間まで縮める — まだ PMF だが、輪郭がより滑らかに。**]{.accent}
 :::
 
+::: {.lang-en}
 ![](images/pmf_to_pdf_10g.png){fig-align="center" width="70%"}
+:::
+
+::: {.lang-ja}
+![](images/pmf_to_pdf_10g-ja.png){fig-align="center" width="70%"}
+:::
 
 ::: {.lang-en}
 [*Same data. Three times as many bins, each one-third the width.*]{.dim}
@@ -1966,7 +2049,13 @@ Answer: B. This is the single biggest density-vs-probability confusion — the p
 [**2g の区間まで縮める — 極限で、棒は滑らかな PDF になる。**]{.accent}
 :::
 
+::: {.lang-en}
 ![](images/pmf_to_pdf_2g.png){fig-align="center" width="70%"}
+:::
+
+::: {.lang-ja}
+![](images/pmf_to_pdf_2g-ja.png){fig-align="center" width="70%"}
+:::
 
 $$P(X \in [a, b]) \;=\; \int_a^b f(x)\, dx \qquad \text{``area under the density''}$$
 
@@ -2221,7 +2310,13 @@ Slide 5: 'Two Gaussians for Chibany. They overlap in the 380-470 range. Next sli
 
 ## [The Gaussian — shape and the 68-95 rule]{.lang-en}[ガウス分布 — 形状と 68-95 ルール]{.lang-ja}
 
+::: {.lang-en}
 ![](images/gaussian_shape.png){fig-align="center" width="75%"}
+:::
+
+::: {.lang-ja}
+![](images/gaussian_shape-ja.png){fig-align="center" width="75%"}
+:::
 
 ::: {.lang-en}
 [Dark fill: ±1σ (~68%). Light fill: ±2σ (~95%).]{.dim}
@@ -2238,7 +2333,13 @@ Pause. Let them trace the curve and see the shaded bands. The peak height formul
 
 ## [Chibany's two bento-weight likelihoods]{.lang-en}[チバニーの2つのお弁当重量の尤度]{.lang-ja}
 
+::: {.lang-en}
 ![](images/tonk_hamb.png){fig-align="center" width="75%"}
+:::
+
+::: {.lang-ja}
+![](images/tonk_hamb-ja.png){fig-align="center" width="75%"}
+:::
 
 ::: {.lang-en}
 [Yellow line: observed 450g. Closer to tonkatsu, but within hamburger tail.]{.dim}
@@ -2257,6 +2358,7 @@ Key setup image for the continuous-Bayes worked example that follows. 450g sits 
 
 $$P(H \mid D) \;=\; \frac{P(H)\,P(D \mid H)}{P(D)}$$
 
+::: {.lang-en}
 ```{mermaid}
 %%| fig-align: center
 flowchart LR
@@ -2276,6 +2378,29 @@ flowchart LR
   class Num mid
   class Post out
 ```
+:::
+
+::: {.lang-ja}
+```{mermaid}
+%%| fig-align: center
+flowchart LR
+  Prior["<b>事前分布</b><br/>P(食事)<br/>離散"]
+  Lik["<b>尤度</b><br/>f(重さ | 食事)<br/><i>ガウス密度</i>"]
+  Num["<b>分子</b><br/>P(食事) · f(重さ | 食事)"]
+  Post["<b>事後分布</b><br/>P(食事 | 重さ)"]
+  Prior --> Num
+  Lik --> Num
+  Num -->|"<b>正規化</b><br/>÷ P(D)<br/><i>証拠</i>"| Post
+  classDef in fill:#1A1A2E,stroke:#64B5F6,stroke-width:2px,color:#fff
+  classDef mid fill:#1A1A2E,stroke:#FFA726,stroke-width:2px,color:#fff
+  classDef highlight fill:#1A1A2E,stroke:#FFEB3B,stroke-width:3px,color:#fff
+  classDef out fill:#1A1A2E,stroke:#66BB6A,stroke-width:3px,color:#fff
+  class Prior in
+  class Lik highlight
+  class Num mid
+  class Post out
+```
+:::
 
 ::: {.lang-en}
 [*Same flow.  Only the likelihood box changed:*]{.dim}    [*a discrete probability became a Gaussian density evaluated at $D$.*]{.yellow}
@@ -2299,18 +2424,29 @@ flowchart LR
 :::
 
 ::: {.lang-ja}
-[**今日の観測：    $D = \text{weight} = 450$ g。**]{.yellow}
+[**今日の観測：    $D = \text{重さ} = 450$ g。**]{.yellow}
 
-**$P(\text{meal} \mid \text{weight} = 450)$  はいくら？**
+**$P(\text{食事} \mid \text{重さ} = 450)$  はいくら？**
 :::
 
 
+::: {.lang-en}
 |                                     |  **tonkatsu**  |  **hamburger**  |
 |-------------------------------------|:--------------:|:---------------:|
 | Prior  $P(H)$                       |     $0.7$      |      $0.3$      |
 | Likelihood  $f(D \mid H)$           |       ?        |        ?        |
 | Numerator                           |       ?        |        ?        |
 | Posterior  $P(H \mid D)$            |       ?        |        ?        |
+:::
+
+::: {.lang-ja}
+|                                     |  **とんかつ**  |  **ハンバーグ**  |
+|-------------------------------------|:--------------:|:----------------:|
+| 事前分布  $P(H)$                    |     $0.7$      |      $0.3$       |
+| 尤度  $f(D \mid H)$                 |       ?        |        ?         |
+| 分子                                |       ?        |        ?         |
+| 事後分布  $P(H \mid D)$             |       ?        |        ?         |
+:::
 
 
 ::: {.lang-en}
@@ -2335,18 +2471,29 @@ Slide 1: 'Structural mirror of the sick-friend problem from Block 4. Four rows, 
 :::
 
 ::: {.lang-ja}
-[**今日の観測：    $D = \text{weight} = 450$ g。**]{.yellow}
+[**今日の観測：    $D = \text{重さ} = 450$ g。**]{.yellow}
 
-**$P(\text{meal} \mid \text{weight} = 450)$  はいくら？**
+**$P(\text{食事} \mid \text{重さ} = 450)$  はいくら？**
 :::
 
 
+::: {.lang-en}
 |                                     |  **tonkatsu**  |  **hamburger**  |
 |-------------------------------------|:--------------:|:---------------:|
 | Prior  $P(H)$                       |     $0.7$      |      $0.3$      |
 | Likelihood  $f(D \mid H)$           |  **$0.00332$** |  **$0.00044$**  |
 | Numerator                           |       ?        |        ?        |
 | Posterior  $P(H \mid D)$            |       ?        |        ?        |
+:::
+
+::: {.lang-ja}
+|                                     |  **とんかつ**  |  **ハンバーグ**  |
+|-------------------------------------|:--------------:|:----------------:|
+| 事前分布  $P(H)$                    |     $0.7$      |      $0.3$       |
+| 尤度  $f(D \mid H)$                 |  **$0.00332$** |  **$0.00044$**   |
+| 分子                                |       ?        |        ?         |
+| 事後分布  $P(H \mid D)$             |       ?        |        ?         |
+:::
 
 
 ::: {.lang-en}
@@ -2379,18 +2526,29 @@ Slide 2: 'Fill the likelihood row with Gaussian density values. Show the RATIO e
 :::
 
 ::: {.lang-ja}
-[**今日の観測：    $D = \text{weight} = 450$ g。**]{.yellow}
+[**今日の観測：    $D = \text{重さ} = 450$ g。**]{.yellow}
 
-**$P(\text{meal} \mid \text{weight} = 450)$  はいくら？**
+**$P(\text{食事} \mid \text{重さ} = 450)$  はいくら？**
 :::
 
 
+::: {.lang-en}
 |                                     |   **tonkatsu**   |  **hamburger**   |
 |-------------------------------------|:----------------:|:----------------:|
 | Prior  $P(H)$                       |      $0.7$       |      $0.3$       |
 | Likelihood  $f(D \mid H)$           |    $0.00332$     |    $0.00044$     |
 | **Numerator  $P(H) \cdot f(D \mid H)$** | **$0.00232$** | **$0.000132$** |
 | Posterior  $P(H \mid D)$            |        ?         |        ?         |
+:::
+
+::: {.lang-ja}
+|                                     |   **とんかつ**   |  **ハンバーグ**  |
+|-------------------------------------|:----------------:|:----------------:|
+| 事前分布  $P(H)$                    |      $0.7$       |      $0.3$       |
+| 尤度  $f(D \mid H)$                 |    $0.00332$     |    $0.00044$     |
+| **分子  $P(H) \cdot f(D \mid H)$**  | **$0.00232$**    | **$0.000132$**   |
+| 事後分布  $P(H \mid D)$             |        ?         |        ?         |
+:::
 
 
 ::: {.lang-en}
@@ -2415,18 +2573,29 @@ Slide 3: 'Multiply the prior and likelihood columns. Sum for the evidence. Same 
 :::
 
 ::: {.lang-ja}
-[**今日の観測：    $D = \text{weight} = 450$ g。**]{.yellow}
+[**今日の観測：    $D = \text{重さ} = 450$ g。**]{.yellow}
 
-**$P(\text{meal} \mid \text{weight} = 450)$  はいくら？**
+**$P(\text{食事} \mid \text{重さ} = 450)$  はいくら？**
 :::
 
 
+::: {.lang-en}
 |                                     |   **tonkatsu**   |  **hamburger**   |
 |-------------------------------------|:----------------:|:----------------:|
 | Prior  $P(H)$                       |      $0.7$       |      $0.3$       |
 | Likelihood  $f(D \mid H)$           |    $0.00332$     |    $0.00044$     |
 | Numerator  $P(H) \cdot f(D \mid H)$ |    $0.00232$     |    $0.000132$    |
 | [**Posterior  $P(H \mid D)$**]{.green} | [**$\approx 0.946$**]{.green} | [**$\approx 0.054$**]{.green} |
+:::
+
+::: {.lang-ja}
+|                                     |   **とんかつ**   |  **ハンバーグ**  |
+|-------------------------------------|:----------------:|:----------------:|
+| 事前分布  $P(H)$                    |      $0.7$       |      $0.3$       |
+| 尤度  $f(D \mid H)$                 |    $0.00332$     |    $0.00044$     |
+| 分子  $P(H) \cdot f(D \mid H)$      |    $0.00232$     |    $0.000132$    |
+| [**事後分布  $P(H \mid D)$**]{.green} | [**$\approx 0.946$**]{.green} | [**$\approx 0.054$**]{.green} |
+:::
 
 
 ::: {.lang-en}
@@ -2829,6 +2998,7 @@ Slide 3: 'Here\'s the trick: when you treat the likelihood N(D|μ,σ²) as a fun
 
 $$P(H \mid D) \;=\; \frac{P(H)\,P(D \mid H)}{P(D)}$$
 
+::: {.lang-en}
 ```{mermaid}
 %%| fig-align: center
 flowchart LR
@@ -2846,6 +3016,27 @@ flowchart LR
   class Num mid
   class Post out
 ```
+:::
+
+::: {.lang-ja}
+```{mermaid}
+%%| fig-align: center
+flowchart LR
+  Prior["<b>事前分布</b><br/>P(μ)<br/><i>ガウス密度</i>"]
+  Lik["<b>尤度</b><br/>f(D | μ)<br/><i>ガウス密度</i>"]
+  Num["<b>分子</b><br/>P(μ) · f(D | μ)"]
+  Post["<b>事後分布</b><br/>P(μ | D)<br/><i>ガウス密度</i>"]
+  Prior --> Num
+  Lik --> Num
+  Num -->|"<b>正規化</b><br/>÷ P(D)<br/><i>証拠</i>"| Post
+  classDef highlight fill:#1A1A2E,stroke:#FFEB3B,stroke-width:3px,color:#fff
+  classDef mid fill:#1A1A2E,stroke:#FFA726,stroke-width:2px,color:#fff
+  classDef out fill:#1A1A2E,stroke:#66BB6A,stroke-width:3px,color:#fff
+  class Prior,Lik highlight
+  class Num mid
+  class Post out
+```
+:::
 
 ::: {.lang-en}
 [*Same flow.  Both boxes are densities now.   Every arrow still works.*]{.yellow}
@@ -3098,7 +3289,13 @@ Slide 4: 'The new μ and σ come from matching coefficients. A (coefficient of �
 
 ## [Precision  =  1 / variance  =  "how sharp I am"]{.lang-en}[精度  =  1 / 分散  =  「どれくらい鋭いか」]{.lang-ja}
 
+::: {.lang-en}
 ![](images/precision.png){fig-align="center" width="75%"}
+:::
+
+::: {.lang-ja}
+![](images/precision-ja.png){fig-align="center" width="75%"}
+:::
 
 ::: {.lang-en}
 [Sharper curve = higher precision = more confident (more weight in the update).]{.dim}
@@ -3317,7 +3514,13 @@ Slide 4: 'Posterior mean ≈ 503.1. Moved from 500 toward 510 but mostly stayed 
 
 ## [Prior × Likelihood = Posterior]{.lang-en}[事前 × 尤度 = 事後]{.lang-ja}
 
+::: {.lang-en}
 ![](images/gg_update.png){fig-align="center" width="75%"}
+:::
+
+::: {.lang-ja}
+![](images/gg_update-ja.png){fig-align="center" width="75%"}
+:::
 
 ::: {.lang-en}
 [Red = prior. Blue = likelihood. Yellow = posterior (tighter; between both).]{.dim}
@@ -3576,15 +3779,15 @@ Appropriate use of time                    0.5
 
 |  | **週 + 話題** | **発表候補の一例** |
 |:---|:---|:---|
-| W4 (5/22) | 一般化 + 階層ベイズ | **Tenenbaum & Griffiths 2001** — ベイズ的一般化の定番 |
-| W5 (5/29) | ベイジアンネット + 因果ベイジアンネット | **Gerstenberg et al 2015** — 反事実としての因果判断 |
-| W6 (6/5) | マルコフ連鎖 + ネットワーク | **Abbott, Austerweil & Griffiths 2012** — ランダムウォークとしての記憶 |
-| W7 (6/12) | モンテカルロ | **Vul et al 2009** — 認知における「1回きりのサンプリング」 |
-| W8 (6/19) | SDT / MDP / RL | **Daw et al 2005** — モデルベース vs. モデルフリーの強化学習 |
-| W9 (6/26) | 逆強化学習 + 社会的認知 | **Baker, Saxe & Tenenbaum 2009** — 行動理解を逆プランニングとして |
-| W10 (7/3) | ベイジアンノンパラメトリクス | **Austerweil & Griffiths 2013** — IBP による特徴学習 |
-| W11 (7/10) | 深層ニューラルネット + LLM | **Lake et al 2017** — 人間のように学習する機械を作る |
-| W12 (7/17) | 倫理 + 敵対的機械学習 | **Caliskan et al 2017** — 単語埋め込みに現れる人間的バイアス |
+| 第4週 (5/22) | 一般化 + 階層ベイズ | **Tenenbaum & Griffiths 2001** — ベイズ的一般化の定番 |
+| 第5週 (5/29) | ベイジアンネット + 因果ベイジアンネット | **Gerstenberg et al 2015** — 反事実としての因果判断 |
+| 第6週 (6/5) | マルコフ連鎖 + ネットワーク | **Abbott, Austerweil & Griffiths 2012** — ランダムウォークとしての記憶 |
+| 第7週 (6/12) | モンテカルロ | **Vul et al 2009** — 認知における「1回きりのサンプリング」 |
+| 第8週 (6/19) | SDT / MDP / RL | **Daw et al 2005** — モデルベース vs. モデルフリーの強化学習 |
+| 第9週 (6/26) | 逆強化学習 + 社会的認知 | **Baker, Saxe & Tenenbaum 2009** — 行動理解を逆プランニングとして |
+| 第10週 (7/3) | ベイジアンノンパラメトリクス | **Austerweil & Griffiths 2013** — IBP による特徴学習 |
+| 第11週 (7/10) | 深層ニューラルネット + LLM | **Lake et al 2017** — 人間のように学習する機械を作る |
+| 第12週 (7/17) | 倫理 + 敵対的機械学習 | **Caliskan et al 2017** — 単語埋め込みに現れる人間的バイアス |
 
 [*各週には2–4つの候補論文がサイトに掲載されている。  割り当てが決まったら、その中から1つ選ぶ。*]{.dim}
 :::
