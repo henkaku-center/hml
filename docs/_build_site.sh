@@ -37,8 +37,9 @@ cd "$DOCS"
 staticrypt readings.html reading-game-plan.html \
     -p "$READINGS_PW" \
     --short \
+    --remember 180 \
     --template-title "Readings — SP26" \
-    --template-instructions "Enter the SP26 class password (pinned in Slack #hml-2026)." \
+    --template-instructions "Enter the SP26 class password (pinned in Slack #hml-2026). Tick \"Remember me\" to stay unlocked for the semester." \
     --template-button "Unlock" \
     -d . >/dev/null
 
