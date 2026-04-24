@@ -207,9 +207,9 @@ weeks:
     date: 2026-06-26
     theme: Inverse RL + social cognition
     required:
-      - citation: "Baker, C. L., Saxe, R., & Tenenbaum, J. B. (2009). Action understanding as inverse planning. Cognition, 113(3), 329–349."
+      - citation: "Baker, C. L., Tenenbaum, J. B., & Saxe, R. R. (2007). Goal inference as inverse planning. Proc. CogSci."
         pdf: Bakeretal2007.pdf
-        why: "Foundational IRL-for-social-cognition paper."
+        why: "6-page CogSci proceedings version of the inverse-planning framework. Shorter precursor to the 2009 Cognition paper; same core model."
     optional: []
     presentation_candidates:
       - citation: "Ho, M. K., Littman, M. L., MacGlashan, J., Cushman, F., & Austerweil, J. L. (2016). Showing versus doing: Teaching by demonstration. NeurIPS."
