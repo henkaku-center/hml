@@ -59,6 +59,54 @@ Rationale: the SP25 quizzes are already-authored, already-pedagogy-tested concep
 - **Landing page**: `docs/index.html` is a single-file static site served by GitHub Pages. Assets in `docs/assets/` (Chiba Tech SDS logos) were fetched via pre-approved `curl` commands in `.claude/settings.local.json`.
 - **Readings:** `course/readings_map.yml` is the source of truth for weekly readings and paper-presentation assignments. Weeks 1 and 2 are populated; Weeks 3–12 are stubs to fill in during the readings-modernization planning session.
 
+## Bilingual slides (EN ↔ JA toggle)
+
+Week 2 onwards, slides support an in-lecture EN↔JA toggle for bilingual students. Press `L` (or `l`) while viewing a deck to switch language; the choice persists across reloads via localStorage. A small muted badge in the bottom-right shows the current language.
+
+**Infrastructure** lives in `sds-reveal/`:
+- `lang-toggle.css` — hides `.lang-ja` by default; `body.show-ja` swaps visibility.
+- `lang-toggle.js` — `L` keypress handler, localStorage persistence, badge mount.
+
+**Wiring** (already done for Week 2; pattern to copy into future weeks' `.qmd` frontmatter):
+
+```yaml
+format:
+  revealjs:
+    theme: [dark, ../../sds-reveal/sds.scss]
+    html-math-method: katex
+    css: ../../sds-reveal/lang-toggle.css
+    include-after-body:
+      text: |
+        <script src="../../sds-reveal/lang-toggle.js"></script>
+```
+
+**Authoring pattern** — wrap parallel content in paired Quarto fenced divs:
+
+```markdown
+## Slide title
+
+::: {.lang-en}
+English content — prose, KaTeX ($P(H \mid D)$), lists, everything.
+:::
+
+::: {.lang-ja}
+日本語の内容 — 散文、KaTeX（$P(H \mid D)$）、リストなど全て。
+:::
+```
+
+**Rules:**
+
+- **CSS-toggle, never re-render.** Both languages stay in the DOM at all times; KaTeX/Mermaid render once on page load and work in both. Re-rendering on toggle (which is what Ira's APS p5.js source does) would break math.
+- **Mermaid diagrams**: mermaid edge labels and node text don't inherit the language wrapper the way markdown prose does. If you need a bilingual mermaid diagram, either duplicate the entire `mermaid` block inside each lang div, or author it language-agnostic (English only — fine for formula-style diagrams).
+- **Fragments**: put `.fragment` elements *inside* the lang divs, not wrapping them. Reveal still counts hidden fragments as steps, which can miscount the build-up.
+- **Speaker notes**: one language per slide unless you wrap content inside `::: {.notes}` in paired lang divs too. Generally not worth it — instructor-only content can stay EN.
+- **Title slide**: Quarto's title/subtitle frontmatter fields don't accept nested divs. If a JA title is needed, use the title in both languages with an `&nbsp;&nbsp;·&nbsp;&nbsp;` separator.
+- **Keyboard**: `L` is free in Reveal. Avoid `f` (fullscreen), `s` (speaker notes), `b` (blackout), `?` (help), `esc`.
+
+**Verifying:** decktape preview captures only the default (EN) state. To verify JA content is present, `grep -c "lang-ja" weekN-slides.html` — should be >0. To actually see JA rendered, open the HTML in a browser and press L.
+
+**Scope today:** Week 2 has 3 slides wrapped as a minimal example (Meet Chibany, Marr L1, Quick poll — posterior). Retrofitting more slides, and JA-translating remaining weeks, is an open TODO tracked in `TODO.md`.
+
 ## How to build a week (SP26 lecture artifacts)
 
 Starting Week 2, lecture artifacts follow the per-week triplet pattern from the APS-I repo:

@@ -48,7 +48,10 @@
 - [ ] Phase 3 (Slack): create `#paper-signups` and `#weekly-discussion` channels before Week 3; post per-week threads in `#paper-signups` after Week 2 class
 - [ ] Phase 4 (optional): GitHub Actions to auto-build on push
 - [ ] Fill in `presenter:` fields in `course/readings_map.yml` after Slack signups close (Fri May 15)
-- [ ] **Japanese translation toggle.** Integrate a one-click EN↔JA translation widget for the course site (home, syllabus, assignments, game plan, presentation guidelines). Adapt from Ira's APS lecture source — reuse the same toggle component/approach. Student body at Chiba Tech skews bilingual; this lowers the barrier for students whose English is strong enough for class but who want a quick translation of syllabus/policy details.
+- [x] **Slide EN↔JA toggle infrastructure.** Built (2026-04-24). `sds-reveal/lang-toggle.{css,js}` + Quarto include wiring. Press `L` to switch; localStorage persists. Authoring pattern documented in CLAUDE.md. Week 2 has 3 slides wrapped as a minimal example.
+- [ ] **Retrofit remaining Week 2 slides with JA translations.** Currently only Meet Chibany, Marr L1, and Quick poll — posterior are bilingual. Wrap the other ~100 slides' prose blocks in `.lang-en` / `.lang-ja` divs and author JA.
+- [ ] **Extend EN↔JA to the course *site* (home, syllabus, assignments, game plan, guidelines).** The slide toggle only covers deck HTML. Site pages are separate Jinja templates and would need their own markup + toggle wiring.
+- [ ] **Extend EN↔JA to Weeks 3-12 slides** as those decks are authored.
 
 ### SP26 New — Slide infrastructure
 - [ ] **Write a Quarto-qmd → pptx converter.** The Quarto deck is now the canonical slide source (week2-slides.qmd, etc.); the hand-written `build_slides_weekN.py` pptx track has diverged and is no longer maintained. Need a single-entry tool that reads the .qmd and emits a python-pptx Office deck preserving speaker notes, math (KaTeX → equation/image), the yellow-frame theme, and section breaks, so the pptx artifact can be regenerated from the canonical source instead of hand-edited in parallel. Until this exists, ignore the per-week `build_slides_weekN.py` scripts.

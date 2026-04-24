@@ -9,6 +9,10 @@ format:
   revealjs:
     theme: [dark, ../../sds-reveal/sds.scss]
     html-math-method: katex
+    css: ../../sds-reveal/lang-toggle.css
+    include-after-body:
+      text: |
+        <script src="../../sds-reveal/lang-toggle.js"></script>
   pptx: default
 ---
 
@@ -55,6 +59,8 @@ State the two facts, move on. If a student asks for detail, say 'I'll get to tha
 
 ## Meet Chibany
 
+::: {.lang-en}
+
 Chibany is the Chiba Tech mascot. They hang out at the cafeteria.
 
 Students bring them two bentos a day — lunch and dinner — as offerings.
@@ -66,6 +72,24 @@ Students bring them two bentos a day — lunch and dinner — as offerings.
 [Chibany is the protagonist of our textbook,]{.dim}
 
 ["A Narrative Introduction to Probability" — Tutorial 3 Ch 1.]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+チバニーは千葉工業大学のマスコットキャラクターです。学食でよく見かけます。
+
+学生たちは毎日2つのお弁当 — 昼食と夕食 — をお供えとして持っていきます。
+
+[チバニーはとんかつが大好きです。]{.yellow}
+
+
+
+[チバニーは私たちの教科書の主人公でもあります。]{.dim}
+
+[『確率論への物語的入門』 — チュートリアル3 第1章。]{.dim}
+
+:::
 
 
 ::: {.notes}
@@ -119,6 +143,8 @@ Slide 2: 'Ambient background knowledge — last week the bentos were transparent
 
 ## Marr L1 — what problem is being solved?
 
+::: {.lang-en}
+
 [**For Chibany:   Compute  P(meal | weight).**]{.accent}
 
 
@@ -130,6 +156,24 @@ Slide 2: 'Ambient background knowledge — last week the bentos were transparent
 
 
 **Different goal  ⇒  different L1  ⇒  different normative answer.**
+
+:::
+
+::: {.lang-ja}
+
+[**チバニーにとって:   $P(\text{食事} \mid \text{重さ})$ を計算する。**]{.accent}
+
+
+
+[L1は「正しい計算」を規定する — 「どう計算するか」ではなく、]{.dim}
+
+[チバニーの脳が実際にどう計算するか、でもない。]{.dim}
+
+
+
+**目的が違えば  ⇒  L1も違う  ⇒  規範的な答えも違う。**
+
+:::
 
 
 ::: {.notes}
@@ -296,6 +340,8 @@ Slide 3: 'Name the four pieces. You\'ll see these names the rest of the semester
 
 ## Quick poll — the posterior is…
 
+::: {.lang-en}
+
 [**What is the posterior probability of an event?**]{.yellow}
 
 &nbsp;&nbsp;&nbsp;A) the probability of the event
@@ -307,6 +353,24 @@ Slide 3: 'Name the four pieces. You\'ll see these names the rest of the semester
 &nbsp;&nbsp;&nbsp;D) the prior, after being multiplied by the likelihood
 
 [*Hands up when you've picked one. 15 seconds.*]{.dim}
+
+:::
+
+::: {.lang-ja}
+
+[**「事後確率」とは何ですか？**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;A) 事象そのものの確率
+
+&nbsp;&nbsp;&nbsp;B) **観測された後の**事象の確率
+
+&nbsp;&nbsp;&nbsp;C) 事象が起きたという条件下での観測の確率
+
+&nbsp;&nbsp;&nbsp;D) 事前確率に尤度を掛けたもの
+
+[*答えを決めたら手を挙げてください。15秒。*]{.dim}
+
+:::
 
 
 ::: {.notes}

@@ -1,0 +1,51 @@
+/*
+ * Bilingual EN/JA slide toggle
+ *
+ * Wrap parallel content:
+ *   ::: {.lang-en}
+ *   English text here.
+ *   :::
+ *   ::: {.lang-ja}
+ *   日本語のテキスト。
+ *   :::
+ *
+ * Default: EN visible, JA hidden.
+ * When <body> has class `show-ja`: JA visible, EN hidden.
+ * Toggle key: L (handled in lang-toggle.js).
+ * Choice persists via localStorage key `hml-slide-lang`.
+ */
+
+.lang-ja {
+  display: none;
+}
+
+body.show-ja .lang-en {
+  display: none;
+}
+
+body.show-ja .lang-ja {
+  display: block;
+}
+
+/* Floating language badge — bottom-right corner, muted */
+.lang-badge {
+  position: fixed;
+  bottom: 0.6em;
+  right: 0.6em;
+  z-index: 100;
+  padding: 0.25em 0.6em;
+  font-size: 0.65rem;
+  font-family: Inter, sans-serif;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.45);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.25em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.lang-badge .lang-hint {
+  color: rgba(255, 255, 255, 0.3);
+  margin-left: 0.5em;
+}
