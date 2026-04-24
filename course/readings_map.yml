@@ -287,9 +287,6 @@ weeks:
       - citation: "Ensign, D., Friedler, S. A., Neville, S., Scheidegger, C., & Venkatasubramanian, S. (2018). Runaway feedback loops in predictive policing. PMLR."
         pdf: ensign18a.pdf
         why: "Predictive-policing feedback loops — concrete example of ML deployment harm."
-      - citation: "Rahwan, I., Cebrian, M., Obradovich, N. et al. (2019). Machine behaviour. Nature, 568(7753), 477–486."
-        pdf: Rahwan2019.pdf
-        why: "Nature review framing study of machine behavior as its own discipline."
       - citation: "Miller, E. J., Foo, Y. Z., Mewton, P., & Dawel, A. (2023). AI hyperrealism: Why AI faces are perceived as more real than human ones. Psychological Science."
         pdf: "miller-et-al-2023-ai-hyperrealism-why-ai-faces-are-perceived-as-more-real-than-human-ones.pdf"
         why: "2023 paper on uncanny-valley inversion — modern ethical concern around AI-generated faces."
