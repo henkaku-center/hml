@@ -47,21 +47,60 @@
     document.body.appendChild(el);
   }
 
-  function handleKey(e) {
-    // Skip if the user is typing in an input/textarea/contentEditable.
-    const t = e.target;
-    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
-    // Skip if modifier keys are held (reserve toggle for bare L).
+  function toggle() {
+    setLang(getLang() === 'ja' ? 'en' : 'ja');
+  }
+
+  function isTypingTarget(el) {
+    if (!el) return false;
+    return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable;
+  }
+
+  function handleKeyFallback(e) {
+    // Fallback for non-Reveal pages. On Reveal pages we register via
+    // Reveal.addKeyBinding below so our L takes priority over nav.
+    if (isTypingTarget(e.target)) return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if ((e.key || '').toLowerCase() !== TOGGLE_KEY) return;
     e.preventDefault();
-    setLang(getLang() === 'ja' ? 'en' : 'ja');
+    e.stopPropagation();
+    toggle();
+  }
+
+  function registerWithReveal() {
+    // Reveal's addKeyBinding claims the key at a higher priority than the
+    // default navigation handlers, so pressing L toggles language without
+    // also advancing the slide.
+    //   76 = 'L' (case-insensitive — Reveal normalizes)
+    if (!window.Reveal || typeof window.Reveal.addKeyBinding !== 'function') {
+      return false;
+    }
+    try {
+      window.Reveal.addKeyBinding(
+        { keyCode: 76, key: 'L', description: 'Toggle language (EN/JA)' },
+        toggle
+      );
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
   function init() {
     mountBadge();
     setLang(getLang()); // apply persisted choice on load
-    document.addEventListener('keydown', handleKey);
+
+    if (window.Reveal && typeof window.Reveal.isReady === 'function' && window.Reveal.isReady()) {
+      registerWithReveal() || document.addEventListener('keydown', handleKeyFallback);
+    } else if (window.Reveal && typeof window.Reveal.on === 'function') {
+      // Wait for Reveal to finish initialization, then bind.
+      window.Reveal.on('ready', () => {
+        registerWithReveal() || document.addEventListener('keydown', handleKeyFallback);
+      });
+    } else {
+      // Plain page (no Reveal) — use the document listener.
+      document.addEventListener('keydown', handleKeyFallback);
+    }
   }
 
   if (document.readyState === 'loading') {
