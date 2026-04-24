@@ -578,15 +578,23 @@ Sum the joint over B:
 
 
 
-[**The named move:  MARGINALIZATION.**]{.yellow}
+[**The named move:  MARGINALIZATION   (a.k.a. the sum rule).**]{.yellow}
 
-Given the joint, sum over the variable you're not asking about.
+$$P(A) \;=\; \sum_{b} P(A, B = b)\qquad\text{for ANY two random variables  } A, B.$$
 
-[Week 1 called this the sum rule.]{.dim}
+[*Intuition:  "A happened" means A happened paired with SOME value of B.*]{.accent}
+
+[*The values of B partition the world; summing over them adds up to "A, no matter what B."*]{.dim}
 
 
 ::: {.notes}
-Slide 3: 'Named: marginalization. Sum rule. Same move as last week. Next move: conditional — then we use marginal + conditional together to define INDEPENDENCE.'
+Slide 3: 'Named: marginalization — also called the sum rule. Give them both names; they\'ll see "sum rule" in the textbook and in most probability references.
+
+CRITICAL: this holds for ANY two random variables A, B — not just today\'s meals. No independence assumption, no shared support, no special structure. The rule is a direct consequence of two facts: (1) the values of B form a partition of the sample space — every outcome has exactly one B value; (2) "A = a" is the disjoint union over b of "A = a AND B = b." Probabilities of disjoint events add. So P(A = a) = sum over b of P(A = a, B = b). Worth saying out loud: it\'s just the event "A = a" rewritten as a disjoint union, then probability-of-a-union becoming a sum. No new axiom.
+
+For continuous B the sum becomes an integral, same logic — shows up after the break. For more than two variables, marginalize variables one at a time or all at once: P(A) = sum over b, c, d, ... of P(A, B, C, D, ...).
+
+Next move: conditional — then we use marginal + conditional together to define INDEPENDENCE.'
 :::
 
 ## Conditional — restrict the possibility space
