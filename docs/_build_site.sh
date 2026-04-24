@@ -34,7 +34,7 @@ fi
 #    matches the input's directory.
 echo "[build] encrypting readings.html..."
 cd "$DOCS"
-staticrypt readings.html reading-game-plan.html \
+staticrypt readings.html \
     -p "$READINGS_PW" \
     --short \
     --remember 180 \
