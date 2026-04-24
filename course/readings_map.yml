@@ -110,9 +110,9 @@ weeks:
       - citation: "Tenenbaum, J. B., & Xu, F. (2000). Word learning as Bayesian inference. Proc. CogSci."
         pdf: TenenbaumXu2000.pdf
         why: "Classic application of Bayesian generalization to word learning."
-      - citation: "Kemp, C., & Tenenbaum, J. B. (2009). Structured statistical models of inductive reasoning. Psychological Review, 116(1), 20–58."
-        pdf: kempjx09_objectdiscoveryandidentification.pdf
-        why: "Hierarchical Bayes for inductive reasoning — direct extension of the lecture."
+      - citation: "Kemp, C., Perfors, A., & Tenenbaum, J. B. (2007). Learning overhypotheses with hierarchical Bayesian models. Developmental Science, 10(3), 307–321."
+        pdf: Kemp07.pdf
+        why: "Canonical hierarchical-Bayes-in-concept-learning paper — 15 pages, Dirichlet-multinomial, accessible from Week 2 machinery. Overhypotheses (shape bias, object/substance kinds) are the textbook example of hierarchical priors in cognition."
       - citation: "Hornsby, A. N., Evans, T., Riefer, P. S., Prior, R., & Love, B. C. (2020). Conceptual organization is revealed by consumer activity patterns. Computational Brain & Behavior, 3, 162–173."
         pdf: Hornsby2020_Article_ConceptualOrganizationIsReveal.pdf
         why: "Recent extension of Bayesian categorization into real consumer data."
@@ -218,9 +218,9 @@ weeks:
       - citation: "Ho, M. K., Littman, M. L., Cushman, F., & Austerweil, J. L. (2015). Teaching with rewards and punishments: Reinforcement or communication? Proc. CogSci."
         pdf: Hoetal2015CogSciProc.pdf
         why: "Follow-up: reward as signal vs. as reinforcer."
-      - citation: "Ho, M. K., Cushman, F., Littman, M. L., & Austerweil, J. L. (2017). Social is special: A normative framework for teaching with and learning from evaluative feedback. Cognition."
+      - citation: "Ho, M. K., Littman, M. L., & Austerweil, J. L. (2017). Teaching by intervention: Working backwards, undoing mistakes, or correcting mistakes? Proc. CogSci."
         pdf: Hoetal2017.pdf
-        why: "Normative framework for teaching — rounds out the Ho trilogy."
+        why: "Follows the Ho 2015/2016 thread — teaching by intervention extends the teaching-as-inverse-planning framing into live correction."
       - citation: "Jara-Ettinger, J. (2019). Theory of mind as inverse reinforcement learning. Current Opinion in Behavioral Sciences, 29, 105–110."
         url: https://doi.org/10.1016/j.cobeha.2019.04.010
         why: "Recent review paper framing ToM explicitly as IRL."

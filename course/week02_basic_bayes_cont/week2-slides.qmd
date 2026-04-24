@@ -25,9 +25,9 @@ Crisp start. Today's backbone is the second half: continuous probability, Gaussi
 - Expected value + discrete [0:30]{.time}
 - Continuous prob + Gaussian [0:45]{.time}
 - Break [1:05]{.time}
-- Gaussian-Gaussian update [1:15]{.time}
-- Paper presentations [1:40]{.time}
-- Admin + Week 3 [1:50]{.time}
+- Gaussian-Gaussian update [1:10]{.time}
+- Paper presentations [1:35]{.time}
+- Admin + Week 3 [1:45]{.time}
 
 ## Welcome back + meet Chibany {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
@@ -106,9 +106,9 @@ Slide 2: 'Ambient background knowledge — last week the bentos were transparent
 - Expected value + discrete [0:30]{.time}
 - Continuous prob + Gaussian [0:45]{.time}
 - Break [1:05]{.time}
-- Gaussian-Gaussian update [1:15]{.time}
-- Paper presentations [1:40]{.time}
-- Admin + Week 3 [1:50]{.time}
+- Gaussian-Gaussian update [1:10]{.time}
+- Paper presentations [1:35]{.time}
+- Admin + Week 3 [1:45]{.time}
 
 ## Marr's three levels — frame for the whole course {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
@@ -214,9 +214,9 @@ witness accurate 80%.  Most of you guessed ~80%.
 - Expected value + discrete [0:30]{.time}
 - Continuous prob + Gaussian [0:45]{.time}
 - Break [1:05]{.time}
-- Gaussian-Gaussian update [1:15]{.time}
-- Paper presentations [1:40]{.time}
-- Admin + Week 3 [1:50]{.time}
+- Gaussian-Gaussian update [1:10]{.time}
+- Paper presentations [1:35]{.time}
+- Admin + Week 3 [1:45]{.time}
 
 ## Notation lock-in {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
@@ -334,9 +334,9 @@ flowchart LR
 - Expected value + discrete [0:30]{.time}
 - Continuous prob + Gaussian [0:45]{.time}
 - Break [1:05]{.time}
-- Gaussian-Gaussian update [1:15]{.time}
-- Paper presentations [1:40]{.time}
-- Admin + Week 3 [1:50]{.time}
+- Gaussian-Gaussian update [1:10]{.time}
+- Paper presentations [1:35]{.time}
+- Admin + Week 3 [1:45]{.time}
 
 ## Joint, marginalization, conditional, independence {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
@@ -582,6 +582,10 @@ Sum the joint over B:
 
 $$P(A) \;=\; \sum_{b} P(A, B = b)\qquad\text{for ANY two random variables  } A, B.$$
 
+[*The $\sum$ symbol means "add up one term for each value of the index."*]{.dim}
+
+[*Here $\sum_b$ ranges over the two values of $B$: $\sum_b P(A,B{=}b) = P(A,B{=}H) + P(A,B{=}T)$.*]{.dim}
+
 [*Intuition:  "A happened" means A happened paired with SOME value of B.*]{.accent}
 
 [*The values of B partition the world; summing over them adds up to "A, no matter what B."*]{.dim}
@@ -760,9 +764,9 @@ Independence   =  $P(A, B) = P(A) \cdot P(B)$    (equivalently, $P(A \mid B) = P
 - [Expected value + discrete]{.highlight} [0:30]{.time}
 - Continuous prob + Gaussian [0:45]{.time}
 - Break [1:05]{.time}
-- Gaussian-Gaussian update [1:15]{.time}
-- Paper presentations [1:40]{.time}
-- Admin + Week 3 [1:50]{.time}
+- Gaussian-Gaussian update [1:10]{.time}
+- Paper presentations [1:35]{.time}
+- Admin + Week 3 [1:45]{.time}
 
 ## Expected value + discrete distributions {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
@@ -987,54 +991,33 @@ $$P(Y = k) = \binom{n}{k} \, p^{k} \, (1-p)^{n-k}$$
 
 &nbsp;&nbsp;&nbsp;[p = 0.7   (per-trial success prob)]{.dim}
 
-&nbsp;&nbsp;&nbsp;[C(n, k)   counts orderings of k successes among n trials]{.dim}
+[$\displaystyle \binom{n}{k} \;=\; \frac{n!}{k!\,(n-k)!} \;=\;$ "$n$ choose $k$" $\;=\;$ number of ways to pick $k$ items from $n$.]{.dim}
+
+[*Example:  $\binom{5}{2} = \frac{5!}{2!\,3!} = \frac{120}{2 \cdot 6} = 10$ — ten distinct orderings of 2 successes among 5 trials.*]{.dim}
 
 
 ::: {.notes}
-Slide 2: 'Binomial formula. Name each piece. Binomial coefficient C(n,k) = "n choose k" = count of orderings.'
+Slide 2: 'Binomial formula. Name each piece. Binomial coefficient n-choose-k counts orderings of k successes among n trials — the factorial formula is just "pick k slots from n, divide out the k! orderings of the successes themselves and the (n-k)! orderings of the failures." Alternative notation you\'ll see: C(n,k) or ^n C_k. Work one example out loud — 5-choose-2 = 10 — so the notation is not a black box.'
 :::
 
-## Binomial distribution (3/3) {.smaller}
+## Binomial distribution (3/3)
 
-Chibany counts tonkatsu across 5 days.
+[**$Y \sim \mathrm{Binomial}(5, 0.7)$:   plug in a few values of $k$.**]{.accent}
 
-Each day:  $\mathrm{Bernoulli}(0.7)$, independent.
+| $k$ | $\binom{5}{k}$ | $0.7^{k}\,(1-0.7)^{5-k}$ | $P(Y = k)$ |
+|:-:|:-:|:-:|:-:|
+| 5 | 1  | $0.7^{5}$         | $\approx 0.168$ |
+| **4** | **5**  | **$0.7^{4}\cdot 0.3$**   | **$\approx 0.360$  ← MODE** |
+| 3 | 10 | $0.7^{3}\cdot 0.3^{2}$ | $\approx 0.309$ |
 
-[**Let $Y$ = total tonkatsu in 5 days.    $Y \sim \mathrm{Binomial}(5, 0.7)$.**]{.accent}
+[**Why is $k{=}4$ more likely than $k{=}5$,  even though $p = 0.7$?**]{.yellow}
 
-
-
-$$P(Y = k) = \binom{n}{k} \, p^{k} \, (1-p)^{n-k}$$
-
-
-
-&nbsp;&nbsp;&nbsp;[n = 5      (trials)]{.dim}
-
-&nbsp;&nbsp;&nbsp;[k          (count of successes)]{.dim}
-
-&nbsp;&nbsp;&nbsp;[p = 0.7   (per-trial success prob)]{.dim}
-
-&nbsp;&nbsp;&nbsp;[C(n, k)   counts orderings of k successes among n trials]{.dim}
-
-
-
-P(Y = 5)  =  1 · 0.7⁵ · 1         ≈  0.168
-
-[**P(Y = 4)  =  5 · 0.7⁴ · 0.3     ≈  0.360        ← the MODE**]{.yellow}
-
-P(Y = 3)  =  10 · 0.7³ · 0.3²   ≈  0.309
-
-
-
-[**Why is k=4 more likely than k=5,  even though p = 0.7?**]{.accent}
-
-&nbsp;&nbsp;&nbsp;[*There are 5 ways to get 4 tonkatsu in 5 days, but only 1 way to get all 5.*]{.dim}
-
-&nbsp;&nbsp;&nbsp;[*The extra orderings outweigh the smaller (0.7·0.3) factor.*]{.dim}
+[*There are 5 orderings for 4 tonkatsu in 5 days, but only 1 for all 5.*]{.dim}
+[*The orderings outweigh the extra factor of $0.7$.*]{.dim}
 
 
 ::: {.notes}
-Slide 3: 'Plug in for k=3, 4, 5. The mode is k=4 — this surprises students who expect k=5 because p=0.7 > 0.5. The answer: 5 orderings for k=4 vs 1 ordering for k=5. The combinatorics wins over the extra factor of 0.7.'
+Slide 3: 'Work the table row-by-row. The MODE is k=4, not k=5 — this surprises students who expect the most-probable count to be np=3.5 rounded up. Answer: 5 orderings for k=4 vs 1 ordering for k=5. Combinatorics wins over the extra factor of 0.7. This tiny combinatorial-vs-probabilistic tradeoff drives the whole shape of the Binomial.'
 :::
 
 ## Binomial(5, 0.7) — full PMF
@@ -1059,9 +1042,9 @@ Mode at k=4 (0.360). In Week 3 this PMF becomes the LIKELIHOOD
 - Expected value + discrete [0:30]{.time}
 - [Continuous prob + Gaussian]{.highlight} [0:45]{.time}
 - Break [1:05]{.time}
-- Gaussian-Gaussian update [1:15]{.time}
-- Paper presentations [1:40]{.time}
-- Admin + Week 3 [1:50]{.time}
+- Gaussian-Gaussian update [1:10]{.time}
+- Paper presentations [1:35]{.time}
+- Admin + Week 3 [1:45]{.time}
 
 ## Continuous probability + the Gaussian {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
@@ -1093,133 +1076,83 @@ Chibany can't peek — and it would be rude to open one while the student watche
 Opaque-bento reveal — deliberately placed here, not in the morning intro. Up to now the meal was observable (Block 4 joint tables used A, B directly). The inference problem only kicks in once we hide the meal and leave weight as the observable. This is the hidden-variable pivot — everything after this needs a likelihood p(weight | meal), which is the next four slides (PMF→PDF).
 :::
 
+## Notation checkpoint — PMF & PDF
+
+[*Two acronyms we\'ll use constantly from here on:*]{.dim}
+
+[**PMF  —  Probability Mass Function.**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;For a discrete RV:   $p(x) = P(X = x)$.   Think: heights of bars.
+
+&nbsp;&nbsp;&nbsp;$\sum_x p(x) = 1$.    Each $p(x) \in [0, 1]$ — a real probability.
+
+[**PDF  —  Probability Density Function.**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;For a continuous RV:   $f(x)$ — probability PER UNIT of $x$.
+
+&nbsp;&nbsp;&nbsp;$\int f(x)\,dx = 1$.    $f(x)$ can exceed 1 — it\'s a density, not a probability.
+
+[*PMFs give bars; PDFs give a smooth curve. We\'ll see how to get from one to the other next.*]{.dim}
+
+
+::: {.notes}
+Lock in both acronyms before we use them. PMF = bars (discrete, heights sum to 1); PDF = curve (continuous, area sums to 1, heights are density — units of probability per unit of x). Common student trap: "why can a PDF exceed 1?" — because density × width = probability, and if width is small, density can be large. e.g. N(0, 0.01) has density ~40 at zero. Integrating gives probability back.
+:::
+
 ## From PMF to PDF — going continuous
 
 Chibany's bentos come in all weights — not a finite menu of values, a real number.
 
-[**We need a different object — a probability DENSITY.**]{.accent}
+[**So the PMF (bars over discrete values) won\'t work — we need a PDF.**]{.accent}
+
+[*How do we GET from bars to a smooth density? Bin the data and shrink the bins.*]{.dim}
 
 
 ::: {.notes}
-Slide 1: 'Weight is continuous. No finite outcome space. We need a new object — the PDF.'
+Slide 1: 'Weight is continuous. No finite outcome space. We need a new object — the PDF. Build: the next 3 slides shrink bins of a histogram until the outline becomes a smooth curve.'
 :::
 
 ## From PMF to PDF — going continuous (2/4)
 
-Chibany's bentos come in all weights — not a finite menu of values, a real number.
+[**Start coarse — 30g bins. A PMF over bins.**]{.accent}
 
-[**We need a different object — a probability DENSITY.**]{.accent}
+![](images/pmf_to_pdf_30g.png){fig-align="center" width="70%"}
 
-
-
-Thought experiment — shrink the bins:
-
-&nbsp;&nbsp;&nbsp;&nbsp;[30g bins:   coarse histogram, PMF over bins]{.dim}
-
-&nbsp;&nbsp;&nbsp;&nbsp;[10g bins:   finer, still PMF]{.dim}
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2g bins:   finer still]{.dim}
-
-&nbsp;&nbsp;&nbsp;&nbsp;[**bin → 0:   PMF → PDF**]{.accent}
+[*Bar heights give probability per gram — each bar\'s AREA is the probability of landing in its bin.*]{.dim}
 
 
 ::: {.notes}
-Slide 2: 'Binning thought experiment. Bin the weights. Shrink bins. In the limit: a smooth curve. That curve is the density.'
+Slide 2: 'Bin at 30g. Legit PMF over bins — finite number of bars, heights sum in an area-weighted way to 1. Pause: point out that what we\'re plotting is probability PER GRAM (the y-axis label). The area of each bar is the probability the weight falls in that bin.'
 :::
 
 ## From PMF to PDF — going continuous (3/4)
 
-Chibany's bentos come in all weights — not a finite menu of values, a real number.
+[**Shrink to 10g bins — still a PMF, but the outline is smoother.**]{.accent}
 
-[**We need a different object — a probability DENSITY.**]{.accent}
+![](images/pmf_to_pdf_10g.png){fig-align="center" width="70%"}
 
-
-
-Thought experiment — shrink the bins:
-
-&nbsp;&nbsp;&nbsp;&nbsp;[30g bins:   coarse histogram, PMF over bins]{.dim}
-
-&nbsp;&nbsp;&nbsp;&nbsp;[10g bins:   finer, still PMF]{.dim}
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2g bins:   finer still]{.dim}
-
-&nbsp;&nbsp;&nbsp;&nbsp;[**bin → 0:   PMF → PDF**]{.accent}
-
-
-
-**The density  f(x)  is NOT a probability — it's probability PER UNIT.**
-
-
-
-$$P(X \in [a, b]) \;=\; \int_a^b f(x)\, dx \qquad \text{``area under the density''}$$
-
-
-
-[PDF values can exceed 1. Probabilities cannot.]{.dim}
+[*Same data. Three times as many bins, each one-third the width.*]{.dim}
 
 
 ::: {.notes}
-Slide 3: 'Density ≠ probability. This trips students up. Density is 'probability PER UNIT. You integrate to get a probability. Density values can be > 1 (density of N(0, 0.01) at 0 is ~40).'
+Slide 3: 'Same 5000 samples, bin width down to 10g. The envelope of the bars is getting smoother. The y-axis stays in the same units (probability per gram) — only the bars are changing.'
 :::
 
 ## From PMF to PDF — going continuous (4/4)
 
-Chibany's bentos come in all weights — not a finite menu of values, a real number.
+[**Shrink to 2g bins — in the limit, bars become a smooth PDF.**]{.accent}
 
-[**We need a different object — a probability DENSITY.**]{.accent}
-
-
-
-Thought experiment — shrink the bins:
-
-&nbsp;&nbsp;&nbsp;&nbsp;[30g bins:   coarse histogram, PMF over bins]{.dim}
-
-&nbsp;&nbsp;&nbsp;&nbsp;[10g bins:   finer, still PMF]{.dim}
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2g bins:   finer still]{.dim}
-
-&nbsp;&nbsp;&nbsp;&nbsp;[**bin → 0:   PMF → PDF**]{.accent}
-
-
-
-**The density  f(x)  is NOT a probability — it's probability PER UNIT.**
-
-
+![](images/pmf_to_pdf_2g.png){fig-align="center" width="70%"}
 
 $$P(X \in [a, b]) \;=\; \int_a^b f(x)\, dx \qquad \text{``area under the density''}$$
 
-
-
-[PDF values can exceed 1. Probabilities cannot.]{.dim}
-
-
-
-Why  P(X = exactly 450g)  =  0   for continuous X:
-
-[$\int_{450}^{450} f(x)\, dx = 0$     (integrate over a single point)]{.dim}
-
-
-
-[**But  P(X ∈ [449.5, 450.5])  ≈  f(450) · 1**]{.green}
-
-
-
-[*"density × interval width = probability."*]{.dim}
+[*bin width → 0: PMF becomes PDF. The blue curve is the PDF; the bars approach it.*]{.dim}
 
 
 ::: {.notes}
-Slide 4: 'Corollary: probability of ANY exact value is 0 for a continuous RV. But probability of being near any value is f(x) × (small interval). Intuitive and mathematically honest.'
-:::
-
-## Shrinking bins → PDF as the limit
-
-![](images/pmf_to_pdf.png){fig-align="center" width="75%"}
-
-[Same underlying data, three bin widths. Blue curve: limit (PDF).]{.dim}
-
-
-::: {.notes}
-Pause 10 seconds. Let them see the histograms smoothing into the PDF. The blue curve is the same Gaussian in all three panels — the histograms are approaching it from above and below.
+Slide 4: 'Bin width 2g. In the limit, the bars ARE the PDF (up to integration). Blue curve overlaid is the underlying Gaussian — the same one the data were drawn from. The integral formula is how we RECOVER probabilities from the density: probability is AREA, density is height.
+\
+Why P(X = exactly 450) = 0 for continuous X: integrate a density over a single point, you get 0. But P(X in [449.5, 450.5]) ≈ f(450) × 1 — density times interval width.'
 :::
 
 ## The Gaussian (normal) distribution
@@ -1520,13 +1453,13 @@ Slide 3: 'Multiply the prior and likelihood columns. Sum for the evidence. Same 
 Slide 4: 'Divide each numerator by the evidence. Posterior 0.95/0.05. Punchline: notice we did the SAME four-row table as the sick-friend problem in Block 4. The only difference: the likelihood row\'s values come from a Gaussian density evaluated at D instead of a discrete probability P(D|H). Bayes\' rule itself doesn\'t care whether the likelihood is a probability or a density — the same multiply-and-normalize moves work.'
 :::
 
-## Break — 10 minutes {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## Break — 5 minutes {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ![](images/week2_catpic.jpg){fig-align="center" width="30%" style="max-height: 50vh; margin-top: 2.2em;"}
 
 
 ::: {.notes}
-Hard 10 minutes. Come back sharp — the Gaussian-Gaussian update is the highest-stakes block of the session. Double-check the tonk_hamb.png loaded correctly on the projector.
+Hard 5 minutes. Come back sharp — the Gaussian-Gaussian update is the highest-stakes block of the session. Double-check the tonk_hamb.png loaded correctly on the projector.
 :::
 
 ## Agenda {.agenda}
@@ -1539,8 +1472,8 @@ Hard 10 minutes. Come back sharp — the Gaussian-Gaussian update is the highest
 - Continuous prob + Gaussian [0:45]{.time}
 - Break [1:05]{.time}
 - [Gaussian-Gaussian update]{.highlight} [1:15]{.time}
-- Paper presentations [1:40]{.time}
-- Admin + Week 3 [1:50]{.time}
+- Paper presentations [1:35]{.time}
+- Admin + Week 3 [1:45]{.time}
 
 ## Gaussian-Gaussian update — launching Week 3 {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
@@ -2148,9 +2081,9 @@ Slide 3: 'Asymptotic behavior: as N grows, the prior term becomes negligible and
 - Expected value + discrete [0:30]{.time}
 - Continuous prob + Gaussian [0:45]{.time}
 - Break [1:05]{.time}
-- Gaussian-Gaussian update [1:15]{.time}
+- Gaussian-Gaussian update [1:10]{.time}
 - [Paper presentations]{.highlight} [1:40]{.time}
-- Admin + Week 3 [1:50]{.time}
+- Admin + Week 3 [1:45]{.time}
 
 ## Paper presentations — rubric + signup {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
@@ -2231,8 +2164,8 @@ Appropriate use of time                    0.5
 - Expected value + discrete [0:30]{.time}
 - Continuous prob + Gaussian [0:45]{.time}
 - Break [1:05]{.time}
-- Gaussian-Gaussian update [1:15]{.time}
-- Paper presentations [1:40]{.time}
+- Gaussian-Gaussian update [1:10]{.time}
+- Paper presentations [1:35]{.time}
 - [Admin + Week 3]{.highlight} [1:50]{.time}
 
 ## Admin + Week 3 homework {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}

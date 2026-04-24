@@ -68,6 +68,7 @@ def fig_pmf_to_pdf():
     x = np.linspace(380, 620, 400)
     pdf = gaussian(x, 500, 30)
 
+    # Triptych — used on the "all three panels" slide (4/4).
     fig, axes = plt.subplots(1, 3, figsize=(12, 3.5), sharey=False)
     for ax, bw, title in zip(axes, [30, 10, 2],
                              ["Bin width = 30g", "Bin width = 10g", "Bin width = 2g"]):
@@ -80,6 +81,26 @@ def fig_pmf_to_pdf():
     axes[0].set_ylabel("probability per gram")
     axes[-1].legend(loc="upper right", facecolor=BG, edgecolor=DIM, labelcolor=TEXT)
     save(fig, "pmf_to_pdf.png")
+
+    # Single-panel variants — used on the step-by-step build slides.
+    # Panel for 30g bins shows histogram ONLY (no PDF limit curve yet);
+    # 10g adds the faint limit curve; 2g is the full "approaching the PDF" view.
+    for bw, title, fname, show_pdf in [
+        (30, "Bin width = 30g  (coarse — looks like a PMF)", "pmf_to_pdf_30g.png", False),
+        (10, "Bin width = 10g  (finer — still a PMF)",       "pmf_to_pdf_10g.png", False),
+        (2,  "Bin width = 2g  (fine — approaching the density)", "pmf_to_pdf_2g.png",  True),
+    ]:
+        fig, ax = plt.subplots(figsize=(9, 3.2))
+        ax.hist(data, bins=np.arange(380, 621, bw),
+                density=True, color=TONK, alpha=0.8, edgecolor=BG)
+        if show_pdf:
+            ax.plot(x, pdf, color=ACCENT, linewidth=2.4, label="limit: PDF")
+            ax.legend(loc="upper right", facecolor=BG, edgecolor=DIM, labelcolor=TEXT)
+        ax.set_title(title, color=TEXT)
+        ax.set_xlabel("weight (g)")
+        ax.set_ylabel("probability per gram")
+        ax.set_xlim(380, 620)
+        save(fig, fname)
 
 
 # ============================================================

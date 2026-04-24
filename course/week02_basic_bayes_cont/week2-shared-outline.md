@@ -36,10 +36,10 @@ Paper presentations are introduced during Block 8. Signup is during class; Weeks
 | 0:18 | **4. Joint + marginalization, Chibany-style** | 12 min | **Bridge: sick-friend in H/D notation (3 slides).** Then the 2×2 bento joint, marginal, conditional. |
 | 0:30 | **5. Expected value + discrete distributions** | 15 min | E[X], Var[X], Bernoulli, Binomial. **Ends with a real matplotlib PMF plot.** |
 | 0:45 | **6. Continuous probability + the Gaussian** | 20 min | PMF → PDF (with shrinking-bins figure). Gaussian formula (built up + shape figure). Two Gaussian likelihoods overlaid (figure). Continuous-Bayes worked for weight = 450g. |
-| 1:05 | **Break** | 10 min | |
-| 1:15 | **7. Gaussian-Gaussian update** | 25 min | Motivation for inferring μ (3 slides). Prior, likelihood. **Derivation sketch (complete the square).** Precision visualized. Posterior built numerically. **GG posterior curve figure (prior × likelihood → posterior).** N-observation generalization (own build-up). Close. |
-| 1:40 | **8. Paper presentations — rubric + signup** | 10 min | Rubric highlights + signup for Weeks 4–12. |
-| 1:50 | **9. Admin + Week 3 homework** | 10 min | Three syllabus changes. Week 3 readings (T3 Ch 1 + Ch 4). Preview. |
+| 1:05 | **Break** | 5 min | |
+| 1:10 | **7. Gaussian-Gaussian update** | 25 min | Motivation for inferring μ (3 slides). Prior, likelihood. **Derivation sketch (complete the square).** Precision visualized. Posterior built numerically. **GG posterior curve figure (prior × likelihood → posterior).** N-observation generalization (own build-up). Close. |
+| 1:35 | **8. Paper presentations — rubric + signup** | 10 min | Rubric highlights + signup for Weeks 4–12. |
+| 1:45 | **9. Admin + Week 3 homework** | 15 min | Three syllabus changes. Week 3 readings (T3 Ch 1 + Ch 4). Preview. |
 | 2:00 | End | (buffer absorbed) | |
 
 **Deck size:** 105 slides total. Sequential-reveal math + six pre-generated matplotlib figures (see `images/`). Regenerate with `python3 generate_images.py && python3 build_slides_week2.py`.
@@ -224,4 +224,4 @@ Rough total: ~90 slides. At 2 hours = 120 min this is ~80 seconds per slide on a
 - **Block 6 runs short on time**: skip the "back to Bayes with continuous likelihoods" sub-block (6 slides). Jump straight from Gaussian formula to Block 7. Students will still see a continuous-Bayes calculation in Block 7 under the Gaussian-Gaussian frame.
 - **Block 7 is the priority**: DO NOT cut this. If something else runs long, cut Block 8 down to 5 min (assign signups by email after class) rather than cutting Block 7.
 - **A student is stuck on a definition from Week 1** (marginalization, conditional): point them at T1 Ch 4–5 for self-study; don't rewind the class. Offer 1:1 in office hours.
-- **Time is short at 1:40**: skip the Block 9 "preview Week 3 and beyond" — the three syllabus changes + Week 3 readings are the priority.
+- **Time is short at 1:35**: skip the Block 9 "preview Week 3 and beyond" — the three syllabus changes + Week 3 readings are the priority.
