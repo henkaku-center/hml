@@ -1764,13 +1764,10 @@ Mode at k=4 (0.360). In Week 3 this PMF becomes the LIKELIHOOD
 
 ## The catch today — bentos are opaque
 
+::: {.lang-en}
 [**This week the bento boxes are OPAQUE.**]{.yellow}
 
-
-
 Chibany can't peek — and it would be rude to open one while the student watches.
-
-
 
 [**So Chibany's plan:   WEIGH THE BENTO.**]{.accent}
 
@@ -1779,6 +1776,21 @@ Chibany can't peek — and it would be rude to open one while the student watche
 &nbsp;[*but it will UPDATE my belief about today's meal."*]{.accent}
 
 [That update is Bayes' rule — now with a continuous observation.]{.dim}
+:::
+
+::: {.lang-ja}
+[**今週のお弁当箱は**不透明**。**]{.yellow}
+
+チバニーは中を覗けない — そして学生の前で開けるのも失礼。
+
+[**そこでチバニーの作戦：   お弁当の重さを量る。**]{.accent}
+
+[*「重さだけでとんかつだと確実にわかるわけではない。*]{.accent}
+
+&nbsp;[*でも、今日の食事についての信念を**更新**できる。」*]{.accent}
+
+[この更新こそがベイズの規則 — 今回は連続的な観測で。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1787,6 +1799,7 @@ Opaque-bento reveal — deliberately placed here, not in the morning intro. Up t
 
 ## Notation checkpoint — PMF & PDF
 
+::: {.lang-en}
 [*Two acronyms we\'ll use constantly from here on:*]{.dim}
 
 [**PMF  —  Probability Mass Function.**]{.yellow}
@@ -1802,6 +1815,25 @@ Opaque-bento reveal — deliberately placed here, not in the morning intro. Up t
 &nbsp;&nbsp;&nbsp;$\int f(x)\,dx = 1$.    $f(x)$ can exceed 1 — it\'s a density, not a probability.
 
 [*PMFs give bars; PDFs give a smooth curve. We\'ll see how to get from one to the other next.*]{.dim}
+:::
+
+::: {.lang-ja}
+[*この後ずっと使う2つの略語：*]{.dim}
+
+[**PMF  —  確率質量関数（Probability Mass Function）。**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;離散確率変数の場合：   $p(x) = P(X = x)$。   棒の高さだと思えばよい。
+
+&nbsp;&nbsp;&nbsp;$\sum_x p(x) = 1$。    各 $p(x) \in [0, 1]$ — これは確率そのもの。
+
+[**PDF  —  確率密度関数（Probability Density Function）。**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;連続確率変数の場合：   $f(x)$ — $x$ の**単位あたり**の確率。
+
+&nbsp;&nbsp;&nbsp;$\int f(x)\,dx = 1$。    $f(x)$ は1を超えることもある — これは密度であって、確率ではない。
+
+[*PMF は棒、PDF は滑らかな曲線。次のスライドで、片方からもう片方への移り方を見る。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1810,11 +1842,21 @@ Lock in both acronyms before we use them. PMF = bars (discrete, heights sum to 1
 
 ## From PMF to PDF — going continuous
 
+::: {.lang-en}
 Chibany's bentos come in all weights — not a finite menu of values, a real number.
 
 [**So the PMF (bars over discrete values) won\'t work — we need a PDF.**]{.accent}
 
 [*How do we GET from bars to a smooth density? Bin the data and shrink the bins.*]{.dim}
+:::
+
+::: {.lang-ja}
+チバニーのお弁当の重さはあらゆる値を取る — 有限のメニューではなく、実数。
+
+[**だから離散値に対する PMF は使えない — PDF が必要。**]{.accent}
+
+[*棒から滑らかな密度にどうやって移るか？  データを区間に分けて、その区間を縮めていく。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1823,11 +1865,23 @@ Slide 1: 'Weight is continuous. No finite outcome space. We need a new object �
 
 ## From PMF to PDF — going continuous (2/4)
 
+::: {.lang-en}
 [**Start coarse — 30g bins. A PMF over bins.**]{.accent}
+:::
+
+::: {.lang-ja}
+[**まずは粗く — 30g の区間。区間に対する PMF。**]{.accent}
+:::
 
 ![](images/pmf_to_pdf_30g.png){fig-align="center" width="70%"}
 
+::: {.lang-en}
 [*Bar heights give probability per gram — each bar\'s AREA is the probability of landing in its bin.*]{.dim}
+:::
+
+::: {.lang-ja}
+[*棒の高さは1グラムあたりの確率 — 各棒の**面積**が、その区間に入る確率。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1836,11 +1890,23 @@ Slide 2: 'Bin at 30g. Legit PMF over bins — finite number of bars, heights sum
 
 ## From PMF to PDF — going continuous (3/4)
 
+::: {.lang-en}
 [**Shrink to 10g bins — still a PMF, but the outline is smoother.**]{.accent}
+:::
+
+::: {.lang-ja}
+[**10g の区間まで縮める — まだ PMF だが、輪郭がより滑らかに。**]{.accent}
+:::
 
 ![](images/pmf_to_pdf_10g.png){fig-align="center" width="70%"}
 
+::: {.lang-en}
 [*Same data. Three times as many bins, each one-third the width.*]{.dim}
+:::
+
+::: {.lang-ja}
+[*同じデータ。区間は3倍の数で、幅は3分の1。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1849,6 +1915,7 @@ Slide 3: 'Same 5000 samples, bin width down to 10g. The envelope of the bars is 
 
 ## Quick poll — Derek's density
 
+::: {.lang-en}
 [*Derek is implementing a model with a continuous variable.*]{.dim}
 
 [*While debugging, he notices  $f(x)$  sometimes returns a value > 1.*]{.dim}
@@ -1864,6 +1931,25 @@ Slide 3: 'Same 5000 samples, bin width down to 10g. The envelope of the bars is 
 &nbsp;&nbsp;&nbsp;D) No — it's only a problem if $f$ is negative.
 
 [*Commit before the reveal. 15 seconds.*]{.dim}
+:::
+
+::: {.lang-ja}
+[*デレクは連続変数を使うモデルを実装している。*]{.dim}
+
+[*デバッグ中に $f(x)$ が時々 1 より大きな値を返すことに気づいた。*]{.dim}
+
+[**デレクは心配すべき？**]{.yellow}
+
+&nbsp;&nbsp;&nbsp;A) はい — 確率は1を超えてはいけない。
+
+&nbsp;&nbsp;&nbsp;B) 条件付きで大丈夫 — $f$ の積分が1であれば OK。
+
+&nbsp;&nbsp;&nbsp;C) いいえ — 密度の値は1を超えてもいつでも大丈夫。
+
+&nbsp;&nbsp;&nbsp;D) いいえ — $f$ が負になるときだけ問題。
+
+[*正解発表の前に答えを決めて。15秒。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1872,15 +1958,29 @@ Answer: B. This is the single biggest density-vs-probability confusion — the p
 
 ## From PMF to PDF — going continuous (4/4)
 
+::: {.lang-en}
 [**Shrink to 2g bins — in the limit, bars become a smooth PDF.**]{.accent}
+:::
+
+::: {.lang-ja}
+[**2g の区間まで縮める — 極限で、棒は滑らかな PDF になる。**]{.accent}
+:::
 
 ![](images/pmf_to_pdf_2g.png){fig-align="center" width="70%"}
 
 $$P(X \in [a, b]) \;=\; \int_a^b f(x)\, dx \qquad \text{``area under the density''}$$
 
+::: {.lang-en}
 [**Derek's question:  B — density can exceed 1, as long as it integrates to 1.**]{.green}
 
 [*bin width → 0: PMF becomes PDF. The blue curve is the PDF; the bars approach it.*]{.dim}
+:::
+
+::: {.lang-ja}
+[**デレクの問題の答え：  B — 密度は1を超えてよい、積分が1である限り。**]{.green}
+
+[*区間の幅 → 0：  PMF が PDF になる。青い曲線が PDF で、棒はそれに近づいていく。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1891,9 +1991,17 @@ Why P(X = exactly 450) = 0 for continuous X: integrate a density over a single p
 
 ## The Gaussian (normal) distribution
 
+::: {.lang-en}
 Chibany's bento weights vary — even within one meal type.
 
 [Tonkatsu weight is roughly  N(500, 30²)  —  centered at 500, spread ≈ 30g.]{.accent}
+:::
+
+::: {.lang-ja}
+チバニーのお弁当の重さはばらつく — 同じメニュー同士でも。
+
+[とんかつの重さはおおよそ  N(500, 30²)  —  中心 500、広がり ≈ 30g。]{.accent}
+:::
 
 
 ::: {.notes}
@@ -1902,10 +2010,17 @@ Slide 1: 'Real bentos vary. Not every tonkatsu is exactly 500g. The natural dist
 
 ## The Gaussian (normal) distribution (2/5)
 
+::: {.lang-en}
 Chibany's bento weights vary — even within one meal type.
 
 [Tonkatsu weight is roughly  N(500, 30²)  —  centered at 500, spread ≈ 30g.]{.accent}
+:::
 
+::: {.lang-ja}
+チバニーのお弁当の重さはばらつく — 同じメニュー同士でも。
+
+[とんかつの重さはおおよそ  N(500, 30²)  —  中心 500、広がり ≈ 30g。]{.accent}
+:::
 
 
 $$N(x \mid \mu, \sigma^2) \;=\; \frac{1}{\sqrt{2\pi\sigma^2}} \; \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
@@ -1917,16 +2032,23 @@ Slide 2: 'The formula. Don\'t try to hold the whole thing at once — we\'ll nam
 
 ## The Gaussian (normal) distribution (3/5)
 
+::: {.lang-en}
 Chibany's bento weights vary — even within one meal type.
 
 [Tonkatsu weight is roughly  N(500, 30²)  —  centered at 500, spread ≈ 30g.]{.accent}
+:::
 
+::: {.lang-ja}
+チバニーのお弁当の重さはばらつく — 同じメニュー同士でも。
+
+[とんかつの重さはおおよそ  N(500, 30²)  —  中心 500、広がり ≈ 30g。]{.accent}
+:::
 
 
 $$N(x \mid \mu, \sigma^2) \;=\; \frac{1}{\sqrt{2\pi\sigma^2}} \; \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
 
 
-
+::: {.lang-en}
 Name each piece:
 
 &nbsp;&nbsp;&nbsp;[μ       mean — where the curve peaks]{.dim}
@@ -1936,6 +2058,19 @@ Name each piece:
 &nbsp;&nbsp;&nbsp;[exp(−(x−μ)²/(2σ²))    peaks at μ, falls off fast outside ±σ]{.dim}
 
 &nbsp;&nbsp;&nbsp;[1/√(2π σ²)                the normalizer — makes total area = 1]{.dim}
+:::
+
+::: {.lang-ja}
+各部品の名前：
+
+&nbsp;&nbsp;&nbsp;[μ       平均 — 曲線のピークの位置]{.dim}
+
+&nbsp;&nbsp;&nbsp;[σ²      分散 — 曲線の広がり  （σ = 標準偏差）]{.dim}
+
+&nbsp;&nbsp;&nbsp;[exp(−(x−μ)²/(2σ²))    μ でピークを取り、±σ の外ではすぐ減衰する]{.dim}
+
+&nbsp;&nbsp;&nbsp;[1/√(2π σ²)                正規化定数 — 全体の面積を1にする]{.dim}
+:::
 
 
 ::: {.notes}
@@ -1944,16 +2079,23 @@ Slide 3: 'Four pieces. Mean, variance, the exponential (which does the peaking),
 
 ## The Gaussian (normal) distribution (4/5)
 
+::: {.lang-en}
 Chibany's bento weights vary — even within one meal type.
 
 [Tonkatsu weight is roughly  N(500, 30²)  —  centered at 500, spread ≈ 30g.]{.accent}
+:::
 
+::: {.lang-ja}
+チバニーのお弁当の重さはばらつく — 同じメニュー同士でも。
+
+[とんかつの重さはおおよそ  N(500, 30²)  —  中心 500、広がり ≈ 30g。]{.accent}
+:::
 
 
 $$N(x \mid \mu, \sigma^2) \;=\; \frac{1}{\sqrt{2\pi\sigma^2}} \; \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
 
 
-
+::: {.lang-en}
 Name each piece:
 
 &nbsp;&nbsp;&nbsp;[μ       mean — where the curve peaks]{.dim}
@@ -1964,8 +2106,6 @@ Name each piece:
 
 &nbsp;&nbsp;&nbsp;[1/√(2π σ²)                the normalizer — makes total area = 1]{.dim}
 
-
-
 **Shape facts:**
 
 &nbsp;&nbsp;&nbsp;• symmetric around μ
@@ -1973,6 +2113,27 @@ Name each piece:
 &nbsp;&nbsp;&nbsp;• peak height = 1/√(2π σ²) — sharper curves are TALLER
 
 &nbsp;&nbsp;&nbsp;• ~68% of mass within  μ ± σ;    ~95% within  μ ± 2σ
+:::
+
+::: {.lang-ja}
+各部品の名前：
+
+&nbsp;&nbsp;&nbsp;[μ       平均 — 曲線のピークの位置]{.dim}
+
+&nbsp;&nbsp;&nbsp;[σ²      分散 — 曲線の広がり  （σ = 標準偏差）]{.dim}
+
+&nbsp;&nbsp;&nbsp;[exp(−(x−μ)²/(2σ²))    μ でピークを取り、±σ の外ではすぐ減衰]{.dim}
+
+&nbsp;&nbsp;&nbsp;[1/√(2π σ²)                正規化定数 — 全体の面積を1にする]{.dim}
+
+**形状の事実：**
+
+&nbsp;&nbsp;&nbsp;• μ を中心に左右対称
+
+&nbsp;&nbsp;&nbsp;• ピークの高さ = 1/√(2π σ²) — より鋭い曲線は**より背が高い**
+
+&nbsp;&nbsp;&nbsp;• 質量の ~68% は  μ ± σ の中；  ~95% は  μ ± 2σ の中
+:::
 
 
 ::: {.notes}
@@ -1981,16 +2142,23 @@ Slide 4: 'Shape. Symmetric around μ. SHARPER (smaller σ) → TALLER peak. The 
 
 ## The Gaussian (normal) distribution (5/5)
 
+::: {.lang-en}
 Chibany's bento weights vary — even within one meal type.
 
 [Tonkatsu weight is roughly  N(500, 30²)  —  centered at 500, spread ≈ 30g.]{.accent}
+:::
 
+::: {.lang-ja}
+チバニーのお弁当の重さはばらつく — 同じメニュー同士でも。
+
+[とんかつの重さはおおよそ  N(500, 30²)  —  中心 500、広がり ≈ 30g。]{.accent}
+:::
 
 
 $$N(x \mid \mu, \sigma^2) \;=\; \frac{1}{\sqrt{2\pi\sigma^2}} \; \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
 
 
-
+::: {.lang-en}
 Name each piece:
 
 &nbsp;&nbsp;&nbsp;[μ       mean — where the curve peaks]{.dim}
@@ -2001,8 +2169,6 @@ Name each piece:
 
 &nbsp;&nbsp;&nbsp;[1/√(2π σ²)                the normalizer — makes total area = 1]{.dim}
 
-
-
 **Shape facts:**
 
 &nbsp;&nbsp;&nbsp;• symmetric around μ
@@ -2011,17 +2177,42 @@ Name each piece:
 
 &nbsp;&nbsp;&nbsp;• ~68% of mass within  μ ± σ;    ~95% within  μ ± 2σ
 
-
-
 **Chibany's two bento-weight distributions:**
 
 &nbsp;&nbsp;&nbsp;[tonkatsu weight     ~   N(500, 30²)]{.accent}
 
 &nbsp;&nbsp;&nbsp;[hamburger weight  ~   N(350, 30²)]{.accent}
 
-
-
 [*Two bell curves. They overlap in the middle — that's where 450g lives.*]{.dim}
+:::
+
+::: {.lang-ja}
+各部品の名前：
+
+&nbsp;&nbsp;&nbsp;[μ       平均 — 曲線のピークの位置]{.dim}
+
+&nbsp;&nbsp;&nbsp;[σ²      分散 — 曲線の広がり  （σ = 標準偏差）]{.dim}
+
+&nbsp;&nbsp;&nbsp;[exp(−(x−μ)²/(2σ²))    μ でピークを取り、±σ の外ではすぐ減衰]{.dim}
+
+&nbsp;&nbsp;&nbsp;[1/√(2π σ²)                正規化定数 — 全体の面積を1にする]{.dim}
+
+**形状の事実：**
+
+&nbsp;&nbsp;&nbsp;• μ を中心に左右対称
+
+&nbsp;&nbsp;&nbsp;• ピークの高さ = 1/√(2π σ²) — より鋭い曲線は**より背が高い**
+
+&nbsp;&nbsp;&nbsp;• 質量の ~68% は  μ ± σ の中；  ~95% は  μ ± 2σ の中
+
+**チバニーの2つのお弁当重量の分布：**
+
+&nbsp;&nbsp;&nbsp;[とんかつの重さ     ~   N(500, 30²)]{.accent}
+
+&nbsp;&nbsp;&nbsp;[ハンバーグの重さ  ~   N(350, 30²)]{.accent}
+
+[*ベルカーブが2つ。真ん中あたりで重なる — そこが 450g のあたり。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2032,7 +2223,13 @@ Slide 5: 'Two Gaussians for Chibany. They overlap in the 380-470 range. Next sli
 
 ![](images/gaussian_shape.png){fig-align="center" width="75%"}
 
+::: {.lang-en}
 [Dark fill: ±1σ (~68%). Light fill: ±2σ (~95%).]{.dim}
+:::
+
+::: {.lang-ja}
+[濃い色：±1σ（~68%）。薄い色：±2σ（~95%）。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2043,7 +2240,13 @@ Pause. Let them trace the curve and see the shaded bands. The peak height formul
 
 ![](images/tonk_hamb.png){fig-align="center" width="75%"}
 
+::: {.lang-en}
 [Yellow line: observed 450g. Closer to tonkatsu, but within hamburger tail.]{.dim}
+:::
+
+::: {.lang-ja}
+[黄色い線：観測値 450g。とんかつに近いが、ハンバーグの裾の範囲にも入っている。]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2074,7 +2277,13 @@ flowchart LR
   class Post out
 ```
 
+::: {.lang-en}
 [*Same flow.  Only the likelihood box changed:*]{.dim}    [*a discrete probability became a Gaussian density evaluated at $D$.*]{.yellow}
+:::
+
+::: {.lang-ja}
+[*同じ流れ。尤度のボックスだけが変わった：*]{.dim}    [*離散確率が、$D$ で評価したガウス密度になった。*]{.yellow}
+:::
 
 
 ::: {.notes}
@@ -2083,10 +2292,17 @@ flowchart LR
 
 ## Bayes with a continuous likelihood — worked
 
+::: {.lang-en}
 [**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
 
 **What's $P(\text{meal} \mid \text{weight} = 450)$?**
+:::
 
+::: {.lang-ja}
+[**今日の観測：    $D = \text{weight} = 450$ g。**]{.yellow}
+
+**$P(\text{meal} \mid \text{weight} = 450)$  はいくら？**
+:::
 
 
 |                                     |  **tonkatsu**  |  **hamburger**  |
@@ -2097,8 +2313,13 @@ flowchart LR
 | Posterior  $P(H \mid D)$            |       ?        |        ?        |
 
 
-
+::: {.lang-en}
 [*Same 4-row Bayes table as the sick-friend problem — but the likelihood row is now a density value.*]{.dim}
+:::
+
+::: {.lang-ja}
+[*風邪の友人の問題と同じ4行のベイズ表 — ただし尤度の行は密度の値。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2107,10 +2328,17 @@ Slide 1: 'Structural mirror of the sick-friend problem from Block 4. Four rows, 
 
 ## Bayes with a continuous likelihood — worked (2/4)
 
+::: {.lang-en}
 [**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
 
 **What's $P(\text{meal} \mid \text{weight} = 450)$?**
+:::
 
+::: {.lang-ja}
+[**今日の観測：    $D = \text{weight} = 450$ g。**]{.yellow}
+
+**$P(\text{meal} \mid \text{weight} = 450)$  はいくら？**
+:::
 
 
 |                                     |  **tonkatsu**  |  **hamburger**  |
@@ -2121,14 +2349,21 @@ Slide 1: 'Structural mirror of the sick-friend problem from Block 4. Four rows, 
 | Posterior  $P(H \mid D)$            |       ?        |        ?        |
 
 
-
+::: {.lang-en}
 [$f_T = N(450 \mid 500, 30^2) \;\approx\; 0.00332$     [(close to the tonkatsu mean of 500)]{.dim}]{.accent}
 
 [$f_H = N(450 \mid 350, 30^2) \;\approx\; 0.00044$     [(100 g above the hamburger mean of 350)]{.dim}]{.accent}
 
-
-
 [*Density values, not probabilities.   $f_T / f_H \approx 7.5$ — the observation is ~7.5× more consistent with tonkatsu.*]{.dim}
+:::
+
+::: {.lang-ja}
+[$f_T = N(450 \mid 500, 30^2) \;\approx\; 0.00332$     [（とんかつの平均 500 に近い）]{.dim}]{.accent}
+
+[$f_H = N(450 \mid 350, 30^2) \;\approx\; 0.00044$     [（ハンバーグの平均 350 より 100g 上）]{.dim}]{.accent}
+
+[*これは密度の値で、確率ではない。   $f_T / f_H \approx 7.5$ — 観測値はとんかつと ~7.5倍整合的。*]{.dim}
+:::
 
 
 ::: {.notes}
@@ -2137,10 +2372,17 @@ Slide 2: 'Fill the likelihood row with Gaussian density values. Show the RATIO e
 
 ## Bayes with a continuous likelihood — worked (3/4)
 
+::: {.lang-en}
 [**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
 
 **What's $P(\text{meal} \mid \text{weight} = 450)$?**
+:::
 
+::: {.lang-ja}
+[**今日の観測：    $D = \text{weight} = 450$ g。**]{.yellow}
+
+**$P(\text{meal} \mid \text{weight} = 450)$  はいくら？**
+:::
 
 
 |                                     |   **tonkatsu**   |  **hamburger**   |
@@ -2151,8 +2393,13 @@ Slide 2: 'Fill the likelihood row with Gaussian density values. Show the RATIO e
 | Posterior  $P(H \mid D)$            |        ?         |        ?         |
 
 
-
+::: {.lang-en}
 [**Evidence  $=$  sum of numerators  $=$  $0.00232 + 0.000132$  $=$  $0.00246$**]{.accent}
+:::
+
+::: {.lang-ja}
+[**証拠  $=$  分子の合計  $=$  $0.00232 + 0.000132$  $=$  $0.00246$**]{.accent}
+:::
 
 
 ::: {.notes}
@@ -2161,10 +2408,17 @@ Slide 3: 'Multiply the prior and likelihood columns. Sum for the evidence. Same 
 
 ## Bayes with a continuous likelihood — worked (4/4) {.smaller}
 
+::: {.lang-en}
 [**Today's observation:    $D = \text{weight} = 450$ g.**]{.yellow}
 
 **What's $P(\text{meal} \mid \text{weight} = 450)$?**
+:::
 
+::: {.lang-ja}
+[**今日の観測：    $D = \text{weight} = 450$ g。**]{.yellow}
+
+**$P(\text{meal} \mid \text{weight} = 450)$  はいくら？**
+:::
 
 
 |                                     |   **tonkatsu**   |  **hamburger**   |
@@ -2175,12 +2429,17 @@ Slide 3: 'Multiply the prior and likelihood columns. Sum for the evidence. Same 
 | [**Posterior  $P(H \mid D)$**]{.green} | [**$\approx 0.946$**]{.green} | [**$\approx 0.054$**]{.green} |
 
 
-
+::: {.lang-en}
 [**Prior $\to$ Posterior:**      $0.70 \to 0.946$  (tonkatsu),    $0.30 \to 0.054$  (hamburger).]{.yellow}
 
-
-
 [*The prior already favored tonkatsu.  The observation moved belief even further that way — not because 450g is closer to 500 (it isn't), but because it's more consistent with the tonkatsu distribution than the hamburger distribution.*]{.dim}
+:::
+
+::: {.lang-ja}
+[**事前確率 $\to$ 事後確率：**      $0.70 \to 0.946$  （とんかつ）、    $0.30 \to 0.054$  （ハンバーグ）。]{.yellow}
+
+[*事前確率は既にとんかつに傾いていた。  観測によってさらにその方向に動いた — 450g が 500 に近いから（近くない）ではなく、とんかつの分布との方がハンバーグの分布より整合的だから。*]{.dim}
+:::
 
 
 ::: {.notes}
