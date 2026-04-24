@@ -236,15 +236,15 @@ weeks:
         why: "Intuitive introduction to Bayesian nonparametrics in cognition — by the instructor."
     optional: []
     presentation_candidates:
-      - citation: "Griffiths, T. L., & Ghahramani, Z. (2011). The Indian Buffet Process: An introduction and review. JMLR."
-        url: https://www.jmlr.org/papers/v12/griffiths11a.html
-        why: "Canonical IBP tutorial — best starting point for feature-learning BNP."
-      - citation: "Austerweil, J. L., & Griffiths, T. L. (2013). A nonparametric Bayesian framework for constructing flexible feature representations. Psychological Review, 120(4), 817."
-        pdf: Austerweil2008.pdf
-        why: "IBP applied to feature learning — instructor's own work."
       - citation: "Gershman, S. J., & Blei, D. M. (2012). A tutorial on Bayesian nonparametric models. Journal of Mathematical Psychology, 56(1), 1–12."
+        url: https://doi.org/10.1016/j.jmp.2011.08.004
+        why: "12-page tutorial covering CRP/DPMM and IBP — the short technical primer that pairs with the Oxford Handbook chapter without repeating it."
+      - citation: "Gershman, S. J., Blei, D. M., & Niv, Y. (2010). Context, learning, and extinction. Psychological Review, 117(1), 197–209."
         pdf: Gershman2010.pdf
-        why: "Accessible tutorial review."
+        why: "13-page empirical application of the DPMM to Pavlovian conditioning — CRP for inferring latent causes from behavior. Bridges Week 9 (IRL) and Week 10."
+      - citation: "Austerweil, J. L. (2014). Testing the psychological validity of cluster construction biases. Proc. CogSci."
+        pdf: AusterweilCogSci2014.pdf
+        why: "8-page empirical test of CRP/DPMM against human cluster construction using MCMC-with-People — instructor's own work. Direct replacement for the 2013 Psych Review feature paper at 1/4 the length."
     presenter: null
     presented: null
 
