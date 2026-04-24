@@ -50,8 +50,6 @@
         <h4>Presentation candidates</h4>
         {% if w.presenter %}
         <p><strong>Presenter:</strong> {{ w.presenter }}{% if w.presented %} &mdash; presenting <em>{{ w.presented }}</em>{% endif %}</p>
-        {% else %}
-        <p><em>Not yet assigned. Rank your top 3 in Slack <code>#paper-signups</code> (see the game plan).</em></p>
         {% endif %}
         <ul>
           {% for r in w.candidates %}
