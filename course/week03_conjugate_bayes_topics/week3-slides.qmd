@@ -100,38 +100,43 @@ Plain-language landing first. "Family" is the new concept; "same family" is
 the load-bearing phrase. Don't show the formal symbols yet.
 :::
 
-## [What "conjugate" means — formally]{.lang-en}[「共役」とは — 形式的に]{.lang-ja} {.bigger}
+## [What "conjugate" means — formally]{.lang-en}[「共役」とは — 形式的に]{.lang-ja}
 
 ::: {.lang-en}
-A **prior family** $\mathcal{F}$ is **conjugate** to a likelihood when:
+A prior family $\mathcal{F}$ is **conjugate to a likelihood** $p(D \mid \theta)$
+when the posterior stays in $\mathcal{F}$ (same functional form, updated params):
 :::
 
 ::: {.lang-ja}
-**事前分布の族** $\mathcal{F}$ が尤度に対して**共役**であるとは:
+事前分布の族 $\mathcal{F}$ が尤度 $p(D \mid \theta)$ に**共役**とは、事後が
+再び $\mathcal{F}$ に属する (同じ関数形、パラメータだけ更新) こと:
 :::
 
 $$
 p(\theta) \in \mathcal{F} \;\; \Longrightarrow \;\; p(\theta \mid D) \in \mathcal{F}
 $$
 
-<br>
-
 ::: {.lang-en}
-[$\mathcal{F}$ is a *set* of distributions — e.g. "all Gaussians" or "all Betas."]{.dim}
+[The likelihood typically lives in a *different* family — e.g. **Beta** prior + **Binomial** likelihood → Beta posterior. Conjugacy is a property of the *pair* (prior family, likelihood).]{.dim}
 
-[The posterior has the same functional form as the prior — just with updated parameters.]{.dim}
+[Last week's Gaussian-Gaussian was the special case where both happened to be in the same family — not the general rule.]{.dim}
 :::
 
 ::: {.lang-ja}
-[$\mathcal{F}$ は分布の*集合* — 例: 「すべてのガウス」または「すべてのベータ」。]{.dim}
+[尤度は通常*別の*族 — 例: **ベータ**事前 + **二項**尤度 → ベータ事後。共役性は (事前族, 尤度) の*組*の性質。]{.dim}
 
-[事後は事前と同じ関数形 — パラメータが更新されるだけ。]{.dim}
+[先週のガウス-ガウスは両者が同じ族だった特殊例 — 一般則ではない。]{.dim}
 :::
 
 ::: {.notes}
-Slow down here. Two parts: (a) prior and posterior in the SAME family, (b)
-"updated parameters" is the mechanical bit — we'll see the update rules next.
-Conjugacy is closure under the Bayesian update operator.
+Slow down here. Three parts: (a) prior and posterior in the SAME family, (b)
+the likelihood is in general a DIFFERENT family — conjugacy is a property of
+the (prior family, likelihood) pair, not of the prior alone, (c) "updated
+parameters" is the mechanical bit — we'll see the update rules next.
+Conjugacy is closure under the Bayesian update operator. Call back to last
+week's Gaussian-Gaussian explicitly: that was the unusual case where prior
+and likelihood lived in the same family; today's Beta-Binomial is the more
+typical pattern.
 :::
 
 ## [Why conjugacy matters]{.lang-en}[共役性が重要な理由]{.lang-ja} {.midbig}
