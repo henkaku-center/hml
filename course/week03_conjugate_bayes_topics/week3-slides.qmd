@@ -53,7 +53,7 @@ to swap weeks, tell them to DM right after class.
 - Papers have more than fits in 15 min — pick the 2–3 ideas that matter most
 - End with **at least 3 discussion questions**
 - **Worth 7.5%** of your grade
-- [**DM me to schedule a 1-on-1 the week before your slot**]{.yellow} — we'll plan what to focus on and what to skip
+- [**If you're concerned about your presentation, DM me for a 1-on-1**]{.yellow} (at least one week before your slot) — we'll plan what to focus on and what to skip
 :::
 
 ::: {.lang-ja}
@@ -62,7 +62,7 @@ to swap weeks, tell them to DM right after class.
 - 論文は15分に収まらない — 最も重要な2〜3点を選ぶ
 - 最後に**3つ以上のディスカッション質問**
 - 成績の**7.5%**
-- [**発表の1週間前までにDMで1対1ミーティングを予約**]{.yellow} — 何に焦点を当てるか、何を飛ばすかを相談
+- [**発表に不安があれば、DMで1対1ミーティングを**]{.yellow}（発表の少なくとも1週間前まで） — 何に焦点を当てるか、何を飛ばすかを相談
 :::
 
 ::: {.notes}

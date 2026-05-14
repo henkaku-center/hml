@@ -12,7 +12,7 @@ The focus is **how the mathematical model connects to cognitive science, and the
 
 ## Before you present
 
-Reach out on Slack to schedule a 1-on-1 meeting with Prof. Austerweil the week before your slot. We'll talk through what to focus on and what to skip.
+If you're concerned about your presentation, DM Prof. Austerweil on Slack to schedule a 1-on-1 — at least one week before your slot. We'll talk through what to focus on and what to skip.
 
 ## Framing questions (adapted from Tom Griffiths)
 
