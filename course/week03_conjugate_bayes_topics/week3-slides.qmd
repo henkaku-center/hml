@@ -913,7 +913,7 @@ have identical probability. Goal of this slide: get them to feel the
 asymmetry, not analyze it.
 :::
 
-## [Why does HHTHTTTH look "more random" than HHHHHHHH?]{.lang-en}[なぜHHTHTTTHはHHHHHHHHより「ランダム」に見えるのか?]{.lang-ja} {.bigger}
+## [Why does HHTHTTTH look "more random" than HHHHHHHH?]{.lang-en}[なぜHHTHTTTHはHHHHHHHHより「ランダム」に見えるのか?]{.lang-ja}
 
 ::: {.lang-en}
 Both sequences have the same probability under a fair coin: $(1/2)^8 = 1/256$.
@@ -922,7 +922,7 @@ So why do people consistently say the first is "more random"?
 
 <br>
 
-[**Griffiths & Tenenbaum (2001):**]{.accent} people aren't computing $P(x \mid \text{random})$. They're computing a Bayes factor.
+[**Griffiths & Tenenbaum (2001):**]{.accent} the question $P(x \mid \text{random})$ alone isn't *Bayesian*. Some hypothesis has to explain $x$ — so "is it random?" only makes sense *relative to an alternative*: "or is some regularity in the world responsible?"
 :::
 
 ::: {.lang-ja}
@@ -932,7 +932,7 @@ So why do people consistently say the first is "more random"?
 
 <br>
 
-[**Griffiths & Tenenbaum (2001):**]{.accent} 人は $P(x \mid \text{random})$ を計算していない。ベイズ因子を計算している。
+[**Griffiths & Tenenbaum (2001):**]{.accent} $P(x \mid \text{random})$ 単体はベイズ的な問いではない。$x$ を説明する何らかの仮説が必要 — だから「ランダムか?」は*代替仮説に対して相対的にしか意味をなさない*: 「それとも世界の何らかの規則性が原因か?」
 :::
 
 ::: {.notes}
@@ -956,13 +956,13 @@ $$
 $$
 
 ::: {.lang-en}
-[A **likelihood ratio** — the same Bayes-factor object that appears in every conjugate update.]{.yellow}
+[A **likelihood ratio.** With a uniform prior over the two hypotheses, this ratio *is* the posterior odds — the answer to "given $x$, is random or regular more likely?"]{.yellow}
 
 [*What competes with "random" depends on the stimulus*: for binary sequences, "regular" = local representativeness (~50/50 in each subsequence). For numbers, it's features like "prime" or "ends in 7." The regularity space is the modeling commitment.]{.dim}
 :::
 
 ::: {.lang-ja}
-[**尤度比** — すべての共役更新に現れる同じベイズ因子の対象。]{.yellow}
+[**尤度比。** 2つの仮説に一様な事前を置くと、この比がそのまま事後オッズ — 「$x$ を見て、ランダムと規則のどちらがありそうか?」の答え。]{.yellow}
 
 [*「ランダム」と競合するものは刺激次第*: 2値系列なら「規則」= 局所代表性（各部分系列が約50/50）。数字なら「素数」「7で終わる」などの特徴。規則空間がモデリングのコミットメント。]{.dim}
 :::
