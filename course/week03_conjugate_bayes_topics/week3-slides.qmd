@@ -922,7 +922,7 @@ So why do people consistently say the first is "more random"?
 
 <br>
 
-[**Griffiths & Tenenbaum (2001):**]{.accent} the question $P(x \mid \text{random})$ alone isn't *Bayesian*. Some hypothesis has to explain $x$ — so "is it random?" only makes sense *relative to an alternative*: "or is some regularity in the world responsible?"
+[**Griffiths & Tenenbaum (2001):**]{.accent} a single likelihood $P(x \mid \text{random})$ can't *decide* anything by itself — you need at least two hypotheses to compare. "Is $x$ random?" only has an answer if you also ask "*compared to what?*" — e.g. "or did some regularity in the world produce $x$?"
 :::
 
 ::: {.lang-ja}
@@ -932,7 +932,7 @@ So why do people consistently say the first is "more random"?
 
 <br>
 
-[**Griffiths & Tenenbaum (2001):**]{.accent} $P(x \mid \text{random})$ 単体はベイズ的な問いではない。$x$ を説明する何らかの仮説が必要 — だから「ランダムか?」は*代替仮説に対して相対的にしか意味をなさない*: 「それとも世界の何らかの規則性が原因か?」
+[**Griffiths & Tenenbaum (2001):**]{.accent} 単一の尤度 $P(x \mid \text{random})$ だけでは何も*判断*できない — 比較する仮説が少なくとも2つ必要。「$x$ はランダムか?」に答えるには「*何と比べて?*」も問わなければならない — 例: 「それとも世界の何らかの規則性が $x$ を生んだのか?」
 :::
 
 ::: {.notes}
