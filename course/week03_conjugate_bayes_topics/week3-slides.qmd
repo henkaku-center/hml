@@ -1,7 +1,7 @@
 ---
-title: "Week 3 — Conjugate Bayes"
-subtitle: "Friday, May 15, 2026"
-author: "Prof. Joseph Austerweil"
+title: '<span class="lang-en">Week 3 — Conjugate Bayes</span><span class="lang-ja">第3週 — 共役ベイズ</span>'
+subtitle: '<span class="lang-en">Friday, May 15, 2026</span><span class="lang-ja">2026年5月15日（金）</span>'
+author: '<span class="lang-en">Prof. Joseph Austerweil</span><span class="lang-ja">オウステウェイル　ジョセフ教授</span>'
 title-slide-attributes:
   data-background-image: "../../sds-reveal/sds_frame.png"
   data-background-size: "cover"
@@ -11,15 +11,14 @@ format:
   pptx: default
 ---
 
-## Agenda {.agenda}
+## Agenda {.agenda .dense}
 
 - Welcome back  [0:00]{.time}
 - Conjugacy as a pattern  [0:10]{.time}
-- Beta-Binomial  [0:20]{.time}
+- Beta-Binomial  [0:25]{.time}
 - Break  [0:55]{.time}
 - Gaussian-Gaussian with N observations  [1:05]{.time}
-- Dirichlet-Multinomial (if time)  [1:35]{.time}
-- Paper presentations  [1:45]{.time}
+- Subjective randomness (G&T 2001)  [1:40]{.time}
 - Close  [1:55]{.time}
 
 ::: {.notes}
@@ -38,8 +37,9 @@ wasn't a coincidence. When the prior and likelihood pair up a certain way, the
 posterior stays in the prior's family. That's the whole point of this week.
 :::
 
-## The move we saw in Week 2
+## [The move we saw in Week 2]{.lang-en}[第2週で見た動き]{.lang-ja} {.bigger}
 
+::: {.lang-en}
 [Prior:]{.accent} $\mu \sim N(500, 20^2)$
 
 [Likelihood:]{.accent} observation $D = 510$, known $\sigma = 30$
@@ -49,6 +49,19 @@ posterior stays in the prior's family. That's the whole point of this week.
 <br>
 
 [**Notice:** prior is Gaussian → posterior is Gaussian. Same family.]{.yellow}
+:::
+
+::: {.lang-ja}
+[事前分布:]{.accent} $\mu \sim N(500, 20^2)$
+
+[尤度:]{.accent} 観測 $D = 510$、既知 $\sigma = 30$
+
+[事後分布:]{.accent} $\mu \mid D \sim N(503.3, 16.6^2)$
+
+<br>
+
+[**注目:** 事前がガウス → 事後もガウス。同じ族。]{.yellow}
+:::
 
 ::: {.notes}
 Quick recall. Spend 30s on this slide. The key observation isn't the numbers,
@@ -56,9 +69,46 @@ it's the closure property. If students groan, remind them: this is exactly
 what we computed at the end of Week 2.
 :::
 
-## What "conjugate" means
+## [What "conjugate" means — in words]{.lang-en}[「共役」とは — 言葉で]{.lang-ja} {.bigger}
 
-A **prior family** $\mathcal{F}$ is **conjugate** to a **likelihood** $\ell$ when:
+::: {.lang-en}
+**Conjugate** = the posterior stays in the *same family* as the prior.
+
+[Gaussian prior + Gaussian likelihood → Gaussian posterior.]{.accent}
+
+Different parameters, same shape of distribution.
+
+<br>
+
+[We just saw it once. The next question: is this lucky, or a pattern?]{.dim}
+:::
+
+::: {.lang-ja}
+**共役** = 事後が事前と*同じ族*にとどまる。
+
+[ガウス事前 + ガウス尤度 → ガウス事後。]{.accent}
+
+パラメータは異なるが、分布の形は同じ。
+
+<br>
+
+[一度見た。次の問い: これは幸運か、パターンか?]{.dim}
+:::
+
+::: {.notes}
+Plain-language landing first. "Family" is the new concept; "same family" is
+the load-bearing phrase. Don't show the formal symbols yet.
+:::
+
+## [What "conjugate" means — formally]{.lang-en}[「共役」とは — 形式的に]{.lang-ja} {.bigger}
+
+::: {.lang-en}
+A **prior family** $\mathcal{F}$ is **conjugate** to a likelihood when:
+:::
+
+::: {.lang-ja}
+**事前分布の族** $\mathcal{F}$ が尤度に対して**共役**であるとは:
+:::
 
 $$
 p(\theta) \in \mathcal{F} \;\; \Longrightarrow \;\; p(\theta \mid D) \in \mathcal{F}
@@ -66,7 +116,17 @@ $$
 
 <br>
 
+::: {.lang-en}
+[$\mathcal{F}$ is a *set* of distributions — e.g. "all Gaussians" or "all Betas."]{.dim}
+
 [The posterior has the same functional form as the prior — just with updated parameters.]{.dim}
+:::
+
+::: {.lang-ja}
+[$\mathcal{F}$ は分布の*集合* — 例: 「すべてのガウス」または「すべてのベータ」。]{.dim}
+
+[事後は事前と同じ関数形 — パラメータが更新されるだけ。]{.dim}
+:::
 
 ::: {.notes}
 Slow down here. Two parts: (a) prior and posterior in the SAME family, (b)
@@ -74,19 +134,88 @@ Slow down here. Two parts: (a) prior and posterior in the SAME family, (b)
 Conjugacy is closure under the Bayesian update operator.
 :::
 
-## Why conjugacy matters
+## [Why conjugacy matters]{.lang-en}[共役性が重要な理由]{.lang-ja} {.midbig}
 
+::: {.lang-en}
 | Property | Why you care |
 |---|---|
 | Closed-form posterior | No integration, no sampling |
 | Sequential updates | Today's posterior = tomorrow's prior |
 | Interpretable hyperparameters | Prior knowledge as "pseudo-observations" |
 | Fast, exact | Good pedagogy + fast enough to compute on the fly |
+:::
+
+::: {.lang-ja}
+| 性質 | なぜ重要か |
+|---|---|
+| 閉形式の事後 | 積分も標本化も不要 |
+| 逐次更新 | 今日の事後 = 明日の事前 |
+| 解釈可能なハイパーパラメータ | 事前知識を「疑似観測」として |
+| 高速・厳密 | 教育に良く、実用速度でも計算可能 |
+:::
 
 ::: {.notes}
 This is the "why learn conjugacy at all?" slide. In Week 7 (Monte Carlo)
 we'll see what you do when conjugacy fails. For now, when it works, it's the
 cleanest tool in the box.
+:::
+
+## [Quick check — when does conjugacy *fail*?]{.lang-en}[クイックチェック — 共役性が*破綻*するのは?]{.lang-ja} {.bigger}
+
+::: {.lang-en}
+Prior on $\mu$: **bimodal** (mixture of two Gaussians). Likelihood: Gaussian. Posterior?
+
+::: {.fragment}
+A. Gaussian (likelihood dominates)
+B. Bimodal Gaussian mixture
+C. Uniform (prior × likelihood cancels)
+D. Not closed-form — needs numerics
+:::
+:::
+
+::: {.lang-ja}
+$\mu$ の事前: **二峰性**（2つのガウスの混合）。尤度: ガウス。事後は?
+
+::: {.fragment}
+A. ガウス（尤度が支配）
+B. 二峰性のガウス混合
+C. 一様（事前と尤度が相殺）
+D. 閉形式でない — 数値計算が必要
+:::
+:::
+
+::: {.notes}
+Self-authored poll. Commit-before-reveal: students vote, then reveal next slide.
+Goal: probe whether "conjugacy" lives in the prior family alone, or in the
+prior+likelihood pair. The Gaussian likelihood preserves Gaussian priors, but
+a mixture-of-Gaussians prior gives a mixture-of-Gaussians posterior — still
+closed form. So the "family" being closed is what matters. Source: self-authored
+for SP26, not from a SP25 quiz item (Quiz 2 had no conceptual MC items at this
+level). Discussion target: 1 min.
+:::
+
+## [Quick check — answer]{.lang-en}[クイックチェック — 答え]{.lang-ja} {.biggerplus}
+
+::: {.lang-en}
+[**B. Bimodal Gaussian mixture.**]{.yellow}
+
+Each component updates Gaussian-Gaussian independently; the mixture weights re-balance by how well each component explains the data.
+
+[Conjugacy is a property of the *prior family × likelihood pair*, not the prior alone.]{.accent}
+:::
+
+::: {.lang-ja}
+[**B. 二峰性のガウス混合。**]{.yellow}
+
+各成分が独立にガウス-ガウス更新を行い、データへの当てはまりの良さで混合重みが再調整される。
+
+[共役性は*事前族 × 尤度の対*の性質であり、事前単体の性質ではない。]{.accent}
+:::
+
+::: {.notes}
+Land the punchline. The "family" in conjugacy can be richer than a single Gaussian
+— mixtures of conjugate priors are themselves conjugate. (We'll see mixture
+modeling proper in a later week.) 30s here.
 :::
 
 ## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
@@ -98,8 +227,9 @@ Block 2 — the first new conjugate pair. Frame: we already saw Gaussian-
 Gaussian. Now the same pattern for a totally different likelihood (Binomial).
 :::
 
-## Back to the bentos — but now with counts
+## [Back to the bentos — but now with counts]{.lang-en}[弁当に戻る — でも今度は回数で]{.lang-ja} {.bigger}
 
+::: {.lang-en}
 Chibany's prior belief about tonkatsu rate:
 
 [70% tonkatsu, 30% hamburger]{.accent} — but how confident?
@@ -109,6 +239,19 @@ Chibany's prior belief about tonkatsu rate:
 This semester's data: **27 tonkatsu out of 40 bentos**.
 
 [What's Chibany's updated belief about $p$?]{.yellow}
+:::
+
+::: {.lang-ja}
+チバニーのとんかつ率に対する事前信念:
+
+[とんかつ70%、ハンバーグ30%]{.accent} — でもどれくらい自信を持って?
+
+<br>
+
+今学期のデータ: **40個中27個がとんかつ**。
+
+[$p$ に対するチバニーの更新後の信念は?]{.yellow}
+:::
 
 ::: {.notes}
 Story-frame. Last week we asked about the meal of a single bento. This week
@@ -116,18 +259,35 @@ we ask about the underlying RATE — which is a parameter, not an observation.
 That shift (from meal to rate) is the conceptual payoff of this slide.
 :::
 
-## The Beta distribution
+## [The Beta distribution]{.lang-en}[ベータ分布]{.lang-ja}
 
 $$
-\text{Beta}(\alpha, \beta) : \quad p(p \mid \alpha, \beta) \propto p^{\alpha - 1} (1-p)^{\beta - 1}
+\text{Beta}(\alpha, \beta) : \quad p(\theta \mid \alpha, \beta) \propto \theta^{\alpha - 1} (1-\theta)^{\beta - 1}
 $$
 
-| $\alpha, \beta$ | Interpretation |
+::: {.lang-en}
+[$\theta \in [0,1]$ is the rate we're inferring (e.g. tonkatsu rate). $\propto$ = "proportional to" — drops the normalizing constant.]{.dim}
+
+| $\alpha, \beta$ | Shape interpretation |
 |---|---|
 | $\alpha = \beta = 1$ | Uniform on $[0,1]$ |
 | $\alpha > \beta$ | Concentrated above $0.5$ |
 | Large $\alpha + \beta$ | Narrow (confident) |
 | Small $\alpha + \beta$ | Wide (uncertain) |
+| $\alpha = \beta < 1$ | U-shaped at the edges |
+:::
+
+::: {.lang-ja}
+[$\theta \in [0,1]$ は推定する割合（例: とんかつ率）。$\propto$ = 「比例」 — 正規化定数を落とす。]{.dim}
+
+| $\alpha, \beta$ | 形の解釈 |
+|---|---|
+| $\alpha = \beta = 1$ | $[0,1]$ 上の一様 |
+| $\alpha > \beta$ | $0.5$ より上に集中 |
+| $\alpha + \beta$ が大 | 鋭い（自信あり） |
+| $\alpha + \beta$ が小 | 平坦（不確実） |
+| $\alpha = \beta < 1$ | 端でU字型 |
+:::
 
 ::: {.notes}
 Intuition pump. Don't prove anything about the Beta yet — just plant the shape
@@ -135,26 +295,162 @@ intuition. The hyperparameters behave like "pseudo-counts of successes and
 failures." That's the interpretation that will pay off in the posterior.
 :::
 
-## Beta-Binomial conjugate update
+## [Poll — Tanaka's attic of marbles]{.lang-en}[ポール — 田中さんの屋根裏のビー玉]{.lang-ja} {.midbig}
 
+::: {.lang-en}
+Tanaka finds bags of marbles in his parents' attic. **Each bag is mostly one color** (white or black), but **overall the count is ~50/50**.
+
+He wants to encode this in a Beta prior over $\theta$ = probability of drawing white. Which $\text{Beta}(\alpha, \beta)$?
+
+::: {.fragment}
+A. $\text{Beta}(1, 1)$ — uniform, no info
+B. $\text{Beta}(2, 2)$ — gentle center at $0.5$
+C. $\text{Beta}(10, 10)$ — strong center at $0.5$
+D. $\text{Beta}(0.5, 0.5)$ — U-shaped at the edges
+:::
+:::
+
+::: {.lang-ja}
+田中さんが実家の屋根裏でビー玉の袋を見つけた。**各袋はほぼ一色**（白または黒）だが、**全体では約50/50**。
+
+これを $\theta$ =（白を引く確率）に対するベータ事前として表したい。どの $\text{Beta}(\alpha, \beta)$ ?
+
+::: {.fragment}
+A. $\text{Beta}(1, 1)$ — 一様、情報なし
+B. $\text{Beta}(2, 2)$ — $0.5$ にやや集中
+C. $\text{Beta}(10, 10)$ — $0.5$ に強く集中
+D. $\text{Beta}(0.5, 0.5)$ — 端でU字型
+:::
+:::
+
+::: {.notes}
+Adapted from SP25 quiz "Gaussian and Binomial Bayes" item ge16beaee (essay,
+"marbles"). Converted to MC. The key insight: "each bag mostly one color" is
+about *within-bag* concentration near 0 or 1; "overall ~50/50" is the symmetry.
+A U-shaped Beta(0.5, 0.5) is the only one that captures both. Beta(2,2) and
+Beta(10,10) get the symmetry but penalize the bag-level extremity — wrong.
+1.5 min including discussion.
+:::
+
+## [Poll — answer]{.lang-en}[ポール — 答え]{.lang-ja}
+
+[**D. $\text{Beta}(0.5, 0.5)$.**]{.yellow}
+
+```
+   P(p)│ █                                            █
+       │ █                                            █
+       │ █  ▄                                      ▄ █
+       │ █  █  ▄                                ▄  █ █
+       │  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+       0                          0.5                   1
+                                  p
+```
+
+::: {.lang-en}
+U-shaped: mass piles up near $0$ and $1$ (bag-level extremity), symmetric overall.
+$\text{Beta}(2,2)$ and $\text{Beta}(10,10)$ are *unimodal at 0.5* — they encode "around half white" *within a bag*, which is the opposite of what Tanaka saw.
+:::
+
+::: {.lang-ja}
+U字型: $0$ と $1$ の近くに質量が集まり（袋ごとの極端さ）、全体としては対称。
+$\text{Beta}(2,2)$ と $\text{Beta}(10,10)$ は*$0.5$ に単峰* — 「袋の中で約半分が白」を表しており、田中さんが見たものとは逆。
+:::
+
+::: {.notes}
+Make sure they see why B and C are wrong, not just why D is right. The trap is
+to read "overall 50/50" and reach for the most-symmetric-around-0.5 option.
+But $0.5$ refers to the marginal across bags, not within. 1 min.
+:::
+
+## [Beta-Binomial — set up the pieces]{.lang-en}[ベータ-二項 — 道具立て]{.lang-ja} {.biggerplus}
+
+::: {.lang-en}
+We're inferring the tonkatsu rate. Call it $p$.
+
+[Prior:]{.accent} $p \sim \text{Beta}(\alpha, \beta)$  →  $p(p) \propto p^{\alpha-1}(1-p)^{\beta-1}$
+
+[Likelihood:]{.accent} $k$ tonkatsus in $n$ bentos  →  $p(k \mid p) \propto p^{k}(1-p)^{n-k}$
+:::
+
+::: {.lang-ja}
+とんかつ率を推定する。それを $p$ とおく。
+
+[事前:]{.accent} $p \sim \text{Beta}(\alpha, \beta)$  →  $p(p) \propto p^{\alpha-1}(1-p)^{\beta-1}$
+
+[尤度:]{.accent} $n$ 個中 $k$ 個がとんかつ  →  $p(k \mid p) \propto p^{k}(1-p)^{n-k}$
+:::
+
+::: {.notes}
+Notation note: previous slide used θ as a generic rate; now we name the
+specific tonkatsu rate p (matches the Tanaka poll's white-marble rate idea but
+applied to bentos). The (n choose k) binomial coefficient is dropped because
+it doesn't involve p — same "drop the normalizer" move from the Jamal poll
+that's coming.
+:::
+
+## [Beta-Binomial — multiply and read off]{.lang-en}[ベータ-二項 — 掛けて読み取る]{.lang-ja} {.biggerplus}
+
+[Posterior $\propto$ Prior $\times$ Likelihood:]{.accent}
+
+$$
+p(p \mid k) \;\propto\; p^{\alpha-1}(1-p)^{\beta-1} \cdot p^{k}(1-p)^{n-k}
+$$
+
+::: {.fragment}
+$$
+= \; p^{(\alpha + k) - 1}(1-p)^{(\beta + n - k) - 1}
+$$
+:::
+
+::: {.fragment}
+::: {.lang-en}
+[Recognize this:]{.yellow} it's $\text{Beta}(\alpha + k, \; \beta + n - k)$.
+:::
+::: {.lang-ja}
+[これは:]{.yellow} $\text{Beta}(\alpha + k, \; \beta + n - k)$。
+:::
+:::
+
+::: {.notes}
+The Jamal move in action. Combine exponents, recognize Beta form, read off
+parameters. This is the *whole* conjugacy mechanic, exposed. Fragments build
+sequentially: students see the multiplication, then the combine, then the
+recognition.
+:::
+
+## [Beta-Binomial conjugate update]{.lang-en}[ベータ-二項 共役更新]{.lang-ja} {.bigger}
+
+::: {.lang-en}
 [Prior:]{.accent} $p \sim \text{Beta}(\alpha, \beta)$
 
-[Likelihood:]{.accent} $k$ successes in $n$ trials $\sim$ Binomial$(n, p)$
+[Data:]{.accent} $k$ successes in $n$ trials
 
 [Posterior:]{.accent} $p \mid k \sim \text{Beta}(\alpha + k, \; \beta + n - k)$
 
 <br>
 
 [**Just add the counts.** Successes bump $\alpha$, failures bump $\beta$.]{.yellow}
-
-::: {.notes}
-This is the cleanest conjugate-update rule in the course. Resist the urge to
-derive it now (save ~10 min for the workout on the next slide). Emphasize the
-interpretability: posterior hyperparameters are literal pseudo-counts. Frame
-this as "the update rule is just addition."
 :::
 
-## Worked example — Chibany's semester
+::: {.lang-ja}
+[事前:]{.accent} $p \sim \text{Beta}(\alpha, \beta)$
+
+[データ:]{.accent} $n$ 試行中 $k$ 成功
+
+[事後:]{.accent} $p \mid k \sim \text{Beta}(\alpha + k, \; \beta + n - k)$
+
+<br>
+
+[**回数を足すだけ。** 成功は $\alpha$ に、失敗は $\beta$ に加算。]{.yellow}
+:::
+
+::: {.notes}
+Summary card. After the derivation, this is the rule students should
+memorize. Hyperparameters as pseudo-counts: Beta(7,3) is "as if we'd seen
+7 tonkatsus and 3 hamburgers before any real data."
+:::
+
+## Worked example — Chibany's semester {.midbig}
 
 [Prior:]{.accent} $p \sim \text{Beta}(7, 3)$   ← encodes "70/30 with low confidence"
 
@@ -180,57 +476,191 @@ and the data:prior ratio determines who wins.
 
 # Break
 
-## Resume — Gaussian-Gaussian with N observations {data-menu-title="Gaussian-N agenda"}
+## [Resume — Gaussian-Gaussian with N observations]{.lang-en}[再開 — N観測のガウス-ガウス]{.lang-ja} {data-menu-title="Gaussian-N agenda" .biggest}
 
+::: {.lang-en}
 Agenda so far: [Beta-Binomial ✓]{.dim}
 
 [Now: what if Chibany weighs N bentos, not one?]{.accent}
+:::
+
+::: {.lang-ja}
+ここまで: [ベータ-二項 ✓]{.dim}
+
+[次は: チバニーが1個ではなくN個の弁当を測ったら?]{.accent}
+:::
 
 ::: {.notes}
 2-min re-grounding after break. Surface the next conceptual move: from
 one observation to many. Week 2 did one observation. Today we generalize.
 :::
 
-## Gaussian-Gaussian — N observations, known σ
+## [Gaussian-Gaussian — notation lock-in]{.lang-en}[ガウス-ガウス — 記号の確認]{.lang-ja} {.midbig}
 
-[Prior:]{.accent} $\mu \sim N(\mu_0, \sigma_0^2)$
+::: {.lang-en}
+| Symbol | What it is |
+|---|---|
+| $\mu_0, \sigma_0^2$ | Prior mean and variance of $\mu$ |
+| $\sigma^2$ | Data noise (known, fixed) |
+| $D_1, \ldots, D_N$ | $N$ iid observations |
+| $\sum_i D_i$ | Sum over the $N$ observations: $D_1 + D_2 + \cdots + D_N$ |
+| $\mu_N, \sigma_N^2$ | Posterior mean and variance of $\mu$ after seeing $N$ data |
+:::
 
-[Data:]{.accent} $D_1, \ldots, D_N \sim N(\mu, \sigma^2)$ (iid)
+::: {.lang-ja}
+| 記号 | 意味 |
+|---|---|
+| $\mu_0, \sigma_0^2$ | $\mu$ の事前の平均と分散 |
+| $\sigma^2$ | データのノイズ（既知・固定） |
+| $D_1, \ldots, D_N$ | $N$ 個の iid 観測 |
+| $\sum_i D_i$ | $N$ 観測の和: $D_1 + D_2 + \cdots + D_N$ |
+| $\mu_N, \sigma_N^2$ | $N$ データを見た後の $\mu$ の事後の平均と分散 |
+:::
 
-[Posterior:]{.accent} $\mu \mid D \sim N(\mu_N, \sigma_N^2)$ where
+::: {.notes}
+NEW slide added per CLAUDE.md "define at first use" rule. Σ in particular is
+its first deck appearance; defining it inline before the formula slide stops
+students from getting stuck on the operator instead of the conjugacy point.
+The two-subscript pairs (μ_0/σ_0 prior vs μ_N/σ_N posterior) are the easiest
+place to lose students — make sure they see the pattern.
+:::
+
+## [Gaussian-Gaussian — precision is additive]{.lang-en}[ガウス-ガウス — 精度は加法的]{.lang-ja}
+
+::: {.lang-en}
+[Posterior precision:]{.accent}
+:::
+::: {.lang-ja}
+[事後の精度:]{.accent}
+:::
 
 $$
-\frac{1}{\sigma_N^2} = \frac{1}{\sigma_0^2} + \frac{N}{\sigma^2} \qquad
-\mu_N = \sigma_N^2 \left( \frac{\mu_0}{\sigma_0^2} + \frac{\sum_i D_i}{\sigma^2} \right)
+\underbrace{\frac{1}{\sigma_N^2}}_{\text{posterior}} \;=\; \underbrace{\frac{1}{\sigma_0^2}}_{\text{prior}} \;+\; \underbrace{\frac{N}{\sigma^2}}_{N \text{ data}}
 $$
 
 <br>
 
-[**Precisions add.** N observations add N units of data precision.]{.yellow}
+::: {.lang-en}
+[**Precision = 1/variance.** Each observation adds $1/\sigma^2$ units. $N$ observations add $N/\sigma^2$.]{.yellow}
 
-::: {.notes}
-Same story as Week 2's single-observation case, but the "1/σ²" term on the
-likelihood side becomes "N/σ²". Everything else — the closed form, the
-precision-weighted average for μ_N — stays intact. Do NOT derive on the slide;
-reference the Week 2 derivation and just generalize the answer.
+[Sanity check: at $N = 1$, this matches Week 2's single-observation case.]{.dim}
 :::
 
-## Sequential updating — same rule, no new math
+::: {.lang-ja}
+[**精度 = 1/分散。** 各観測が $1/\sigma^2$ 単位を加える。$N$ 観測で $N/\sigma^2$。]{.yellow}
 
+[確認: $N = 1$ なら第2週の単一観測の式と一致。]{.dim}
+:::
+
+::: {.notes}
+Isolate the precision formula. The under-braces are critical — they tell
+students what each term *means* before they're asked to manipulate it. The
+N=1 sanity check is the bridge back to Week 2's worked example.
+:::
+
+## [Gaussian-Gaussian — posterior mean]{.lang-en}[ガウス-ガウス — 事後平均]{.lang-ja} {.bigger}
+
+$$
+\mu_N \;=\; \sigma_N^2 \left( \underbrace{\frac{\mu_0}{\sigma_0^2}}_{\text{prior precision} \times \text{prior mean}} \;+\; \underbrace{\frac{\sum_i D_i}{\sigma^2}}_{\text{data precision} \times \text{data sum}} \right)
+$$
+
+<br>
+
+::: {.lang-en}
+[$\mu_N$ is a **precision-weighted average** of the prior mean and the data sum. Whoever has more precision wins.]{.accent}
+:::
+
+::: {.lang-ja}
+[$\mu_N$ は事前平均とデータ和の**精度重み付き平均**。精度の大きい方が勝つ。]{.accent}
+:::
+
+::: {.notes}
+Final piece. Show this *after* precision is internalized, not before — the
+formula is intimidating until students know that 1/σ² is "precision."
+:::
+
+## [Poll — Jamal's shortcut]{.lang-en}[ポール — ジャマルの近道]{.lang-ja} {.bigger}
+
+::: {.lang-en}
+While deriving a posterior over $\mu$, Jamal notices the non-constant terms (w.r.t. $\mu$) **have the form of a Gaussian**. He drops everything else and concludes the posterior is Gaussian with parameters read off the surviving form. Is he correct?
+
+::: {.fragment}
+A. Yes — the dropped terms are absorbed into the normalization constant
+B. Yes — you can drop any term, even those involving $\mu$
+C. No — he dropped some terms that involve $\mu$
+D. Only if he later multiplies his answer by the dropped terms
+:::
+:::
+
+::: {.lang-ja}
+$\mu$ の事後を導出中、ジャマルは（$\mu$ に関する）非定数項が **ガウスの形をしている** ことに気づいた。残りを全て落とし、残った形からパラメータを読み取って事後をガウスと結論した。正しい?
+
+::: {.fragment}
+A. はい — 落とした項は正規化定数に吸収される
+B. はい — $\mu$ を含む項でさえ落としてよい
+C. いいえ — $\mu$ を含む項を落としてしまった
+D. 後で落とした項を掛け直す場合のみ
+:::
+:::
+
+::: {.notes}
+SP25 "Gaussian and Binomial Bayes" item g5f90d4e (the only MC item in that
+quiz). This is THE canonical conjugacy move — "drop terms that don't involve
+the variable of interest, recognize the surviving functional form, read off
+parameters." It's exactly what the Gaussian-N derivation hides behind that
+"complete the square" step. 1.5 min.
+:::
+
+## [Poll — answer]{.lang-en}[ポール — 答え]{.lang-ja} {.bigger}
+
+[**A. Yes — the dropped terms are part of the normalization constant.**]{.yellow}
+
+::: {.lang-en}
+A posterior is a probability density in $\mu$. Anything not depending on $\mu$ is a multiplicative constant — absorbed into $Z = \int p(\mu \mid D)\, d\mu$.
+
+[Recognize the functional form → read off parameters → normalization handles itself.]{.accent}
+:::
+
+::: {.lang-ja}
+事後分布は $\mu$ についての確率密度。$\mu$ に依存しないものは乗法的な定数で、$Z = \int p(\mu \mid D)\, d\mu$ に吸収される。
+
+[関数形を認識 → パラメータを読み取る → 正規化は勝手に処理される。]{.accent}
+:::
+
+::: {.notes}
+This is the rhetorical move every conjugacy derivation makes. Anchor it now;
+they'll reuse it for Beta-Binomial (drop the binomial coefficient and the
+B(α,β) normalizer) and Dirichlet-Multinomial. 30s.
+:::
+
+## [Sequential updating — same rule, no new math]{.lang-en}[逐次更新 — 同じ規則、新しい計算なし]{.lang-ja}
+
+::: {.lang-en}
 Observations arrive one at a time. Posterior after $k$ observations becomes
 prior for observation $k+1$.
+:::
+
+::: {.lang-ja}
+観測が1個ずつ到着。$k$ 観測後の事後が、$k+1$ 番目の観測の事前になる。
+:::
 
 $$
 \text{Beta}(34, 16) \xrightarrow[+1 \text{ hamb}]{\text{see 1 more}} \text{Beta}(34, 17)
 $$
 
 $$
-N(503.3, 16.6^2) \xrightarrow[D = 498]{\text{see 1 more}} N(502.1, \ldots)
+N(503.3, 16.6^2) \xrightarrow[D = 498]{\text{see 1 more}} N(502.2, 14.5^2)
 $$
 
 <br>
 
+::: {.lang-en}
 [This is why conjugacy is useful in practice: online updates, no re-fit.]{.dim}
+:::
+
+::: {.lang-ja}
+[これが実用上の共役性の利点: オンライン更新、再学習不要。]{.dim}
+:::
 
 ::: {.notes}
 Forward-pointer to future weeks. In Week 7 we'll see what happens when you
@@ -239,37 +669,191 @@ story is the exception, not the rule, but it's the one we can reason about
 exactly.
 :::
 
-## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Three conjugate pairs, one pattern]{.lang-en}[3つの共役対、1つのパターン]{.lang-ja} {.bigger}
 
-# Dirichlet-Multinomial (if time)
-
-## More than two outcomes
-
-What if Chibany has **three** meals: tonkatsu, hamburger, [curry]{.orange}?
-
-[Prior on rates:]{.accent} $(p_1, p_2, p_3) \sim \text{Dirichlet}(\alpha_1, \alpha_2, \alpha_3)$
-
-[Data:]{.accent} counts $(k_1, k_2, k_3)$ from $n$ observations
-
-[Posterior:]{.accent} Dirichlet$(\alpha_1 + k_1, \; \alpha_2 + k_2, \; \alpha_3 + k_3)$
-
-<br>
-
-[Same move as Beta-Binomial, with more categories.]{.yellow}
-
-::: {.notes}
-Stretch goal — cut if running short. The pattern generalizes: Dirichlet is
-the multivariate Beta, Multinomial is the multivariate Binomial. Just add
-the counts. Same rule.
-:::
-
-## Three conjugate pairs, one pattern
-
+::: {.lang-en}
 | Prior | Likelihood | Posterior |
 |---|---|---|
 | $\text{Beta}(\alpha, \beta)$ | Binomial$(n, p)$ | $\text{Beta}(\alpha + k, \beta + n - k)$ |
 | $\text{Dirichlet}(\vec{\alpha})$ | Multinomial$(n, \vec{p})$ | $\text{Dirichlet}(\vec{\alpha} + \vec{k})$ |
 | $N(\mu_0, \sigma_0^2)$ | $N(\mu, \sigma^2)$ | $N(\mu_N, \sigma_N^2)$ |
+
+[Row 2 is the multi-category generalization: $\vec{\alpha} = (\alpha_1, \ldots, \alpha_K)$, $\vec{k} = (k_1, \ldots, k_K)$. Same "add the counts" rule.]{.dim}
+:::
+
+::: {.lang-ja}
+| 事前 | 尤度 | 事後 |
+|---|---|---|
+| $\text{Beta}(\alpha, \beta)$ | Binomial$(n, p)$ | $\text{Beta}(\alpha + k, \beta + n - k)$ |
+| $\text{Dirichlet}(\vec{\alpha})$ | Multinomial$(n, \vec{p})$ | $\text{Dirichlet}(\vec{\alpha} + \vec{k})$ |
+| $N(\mu_0, \sigma_0^2)$ | $N(\mu, \sigma^2)$ | $N(\mu_N, \sigma_N^2)$ |
+
+[2行目は多カテゴリへの一般化: $\vec{\alpha} = (\alpha_1, \ldots, \alpha_K)$、$\vec{k} = (k_1, \ldots, k_K)$。同じ「回数を足す」規則。]{.dim}
+:::
+
+::: {.notes}
+Punchline table. Row 2 (Dirichlet-Multinomial) now arrives WITHOUT a dedicated
+intro slide — students see the pattern from the table alone. The dim caption
+defines the vector notation since it's the only place \vec{α} appears.
+:::
+
+## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+
+# Subjective randomness — a Bayesian story
+
+## [Why does HHTHTTTH look "more random" than HHHHHHHH?]{.lang-en}[なぜHHTHTTTHはHHHHHHHHより「ランダム」に見えるのか?]{.lang-ja} {.bigger}
+
+::: {.lang-en}
+Both sequences have the same probability under a fair coin: $(1/2)^8 = 1/256$.
+
+So why do people consistently say the first is "more random"?
+
+<br>
+
+[**Griffiths & Tenenbaum (2001):**]{.accent} people aren't computing $P(x \mid \text{random})$. They're computing a Bayes factor.
+:::
+
+::: {.lang-ja}
+両方とも公正なコインで同じ確率: $(1/2)^8 = 1/256$。
+
+なぜ人は一貫して前者を「よりランダム」と言うのか?
+
+<br>
+
+[**Griffiths & Tenenbaum (2001):**]{.accent} 人は $P(x \mid \text{random})$ を計算していない。ベイズ因子を計算している。
+:::
+
+::: {.notes}
+~2 min hook. Open with the actual classic example. The probability-equivalence
+fact is the hook: students who've taken any stats class know both sequences
+have the same probability, but the intuition that one is "more random" is
+unshakeable. The paper's move is to take that intuition seriously and ask:
+what BAYESIAN question is the mind actually answering?
+:::
+
+## [The reframe — likelihood ratio, not likelihood]{.lang-en}[再構築 — 尤度ではなく尤度比]{.lang-ja} {.midbig}
+
+::: {.lang-en}
+[Wrong question:]{.dim} "How likely is $x$ under randomness?" → $P(x \mid \text{random})$
+
+[Right question:]{.accent} "How much *more* does $x$ favor randomness over a regular pattern?"
+:::
+
+$$
+\text{subjective randomness}(x) \;=\; \log \frac{P(x \mid \text{random})}{P(x \mid \text{regular})}
+$$
+
+::: {.lang-en}
+[A **likelihood ratio** — the same Bayes-factor object that appears in every conjugate update.]{.yellow}
+:::
+
+::: {.lang-ja}
+[**尤度比** — すべての共役更新に現れる同じベイズ因子の対象。]{.yellow}
+:::
+
+::: {.notes}
+~2 min. The pivot. This is where today's conjugacy machinery pays off — the
+"drop the normalizer, recognize the form" move from the Jamal poll is
+EXACTLY what this paper does. P(random|x) / P(regular|x) is a posterior odds;
+by Bayes' rule it factors into prior odds × likelihood ratio. Under equal
+priors over "random" vs "regular," it IS the likelihood ratio.
+:::
+
+## [Defining "regular"]{.lang-en}[「規則」の定義]{.lang-ja}
+
+::: {.lang-en}
+What competes with "random" depends on the stimulus.
+
+| Stimulus | "Regular" hypothesis |
+|---|---|
+| Binary sequence | Local representativeness: each subsequence has ~50/50 split |
+| Numbers (pick 1–10) | Properties like "is prime," "is even," "ends in 7" |
+| Spatial points | Clusters, lines, symmetry |
+
+[The "regular" model is whatever your mind treats as the salient alternative — the implicit prior over what patterns exist.]{.accent}
+:::
+
+::: {.lang-ja}
+「ランダム」と競合するものは刺激によって異なる。
+
+| 刺激 | 「規則」仮説 |
+|---|---|
+| 2値系列 | 局所代表性: 各部分系列が約50/50 |
+| 数字（1〜10から選ぶ） | 「素数」「偶数」「7で終わる」などの性質 |
+| 空間上の点 | クラスタ、線、対称性 |
+
+[「規則」モデルは、心が顕著な代替案として扱うもの — どのパターンが存在するかの暗黙の事前。]{.accent}
+:::
+
+::: {.notes}
+~3 min. The "regular" alternative is what makes this work — and it's the
+fragile part. For binary sequences they use a Markov-chain regularity. For
+"pick a number" they use a feature set ("primes," "evens," etc.). The
+choice of regularity space is the modeling commitment. Worth flagging
+that this is also the paper's weakest point — different regularity choices
+can give very different fits.
+:::
+
+## [Zenith radio data — the binary sequence experiment]{.lang-en}[Zenithラジオデータ — 2値系列実験]{.lang-ja} {.midbig}
+
+::: {.lang-en}
+1937 publicity stunt: Zenith broadcast 5 H/T sequences over the radio, asked listeners to "transmit" their guesses via ESP.
+
+Result: people responded with sequences biased toward switching (away from runs). $P(\text{switch}) \approx 0.6$ instead of $0.5$.
+
+[G&T fit this with their likelihood-ratio model: switches *raise* the posterior odds of "random." Predicted bias falls out of the math, not added as a free parameter.]{.yellow}
+:::
+
+::: {.lang-ja}
+1937年の宣伝企画: ZenithがH/T系列5つをラジオで放送し、リスナーにESPで「送信」してもらった。
+
+結果: 人々は連続を避けて切り替えに偏った系列を返した。$P(\text{切替}) \approx 0.6$（$0.5$ ではなく）。
+
+[G&Tは尤度比モデルでこれを再現: 切替は「ランダム」の事後オッズを*上げる*。バイアスは自由パラメータではなく数式から導かれる。]{.yellow}
+:::
+
+::: {.notes}
+~3 min. This is the empirical landing. The Zenith experiment is wonderful
+because it predates the cognitive-science framing by decades — pure
+behavioral data. G&T's model FITS it without tuning a "switch preference"
+parameter; the bias is an emergent property of computing the Bayes factor.
+That's the difference between a descriptive model and an explanatory one.
+:::
+
+## [The takeaway for today's class]{.lang-en}[今日の授業のまとめ]{.lang-ja}
+
+::: {.lang-en}
+- The "mistake" in subjective randomness is **not** that people are bad at probability.
+- They're computing $\log P(x \mid \text{random}) / P(x \mid \text{regular})$ — a perfectly Bayesian quantity.
+- Today's conjugate-update mechanics ("drop the normalizer, recognize the form") are *exactly* the operation behind this model.
+
+<br>
+
+[**Open question:** is human cognition Bayesian-by-default, or just Bayesian-when-tractable?]{.accent}
+:::
+
+::: {.lang-ja}
+- 主観的ランダムさの「誤り」は、人が確率に弱いということ**ではない**。
+- 人は $\log P(x \mid \text{random}) / P(x \mid \text{regular})$ — 完全にベイズ的な量 — を計算している。
+- 今日の共役更新の操作（「正規化を落として形を認識」）が、まさにこのモデルの背後にある操作。
+
+<br>
+
+[**開かれた問い:** 人の認知はデフォルトでベイズ的か、それとも扱える時だけベイズ的か?]{.accent}
+:::
+
+::: {.notes}
+~3 min including discussion. Land two points: (a) the methodological move
+(reframe the question, don't blame the participant); (b) the technical link
+to today's content (the likelihood-ratio computation IS conjugacy mechanics
+applied to a binary discrimination problem). The open question is the
+forward-pointer to Weeks 11-13 on contemporary cognitive ML.
+
+Source: archive/canvas_export_sp25/web_resources/old_paper_presents/
+GriffithsTenenbaum2001.pptx — restructured around the conjugacy connection
+rather than the SP25 student's original ordering. Paper PDF at
+resources/readings/Griffiths2001random.pdf.
+:::
 
 ::: {.notes}
 Punchline table. The POINT of this week: conjugacy isn't one trick. It's
@@ -279,10 +863,11 @@ a recurring pattern. Mixture models (later weeks) and hierarchical Bayes
 
 ## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
-# Paper presentations + close
+# Close
 
-## Next week — Week 4 preview
+## [Next week — Week 4 preview]{.lang-en}[来週 — 第4週のプレビュー]{.lang-ja} {.bigger}
 
+::: {.lang-en}
 Ira leads. **Hierarchical Bayes.**
 
 Chibany's bento rate isn't the same across every semester, but semesters
@@ -292,6 +877,18 @@ collapsing?
 <br>
 
 [Read T3 Ch 5 before class.]{.accent}
+:::
+
+::: {.lang-ja}
+イラが進行。**階層ベイズ。**
+
+チバニーの弁当率は学期ごとに同じではないが、学期同士が完全に独立でもない。
+潰さずに情報をどう共有する?
+
+<br>
+
+[授業前にT3 第5章を読むこと。]{.accent}
+:::
 
 ::: {.notes}
 ~2 min close. Thank students for sitting through the math-heavy day. Set up

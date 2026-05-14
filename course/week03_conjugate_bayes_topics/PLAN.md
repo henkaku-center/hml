@@ -36,9 +36,19 @@ This means Week 3 does NOT need to re-teach continuous probability or Gaussians.
 None this week.
 
 ## Status
-Content outline set above. SP26 artifacts (shared-outline, build script, deck) not yet built — follow the Week 2 canonical pattern when building.
+**Lecture-ready in EN+JA.** Quarto qmd (`week3-slides.qmd`) replaces the python-pptx pattern used by Week 1 — Week 3 is the first SP26 deck built directly in Quarto/RevealJS. Pinned to the synced shared `sds-reveal/sds.scss` (five-tier sizing). Fill-audit run via `scripts/audit_slide_fill.js`; 3 remaining flags are sparse-content slides in the acceptable 60–75% fill band per `SLIDE_VISUAL_QA.md`. JA retrofit covers 17 concept-introducing slides; build-up math reveals and worked-example walkthroughs stay EN-only.
+
+## SP26 artifacts
+- `week3-slides.qmd` — single-source deck (no shared-outline split; deck is small enough that the outline is implicit in section headers + speaker notes)
+- `week3-slides.html` — generated; do not hand-edit
+- `week3-audit/slide-fill.json` — audit history
+- `wiki_pages/` — SP25 Canvas snapshots (reference only)
 
 ## TODOs
-- [ ] Build SP26 Week 3 artifacts (shared-outline + build script + generated deck)
-- [ ] Copy relevant wiki pages from `archive/canvas_export_sp25/web_resources/wiki_content/` into `wiki_pages/`
-- [ ] Add student discussion/activities
+- [x] Build SP26 Week 3 artifacts (qmd → RevealJS, audit-passed)
+- [x] Copy relevant wiki pages from `archive/canvas_export_sp25/web_resources/wiki_content/` into `wiki_pages/`
+- [x] Add 3 polls (1 self-authored conjugacy fail-mode + 2 adapted from SP25 "Gaussian and Binomial Bayes" quiz)
+- [x] EN↔JA toggle on 17 concept slides
+- [x] Pedagogical density review — split conjugacy def (1→2 slides), Beta-Binomial update (1→3 slides with explicit derivation), Gaussian-N formula (1→3 slides: notation lock-in / precision / posterior mean); fixed `p`/`θ` double-use; defined Σ before first use; filled in Sequential-update ellipsis; added $\vec{\alpha}$ shorthand definition
+- [x] Added 6-slide instructor-led presentation block on **Griffiths & Tenenbaum (2001) "Randomness and coincidences"** (15 min, replaces dropped Dirichlet-Multinomial block; Dirichlet pattern still visible in the summary table). Restructured from SP25 student PPTX (`archive/.../old_paper_presents/GriffithsTenenbaum2001.pptx`) around the likelihood-ratio→conjugacy connection.
+- [ ] Optional: GenJAX `beta_binomial_update()` live demo (per PLAN — currently no slide for it; consider for next iteration)
