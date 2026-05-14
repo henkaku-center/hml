@@ -27,9 +27,7 @@ gap and resurfacing the Gaussian-Gaussian update from Block 7 — that's the
 anchor we pivot on today. ~2 min agenda overview.
 :::
 
-## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
-
-# Paper presentation assignments
+## [Paper presentation assignments]{.lang-en}[論文発表の割り当て]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ## [Your paper presentation slots]{.lang-en}[論文発表のスケジュール]{.lang-ja}
 
@@ -90,9 +88,7 @@ six you should organize around, they're on the guidelines page." Move on.
 Total announcements block target: 3 minutes. Then transition to conjugacy.
 :::
 
-## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
-
-# Conjugacy as a pattern
+## [Conjugacy as a pattern]{.lang-en}[パターンとしての共役性]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ::: {.notes}
 Block 1 — the framing move. Show that Week 2's Gaussian × Gaussian = Gaussian
@@ -286,9 +282,7 @@ Land the punchline. The "family" in conjugacy can be richer than a single Gaussi
 modeling proper in a later week.) 30s here.
 :::
 
-## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
-
-# Beta-Binomial
+## [Beta-Binomial]{.lang-en}[ベータ-二項]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ::: {.notes}
 Block 2 — the first new conjugate pair. Frame: we already saw Gaussian-
@@ -540,9 +534,7 @@ data dominates. This is the BIG intuition: priors act like pseudo-observations
 and the data:prior ratio determines who wins.
 :::
 
-## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
-
-# Break
+## [Break]{.lang-en}[休憩]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ## [Resume — Gaussian-Gaussian with N observations]{.lang-en}[再開 — N観測のガウス-ガウス]{.lang-ja} {data-menu-title="Gaussian-N agenda" .biggest}
 
@@ -765,9 +757,7 @@ intro slide — students see the pattern from the table alone. The dim caption
 defines the vector notation since it's the only place \vec{α} appears.
 :::
 
-## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
-
-# Subjective randomness — a Bayesian story
+## [Subjective randomness — a Bayesian story]{.lang-en}[主観的ランダム性 — ベイズ的物語]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ## [Why does HHTHTTTH look "more random" than HHHHHHHH?]{.lang-en}[なぜHHTHTTTHはHHHHHHHHより「ランダム」に見えるのか?]{.lang-ja} {.bigger}
 
@@ -929,9 +919,7 @@ a recurring pattern. Mixture models (later weeks) and hierarchical Bayes
 (Week 4) lean on these closed forms.
 :::
 
-## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
-
-# Close
+## [Close]{.lang-en}[まとめ]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ## [Next week — Week 4 preview]{.lang-en}[来週 — 第4週のプレビュー]{.lang-ja} {.bigger}
 
