@@ -889,6 +889,30 @@ conjugate priors get their own treatment in a later mixture-modeling week. ~1 mi
 
 ## [Subjective randomness — a Bayesian story]{.lang-en}[主観的ランダム性 — ベイズ的物語]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
+## [Which feels more random?]{.lang-en}[どちらがよりランダムに感じる?]{.lang-ja} {.bigger}
+
+<br>
+
+$$
+\text{(a)} \quad \mathtt{H \; H \; T \; H \; T \; T \; T \; H}
+$$
+
+<br>
+
+$$
+\text{(b)} \quad \mathtt{H \; H \; H \; H \; H \; H \; H \; H}
+$$
+
+::: {.notes}
+~30 seconds. SHOW. Don't tell. Read the two sequences out loud. Ask the
+class — gestures, voting by hand, whatever. Wait for the answer to land
+naturally; almost everyone will say (a). Don't say anything else yet —
+the paradox lands harder if students have *already committed* to "(a) is
+more random" before they see the next slide reveal that both sequences
+have identical probability. Goal of this slide: get them to feel the
+asymmetry, not analyze it.
+:::
+
 ## [Why does HHTHTTTH look "more random" than HHHHHHHH?]{.lang-en}[なぜHHTHTTTHはHHHHHHHHより「ランダム」に見えるのか?]{.lang-ja} {.bigger}
 
 ::: {.lang-en}
