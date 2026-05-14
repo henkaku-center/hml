@@ -71,6 +71,7 @@ guidelines page has it.
 
 ## [Framing — six questions to organize your talk]{.lang-en}[構成 — 発表を組み立てる6つの問い]{.lang-ja}
 
+::: {.lang-en}
 *(Adapted from Tom Griffiths. Also good for reading ANY paper in this course.)*
 
 1. **What is the cognitive science question** the paper explores?
@@ -79,6 +80,18 @@ guidelines page has it.
 4. **What is the solution?** Core mathematical ideas — intuition over rigor.
 5. **How does the solution connect to human behavior?**
 6. **What can we conclude?** Your own interpretation.
+:::
+
+::: {.lang-ja}
+*(Tom Griffithsから。本コースで論文を読むときにも有用。)*
+
+1. 論文が探る**認知科学の問い**は何か?
+2. **文脈**は? これまでどんなアプローチが試みられてきたか?
+3. 背後にある**計算的問題**は? どう定式化されているか?
+4. **解法**は? 中核となる数式 — 厳密さよりも直観で。
+5. 解法は**人間の行動とどう繋がるか**?
+6. **何が結論できるか**? 自分自身の解釈。
+:::
 
 [Full rubric + tips · 完全な評価基準: [hml.chibatech.dev/presentation-guidelines.html](https://hml.chibatech.dev/presentation-guidelines.html)]{.accent}
 

@@ -54,6 +54,12 @@ $presentation-heading-font: $font-family-sans-serif !default;
   // ~80-90% of the vertical space; very dense slides should opt into .smaller.
   p, li, td { font-size: 0.82em; line-height: 1.45; }
   p { margin: 0 0 0.6em 0; }
+  // Restore padding-left so list markers (bullets for ul, numbers for ol)
+  // render inside the slide. The default browser padding-inline-start is
+  // 40px; the tier-specific `ul, ol { margin: ... 0 }` rules below zero out
+  // the left margin without restoring padding, which clips ol markers off
+  // the left edge in `list-style-position: outside` (the default).
+  ul, ol { padding-left: 1.5em; }
   ul, ol { margin: 0.5em 0 0.6em 0; }
   li { margin: 0 0 0.3em 0; }
   h2 + p, h2 + ul, h2 + ol { margin-top: 0.6em; }
