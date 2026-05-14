@@ -466,24 +466,14 @@ Beta(10,10) get the symmetry but penalize the bag-level extremity — wrong.
 
 [**D. $\text{Beta}(0.5, 0.5)$.**]{.yellow}
 
-```
-   P(p)│ █                                            █
-       │ █                                            █
-       │ █  ▄                                      ▄ █
-       │ █  █  ▄                                ▄  █ █
-       │  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-       0                          0.5                   1
-                                  p
-```
+![](images/beta_ushaped.png){fig-align="center" width="58%"}
 
 ::: {.lang-en}
-U-shaped: mass piles up near $0$ and $1$ (bag-level extremity), symmetric overall.
-$\text{Beta}(2,2)$ and $\text{Beta}(10,10)$ are *unimodal at 0.5* — they encode "around half white" *within a bag*, which is the opposite of what Tanaka saw.
+U-shaped: mass piles up near $0$ and $1$ (bag-level extremity), symmetric overall. $\text{Beta}(2,2)$ and $\text{Beta}(10,10)$ are *unimodal at $0.5$* — they encode "around half white" *within a bag*, which is the opposite of what Tanaka saw.
 :::
 
 ::: {.lang-ja}
-U字型: $0$ と $1$ の近くに質量が集まり（袋ごとの極端さ）、全体としては対称。
-$\text{Beta}(2,2)$ と $\text{Beta}(10,10)$ は*$0.5$ に単峰* — 「袋の中で約半分が白」を表しており、田中さんが見たものとは逆。
+U字型: $0$ と $1$ の近くに質量が集まり（袋ごとの極端さ）、全体としては対称。$\text{Beta}(2,2)$ と $\text{Beta}(10,10)$ は*$0.5$ に単峰* — 「袋の中で約半分が白」を表しており、田中さんが見たものとは逆。
 :::
 
 ::: {.notes}
