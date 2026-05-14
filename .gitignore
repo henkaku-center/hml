@@ -27,6 +27,9 @@ course/**/slides/sp26/preview/
 qa-previews/
 course/**/week*-audit/
 
+# Build-output JSONs from per-week plot scripts (sample numbers etc.)
+course/**/images/samples.json
+
 # Editor
 .vscode/
 .idea/

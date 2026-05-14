@@ -16,9 +16,9 @@ format:
 - Welcome back  [0:00]{.time}
 - Conjugacy as a pattern  [0:10]{.time}
 - Beta-Binomial  [0:25]{.time}
-- Break  [0:55]{.time}
-- Gaussian-Gaussian with N observations  [1:05]{.time}
-- Subjective randomness (G&T 2001)  [1:40]{.time}
+- Break  [1:00]{.time}
+- Gaussian-Gaussian with N observations  [1:10]{.time}
+- Subjective randomness (G&T 2001)  [1:45]{.time}
 - Close  [1:55]{.time}
 
 ::: {.notes}
@@ -247,7 +247,7 @@ Gaussian. Now the same pattern for a totally different likelihood (Binomial).
 ## [Back to the bentos — but now with counts]{.lang-en}[弁当に戻る — でも今度は回数で]{.lang-ja} {.bigger}
 
 ::: {.lang-en}
-Chibany's prior belief about tonkatsu rate:
+Chibany's prior belief about tonkatsu rate $\theta$:
 
 [70% tonkatsu, 30% hamburger]{.accent} — but how confident?
 
@@ -255,11 +255,11 @@ Chibany's prior belief about tonkatsu rate:
 
 This semester's data: **27 tonkatsu out of 40 bentos**.
 
-[What's Chibany's updated belief about $p$?]{.yellow}
+[What's Chibany's updated belief about $\theta$?]{.yellow}
 :::
 
 ::: {.lang-ja}
-チバニーのとんかつ率に対する事前信念:
+チバニーのとんかつ率 $\theta$ に対する事前信念:
 
 [とんかつ70%、ハンバーグ30%]{.accent} — でもどれくらい自信を持って?
 
@@ -267,49 +267,160 @@ This semester's data: **27 tonkatsu out of 40 bentos**.
 
 今学期のデータ: **40個中27個がとんかつ**。
 
-[$p$ に対するチバニーの更新後の信念は?]{.yellow}
+[$\theta$ に対するチバニーの更新後の信念は?]{.yellow}
 :::
 
 ::: {.notes}
 Story-frame. Last week we asked about the meal of a single bento. This week
 we ask about the underlying RATE — which is a parameter, not an observation.
-That shift (from meal to rate) is the conceptual payoff of this slide.
+That shift (from meal to rate) is the conceptual payoff of this slide. We
+name the rate θ (theta) consistently from here on.
 :::
 
-## [The Beta distribution]{.lang-en}[ベータ分布]{.lang-ja}
-
-$$
-\text{Beta}(\alpha, \beta) : \quad p(\theta \mid \alpha, \beta) \propto \theta^{\alpha - 1} (1-\theta)^{\beta - 1}
-$$
+## [The Binomial likelihood — what you already know]{.lang-en}[二項尤度 — 既知の話]{.lang-ja} {.bigger}
 
 ::: {.lang-en}
-[$\theta \in [0,1]$ is the rate we're inferring (e.g. tonkatsu rate). $\propto$ = "proportional to" — drops the normalizing constant.]{.dim}
+With rate $\theta$ fixed, $n$ bentos give $k$ tonkatsus with probability:
 
-| $\alpha, \beta$ | Shape interpretation |
-|---|---|
-| $\alpha = \beta = 1$ | Uniform on $[0,1]$ |
-| $\alpha > \beta$ | Concentrated above $0.5$ |
-| Large $\alpha + \beta$ | Narrow (confident) |
-| Small $\alpha + \beta$ | Wide (uncertain) |
-| $\alpha = \beta < 1$ | U-shaped at the edges |
+$$
+p(k \mid \theta, n) = \binom{n}{k} \, \theta^{k} (1-\theta)^{n-k}
+$$
+
+[Each bento is iid Bernoulli($\theta$). $\binom{n}{k}$ counts which $k$ of the $n$ were tonkatsu.]{.dim}
 :::
 
 ::: {.lang-ja}
-[$\theta \in [0,1]$ は推定する割合（例: とんかつ率）。$\propto$ = 「比例」 — 正規化定数を落とす。]{.dim}
+率 $\theta$ を固定すると、$n$ 個の弁当のうち $k$ 個がとんかつである確率:
 
-| $\alpha, \beta$ | 形の解釈 |
-|---|---|
-| $\alpha = \beta = 1$ | $[0,1]$ 上の一様 |
-| $\alpha > \beta$ | $0.5$ より上に集中 |
-| $\alpha + \beta$ が大 | 鋭い（自信あり） |
-| $\alpha + \beta$ が小 | 平坦（不確実） |
-| $\alpha = \beta < 1$ | 端でU字型 |
+$$
+p(k \mid \theta, n) = \binom{n}{k} \, \theta^{k} (1-\theta)^{n-k}
+$$
+
+[各弁当は iid ベルヌーイ($\theta$)。$\binom{n}{k}$ は $n$ 個中どの $k$ 個がとんかつかの選び方の数。]{.dim}
 :::
 
 ::: {.notes}
-Intuition pump. Don't prove anything about the Beta yet — just plant the shape
-intuition. The hyperparameters behave like "pseudo-counts of successes and
-failures." That's the interpretation that will pay off in the posterior.
+Anchor on what students already know from undergrad probability. Binomial
+PMF is a likelihood — given a fixed θ, it gives the probability of getting
+exactly k successes. Spend ~1 min here. Don't move forward until this lands
+— the pivot on the next slide depends on θ being "fixed."
+:::
+
+## [Now flip your viewpoint]{.lang-en}[視点を反転させる]{.lang-ja} {.bigger}
+
+::: {.lang-en}
+What if we fix $k$ and $n$ (we *saw* them) and ask: which $\theta$ made these data likely?
+
+$$
+\underbrace{\theta^{k}(1-\theta)^{n-k}}_{\text{a function of } \theta}
+$$
+
+[Same expression — now read as a curve over $\theta \in [0,1]$. The $\binom{n}{k}$ drops out: it doesn't depend on $\theta$.]{.accent}
+:::
+
+::: {.lang-ja}
+$k$ と $n$ を固定して（観測したから）、「どの $\theta$ がこのデータを起こりやすくしたか?」と問うたら?
+
+$$
+\underbrace{\theta^{k}(1-\theta)^{n-k}}_{\theta \text{ の関数}}
+$$
+
+[同じ式 — でも今度は $\theta \in [0,1]$ 上の曲線として読む。$\binom{n}{k}$ は $\theta$ に依らないので落ちる。]{.accent}
+:::
+
+::: {.notes}
+The pivot. Same algebraic expression, two different readings:
+  - Fix θ, vary k: discrete probability mass function (last slide).
+  - Fix k, vary θ: a CURVE over θ. Not a probability (doesn't integrate to 1),
+    but the shape encodes which θ values are compatible with the data.
+This is the foreshadowing of "likelihood as a function of the parameter." It's
+the move EVERY conjugacy derivation makes. Pause ~30s after the slide — give
+students time to feel the flip.
+:::
+
+## [That curve has a name — Beta]{.lang-en}[その曲線には名前がある — ベータ]{.lang-ja} {.bigger}
+
+::: {.lang-en}
+Normalize $\theta^{k}(1-\theta)^{n-k}$ over $\theta \in [0,1]$ — it integrates to a constant. Call that constant $B(k+1, n-k+1)$.
+
+$$
+\text{Beta}(\theta; \, \alpha, \beta) \;\propto\; \theta^{\alpha - 1}(1-\theta)^{\beta - 1}
+$$
+
+[Setting $\alpha = k+1$, $\beta = n-k+1$ recovers exactly the likelihood-as-curve. **Beta is the family that generalizes that shape** — any $\alpha, \beta > 0$ allowed, including non-integer.]{.dim}
+:::
+
+::: {.lang-ja}
+$\theta^{k}(1-\theta)^{n-k}$ を $\theta \in [0,1]$ で積分すると、ある定数になる。それを $B(k+1, n-k+1)$ とおく。
+
+$$
+\text{Beta}(\theta; \, \alpha, \beta) \;\propto\; \theta^{\alpha - 1}(1-\theta)^{\beta - 1}
+$$
+
+[$\alpha = k+1$、$\beta = n-k+1$ とおけば、ちょうど尤度曲線と一致。**ベータはその形を一般化した族** — $\alpha, \beta > 0$ なら何でもよく、非整数も可。]{.dim}
+:::
+
+::: {.notes}
+The naming move. The likelihood-as-function-of-θ has a specific functional
+form; that form generalizes to a 2-parameter family called Beta. The
+key insight: Beta isn't dropped from the sky — it's the natural shape that
+emerges from the Binomial likelihood when you flip the conditioning.
+
+This also explains why Beta is CONJUGATE to Binomial: same functional form
+in θ means prior × likelihood is also in that form. We'll see the mechanic
+explicitly in a few slides.
+:::
+
+## [One Beta to start — Chibany's prior]{.lang-en}[まずは1つ — チバニーの事前]{.lang-ja} {.bigger}
+
+![](images/beta_concentrated_high.png){fig-align="center" width="65%"}
+
+::: {.lang-en}
+$\text{Beta}(8, 3)$: mass concentrated **above $0.5$**, peak around $0.78$. Moderate confidence — not razor-sharp, not flat.
+
+[5 samples: $0.72, \; 0.89, \; 0.83, \; 0.64, \; 0.82$]{.dim}
+:::
+
+::: {.lang-ja}
+$\text{Beta}(8, 3)$: 質量は **$0.5$ より上に集中**、ピークは $0.78$ あたり。中程度の自信 — 鋭くも平坦でもない。
+
+[5サンプル: $0.72, \; 0.89, \; 0.83, \; 0.64, \; 0.82$]{.dim}
+:::
+
+::: {.notes}
+Single-case anchor. Pick (8, 3) deliberately: it's roughly Chibany's
+"70% tonkatsu, moderate confidence" prior from the bento slide, so the
+picture answers a question students just asked. Both dials are non-trivial:
+α > β (skew above 0.5) AND α + β = 11 (moderate width). Walk through:
+  - peak shifted right because α > β
+  - some width because α + β isn't huge
+  - 5 samples cluster above 0.5, matching the picture
+Uniform Beta(1,1) is deliberately NOT shown here because the parameters
+"vanish" (exponents → 0) and you can't see how α, β shape anything. It
+appears on the next slide as one of 5 cases where the parameter-shape
+relationship is the focus.
+:::
+
+## [Five Betas — sweep the parameters]{.lang-en}[5つのベータ — パラメータを動かす]{.lang-ja}
+
+![](images/beta_grid.png){fig-align="center" width="92%"}
+
+::: {.lang-en}
+[**Two dials.** $\alpha/\beta$ ratio: where mass concentrates. $\alpha + \beta$: how confident.]{.yellow}
+:::
+
+::: {.lang-ja}
+[**2つのダイヤル。** $\alpha/\beta$ 比: 質量の位置。$\alpha + \beta$: 自信の強さ。]{.yellow}
+:::
+
+::: {.notes}
+The sweep. Walk through each panel:
+  - Beta(1,1): uniform — the start case.
+  - Beta(8,3): α > β → concentrated above 0.5. Bento prior territory.
+  - Beta(50,50): large α+β → narrow around 0.5 (strong belief in fair).
+  - Beta(2,2): small α+β with α=β → wide, gentle center on 0.5.
+  - Beta(0.5, 0.5): U-shape — strong prior on extremes. Tanaka marbles.
+Land the two-dial intuition: α/β ratio is *where*, α+β is *how confident*.
 :::
 
 ## [Poll — Tanaka's attic of marbles]{.lang-en}[ポール — 田中さんの屋根裏のビー玉]{.lang-ja} {.midbig}
@@ -382,27 +493,22 @@ But $0.5$ refers to the marginal across bags, not within. 1 min.
 ## [Beta-Binomial — set up the pieces]{.lang-en}[ベータ-二項 — 道具立て]{.lang-ja} {.biggerplus}
 
 ::: {.lang-en}
-We're inferring the tonkatsu rate. Call it $p$.
+[Prior:]{.accent} $\theta \sim \text{Beta}(\alpha, \beta)$  →  $p(\theta) \propto \theta^{\alpha-1}(1-\theta)^{\beta-1}$
 
-[Prior:]{.accent} $p \sim \text{Beta}(\alpha, \beta)$  →  $p(p) \propto p^{\alpha-1}(1-p)^{\beta-1}$
-
-[Likelihood:]{.accent} $k$ tonkatsus in $n$ bentos  →  $p(k \mid p) \propto p^{k}(1-p)^{n-k}$
+[Likelihood:]{.accent} $k$ tonkatsus in $n$ bentos  →  $p(k \mid \theta) \propto \theta^{k}(1-\theta)^{n-k}$
 :::
 
 ::: {.lang-ja}
-とんかつ率を推定する。それを $p$ とおく。
+[事前:]{.accent} $\theta \sim \text{Beta}(\alpha, \beta)$  →  $p(\theta) \propto \theta^{\alpha-1}(1-\theta)^{\beta-1}$
 
-[事前:]{.accent} $p \sim \text{Beta}(\alpha, \beta)$  →  $p(p) \propto p^{\alpha-1}(1-p)^{\beta-1}$
-
-[尤度:]{.accent} $n$ 個中 $k$ 個がとんかつ  →  $p(k \mid p) \propto p^{k}(1-p)^{n-k}$
+[尤度:]{.accent} $n$ 個中 $k$ 個がとんかつ  →  $p(k \mid \theta) \propto \theta^{k}(1-\theta)^{n-k}$
 :::
 
 ::: {.notes}
-Notation note: previous slide used θ as a generic rate; now we name the
-specific tonkatsu rate p (matches the Tanaka poll's white-marble rate idea but
-applied to bentos). The (n choose k) binomial coefficient is dropped because
-it doesn't involve p — same "drop the normalizer" move from the Jamal poll
-that's coming.
+Symbols already established: θ = tonkatsu rate (from bento slide and
+Binomial-first walkthrough). The (n choose k) binomial coefficient drops
+because it doesn't involve θ — same "drop the normalizer" move from the
+Jamal poll that's coming.
 :::
 
 ## [Beta-Binomial — multiply and read off]{.lang-en}[ベータ-二項 — 掛けて読み取る]{.lang-ja} {.biggerplus}
@@ -410,12 +516,12 @@ that's coming.
 [Posterior $\propto$ Prior $\times$ Likelihood:]{.accent}
 
 $$
-p(p \mid k) \;\propto\; p^{\alpha-1}(1-p)^{\beta-1} \cdot p^{k}(1-p)^{n-k}
+p(\theta \mid k) \;\propto\; \theta^{\alpha-1}(1-\theta)^{\beta-1} \cdot \theta^{k}(1-\theta)^{n-k}
 $$
 
 ::: {.fragment}
 $$
-= \; p^{(\alpha + k) - 1}(1-p)^{(\beta + n - k) - 1}
+= \; \theta^{(\alpha + k) - 1}(1-\theta)^{(\beta + n - k) - 1}
 $$
 :::
 
@@ -438,11 +544,11 @@ recognition.
 ## [Beta-Binomial conjugate update]{.lang-en}[ベータ-二項 共役更新]{.lang-ja} {.bigger}
 
 ::: {.lang-en}
-[Prior:]{.accent} $p \sim \text{Beta}(\alpha, \beta)$
+[Prior:]{.accent} $\theta \sim \text{Beta}(\alpha, \beta)$
 
 [Data:]{.accent} $k$ successes in $n$ trials
 
-[Posterior:]{.accent} $p \mid k \sim \text{Beta}(\alpha + k, \; \beta + n - k)$
+[Posterior:]{.accent} $\theta \mid k \sim \text{Beta}(\alpha + k, \; \beta + n - k)$
 
 <br>
 
@@ -450,11 +556,11 @@ recognition.
 :::
 
 ::: {.lang-ja}
-[事前:]{.accent} $p \sim \text{Beta}(\alpha, \beta)$
+[事前:]{.accent} $\theta \sim \text{Beta}(\alpha, \beta)$
 
 [データ:]{.accent} $n$ 試行中 $k$ 成功
 
-[事後:]{.accent} $p \mid k \sim \text{Beta}(\alpha + k, \; \beta + n - k)$
+[事後:]{.accent} $\theta \mid k \sim \text{Beta}(\alpha + k, \; \beta + n - k)$
 
 <br>
 
@@ -469,11 +575,11 @@ memorize. Hyperparameters as pseudo-counts: Beta(7,3) is "as if we'd seen
 
 ## Worked example — Chibany's semester {.midbig}
 
-[Prior:]{.accent} $p \sim \text{Beta}(7, 3)$   ← encodes "70/30 with low confidence"
+[Prior:]{.accent} $\theta \sim \text{Beta}(7, 3)$   ← encodes "70/30 with low confidence"
 
 [Data:]{.accent} 27 tonkatsu in 40 ($k = 27$, $n = 40$)
 
-[Posterior:]{.accent} $p \mid D \sim \text{Beta}(7 + 27, \; 3 + 13) = \text{Beta}(34, 16)$
+[Posterior:]{.accent} $\theta \mid D \sim \text{Beta}(7 + 27, \; 3 + 13) = \text{Beta}(34, 16)$
 
 <br>
 
@@ -815,7 +921,7 @@ unshakeable. The paper's move is to take that intuition seriously and ask:
 what BAYESIAN question is the mind actually answering?
 :::
 
-## [The reframe — likelihood ratio, not likelihood]{.lang-en}[再構築 — 尤度ではなく尤度比]{.lang-ja} {.midbig}
+## [The reframe — likelihood ratio, not likelihood]{.lang-en}[再構築 — 尤度ではなく尤度比]{.lang-ja} {.smaller}
 
 ::: {.lang-en}
 [Wrong question:]{.dim} "How likely is $x$ under randomness?" → $P(x \mid \text{random})$
@@ -829,53 +935,25 @@ $$
 
 ::: {.lang-en}
 [A **likelihood ratio** — the same Bayes-factor object that appears in every conjugate update.]{.yellow}
+
+[*What competes with "random" depends on the stimulus*: for binary sequences, "regular" = local representativeness (~50/50 in each subsequence). For numbers, it's features like "prime" or "ends in 7." The regularity space is the modeling commitment.]{.dim}
 :::
 
 ::: {.lang-ja}
 [**尤度比** — すべての共役更新に現れる同じベイズ因子の対象。]{.yellow}
+
+[*「ランダム」と競合するものは刺激次第*: 2値系列なら「規則」= 局所代表性（各部分系列が約50/50）。数字なら「素数」「7で終わる」などの特徴。規則空間がモデリングのコミットメント。]{.dim}
 :::
 
 ::: {.notes}
-~2 min. The pivot. This is where today's conjugacy machinery pays off — the
+~3 min. The pivot. This is where today's conjugacy machinery pays off — the
 "drop the normalizer, recognize the form" move from the Jamal poll is
 EXACTLY what this paper does. P(random|x) / P(regular|x) is a posterior odds;
 by Bayes' rule it factors into prior odds × likelihood ratio. Under equal
-priors over "random" vs "regular," it IS the likelihood ratio.
-:::
-
-## [Defining "regular"]{.lang-en}[「規則」の定義]{.lang-ja}
-
-::: {.lang-en}
-What competes with "random" depends on the stimulus.
-
-| Stimulus | "Regular" hypothesis |
-|---|---|
-| Binary sequence | Local representativeness: each subsequence has ~50/50 split |
-| Numbers (pick 1–10) | Properties like "is prime," "is even," "ends in 7" |
-| Spatial points | Clusters, lines, symmetry |
-
-[The "regular" model is whatever your mind treats as the salient alternative — the implicit prior over what patterns exist.]{.accent}
-:::
-
-::: {.lang-ja}
-「ランダム」と競合するものは刺激によって異なる。
-
-| 刺激 | 「規則」仮説 |
-|---|---|
-| 2値系列 | 局所代表性: 各部分系列が約50/50 |
-| 数字（1〜10から選ぶ） | 「素数」「偶数」「7で終わる」などの性質 |
-| 空間上の点 | クラスタ、線、対称性 |
-
-[「規則」モデルは、心が顕著な代替案として扱うもの — どのパターンが存在するかの暗黙の事前。]{.accent}
-:::
-
-::: {.notes}
-~3 min. The "regular" alternative is what makes this work — and it's the
-fragile part. For binary sequences they use a Markov-chain regularity. For
-"pick a number" they use a feature set ("primes," "evens," etc.). The
-choice of regularity space is the modeling commitment. Worth flagging
-that this is also the paper's weakest point — different regularity choices
-can give very different fits.
+priors over "random" vs "regular," it IS the likelihood ratio. The dim
+caption packs in the "what is regular?" point that previously had its own
+slide — flag verbally that the regularity-space choice is the paper's
+weakest spot if students are interested.
 :::
 
 ## [Zenith radio data — the binary sequence experiment]{.lang-en}[Zenithラジオデータ — 2値系列実験]{.lang-ja} {.midbig}
