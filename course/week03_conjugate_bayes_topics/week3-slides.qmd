@@ -433,10 +433,10 @@ Tanaka finds bags of marbles in his parents' attic. **Each bag is mostly one col
 He wants to encode this in a Beta prior over $\theta$ = probability of drawing white. Which $\text{Beta}(\alpha, \beta)$?
 
 ::: {.fragment}
-A. $\text{Beta}(1, 1)$ — uniform, no info
-B. $\text{Beta}(2, 2)$ — gentle center at $0.5$
-C. $\text{Beta}(10, 10)$ — strong center at $0.5$
-D. $\text{Beta}(0.5, 0.5)$ — U-shaped at the edges
+- **A.** $\text{Beta}(1, 1)$ — uniform, no info
+- **B.** $\text{Beta}(2, 2)$ — gentle center at $0.5$
+- **C.** $\text{Beta}(10, 10)$ — strong center at $0.5$
+- **D.** $\text{Beta}(0.5, 0.5)$ — U-shaped at the edges
 :::
 :::
 
@@ -446,10 +446,10 @@ D. $\text{Beta}(0.5, 0.5)$ — U-shaped at the edges
 これを $\theta$ =（白を引く確率）に対するベータ事前として表したい。どの $\text{Beta}(\alpha, \beta)$ ?
 
 ::: {.fragment}
-A. $\text{Beta}(1, 1)$ — 一様、情報なし
-B. $\text{Beta}(2, 2)$ — $0.5$ にやや集中
-C. $\text{Beta}(10, 10)$ — $0.5$ に強く集中
-D. $\text{Beta}(0.5, 0.5)$ — 端でU字型
+- **A.** $\text{Beta}(1, 1)$ — 一様、情報なし
+- **B.** $\text{Beta}(2, 2)$ — $0.5$ にやや集中
+- **C.** $\text{Beta}(10, 10)$ — $0.5$ に強く集中
+- **D.** $\text{Beta}(0.5, 0.5)$ — 端でU字型
 :::
 :::
 
@@ -702,16 +702,16 @@ Final piece. Show this *after* precision is internalized, not before — the
 formula is intimidating until students know that 1/σ² is "precision."
 :::
 
-## [Poll — Jamal's shortcut]{.lang-en}[ポール — ジャマルの近道]{.lang-ja} {.bigger}
+## [Poll — Jamal's shortcut]{.lang-en}[ポール — ジャマルの近道]{.lang-ja}
 
 ::: {.lang-en}
 While deriving a posterior over $\mu$, Jamal notices the non-constant terms (w.r.t. $\mu$) **have the form of a Gaussian**. He drops everything else and concludes the posterior is Gaussian with parameters read off the surviving form. Is he correct?
 
 ::: {.fragment}
-A. Yes — the dropped terms are absorbed into the normalization constant
-B. Yes — you can drop any term, even those involving $\mu$
-C. No — he dropped some terms that involve $\mu$
-D. Only if he later multiplies his answer by the dropped terms
+- **A.** Yes — the dropped terms are absorbed into the normalization constant
+- **B.** Yes — you can drop any term, even those involving $\mu$
+- **C.** No — he dropped some terms that involve $\mu$
+- **D.** Only if he later multiplies his answer by the dropped terms
 :::
 :::
 
@@ -719,10 +719,10 @@ D. Only if he later multiplies his answer by the dropped terms
 $\mu$ の事後を導出中、ジャマルは（$\mu$ に関する）非定数項が **ガウスの形をしている** ことに気づいた。残りを全て落とし、残った形からパラメータを読み取って事後をガウスと結論した。正しい?
 
 ::: {.fragment}
-A. はい — 落とした項は正規化定数に吸収される
-B. はい — $\mu$ を含む項でさえ落としてよい
-C. いいえ — $\mu$ を含む項を落としてしまった
-D. 後で落とした項を掛け直す場合のみ
+- **A.** はい — 落とした項は正規化定数に吸収される
+- **B.** はい — $\mu$ を含む項でさえ落としてよい
+- **C.** いいえ — $\mu$ を含む項を落としてしまった
+- **D.** 後で落とした項を掛け直す場合のみ
 :::
 :::
 
