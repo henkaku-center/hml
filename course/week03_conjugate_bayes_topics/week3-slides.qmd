@@ -237,27 +237,35 @@ we'll see what you do when conjugacy fails. For now, when it works, it's the
 cleanest tool in the box.
 :::
 
-## [Quick check — when does conjugacy *fail*?]{.lang-en}[クイックチェック — 共役性が*破綻*するのは?]{.lang-ja} {.bigger}
+## [Quick check — when does conjugacy *fail*?]{.lang-en}[クイックチェック — 共役性が*破綻*するのは?]{.lang-ja}
 
 ::: {.lang-en}
-Prior on $\mu$: **bimodal** (mixture of two Gaussians). Likelihood: Gaussian. Posterior?
+[Prior on $\mu$:]{.accent} **bimodal** (mixture of two Gaussians)
+
+[Likelihood:]{.accent} Gaussian
+
+[Posterior?]{.yellow}
 
 ::: {.fragment}
-A. Gaussian (likelihood dominates)
-B. Bimodal Gaussian mixture
-C. Uniform (prior × likelihood cancels)
-D. Not closed-form — needs numerics
+- **A.** Gaussian (likelihood dominates)
+- **B.** Bimodal Gaussian mixture
+- **C.** Uniform (prior × likelihood cancels)
+- **D.** Not closed-form — needs numerics
 :::
 :::
 
 ::: {.lang-ja}
-$\mu$ の事前: **二峰性**（2つのガウスの混合）。尤度: ガウス。事後は?
+[$\mu$ の事前:]{.accent} **二峰性**（2つのガウスの混合）
+
+[尤度:]{.accent} ガウス
+
+[事後は?]{.yellow}
 
 ::: {.fragment}
-A. ガウス（尤度が支配）
-B. 二峰性のガウス混合
-C. 一様（事前と尤度が相殺）
-D. 閉形式でない — 数値計算が必要
+- **A.** ガウス（尤度が支配）
+- **B.** 二峰性のガウス混合
+- **C.** 一様（事前と尤度が相殺）
+- **D.** 閉形式でない — 数値計算が必要
 :::
 :::
 
@@ -271,28 +279,34 @@ for SP26, not from a SP25 quiz item (Quiz 2 had no conceptual MC items at this
 level). Discussion target: 1 min.
 :::
 
-## [Quick check — answer]{.lang-en}[クイックチェック — 答え]{.lang-ja} {.biggerplus}
+## [Quick check — answer]{.lang-en}[クイックチェック — 答え]{.lang-ja}
 
 ::: {.lang-en}
-[**B. Bimodal Gaussian mixture.**]{.yellow}
+[**B and D are both defensible — depending on what "family" means.**]{.yellow}
 
-Each component updates Gaussian-Gaussian independently; the mixture weights re-balance by how well each component explains the data.
+- [**D (strict):**]{.accent} the posterior isn't a single Gaussian, so we left the Gaussian family. Conjugacy *to Gaussians* fails.
+- [**B (generalized):**]{.accent} components update independently, weights re-balance — still closed-form. The richer "mixture of Gaussians" family IS conjugate.
 
-[Conjugacy is a property of the *prior family × likelihood pair*, not the prior alone.]{.accent}
+[Lesson: conjugacy is a property of the *(prior family, likelihood) pair*, not the prior alone.]{.dim}
 :::
 
 ::: {.lang-ja}
-[**B. 二峰性のガウス混合。**]{.yellow}
+[**BとDのどちらも妥当 — 「族」の意味次第。**]{.yellow}
 
-各成分が独立にガウス-ガウス更新を行い、データへの当てはまりの良さで混合重みが再調整される。
+- [**D (厳密):**]{.accent} 事後は単一のガウスでない。「ガウス族への共役」は破綻。
+- [**B (一般化):**]{.accent} 成分は独立に更新、重みが再調整 — 依然として閉形式。「ガウスの混合」というより広い族は共役。
 
-[共役性は*事前族 × 尤度の対*の性質であり、事前単体の性質ではない。]{.accent}
+[教訓: 共役性は*（事前族、尤度）の対*の性質、事前単体ではない。]{.dim}
 :::
 
 ::: {.notes}
-Land the punchline. The "family" in conjugacy can be richer than a single Gaussian
-— mixtures of conjugate priors are themselves conjugate. (We'll see mixture
-modeling proper in a later week.) 30s here.
+Land the nuance. This poll is genuinely ambiguous and that's deliberate — it
+surfaces the difference between the textbook-strict definition (conjugate
+to a SPECIFIC family) and the generalized fact (mixtures of conjugate priors
+are themselves conjugate). Both readings are defensible; what matters is
+that students see conjugacy as a property of the pair, not the prior alone.
+If a student picked D, validate it — they read the question rigorously.
+If they picked B, validate it — they generalized correctly. 1 min.
 :::
 
 ## [Beta-Binomial]{.lang-en}[ベータ-二項]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
