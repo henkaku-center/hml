@@ -943,30 +943,32 @@ unshakeable. The paper's move is to take that intuition seriously and ask:
 what BAYESIAN question is the mind actually answering?
 :::
 
-## [The reframe — likelihood ratio, not likelihood]{.lang-en}[再構築 — 尤度ではなく尤度比]{.lang-ja} {.bigger}
+## [The reframe — likelihood ratio, not likelihood]{.lang-en}[再構築 — 尤度ではなく尤度比]{.lang-ja}
 
 ::: {.lang-en}
-[Wrong question:]{.dim} "How likely is $x$ under randomness?"
-
-[Right question:]{.accent} "How much *more* does $x$ favor randomness over a regular pattern?"
+Not [$P(x \mid \text{random})$]{.dim}.   Instead, [$P(x \mid \text{random})$ vs. $P(x \mid \text{regular})$]{.accent}.
 :::
 
 ::: {.lang-ja}
-[誤った問い:]{.dim} 「$x$ はランダム下でどれくらい起こりやすいか?」
-
-[正しい問い:]{.accent} 「$x$ は規則的パターンよりランダムをどれだけ*強く*支持するか?」
+[$P(x \mid \text{random})$]{.dim} ではなく、[$P(x \mid \text{random})$ vs. $P(x \mid \text{regular})$]{.accent}。
 :::
 
+<br>
+
+::: {.r-fit-text}
 $$
 \text{subjective randomness}(x) \;=\; \log \frac{P(x \mid \text{random})}{P(x \mid \text{regular})}
 $$
+:::
+
+<br>
 
 ::: {.lang-en}
-[A **likelihood ratio** — with a uniform prior over the two hypotheses, this *is* the posterior odds.]{.yellow}
+[A **likelihood ratio.** Uniform prior over the two hypotheses → this *is* the posterior odds.]{.yellow}
 :::
 
 ::: {.lang-ja}
-[**尤度比** — 2つの仮説に一様な事前を置けば、これがそのまま事後オッズ。]{.yellow}
+[**尤度比。** 2つの仮説に一様な事前 → これがそのまま事後オッズ。]{.yellow}
 :::
 
 ::: {.notes}
@@ -983,22 +985,62 @@ the modeling commitment, and arguably the paper's weakest spot — flag
 verbally if students are interested but don't crowd the slide with it.
 :::
 
-## [Zenith radio data — the binary sequence experiment]{.lang-en}[Zenithラジオデータ — 2値系列実験]{.lang-ja} {.midbig}
+## [The model — local representativeness]{.lang-en}[モデル — 局所代表性]{.lang-ja}
 
 ::: {.lang-en}
-1937 publicity stunt: Zenith broadcast 5 H/T sequences over the radio, asked listeners to "transmit" their guesses via ESP.
-
-Result: people responded with sequences biased toward switching (away from runs). $P(\text{switch}) \approx 0.6$ instead of $0.5$.
-
-[G&T fit this with their likelihood-ratio model: switches *raise* the posterior odds of "random." Predicted bias falls out of the math, not added as a free parameter.]{.yellow}
+For each new response, sum log-likelihood-ratios over all suffix lengths back to step 1 — bias toward whichever symbol makes recent subsequences look more 50/50:
 :::
 
 ::: {.lang-ja}
-1937年の宣伝企画: ZenithがH/T系列5つをラジオで放送し、リスナーにESPで「送信」してもらった。
+新しい反応ごとに、1ステップ前から $k{-}1$ ステップ前までのすべての部分系列で対数尤度比を合計 — 直近の部分系列がより50/50に見える方の記号にバイアス:
+:::
 
-結果: 人々は連続を避けて切り替えに偏った系列を返した。$P(\text{切替}) \approx 0.6$（$0.5$ ではなく）。
+$$
+L_k \;=\; \sum_{i=1}^{k-1} \log \frac{P(\text{suffix with new symbol} \mid \text{random})}{P(\text{suffix with the other symbol} \mid \text{random})}
+$$
 
-[G&Tは尤度比モデルでこれを再現: 切替は「ランダム」の事後オッズを*上げる*。バイアスは自由パラメータではなく数式から導かれる。]{.yellow}
+::: {.lang-en}
+[Push through a logistic with scale $\lambda$ → $P(R_k)$. **A long run makes every suffix look extreme**, so the model strongly favors the *other* symbol — no free "switch preference" parameter needed.]{.yellow}
+:::
+
+::: {.lang-ja}
+[スケール $\lambda$ のロジスティックに通して $P(R_k)$。**連続が長いと各部分系列が極端に見える**ので、モデルは*もう一方*の記号を強く支持 — 自由な「切替選好」パラメータ不要。]{.yellow}
+:::
+
+::: {.notes}
+~3 min. The model spec. Key conceptual moves to land:
+1. The model is SEQUENTIAL — each response depends on what came before.
+2. "Local representativeness" = each suffix subsequence should look ~50/50.
+3. L_k is a SUM of log-likelihood-ratios over different suffix lengths
+   (this is exactly the conjugacy "drop the normalizer, recognize the form"
+   move applied across multiple Bernoulli likelihoods).
+4. The logistic transform converts L_k into a response probability.
+5. λ is the model's ONE free parameter — controls how strongly the bias
+   plays. G&T fit λ ≈ 0.6 to the Zenith data.
+
+Importantly: the model has NO free "switch preference" parameter. The
+switching bias is an EMERGENT property of computing the likelihood ratio.
+That's the difference between description and explanation.
+:::
+
+## [Zenith radio data — the binary sequence experiment]{.lang-en}[Zenithラジオデータ — 2値系列実験]{.lang-ja} {.smaller}
+
+::: {.lang-en}
+1937 publicity stunt: Zenith broadcast 5 H/T sequences via radio, asked **20,099 listeners** to "transmit" their guesses via ESP. Sequences collapsed to 16 length-5 patterns (initial choice ignored).
+:::
+
+::: {.lang-ja}
+1937年の宣伝企画: ZenithがH/T系列5つをラジオで放送し、**20,099人**のリスナーにESPで「送信」してもらった。長さ5の16パターンに集約（最初の選択は無視）。
+:::
+
+![](images/gt2001_zenith_fig1.png){fig-align="center" width="62%"}
+
+::: {.lang-en}
+[**$\lambda = 0.6$ fits with $r = 0.95$.** The bias toward sequences like `01010` falls out of the math — no free "switch preference" knob.]{.yellow}
+:::
+
+::: {.lang-ja}
+[**$\lambda = 0.6$ で当てはまり $r = 0.95$。** `01010` のような系列への偏りは数式から導かれる — 自由な「切替選好」パラメータなし。]{.yellow}
 :::
 
 ::: {.notes}
