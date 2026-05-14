@@ -2,7 +2,7 @@
 
 **Human and Machine Learning, SP26 — Chiba Tech SDS**
 
-Each student gives one ~15-minute presentation of an assigned paper from the week's presentation candidates, followed by ~10–15 minutes of discussion that you facilitate. The presentation is 7.5% of your grade.
+Each student gives one ~15-minute presentation of an assigned paper from the week's presentation candidates, followed by ~5–10 minutes of discussion that you facilitate. The presentation is 7.5% of your grade.
 
 See the [Readings & discussion game plan](reading-game-plan.html) for how signups work.
 
@@ -25,7 +25,7 @@ Organize your talk around these. They are also good questions to hold in mind wh
 5. **How does the solution connect to human behavior?** How does the model compare to human performance?
 6. **What can we conclude?** What's your own interpretation?
 
-End with at least **3 discussion questions** meant to generate 10–15 minutes of class conversation.
+End with at least **3 discussion questions** meant to generate 5–10 minutes of class conversation.
 
 ## Grading (out of 7.5 points)
 

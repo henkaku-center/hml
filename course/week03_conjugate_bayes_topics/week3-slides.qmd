@@ -29,6 +29,69 @@ anchor we pivot on today. ~2 min agenda overview.
 
 ## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
+# Paper presentation assignments
+
+## [Your paper presentation slots]{.lang-en}[論文発表のスケジュール]{.lang-ja}
+
+| Week | Presenter | Paper |
+|---|---|---|
+| **4** | **Shohei** | Tenenbaum & Xu (2000), *Word learning as Bayesian inference* |
+| **11** | **Imai** | Mikolov et al. (2013), *Efficient estimation of word representations in vector space* (word2vec) |
+| **12** | **Tenzin** | Miller, Raine & Groh (2023), *AI hyperrealism: why AI faces are perceived as more real than human ones* |
+
+::: {.notes}
+~1 min. Brief announcement — names + papers + which week. Don't get into
+the content of any paper yet; just confirm the schedule. If anyone wants
+to swap weeks, tell them to DM right after class.
+:::
+
+## [How the presentation works]{.lang-en}[発表のやり方]{.lang-ja}
+
+::: {.lang-en}
+- **~15 min talk** + **5–10 min discussion** that you facilitate
+- Focus: **how the math connects to cognitive science**, and the authors' evidence
+- Papers have more than fits in 15 min — pick the 2–3 ideas that matter most
+- End with **at least 3 discussion questions**
+- **Worth 7.5%** of your grade
+- [**DM me to schedule a 1-on-1 the week before your slot**]{.yellow} — we'll plan what to focus on and what to skip
+:::
+
+::: {.lang-ja}
+- **約15分の発表** + **5〜10分のディスカッション**（自分で進行）
+- 焦点: **数式モデルと認知科学の繋がり**、著者が示した証拠
+- 論文は15分に収まらない — 最も重要な2〜3点を選ぶ
+- 最後に**3つ以上のディスカッション質問**
+- 成績の**7.5%**
+- [**発表の1週間前までにDMで1対1ミーティングを予約**]{.yellow} — 何に焦点を当てるか、何を飛ばすかを相談
+:::
+
+::: {.notes}
+~1.5 min. Emphasize the 1-on-1 — it's the safety net for students who are
+nervous about presenting. Don't read the full grading rubric here; the
+guidelines page has it.
+:::
+
+## [Framing — six questions to organize your talk]{.lang-en}[構成 — 発表を組み立てる6つの問い]{.lang-ja}
+
+*(Adapted from Tom Griffiths. Also good for reading ANY paper in this course.)*
+
+1. **What is the cognitive science question** the paper explores?
+2. **What is the context?** What previous approaches have been tried?
+3. **What is the underlying computational problem?** How is it formulated?
+4. **What is the solution?** Core mathematical ideas — intuition over rigor.
+5. **How does the solution connect to human behavior?**
+6. **What can we conclude?** Your own interpretation.
+
+[Full rubric + tips · 完全な評価基準: [hml.chibatech.dev/presentation-guidelines.html](https://hml.chibatech.dev/presentation-guidelines.html)]{.accent}
+
+::: {.notes}
+~30s. Don't read the questions aloud — point at them, say "these are the
+six you should organize around, they're on the guidelines page." Move on.
+Total announcements block target: 3 minutes. Then transition to conjugacy.
+:::
+
+## {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+
 # Conjugacy as a pattern
 
 ::: {.notes}
