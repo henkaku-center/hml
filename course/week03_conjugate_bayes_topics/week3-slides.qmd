@@ -1000,27 +1000,67 @@ L_k \;=\; \sum_{i=1}^{k-1} \log \frac{P(\,H_i + 1,\; T_i \mid \text{random}\,)}{
 $$
 
 ::: {.lang-en}
-[Then $P(R_k = \text{H}) = \sigma(\lambda L_k)$. **A long run of H's drives $L_k$ negative** (every suffix already looks H-heavy), so the model strongly prefers T next — no free "switch preference" parameter needed.]{.yellow}
+[Then $P(R_k = \text{H}) = \sigma(\lambda L_k)$, where $\sigma(z) = \dfrac{1}{1 + e^{-z}}$ squashes any real number into $[0, 1]$.]{.dim}
+
+[**A long run of H's drives $L_k$ negative** (every suffix already looks H-heavy), so the model strongly prefers T next — no free "switch preference" parameter needed.]{.yellow}
 :::
 
 ::: {.lang-ja}
-[次に $P(R_k = \text{H}) = \sigma(\lambda L_k)$。**Hの連続が長いと $L_k$ が負に振れる**（どの部分系列もすでにH偏重）ので、モデルは次にTを強く好む — 自由な「切替選好」パラメータ不要。]{.yellow}
+[次に $P(R_k = \text{H}) = \sigma(\lambda L_k)$、ここで $\sigma(z) = \dfrac{1}{1 + e^{-z}}$ は任意の実数を $[0, 1]$ に押し込む関数。]{.dim}
+
+[**Hの連続が長いと $L_k$ が負に振れる**（どの部分系列もすでにH偏重）ので、モデルは次にTを強く好む — 自由な「切替選好」パラメータ不要。]{.yellow}
 :::
 
 ::: {.notes}
-~3 min. The model spec. Key conceptual moves to land:
+~3-4 min. The model spec. This slide has more notation than usual — slow down.
+
+WHAT σ MEANS HERE (the load-bearing notation explanation):
+
+σ is the LOGISTIC function (also called the sigmoid). Three facts to convey:
+
+  (a) Definition: σ(z) = 1 / (1 + e^(-z)). On the board, draw the S-curve:
+      it passes through (0, 0.5), asymptotes to 0 as z → -∞ and to 1 as
+      z → +∞. The curve is monotonically increasing.
+
+  (b) What it does FOR US: L_k is a real number — it can be any value
+      from -∞ to +∞. But we need a PROBABILITY for the response. The
+      logistic squashes the real line into [0, 1] so the output is a
+      valid probability. σ(0) = 0.5 ("indifferent → pick H half the
+      time"), σ(large positive) → 1 ("very strongly prefer H"),
+      σ(large negative) → 0 ("very strongly prefer T").
+
+  (c) NOTATION WARNING — σ is overloaded. In Weeks 2-3 we used σ for the
+      standard deviation of a Gaussian (e.g. σ², σ²₀ in the Gaussian-
+      Gaussian update). HERE σ is a FUNCTION, not a variance. Same Greek
+      letter, totally different meaning. The argument tells you which:
+      σ(z) with parentheses = logistic function; σ alone = std dev. Flag
+      this to the class verbally — it's the kind of notation collision
+      that trips up careful students.
+
+  (d) λ is INSIDE σ. λ multiplies L_k before squashing. Bigger λ →
+      σ steepens around 0 → small differences in L_k become large
+      differences in probability. λ → 0 → σ(0) = 0.5 always, model becomes
+      indifferent. λ → ∞ → step function, model is deterministic. G&T
+      fit λ ≈ 0.6 — moderately strong but not deterministic.
+
+KEY CONCEPTUAL MOVES TO LAND (beyond σ):
 1. The model is SEQUENTIAL — each response depends on what came before.
 2. "Local representativeness" = each suffix subsequence should look ~50/50.
 3. L_k is a SUM of log-likelihood-ratios over different suffix lengths
    (this is exactly the conjugacy "drop the normalizer, recognize the form"
    move applied across multiple Bernoulli likelihoods).
 4. The logistic transform converts L_k into a response probability.
-5. λ is the model's ONE free parameter — controls how strongly the bias
-   plays. G&T fit λ ≈ 0.6 to the Zenith data.
+5. λ is the model's ONE free parameter. G&T fit λ ≈ 0.6 to Zenith data.
 
 Importantly: the model has NO free "switch preference" parameter. The
 switching bias is an EMERGENT property of computing the likelihood ratio.
 That's the difference between description and explanation.
+
+If students push back on σ: just draw it. The S-curve is a 30-second
+sketch and once they see "any real number in, a probability out" it
+becomes intuitive. Don't get stuck deriving why this particular function
+— other squashing functions exist; G&T just picked the logistic because
+it's smooth and analytically convenient.
 :::
 
 ## [Zenith radio data — the binary sequence experiment]{.lang-en}[Zenithラジオデータ — 2値系列実験]{.lang-ja} {.smaller}
