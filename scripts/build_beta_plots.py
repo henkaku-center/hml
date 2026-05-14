@@ -130,41 +130,30 @@ def _draw_panel(ax, a: float, b: float, *, x_label: bool, y_label: bool, samples
 
 
 def plot_grid(cases: list[tuple]) -> None:
-    """Render Beta cases on a 2-row grid:
-       Row 1: skew case alone (Beta(8,3)) — non-symmetric, mean ≠ 0.5
-       Row 2: four α=β cases — Beta(0.5,0.5), Beta(1,1), Beta(2,2), Beta(50,50)
-              all with mean 0.5 but very different shapes.
+    """Render the 4 same-mean (α=β, μ=0.5) Betas on a 2×2 grid.
+
+    Beta(8, 3) lives on the previous single-anchor slide and is intentionally
+    omitted here — this grid's whole job is to show that very different
+    Beta shapes can share the same mean.
+
+    Order on the 2×2 grid (ascending α+β = increasing concentration):
+        Beta(0.5, 0.5)  |  Beta(1, 1)
+        Beta(2, 2)      |  Beta(50, 50)
     """
     case_map = {slug: (a, b) for slug, a, b, _ in cases}
+    grid_order = ["beta_ushaped", "beta_uniform", "beta_wide", "beta_narrow"]
 
-    fig = plt.figure(figsize=(11.5, 7), dpi=150, facecolor=BG)
-    gs = fig.add_gridspec(nrows=2, ncols=4, hspace=0.55, wspace=0.30,
-                          height_ratios=[1, 1])
+    fig, axes = plt.subplots(2, 2, figsize=(11, 7), dpi=150, facecolor=BG)
 
-    # Row 1: skew case (Beta(8,3)) — span columns 1-2 (the middle two of 4) so
-    # it sits centered with breathing room either side
-    ax_top = fig.add_subplot(gs[0, 1:3])
-    a, b = case_map["beta_concentrated_high"]
-    _draw_panel(ax_top, a, b, x_label=True, y_label=True,
-                samples_seed=42 + hash("beta_concentrated_high") % 1000)
-
-    # Row 2: four same-mean (μ=0.5) cases in ascending α+β order to show
-    # how concentration changes while the mean stays put.
-    row2_order = ["beta_ushaped", "beta_uniform", "beta_wide", "beta_narrow"]
-    for col, slug in enumerate(row2_order):
+    for i, slug in enumerate(grid_order):
         a, b = case_map[slug]
-        ax = fig.add_subplot(gs[1, col])
-        _draw_panel(ax, a, b,
-                    x_label=True,           # bottom row → all get x label
-                    y_label=(col == 0),     # only leftmost → y label
+        row, col = divmod(i, 2)
+        _draw_panel(axes[row, col], a, b,
+                    x_label=(row == 1),     # bottom row gets θ
+                    y_label=(col == 0),     # left column gets p(θ)
                     samples_seed=42 + (zlib.crc32(slug.encode()) % 1000))
 
-    # Annotation labels for the rows (left margin)
-    fig.text(0.02, 0.76, "Skewed",
-             color=DIM, fontsize=13, fontstyle="italic", rotation=90, va="center")
-    fig.text(0.02, 0.27, "Mean = 0.5",
-             color=DIM, fontsize=13, fontstyle="italic", rotation=90, va="center")
-
+    fig.subplots_adjust(hspace=0.40, wspace=0.20)
     out_path = OUT_DIR / "beta_grid.png"
     fig.savefig(out_path, facecolor=BG, edgecolor="none", bbox_inches="tight")
     plt.close(fig)

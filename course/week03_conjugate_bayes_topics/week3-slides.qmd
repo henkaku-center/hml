@@ -401,26 +401,28 @@ appears on the next slide as one of 5 cases where the parameter-shape
 relationship is the focus.
 :::
 
-## [Five Betas — sweep the parameters]{.lang-en}[5つのベータ — パラメータを動かす]{.lang-ja}
+## [Four Betas, same mean — different shapes]{.lang-en}[4つのベータ、同じ平均 — 異なる形]{.lang-ja}
 
 ![](images/beta_grid.png){fig-align="center" width="92%"}
 
 ::: {.lang-en}
-[**Two dials.** $\alpha/\beta$ ratio: where mass concentrates. $\alpha + \beta$: how confident.]{.yellow}
+[**All four have mean $0.5$** (because $\alpha = \beta$) — but they look completely different. The $\alpha + \beta$ dial controls **concentration**, not location.]{.yellow}
 :::
 
 ::: {.lang-ja}
-[**2つのダイヤル。** $\alpha/\beta$ 比: 質量の位置。$\alpha + \beta$: 自信の強さ。]{.yellow}
+[**4つとも平均は $0.5$**（$\alpha = \beta$ だから） — でも見た目はまったく違う。$\alpha + \beta$ ダイヤルは**集中度**を制御、位置ではない。]{.yellow}
 :::
 
 ::: {.notes}
-The sweep. Walk through each panel:
-  - Beta(1,1): uniform — the start case.
-  - Beta(8,3): α > β → concentrated above 0.5. Bento prior territory.
-  - Beta(50,50): large α+β → narrow around 0.5 (strong belief in fair).
-  - Beta(2,2): small α+β with α=β → wide, gentle center on 0.5.
-  - Beta(0.5, 0.5): U-shape — strong prior on extremes. Tanaka marbles.
-Land the two-dial intuition: α/β ratio is *where*, α+β is *how confident*.
+Walk through each panel — same mean, different shape:
+  - Beta(0.5, 0.5): U-shape — strong prior on extremes. (Tanaka marbles.)
+  - Beta(1, 1): uniform — no information.
+  - Beta(2, 2): wide, gentle center on 0.5.
+  - Beta(50, 50): narrow around 0.5 — strong belief in "fair."
+All four have mean = 0.5, but the SHAPE encodes wildly different beliefs.
+Land the takeaway: α+β controls concentration; mean alone doesn't define a
+prior. Beta(8,3) is on the previous slide as the skewed example — not
+repeated here because it would dilute the same-mean-different-shape point.
 :::
 
 ## [Poll — Tanaka's attic of marbles]{.lang-en}[ポール — 田中さんの屋根裏のビー玉]{.lang-ja} {.midbig}
