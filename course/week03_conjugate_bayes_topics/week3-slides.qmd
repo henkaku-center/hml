@@ -943,12 +943,18 @@ unshakeable. The paper's move is to take that intuition seriously and ask:
 what BAYESIAN question is the mind actually answering?
 :::
 
-## [The reframe — likelihood ratio, not likelihood]{.lang-en}[再構築 — 尤度ではなく尤度比]{.lang-ja} {.smaller}
+## [The reframe — likelihood ratio, not likelihood]{.lang-en}[再構築 — 尤度ではなく尤度比]{.lang-ja} {.bigger}
 
 ::: {.lang-en}
-[Wrong question:]{.dim} "How likely is $x$ under randomness?" → $P(x \mid \text{random})$
+[Wrong question:]{.dim} "How likely is $x$ under randomness?"
 
 [Right question:]{.accent} "How much *more* does $x$ favor randomness over a regular pattern?"
+:::
+
+::: {.lang-ja}
+[誤った問い:]{.dim} 「$x$ はランダム下でどれくらい起こりやすいか?」
+
+[正しい問い:]{.accent} 「$x$ は規則的パターンよりランダムをどれだけ*強く*支持するか?」
 :::
 
 $$
@@ -956,15 +962,11 @@ $$
 $$
 
 ::: {.lang-en}
-[A **likelihood ratio.** With a uniform prior over the two hypotheses, this ratio *is* the posterior odds — the answer to "given $x$, is random or regular more likely?"]{.yellow}
-
-[*What competes with "random" depends on the stimulus*: for binary sequences, "regular" = local representativeness (~50/50 in each subsequence). For numbers, it's features like "prime" or "ends in 7." The regularity space is the modeling commitment.]{.dim}
+[A **likelihood ratio** — with a uniform prior over the two hypotheses, this *is* the posterior odds.]{.yellow}
 :::
 
 ::: {.lang-ja}
-[**尤度比。** 2つの仮説に一様な事前を置くと、この比がそのまま事後オッズ — 「$x$ を見て、ランダムと規則のどちらがありそうか?」の答え。]{.yellow}
-
-[*「ランダム」と競合するものは刺激次第*: 2値系列なら「規則」= 局所代表性（各部分系列が約50/50）。数字なら「素数」「7で終わる」などの特徴。規則空間がモデリングのコミットメント。]{.dim}
+[**尤度比** — 2つの仮説に一様な事前を置けば、これがそのまま事後オッズ。]{.yellow}
 :::
 
 ::: {.notes}
@@ -972,10 +974,13 @@ $$
 "drop the normalizer, recognize the form" move from the Jamal poll is
 EXACTLY what this paper does. P(random|x) / P(regular|x) is a posterior odds;
 by Bayes' rule it factors into prior odds × likelihood ratio. Under equal
-priors over "random" vs "regular," it IS the likelihood ratio. The dim
-caption packs in the "what is regular?" point that previously had its own
-slide — flag verbally that the regularity-space choice is the paper's
-weakest spot if students are interested.
+priors over "random" vs "regular," it IS the likelihood ratio.
+
+What competes with "random" depends on the stimulus — for binary sequences,
+"regular" = local representativeness (~50/50 in each subsequence). For
+numbers, it's features like "prime" or "ends in 7." The regularity space is
+the modeling commitment, and arguably the paper's weakest spot — flag
+verbally if students are interested but don't crowd the slide with it.
 :::
 
 ## [Zenith radio data — the binary sequence experiment]{.lang-en}[Zenithラジオデータ — 2値系列実験]{.lang-ja} {.midbig}
