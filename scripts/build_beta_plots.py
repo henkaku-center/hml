@@ -160,10 +160,60 @@ def plot_grid(cases: list[tuple]) -> None:
     print(f"  wrote {out_path.relative_to(OUT_DIR.parent.parent.parent)}")
 
 
+def plot_worked_example() -> None:
+    """Chibany's worked example: Beta(7, 3) prior → 27/40 data → Beta(34, 16) posterior.
+
+    Side-by-side panels with a shared y-axis (so the "posterior is taller / tighter"
+    contrast is visually obvious). Both panels share the same θ range [0, 1].
+    """
+    prior_a, prior_b = 7.0, 3.0
+    post_a, post_b = 34.0, 16.0  # = (7 + 27, 3 + 13)
+
+    x = np.linspace(1e-4, 1 - 1e-4, 500)
+    y_prior = beta.pdf(x, prior_a, prior_b)
+    y_post = beta.pdf(x, post_a, post_b)
+    y_max = max(np.nanmax(y_prior), np.nanmax(y_post)) * 1.05
+
+    fig, (ax_prior, ax_post) = plt.subplots(
+        1, 2, figsize=(11, 4.2), dpi=150, facecolor=BG, sharey=True
+    )
+
+    for ax, a, b, label_color, label_txt, y in [
+        (ax_prior, prior_a, prior_b, ACCENT, f"Prior: Beta({_fmt(prior_a)}, {_fmt(prior_b)})", y_prior),
+        (ax_post,  post_a,  post_b,  YELLOW, f"Posterior: Beta({_fmt(post_a)}, {_fmt(post_b)})", y_post),
+    ]:
+        ax.set_facecolor(BG)
+        ax.plot(x, y, color=label_color, linewidth=2.6)
+        ax.fill_between(x, 0, y, color=label_color, alpha=0.20)
+        # Mean line
+        mean = a / (a + b)
+        ax.axvline(mean, color=label_color, linewidth=1.0, linestyle=":", alpha=0.7)
+        ax.text(mean, y_max * 0.95, f" μ = {mean:.2f}",
+                color=label_color, fontsize=11, ha="left", va="top")
+        ax.set_title(label_txt, color=TEXT, fontsize=14, pad=8, loc="left")
+        ax.set_xlim(0, 1)
+        ax.set_ylim(0, y_max)
+        ax.set_xlabel("θ (tonkatsu rate)", color=TEXT, fontsize=12)
+        ax.tick_params(colors=DIM, labelsize=10)
+        for spine in ax.spines.values():
+            spine.set_color(DIM)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+
+    ax_prior.set_ylabel("p(θ)", color=TEXT, fontsize=12)
+
+    fig.tight_layout()
+    out_path = OUT_DIR / "beta_worked_example.png"
+    fig.savefig(out_path, facecolor=BG, edgecolor="none", bbox_inches="tight")
+    plt.close(fig)
+    print(f"  wrote {out_path.relative_to(OUT_DIR.parent.parent.parent)}")
+
+
 def main() -> None:
     print("Building Beta-case plots...")
     results = [plot_case(slug, a, b, lbl) for slug, a, b, lbl in CASES]
     plot_grid(CASES)
+    plot_worked_example()
     # Write samples to JSON so the .qmd author can copy them in (and so we
     # have a record of which numbers landed on which slide).
     samples_path = OUT_DIR / "samples.json"

@@ -565,19 +565,25 @@ memorize. Hyperparameters as pseudo-counts: Beta(7,3) is "as if we'd seen
 7 tonkatsus and 3 hamburgers before any real data."
 :::
 
-## Worked example — Chibany's semester {.midbig}
+## [Worked example — Chibany's semester]{.lang-en}[計算例 — チバニーの学期]{.lang-ja} {.smaller}
 
-[Prior:]{.accent} $\theta \sim \text{Beta}(7, 3)$   ← encodes "70/30 with low confidence"
+::: {.lang-en}
+[Prior:]{.accent} $\theta \sim \text{Beta}(7, 3)$ — "70/30 with low confidence"   ·   [Data:]{.accent} 27 tonkatsu in 40   ·   [Posterior:]{.accent} $\text{Beta}(7+27, \; 3+13) = \text{Beta}(34, 16)$
+:::
 
-[Data:]{.accent} 27 tonkatsu in 40 ($k = 27$, $n = 40$)
+::: {.lang-ja}
+[事前:]{.accent} $\theta \sim \text{Beta}(7, 3)$ — 「70/30、自信は低め」   ·   [データ:]{.accent} 40個中27個がとんかつ   ·   [事後:]{.accent} $\text{Beta}(7+27, \; 3+13) = \text{Beta}(34, 16)$
+:::
 
-[Posterior:]{.accent} $\theta \mid D \sim \text{Beta}(7 + 27, \; 3 + 13) = \text{Beta}(34, 16)$
+![](images/beta_worked_example.png){fig-align="center" width="78%"}
 
-<br>
+::: {.lang-en}
+[Mean barely moved ($0.70 \to 0.68$) — but the posterior is **much sharper**. 40 observations of moderate signal added a lot of certainty.]{.yellow}
+:::
 
-[Posterior mean: $34/50 = 0.68$. Prior was $0.70$.]{.dim}
-
-[Posterior is tighter: the data shrank the spread.]{.accent}
+::: {.lang-ja}
+[平均はほとんど動かず（$0.70 \to 0.68$） — でも事後は**ずっと鋭く**なる。40個の観測で確信が大幅に強まった。]{.yellow}
+:::
 
 ::: {.notes}
 Play with the numbers. What if the prior were Beta(70, 30) instead of (7, 3)?
@@ -587,7 +593,7 @@ data dominates. This is the BIG intuition: priors act like pseudo-observations
 and the data:prior ratio determines who wins.
 :::
 
-## [Break]{.lang-en}[休憩]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Break]{.lang-en}[休憩]{.lang-ja} {.section-break background-image="images/jimcalliestairs.jpg" background-size="cover" background-opacity="0.55"}
 
 ## [Resume — Gaussian-Gaussian with N observations]{.lang-en}[再開 — N観測のガウス-ガウス]{.lang-ja} {data-menu-title="Gaussian-N agenda" .biggest}
 
