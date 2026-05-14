@@ -315,10 +315,7 @@ def build_schedule():
         topic = TOPIC_OVERRIDES.get(dir_num)
         tags = extract_tags_from_plan(plan)
         slide_url = sync_slide_pdf(dir_num, d)
-        # Only publish the HTML deck if a PDF is also present — that's our
-        # signal that the deck is finalized for that week. Keeps WIP decks
-        # out of the published schedule.
-        slide_html_url = sync_slide_html(dir_num, d) if slide_url else ""
+        slide_html_url = sync_slide_html(dir_num, d)
         rows.append({
             "kind": "week",
             "week": WEEK_DISPLAY_NUM[dir_num],
