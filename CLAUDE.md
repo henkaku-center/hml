@@ -94,9 +94,20 @@ English content — prose, KaTeX ($P(H \mid D)$), lists, everything.
 
 **Verifying:** decktape preview captures only the default (EN) state. To verify JA content is present, `grep -c "lang-ja" weekN-slides.html` — should be >0. To actually see JA rendered, open the HTML in a browser and press L.
 
+**Trim symmetrically.** When the fill audit (see `SLIDE_VISUAL_QA.md`) flags a bilingual slide and the fix is content-trim rather than tier-change, trim BOTH languages — an EN-only trim leaves the JA side bloated, which `L` reveals instantly.
+
 **Scope today:** Week 2 has ~24 concept-introducing slides translated to JA (Block 1 Meet Chibany, Block 2 Marr L1/L2/L3/cab, Block 3 Notation 1-3 + Bayes flow + polls, Block 4 Setup/joint/marginal/conditional/independence/summary, Block 5 EV/Bernoulli/Binomial intros, Block 7 Shift in what's hidden). Build-up repetitions (slides that only change a number) stay EN-only on purpose — students who want JA can press L on the concept intros, where it matters. Full retrofit of remaining slides is an open TODO in `TODO.md`.
 
 ## How to build a week (SP26 lecture artifacts)
+
+**SCSS theme split (Week 2 pinned, Week 3+ uses synced).** `sds-reveal/sds.scss` is the shared theme synced from lecture-plans with the five-tier sizing system (`.smaller` / default / `.midbig` / `.bigger` / `.biggerplus` / `.biggest`) used by the Quarto fill-audit workflow. Week 2 was authored against an earlier, tighter-rhythm version and is pinned: its qmd points at `course/week02_basic_bayes_cont/sds-reveal-week2.scss` (a frozen snapshot, not symlinked).
+
+**Each week's qmd MUST set its own `theme:` in frontmatter.** The repo-root `_quarto.yml` intentionally does *not* set a project-level theme, because Quarto merges (rather than replaces) parent and child theme arrays — which made it impossible to keep the shared `!important` rules out of Week 2's cascade. So:
+
+- Week 2 (pinned): `theme: [dark, sds-reveal-week2.scss]`
+- Week 3+ (shared, five-tier): `theme: [dark, ../../sds-reveal/sds.scss]`
+
+If you create a new week's qmd and forget the theme line, the deck renders with Quarto's default `dark` theme only and looks wrong. Do not edit `sds-reveal-week2.scss`; if a fix is needed in the shared theme, mirror it to lecture-plans per the cross-repo sync rule.
 
 Starting Week 2, lecture artifacts follow the per-week triplet pattern from the APS-I repo:
 
@@ -126,7 +137,16 @@ Rule: edit the shared-outline first → edit the build script (speaker notes as 
 
 Week 1's `LECTURE_NOTES.md` predates this pattern and will NOT be retrofitted — it's a historical artifact of the first session.
 
-## Slide visual-QA loop (render → inspect → fix)
+## Slide visual-QA loops (two pipelines)
+
+Two slide pipelines, two QA loops — pick by how the deck was built:
+
+- **python-pptx weeks** (Week 1 only currently; any week built via `build_slides_weekN.py` + `sds_slides.SDSDeck`) — use the LibreOffice → `pdftoppm` → Read PNG loop documented below. PPTX previews catch overflow reliably.
+- **Quarto/RevealJS weeks** (Week 2 onwards) — use the Puppeteer-based fill audit in `SLIDE_VISUAL_QA.md`. PPTX-style PNG previews **miss "floating" slides entirely** (short content blocks symmetrically padded by `center: true`); the HTML-level audit is required. Spot-check the riskiest 3–5 slides with `decktape` + `Read` PNG only *after* the fill audit reports zero flags. Remediation uses the five-tier sizing classes in `sds-reveal/sds.scss` (`.smaller` / default / `.midbig` / `.bigger` / `.biggerplus` / `.biggest`).
+
+Shared rule across both loops: never iteratively nudge coordinates/font-sizes blind past one cycle — fix the template (sds_slides helper for PPTX, the tier classes for Quarto), not the call site.
+
+### python-pptx loop (render → inspect → fix)
 
 `python-pptx` places text boxes by absolute coordinates; without rasterized previews, overflow and misalignment are invisible to Claude. Every slide change must close the visual loop:
 

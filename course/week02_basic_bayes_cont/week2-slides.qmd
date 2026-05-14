@@ -7,7 +7,7 @@ title-slide-attributes:
   data-background-size: "cover"
 format:
   revealjs:
-    theme: [dark, ../../sds-reveal/sds.scss]
+    theme: [dark, sds-reveal-week2.scss]
     html-math-method: katex
   pptx: default
 ---

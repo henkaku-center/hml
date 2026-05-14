@@ -7,7 +7,11 @@ project:
 # and can override per-file in its YAML frontmatter.
 format:
   revealjs:
-    theme: [dark, sds-reveal/sds.scss]
+    # NOTE: theme is intentionally NOT set at project level. Quarto merges parent
+    # and child `theme:` arrays, which made it impossible to pin Week 2 to its
+    # frozen pre-five-tier SCSS. Each week's qmd must declare its own theme:
+    #   theme: [dark, ../../sds-reveal/sds.scss]            # Week 3+ (synced, five-tier)
+    #   theme: [dark, sds-reveal-week2.scss]                # Week 2 only (pinned)
     width: 960
     height: 540
     margin: 0.04

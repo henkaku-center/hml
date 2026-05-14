@@ -44,72 +44,25 @@ $presentation-heading-font: $font-family-sans-serif !default;
     text-transform: none;
   }
   h1.title { font-size: 2.1em; }  // title slide
-  h2 { font-size: 1.2em !important; }   // content-slide title; !important because RevealJS dark theme
-                                        // injects a calc(1.6em/0.7) rule with higher specificity
-  h3 { font-size: 1.05em; }
+  h2 { font-size: 1.4em; }        // content-slide title
+  h3 { font-size: 1.1em; }
 
-  // Body text — sized to fill the slide naturally at typical content density.
-  // With `center: true` in _quarto.yml, content vertical-centers in the stage.
-  // The sizing here is calibrated so slides with 5-8 lines of content fill
-  // ~80-90% of the vertical space; very dense slides should opt into .smaller.
-  p, li, td { font-size: 0.82em; line-height: 1.45; }
-  p { margin: 0 0 0.6em 0; }
-  ul, ol { margin: 0.5em 0 0.6em 0; }
-  li { margin: 0 0 0.3em 0; }
-  h2 + p, h2 + ul, h2 + ol { margin-top: 0.6em; }
-  h2 { margin-bottom: 0.5em; }
-
-  // Opt-in larger sizing for slides whose content is sparse enough that
-  // default sizing leaves dead space. Use `## Title {.bigger}` in the .qmd.
-  // Inverse of .smaller.
-  .slide.bigger {
-    p, li, td { font-size: 1.0em; line-height: 1.6; }
-    p { margin: 0 0 0.9em 0; }
-    ul, ol { margin: 0.7em 0 0.9em 0; }
-    li { margin: 0 0 0.5em 0; }
-    h2 { font-size: 1.35em !important; margin-bottom: 0.7em; }
-  }
-
-  // Between .bigger and .biggest. For sparse slides where .bigger leaves ~25%
-  // dead space but .biggest overflows.
-  .slide.biggerplus {
-    p, li, td { font-size: 1.12em; line-height: 1.68; }
-    p { margin: 0 0 1.0em 0; }
-    ul, ol { margin: 0.8em 0 1.0em 0; }
-    li { margin: 0 0 0.6em 0; }
-    h2 { font-size: 1.45em !important; margin-bottom: 0.8em; }
-  }
-
-  // Maximum-size opt-in for very sparse slides (3-4 short lines). Use sparingly —
-  // it's an aggressive size and reads as "big poster" not "slide content".
-  .slide.biggest {
-    p, li, td { font-size: 1.25em; line-height: 1.75; }
-    p { margin: 0 0 1.3em 0; }
-    ul, ol { margin: 1em 0 1.3em 0; }
-    li { margin: 0 0 0.75em 0; }
-    h2 { font-size: 1.65em !important; margin-bottom: 1em; }
-  }
-
-  // Middle tier between default and .bigger — for slides that need more than
-  // default but overflow at .bigger. Smaller bump than .bigger.
-  .slide.midbig {
-    p, li, td { font-size: 0.92em; line-height: 1.52; }
-    p { margin: 0 0 0.75em 0; }
-    ul, ol { margin: 0.6em 0 0.75em 0; }
-    li { margin: 0 0 0.4em 0; }
-    h2 { font-size: 1.25em !important; margin-bottom: 0.6em; }
-  }
+  // Body text — tight vertical rhythm so multi-paragraph slides fit 540h.
+  p, li, td { font-size: 0.78em; line-height: 1.15; }
+  p { margin: 0 0 0.22em 0; }
+  ul, ol { margin: 0.15em 0 0.25em 0; }
+  li { margin: 0 0 0.1em 0; }
+  h2 + p, h2 + ul, h2 + ol { margin-top: 0.25em; }
+  h2 { margin-bottom: 0.2em; }
 
   // Opt-in denser slide — apply via { .smaller } on the ## header for
-  // content-heavy slides that don't fit even at default sizing. Keep margins
-  // tight so dense slides don't trigger RevealJS auto-shrink-to-fit.
-  // Title shrinks too so it doesn't tower over the smaller body.
+  // content-heavy slides that don't fit even at default sizing.
   .slide.smaller {
-    p, li, td { font-size: 0.78em; line-height: 1.35; }
-    p { margin: 0 0 0.4em 0; }
-    ul, ol { margin: 0.3em 0 0.4em 0; }
-    li { margin: 0 0 0.2em 0; }
-    h2 { font-size: 1.05em !important; margin-bottom: 0.45em; }
+    p, li, td { font-size: 0.66em; line-height: 1.1; }
+    p { margin: 0 0 0.12em 0; }
+    ul, ol { margin: 0.08em 0 0.15em 0; }
+    li { margin: 0; }
+    h2 { font-size: 1.2em; margin-bottom: 0.15em; }
   }
 
   // Links keep accent
@@ -131,12 +84,12 @@ $presentation-heading-font: $font-family-sans-serif !default;
   // HTML tables give us real column alignment.
   table {
     border-collapse: collapse;
-    margin: 0.9em auto;
+    margin: 0.6em auto;
     font-size: 0.82em;
     color: $sds-text-white;
 
     th, td {
-      padding: 0.35em 0.9em;
+      padding: 0.22em 0.8em;
       border: 1px solid rgba(255,255,255,0.18);
       text-align: left;
     }
@@ -269,25 +222,14 @@ div.reveal div.slides section.title-slide {
 //   ## Section Title {.section-break background-image="…/sds_frame.png"}
 // ==========================================================================
 .reveal .section-break {
-  // Flex-center the heading so 1-line and 2-line titles both sit at the
-  // geometric center of the slide. Previously used margin-top: 2.6em which
-  // pushed 2-line titles visibly below center.
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
   text-align: center;
 
   h1, h2 {
     color: $sds-text-white;
-    font-size: 1.05em;
-    line-height: 1.25;
-    margin: 0 auto;
-    // Wide enough that typical 1-line section titles don't wrap inside the
-    // yellow frame even when fonts render slightly larger than in headless
-    // Chrome (which is what the audit script uses). 92% leaves a small
-    // margin inside the frame; long titles will still wrap to 2 lines.
-    max-width: 92%;
+    font-size: 1.15em;
+    line-height: 1.2;
+    margin: 2.6em auto 0 auto;
+    max-width: 58%;
     text-align: center;
     overflow-wrap: break-word;
     hyphens: auto;
@@ -304,15 +246,13 @@ div.reveal div.slides section.title-slide {
     justify-content: space-between;
     align-items: baseline;
     padding: 0.18em 0;
-    font-size: 1.0em;
+    font-size: 0.95em;
     gap: 2em;
     .time { color: $sds-text-dim; font-variant-numeric: tabular-nums; min-width: 3em; text-align: right; }
     // Highlight may be either on the <li> or on a span inside the label.
     &.highlight, .highlight { color: $sds-accent; font-weight: 700; }
     &.highlight .time, .highlight + .time { color: $sds-accent; }
   }
-  // Opt-in denser variant for agendas with 11+ items.
-  &.dense li { font-size: 0.82em; padding: 0.06em 0; }
 }
 
 // ==========================================================================

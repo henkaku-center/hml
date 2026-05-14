@@ -25,6 +25,7 @@ course/**/slides/sp26/preview/
 
 # QA scratch
 qa-previews/
+course/**/week*-audit/
 
 # Editor
 .vscode/
