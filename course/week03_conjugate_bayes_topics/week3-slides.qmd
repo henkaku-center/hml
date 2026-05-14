@@ -378,13 +378,13 @@ explicitly in a few slides.
 ::: {.lang-en}
 $\text{Beta}(8, 3)$: mass concentrated **above $0.5$**, peak around $0.78$. Moderate confidence — not razor-sharp, not flat.
 
-[5 samples: $0.72, \; 0.89, \; 0.83, \; 0.64, \; 0.82$]{.dim}
+[5 samples: $0.755, \; 0.638, \; 0.520, \; 0.748, \; 0.647$]{.dim}
 :::
 
 ::: {.lang-ja}
 $\text{Beta}(8, 3)$: 質量は **$0.5$ より上に集中**、ピークは $0.78$ あたり。中程度の自信 — 鋭くも平坦でもない。
 
-[5サンプル: $0.72, \; 0.89, \; 0.83, \; 0.64, \; 0.82$]{.dim}
+[5サンプル: $0.755, \; 0.638, \; 0.520, \; 0.748, \; 0.647$]{.dim}
 :::
 
 ::: {.notes}
