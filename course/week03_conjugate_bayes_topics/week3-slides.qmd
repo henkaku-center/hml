@@ -988,23 +988,23 @@ verbally if students are interested but don't crowd the slide with it.
 ## [The model — local representativeness]{.lang-en}[モデル — 局所代表性]{.lang-ja}
 
 ::: {.lang-en}
-For each new response, sum log-likelihood-ratios over all suffix lengths back to step 1 — bias toward whichever symbol makes recent subsequences look more 50/50:
+At step $k$, count heads $H_i$ and tails $T_i$ in the suffix going back $i$ steps. Score how much choosing **H** vs **T** at step $k$ keeps the suffixes balanced:
 :::
 
 ::: {.lang-ja}
-新しい反応ごとに、1ステップ前から $k{-}1$ ステップ前までのすべての部分系列で対数尤度比を合計 — 直近の部分系列がより50/50に見える方の記号にバイアス:
+ステップ $k$ で、$i$ ステップ前まで遡る部分系列の表 $H_i$ と裏 $T_i$ を数える。ステップ $k$ で **H** と **T** のどちらを選ぶと部分系列のバランスが保たれるかを採点:
 :::
 
 $$
-L_k \;=\; \sum_{i=1}^{k-1} \log \frac{P(\text{suffix with new symbol} \mid \text{random})}{P(\text{suffix with the other symbol} \mid \text{random})}
+L_k \;=\; \sum_{i=1}^{k-1} \log \frac{P(\,H_i + 1,\; T_i \mid \text{random}\,)}{P(\,H_i,\; T_i + 1 \mid \text{random}\,)}
 $$
 
 ::: {.lang-en}
-[Push through a logistic with scale $\lambda$ → $P(R_k)$. **A long run makes every suffix look extreme**, so the model strongly favors the *other* symbol — no free "switch preference" parameter needed.]{.yellow}
+[Then $P(R_k = \text{H}) = \sigma(\lambda L_k)$. **A long run of H's drives $L_k$ negative** (every suffix already looks H-heavy), so the model strongly prefers T next — no free "switch preference" parameter needed.]{.yellow}
 :::
 
 ::: {.lang-ja}
-[スケール $\lambda$ のロジスティックに通して $P(R_k)$。**連続が長いと各部分系列が極端に見える**ので、モデルは*もう一方*の記号を強く支持 — 自由な「切替選好」パラメータ不要。]{.yellow}
+[次に $P(R_k = \text{H}) = \sigma(\lambda L_k)$。**Hの連続が長いと $L_k$ が負に振れる**（どの部分系列もすでにH偏重）ので、モデルは次にTを強く好む — 自由な「切替選好」パラメータ不要。]{.yellow}
 :::
 
 ::: {.notes}
@@ -1033,7 +1033,14 @@ That's the difference between description and explanation.
 1937年の宣伝企画: ZenithがH/T系列5つをラジオで放送し、**20,099人**のリスナーにESPで「送信」してもらった。長さ5の16パターンに集約（最初の選択は無視）。
 :::
 
-![](images/gt2001_zenith_fig1.png){fig-align="center" width="62%"}
+::: {.columns}
+::: {.column width="50%"}
+![](images/gt2001_zenith_data.png){fig-align="center"}
+:::
+::: {.column width="50%"}
+![](images/gt2001_zenith_model.png){fig-align="center"}
+:::
+:::
 
 ::: {.lang-en}
 [**$\lambda = 0.6$ fits with $r = 0.95$.** The bias toward sequences like `01010` falls out of the math — no free "switch preference" knob.]{.yellow}
