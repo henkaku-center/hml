@@ -57,7 +57,7 @@ This is your pocket guide for the semester. Three things happen every week, and 
 
 **How long:** 150–200 words. Quality over volume — one thoughtful question beats a paragraph of generalities.
 
-**Grading:** pass/fail. Posts together count for 12.5% of your grade; you need 6 of 12 weeks posted for full credit. You can skip any 6 weeks you want.
+**Grading:** pass/fail. Posts together count for 12.5% of your grade; you need 5 of 11 eligible weeks posted for full credit (Weeks 2–12; Week 1 was the intro session and has no post). You can skip any 6 of those 11 weeks you want.
 
 **Why we do it this way:** your post tells Prof. Austerweil what to spend extra time on in class. Students who post by Thursday reliably get their questions addressed on Friday.
 

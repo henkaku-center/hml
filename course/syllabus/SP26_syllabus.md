@@ -38,7 +38,7 @@ Students who successfully complete the course will be able to:
 |---|---|---|
 | Final project | **50%** | Proposal 5% · In-class presentation 7.5% · Final paper 37.5% |
 | Programming assignments (4) | **30%** | Clusters 7.5% · Generalization 7.5% · Monte Carlo 10.5% · RL 4.5%. All in GenJAX. |
-| Weekly written reflections | **12.5%** | ~200 words on one assigned reading, pre-class. 6 of 12 required (student's choice). Pass/fail each. |
+| Weekly written reflections | **12.5%** | ~200 words on one assigned reading, pre-class. 5 of 11 required (student's choice; Week 1 not eligible). Pass/fail each. |
 | Paper presentation | **7.5%** | One 20-minute presentation of an assigned reading, followed by ~15 minutes of discussion you facilitate. See the "Paper presentations" section below. |
 | Quizzes | **0%** | Self-check only, available via the textbook. |
 | **Total** | **100%** | |
@@ -65,7 +65,7 @@ Project deliverables:
 
 ## Weekly written reflections
 
-Each week, students write a ~200-word reaction to one of the assigned readings. Reflections are not summaries — they are thoughtful engagements (a point you find compelling, a doubt, a connection to other work). Submit before class. Students choose any 6 of the 12 weeks. Pass/fail each.
+Each week, students write a ~200-word reaction to one of the assigned readings. Reflections are not summaries — they are thoughtful engagements (a point you find compelling, a doubt, a connection to other work). Submit before class. Students choose any 5 of the 11 eligible weeks (Weeks 2–12; Week 1 is the intro session and has no reflection). Pass/fail each.
 
 ## Paper presentations
 
