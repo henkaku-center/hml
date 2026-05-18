@@ -107,9 +107,9 @@ weeks:
     date: 2026-05-22
     theme: Bayesian generalization + hierarchical Bayes
     required:
-      - citation: "Tenenbaum, J. B., & Griffiths, T. L. (2001). Generalization, similarity, and Bayesian inference. Behavioral and Brain Sciences, 24(4), 629–640."
+      - citation: "Tenenbaum, J. B. (1999). Bayesian modeling of human concept learning. Advances in Neural Information Processing Systems (NeurIPS) 11."
         pdf: Tenenbaum99ConcLearn.pdf
-        why: "The canonical Bayesian-generalization paper. This week's math is a worked example of this paper."
+        why: "Tenenbaum's Bayesian-generalization framework worked through the axis-aligned-rectangles task. Friday's math is a direct walk-through of this paper."
     optional:
       - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 3 Ch 5 (Mixture models)."
         url: https://josephausterweil.github.io/probintro/intro2/05_mixture_models/
