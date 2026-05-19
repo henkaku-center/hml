@@ -1,0 +1,272 @@
+---
+title: "Human and Machine Learning — Assignment 1: Gaussians, Categories, and Clusters"
+subtitle: "R (no-GenJAX) stencil"
+author: "Joseph Austerweil"
+date: "Spring 2026 (due Fri Jun 5, 2026 at 8:00pm)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is the **R stencil** for Assignment 1. Problems are solved with base R (`dnorm`) and `ggplot2`. If you would prefer the Python or GenJAX (canonical) stencils, see `clusters_python.ipynb` and `clusters.ipynb` in the same directory. Matlab stencil available on request — DM Joe.
+
+**Corresponding textbook chapters:** Tutorial 1 Ch 5 (Bayesian inference) and [Tutorial 2 Ch 5 — Mixture Models](https://josephausterweil.github.io/probintro/intro2/05_mixture_models/).
+
+```{r libraries, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+```
+
+# Problem 1: Gaussian-Gaussian Conjugate Model
+
+In class, we derived (or will derive) the posterior and predictive distributions for a data point generated from a Gaussian-Gaussian model: having a Gaussian likelihood with unknown mean and known variance, and with a Gaussian prior on the mean of the likelihood with known mean and known variance. This model can be written in generative process notation\footnote{I try to use the following convention for variables: scalar variables are lowercase and italics (e.g., $x$), indices tend to be $n$, $t$, $c$ or $k$, the largest index is uppercase (e.g., $N$), vector variables are bold and lowercase (e.g., ${\bf x}$), and matrix variables are bold and uppercase (e.g., ${\bf X}$).} as:
+
+$\mu \sim {\rm N}(\mu_0, \sigma^2_0)$
+$x_1,\dotsc, x_N | \mu, \sigma_x^2 \overset{iid}{\sim} {\rm N}(\mu, \sigma^2_x)$
+
+Remember that $iid$ means {\em independent} and {\em identically distributed} and the generative process notation $x | \mu, \sigma_x^2 \sim {\rm N}(\mu, \sigma_x^2)$ means that given the values of parameters $\mu$ and $\sigma_x^2$, $x$ is normally distributed with mean $\mu$ and variance $\sigma_x^2$. So, this means
+$p(x|\mu,\sigma_x^2) = \frac{1}{\sigma_x \sqrt{2 \pi}} e^{-\frac{1}{2 \sigma_x^2}\left(x-\mu \right)^2}$
+
+Note that it is traditional to use a zero subscript for the parameters for a prior distribution. For this model, there is a closed form solution for the posterior probability, $p(\mu | x_1, \dotsc, x_N)$, and predictive probability, $p(x_{N+1} | x_1,\dotsc,x_N)$. Remember that you can always look up these special models whose posterior distribution is the same form as the prior distribution on Wikipedia [Conjugate Prior](https://en.wikipedia.org/wiki/Conjugate_prior). They are
+
+
+\begin{align*}
+{\rm Posterior:} & &  \mu & | x_1,\dotsc, x_N \sim {\rm N} \left( \frac{\mu_0 \sigma_0^{-2} + \sigma_x^{-2} \sum_{n=1}^N{x_n}   } {\sigma_0^{-2} + N \sigma_x^{-2} }, \left[ \sigma_0^{-2} + N \sigma_x^{-2} \right]^{-1}  \right)  \\
+{\rm Prediction} & & x_{N+1} & | x_1, \dotsc, x_N \sim {\rm N} \left( \frac{ \mu_0 \sigma_0^{-2} + \sigma_x^{-2} \sum_{n=1}^N{x_n}  }{\sigma_0^{-2} + N \sigma_x^{-2} },  \left[ \sigma_0^{-2} + N \sigma_x^{-2} \right]^{-1} + \sigma_x^2 \right)
+\end{align*}
+
+
+So, the predictive distribution has the same mean as the posterior distribution, but it has larger variance (it is $\sigma_x^2$ larger). For this problem, use $\mu_0=0$ and $\sigma_0^2 = 1$.  In this problem, we will explore how the number of data points and variance of the likelihood affect the posterior and predictive distributions.
+
+### 1. (a) Prior
+
+To provide a baseline, turn in a plot of the prior distribution. Please make sure your plot captures the ``interesting'' part of the distribution (i.e., the two extrema of the x-axis are the tails and the width and maximum of the bell are clearly visible).
+
+```{r prior, echo=TRUE}
+# fill me
+#
+# Suggested approach:
+#   1. mu_0 = 0, sigma_0_squared = 1.
+#   2. mu_range = seq(-4, 4, length.out = 1000).
+#   3. Evaluate the prior density with dnorm(mu_range, mu_0, sqrt(sigma_0_squared)).
+#   4. Plot density vs. mu_range; label the axes.
+
+mu_0 <- 0
+sigma_0_squared <- 1
+mu_range <- seq(-4, 4, length.out = 1000)
+
+# your plotting code here, e.g.
+# prior_df <- data.frame(mu = mu_range, density = ...)
+# ggplot(prior_df, aes(x = mu, y = density)) +
+#   geom_line() +
+#   labs(x = expression(mu), y = expression(p(mu)),
+#        title = expression(paste("Prior: N(", mu[0], ", ", sigma[0]^2, ")"))) +
+#   theme_minimal()
+```
+
+Fill this in with your explanation of the plot(s) above.
+
+### 1. (b) One Datum update
+Calculate and plot the posterior and predictive distributions after observing $x_1=2$ for $\sigma_x^2 = 0.25$ and $\sigma_x^2=4$ (that is 4 different distributions: the posterior and predictive for $\sigma_x^2=0.25$ and the posterior and predictive for $\sigma_x^2=4$). How does changing the variance of the likelihood affect the distributions? Are there any differences? Why?
+
+
+```{r conjugate-update, echo=TRUE}
+# Helper function for the conjugate Gaussian-Gaussian update.
+#
+# Returns a list with components:
+#   post_mean : posterior mean of mu given data
+#   post_var  : posterior variance of mu given data
+#   pred_var  : posterior-predictive variance for a new x (= post_var + sigma_x_squared)
+#
+# Suggested approach:
+#   1. N = length(data); sum_x = sum(data). (Handle N = 0 as the prior.)
+#   2. posterior_precision = 1/sigma_0_squared + N/sigma_x_squared
+#   3. post_mean  = (mu_0/sigma_0_squared + sum_x/sigma_x_squared) / posterior_precision
+#   4. post_var   = 1 / posterior_precision
+#   5. pred_var   = post_var + sigma_x_squared
+conjugate_update <- function(mu_0, sigma_0_squared, sigma_x_squared, data) {
+  # fill me
+}
+```
+
+```{r one-datum, echo=TRUE}
+# fill me
+#
+# Plot p(mu | x_1=2) and p(x_2 | x_1=2) for sigma_x_squared in {0.25, 4}.
+
+mu_0 <- 0
+sigma_0_squared <- 1
+x_1 <- c(2)
+sigma_x_squared_values <- c(0.25, 4)
+plot_range <- seq(-4, 6, length.out = 1000)
+
+# Suggested approach:
+#   For each sigma_x_squared:
+#     1. fit <- conjugate_update(mu_0, sigma_0_squared, sigma_x_squared, x_1)
+#     2. posterior  <- dnorm(plot_range, fit$post_mean, sqrt(fit$post_var))
+#     3. predictive <- dnorm(plot_range, fit$post_mean, sqrt(fit$pred_var))
+#     4. Build a data.frame with columns value, density, type (posterior/predictive), sigma_x_squared
+#   Then ggplot(...) + geom_line(aes(color = type)) + facet_wrap(~ sigma_x_squared).
+
+# your code here, e.g.
+# plot_df <- bind_rows(lapply(sigma_x_squared_values, function(sx2) {
+#   fit <- conjugate_update(mu_0, sigma_0_squared, sx2, x_1)
+#   data.frame(
+#     value = rep(plot_range, 2),
+#     density = c(dnorm(plot_range, fit$post_mean, sqrt(fit$post_var)),
+#                 dnorm(plot_range, fit$post_mean, sqrt(fit$pred_var))),
+#     type = rep(c("posterior", "predictive"), each = length(plot_range)),
+#     sigma_x_squared = sx2
+#   )
+# }))
+# ggplot(plot_df, aes(x = value, y = density, color = type)) +
+#   geom_line() +
+#   geom_vline(xintercept = x_1, linetype = "dashed", alpha = 0.5) +
+#   facet_wrap(~ sigma_x_squared, labeller = label_bquote(sigma[x]^2 == .(sigma_x_squared))) +
+#   theme_minimal()
+```
+
+Fill this in with your explanation of the plot(s) above.
+
+### 1. (c) Multiple data update
+Calculate and plot the posterior and predictive distributions given $(x_1,\dotsc, x_5) = (2.1, 2.5, 1.4, 2.2, 1.8)$ for $\sigma_x^2 = 0.25$ and $\sigma_x^2 = 4$. How does this  compare to the previous example? Note that the average of the data points is 2, and so both contribute the same average value. For cases that differ, why do they differ then? For those that do not, why don't they differ?
+
+
+```{r five-data, echo=TRUE}
+# fill me
+#
+# Reuse conjugate_update with the 5-point data array.
+
+mu_0 <- 0
+sigma_0_squared <- 1
+data <- c(2.1, 2.5, 1.4, 2.2, 1.8)
+sigma_x_squared_values <- c(0.25, 4)
+plot_range <- seq(-4, 6, length.out = 1000)
+
+# Same plotting recipe as Part 1(b), but with the 5-point data array.
+# your code here
+```
+
+Fill this in with your explanation of the plot(s) above.
+
+# Problem 2: Gaussian Mixture / Categorization
+
+In this problem, we will investigate how to make categorization decisions for two categories, where each is defined as a Gaussian distribution. First, you will derive the probability of an item being in one category or another. Then, we will explore how the variances and prior probability of each category affect the posterior and predictive distributions.
+
+For this problem, we will assume that data are generated by first picking which of two categories $c=1,2$ it belongs to (according to their prior probability) and then generating the datum according to the corresponding category's likelihood. This results in the following generative process:
+
+
+\begin{align*}
+c_n | \theta \sim {\rm Bernoulli}(\theta)   & \qquad \qquad \qquad & x_n | \mu_{c(n)}, \sigma_{c(n)}^2 \overset{iid}{\sim} {\rm N}(\mu_{c(n)}, \sigma_{c(n)}^2)
+\end{align*}
+
+
+Note that $c(n)$ is the same as $c_n$. I use parentheses rather than a subscript to avoid having something that is
+``double subscripted.''. In generative process notation, $c_n | \theta \sim {\rm Bernoulli}(\theta)$ means that $c_n$, the category for data point $n$, is a Bernoulli random variable with parameter $\theta$. This means $c_n$ will be $1$ with probability $\theta$ (and so with probability $1-\theta$, $c_n=2$). So, the prior probability of category 1 is $\theta$ ($P(c_n=1)=\theta$). For all of Problem 2, assume $\mu_1=-1$ and $\mu_2=1$.
+
+### 2. (a) Derivation: Categorization
+
+ Using Bayes' rule, derive the probability of a single datum being in category 1: $P(c_1=1|x_1)$.\footnote{If you are wondering why $P$ is uppercase here and lowercase in other cases, it has to do with whether it is a probability mass (uppercase) or density (lowercase) function. You do not have to worry about this distinction (I mess it up sometimes too!), but as a general rule, you should use the uppercase $P(\cdot)$ when it is a discrete random variable and the lowercase $p(\cdot)$ when it is a continuous random variable.} You can assume that the values of $\mu_1, \mu_2, \sigma^2_1,$ and $\sigma^2_2$ are given parameters (I didn't put them to the right of the $|$ to save space). Show your work (if you do not know how to create equations on a computer, you can scan your handwritten derivation and include it as an image into your document).
+
+As the next problem depends on this answer, I will give you what your derivation should end up with. It is
+
+ \begin{equation*}
+P(c=1|x_1) = \frac{\theta {\rm N}(x_1; \mu_1, \sigma_1^2)}{\theta {\rm N}(x_1; \mu_1, \sigma_1^2) + (1-\theta){\rm N}(x_1; \mu_2, \sigma_2^2)}
+\end{equation*}
+
+
+where $N(x;\mu,\sigma^2)$ is the probability density of $x$ from a Normal distribution with mean $\mu$ and variance $\sigma^2$.
+
+### Answer:
+*(fill in your derivation here — show your work)*
+
+### 2. (b) Categorization
+
+Calculate and plot the probability of being in category 1 (so, the x-axis is the $x_1$ value and the y-axis is $P(c_1=1|x_1)$) for $\theta = 0.5$ and for $\theta = 0.75$ with $\sigma_1^2=\sigma_2^2=1$ (remember $\mu_1 = -1$ and $\mu_2=1$). Next, calculate and plot the probability of being in category 1 for $\theta = 0.5$ when $\sigma_1^2=0.5$ and $\sigma_2^2=2$. Do this again, but for $\theta=0.75$. Please make sure all of your plots show all of the interesting behavior (so make sure the range of your x- and y-axes are appropriate). Describe the effect of changing the prior and the variance on categorization decisions. What is the effect of varying them? Do they have the same effect? Why do they or why do they not?
+
+
+```{r categorization, echo=TRUE}
+# fill me
+#
+# Plot P(c=1|x) for each configuration.
+
+mu_1 <- -1
+mu_2 <- 1
+theta_values <- c(0.5, 0.75)
+configs <- list(c(1, 1), c(0.5, 2))   # (sigma_1^2, sigma_2^2) pairs
+x_range <- seq(-6, 6, length.out = 1000)
+
+# Suggested approach:
+#   For each (theta, (sigma_1_sq, sigma_2_sq)) combination:
+#     lik1 <- dnorm(x_range, mu_1, sqrt(sigma_1_sq))
+#     lik2 <- dnorm(x_range, mu_2, sqrt(sigma_2_sq))
+#     posterior_c1 <- (theta * lik1) / (theta * lik1 + (1 - theta) * lik2)
+#   Then ggplot lines, colored by theta, linetyped by config.
+
+# your plotting code here, e.g.
+# rows <- list()
+# for (theta in theta_values) {
+#   for (cfg in configs) {
+#     sigma_1_sq <- cfg[1]; sigma_2_sq <- cfg[2]
+#     lik1 <- dnorm(x_range, mu_1, sqrt(sigma_1_sq))
+#     lik2 <- dnorm(x_range, mu_2, sqrt(sigma_2_sq))
+#     posterior_c1 <- (theta * lik1) / (theta * lik1 + (1 - theta) * lik2)
+#     rows[[length(rows) + 1]] <- data.frame(
+#       x = x_range, prob = posterior_c1,
+#       theta = theta,
+#       config = sprintf("sigma_1^2=%s, sigma_2^2=%s", sigma_1_sq, sigma_2_sq)
+#     )
+#   }
+# }
+# plot_df <- bind_rows(rows)
+# ggplot(plot_df, aes(x = x, y = prob, color = factor(theta), linetype = config)) +
+#   geom_line() +
+#   labs(x = "x", y = expression(P(c[1] == 1 ~ "|" ~ x)),
+#        color = expression(theta), linetype = "configuration") +
+#   theme_minimal()
+```
+
+Fill this in with your explanation of the plot(s) above.
+
+### 2. (c) Derivation --- Prediction
+
+Using Bayes' rule and the {\em Law of Total Probability}, derive the probability of a data point $p(x)$ according to this model (note, this is without any given data). As the next problem depends on this answer, I will give you what your derivation should end up with. It is
+
+
+\begin{equation*}
+p(x_1) = \theta {\rm N}(x_1; \mu_1, \sigma_1^2) + (1-\theta){\rm N}(x_1; \mu_2, \sigma_2^2)
+\end{equation*}
+
+
+### Answer:
+*(fill in your derivation here — show your work)*
+
+### 2. (d) Prediction
+
+As before, plot $p(x_1)$ for $\theta = 0.5$, and then for $\theta =  0.75$ with $\sigma_1^2=\sigma_2^2=1$. Next, calculate and plot $P(x_1)$ for $\theta = 0.5$ when $\sigma_1^2=0.5$ and $\sigma_2^2=2$. Do this again, but for $\theta=0.75$. How does the prior and variance of the likelihood affect $p(x_1)$?  Please make sure all of your plots show all of the interesting behavior (so make sure the range of your x- and y-axes are appropriate). Describe the effect of changing the prior and the variance on $p(x_1)$. What is the effect of varying them? Do they have the same effect? Why do they or why do they not?
+
+Note that $p(x_1)$ is sometimes called the *marginal data distribution* and this type of model is called a *mixture model* because it composes a new probability distribution by``mixing'' two (or more) distributions together.
+
+
+```{r prediction, echo=TRUE}
+# fill me
+#
+# Plot the marginal p(x) for each configuration.
+
+mu_1 <- -1
+mu_2 <- 1
+theta_values <- c(0.5, 0.75)
+configs <- list(c(1, 1), c(0.5, 2))
+x_range <- seq(-6, 6, length.out = 1000)
+
+# Suggested approach:
+#   p_x <- theta * dnorm(x_range, mu_1, sqrt(sigma_1_sq)) +
+#          (1 - theta) * dnorm(x_range, mu_2, sqrt(sigma_2_sq))
+
+# your plotting code here (same pattern as Part 2(b), but plotting p_x instead of P(c=1|x))
+```
+
+Fill this in with your explanation of the plot(s) above.
