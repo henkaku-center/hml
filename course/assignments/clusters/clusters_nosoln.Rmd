@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This is the **R stencil** for Assignment 1. Problems are solved with base R (`dnorm`) and `ggplot2`. If you would prefer the Python or GenJAX (canonical) stencils, see `clusters_python.ipynb` and `clusters.ipynb` in the same directory. Matlab stencil available on request — DM Joe.
 
-**Corresponding textbook chapters:** Tutorial 1 Ch 5 (Bayesian inference) and [Tutorial 2 Ch 5 — Mixture Models](https://josephausterweil.github.io/probintro/intro2/05_mixture_models/).
+**Corresponding textbook chapters:** Tutorial 1 Ch 5 (Bayesian inference) and [Tutorial 3 Ch 5 — Mixture Models](https://josephausterweil.github.io/probintro/intro2/05_mixture_models/). (The mixture-models chapter lives at the URL path `intro2/` because Tutorial 3 is the continuous-probability tutorial.)
 
 ```{r libraries, message=FALSE, warning=FALSE}
 library(ggplot2)
@@ -180,6 +180,8 @@ P(c=1|x_1) = \frac{\theta {\rm N}(x_1; \mu_1, \sigma_1^2)}{\theta {\rm N}(x_1; \
 
 where $N(x;\mu,\sigma^2)$ is the probability density of $x$ from a Normal distribution with mean $\mu$ and variance $\sigma^2$.
 
+**Grading note: no credit for transcribing the given answer. Show every step (Bayes' rule, expand the denominator with the Law of Total Probability).**
+
 ### Answer:
 *(fill in your derivation here — show your work)*
 
@@ -240,6 +242,7 @@ Using Bayes' rule and the {\em Law of Total Probability}, derive the probability
 p(x_1) = \theta {\rm N}(x_1; \mu_1, \sigma_1^2) + (1-\theta){\rm N}(x_1; \mu_2, \sigma_2^2)
 \end{equation*}
 
+**Grading note: no credit for transcribing the given answer. Show every step (Law of Total Probability over $c$, then expand $p(x|c)P(c)$ for each category).**
 
 ### Answer:
 *(fill in your derivation here — show your work)*
@@ -270,3 +273,34 @@ x_range <- seq(-6, 6, length.out = 1000)
 ```
 
 Fill this in with your explanation of the plot(s) above.
+
+# Bonus (optional): Part 2(e) — verify the marginal by Monte Carlo
+
+The canonical (GenJAX) stencil has an additional Part 2(e) that asks for a generative `@gen` mixture model and verifies $p(x)$ by simulation. For the R path, this is optional bonus work. A 5-line base-R version: for $N = 2000$ draws, flip a coin with probability $\theta = 0.7$ to pick a category, then sample $x$ from the corresponding Gaussian. Histogram and overlay the analytical $p(x)$ from Part 2(d).
+
+```{r bonus-monte-carlo, eval=FALSE, echo=TRUE}
+# Optional bonus — uncomment and complete to earn extra credit.
+#
+# set.seed(42)
+# N <- 2000
+# theta <- 0.7
+# mu_1 <- -1; mu_2 <- 1; sigma_1 <- 1; sigma_2 <- 1
+# c_samples <- rbinom(N, 1, theta)            # 1 = category 1, 0 = category 2
+# x_samples <- ifelse(c_samples == 1,
+#                     rnorm(N, mu_1, sigma_1),
+#                     rnorm(N, mu_2, sigma_2))
+# analytical <- theta * dnorm(x_range, mu_1, sigma_1) +
+#               (1 - theta) * dnorm(x_range, mu_2, sigma_2)
+# ggplot(data.frame(x = x_samples), aes(x = x)) +
+#   geom_histogram(aes(y = after_stat(density)), bins = 60, alpha = 0.5) +
+#   geom_line(data = data.frame(x = x_range, density = analytical),
+#             aes(x = x, y = density), color = "red", linewidth = 1) +
+#   labs(title = "Monte Carlo p(x) vs. analytical mixture") +
+#   theme_minimal()
+```
+
+If you complete this, mention it in your submission.
+
+## Submission
+
+Submit this knitted .Rmd (run end-to-end with no errors) plus your derivations for Parts 2(a) and 2(c).
