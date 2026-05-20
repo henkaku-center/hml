@@ -28,8 +28,16 @@ const PUPPETEER_PATH = '/home/jausterw/.nvm/versions/node/v22.20.0/lib/node_modu
 const puppeteer = require(PUPPETEER_PATH);
 
 const REPO = '/home/jausterw/work/hummachlearn/spring2026';
-const DECK = `file://${REPO}/course/week03_conjugate_bayes_topics/week3-slides.html`;
-const OUT_DIR = `${REPO}/course/week03_conjugate_bayes_topics/week3-audit`;
+// DECK / OUT_DIR default to Week 3 but are overridable per-week via env vars:
+//   DECK=course/week04_generalization_hier_bayes/week4-slides.html \
+//   OUT_DIR=course/week04_generalization_hier_bayes/week4-audit \
+//   node scripts/audit_slide_fill.js --threshold 75
+const DECK = process.env.DECK
+  ? `file://${path.resolve(REPO, process.env.DECK)}`
+  : `file://${REPO}/course/week03_conjugate_bayes_topics/week3-slides.html`;
+const OUT_DIR = process.env.OUT_DIR
+  ? path.resolve(REPO, process.env.OUT_DIR)
+  : `${REPO}/course/week03_conjugate_bayes_topics/week3-audit`;
 
 const NOMINAL = { w: 1050, h: 700, label: 'nominal' };
 const ALL_SIZES = [

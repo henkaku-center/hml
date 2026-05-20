@@ -26,10 +26,21 @@
 Merged from the previous 13-session plan: this week now absorbs hierarchical-Bayes content that was formerly week05's first half. Bayes Nets (week05's second half) + Causal Bayes Nets (former week06) are consolidated into the new Week 5.
 
 ## SP26 artifacts
-- Not yet built. Use the `course/week02_basic_bayes_cont/` triplet pattern when the week approaches (see repo CLAUDE.md → "How to build a week").
+- `week4-shared-outline.md` — SOURCE OF TRUTH: timing table + per-block key points + contingencies.
+- `week4-slides.qmd` — Quarto RevealJS deck (61 slides). Shared SCSS theme (`../../sds-reveal/sds.scss`, Week 3+ five-tier system); EN↔JA `.lang-*` divs on all concept slides; KaTeX math; three polls mined from the SP25 *Bayesian Generalization* quiz.
+- `week4-slides.html` — generated (`quarto render week4-slides.qmd`).
+- `week4-audit/` — fill-audit JSON from `scripts/audit_slide_fill.js`.
+
+**Session design.** 2-hour session structured around Shohei's ~25-min paper presentation (Tenenbaum & Xu 2000, *Word learning as Bayesian inference* — 15 talk + 5 discussion + 5 swap). All core content — generalization framework, size principle, rectangle game (continuous) AND number game (discrete) — is delivered **before the break**. Opens with an 8-min Clusters-assignment walkthrough (Assignment 1 due Fri Jun 5, 8 PM). A dedicated bridge slide primes Shohei's paper as "the number game applied to word meanings."
+
+**Hierarchical Bayes is authored two ways** (instructor selects live by timing): Variant A = 3-slide teaser (~5 min); Variant B = teaser + full worked two-level Beta-Binomial with shrinkage (~10 min more). The variants are fenced with `<!-- HIER-BAYES VARIANT A/B -->` HTML comments in the qmd; A's three slides are also B's opening. T3 Ch 5 assigned as the Week 5 pre-read either way.
+
+**Visual QA.** Passed the RevealJS fill audit (`SLIDE_VISUAL_QA.md` workflow): 0 FLOATING/PUSHED-DOWN defects, 0 real overflows across all 8 viewport sizes. The lone audit flag is the `.agenda.dense` slide, which legitimately fills the stage.
 
 ## TODOs
-- [ ] Build SP26 Week 4 artifacts (shared-outline + build script + generated deck)
-- [ ] Move `hierarchical-bayes.html` from the old `week05_hier_bayes_bayes_nets/wiki_pages/` into this directory's `wiki_pages/`
-- [ ] Write the hierarchical `bento_day()` GenJAX exercise
+- [x] Build SP26 Week 4 artifacts (shared-outline + Quarto deck) — done 2026-05-20.
+- [ ] Move `hierarchical-bayes.html` from the old `week05_hier_bayes_bayes_nets/wiki_pages/` into this directory's `wiki_pages/` *(note: `wiki_pages/hierarchical-bayes.html` is already present)*
+- [ ] Write the hierarchical `bento_day()` GenJAX exercise (referenced on slide B6)
+- [ ] Confirm Week 5's student presenter against `course/readings_map.yml` before class — the deck's "Next week" slide deliberately does not name one.
+- [ ] Native-speaker proof of the Week 4 JA translations (machine-authored, same as Weeks 2–3).
 - [ ] Optional: add in-context learning reading (contemporary ML)

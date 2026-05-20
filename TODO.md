@@ -29,6 +29,13 @@
 - [ ] Acknowledge A/B vs. H/D notation shift on the Block 4 setup slide (one dim line suffices).
 - [ ] After Week 2 class: transcribe paper-presentation signups into `course/readings_map.yml` `presenter:` fields
 
+### SP26 New — Week 4
+- [x] Build SP26 Week 4 artifacts — `week4-shared-outline.md` + `week4-slides.qmd` (61-slide Quarto RevealJS deck), done 2026-05-20. Generalization framework + size principle + rectangle game + number game all before the break; Shohei's presentation (~25 min) after; No Free Lunch + hierarchical-Bayes close. Opens with an 8-min Clusters-assignment walkthrough.
+- [x] Hierarchical Bayes authored two ways (teaser / full block) — instructor selects live by timing; both fenced in the qmd.
+- [ ] Write the hierarchical `bento_day()` GenJAX exercise (referenced on Week 4 slide B6)
+- [ ] Native-speaker proof of Week 4 JA translations (machine-authored)
+- [ ] Confirm Week 5 presenter against `readings_map.yml` before the Week 4 class — Week 4's "next week" slide intentionally names none
+
 ### SP26 New — Syllabus & Admin
 - [x] Draft SP26 syllabus source (`course/syllabus/SP26_syllabus.md`) and publish to the site
 - [x] Update grading to reflect 6 students / 12 sessions: reflections 15%→12.5% (8-of-13 → 6-of-12); new paper-presentation line at 7.5%; participation folded in
