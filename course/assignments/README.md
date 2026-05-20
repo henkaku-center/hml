@@ -29,12 +29,12 @@ Investigate categorization and prediction in a 2-component Gaussian mixture mode
 
 **Then pick one stencil to work in.** All three cover the same problems with the same scaffolding — choose whichever language you prefer:
 
-| Stencil | File | Notes |
-|---|---|---|
-| **GenJAX (canonical)** | [clusters.ipynb](assignments/clusters/clusters.ipynb) | Recommended if you've done the Tutorial 2 GenJAX readings. Includes a bonus Part 2(e). |
-| **Python (no GenJAX)** | [clusters_python.ipynb](assignments/clusters/clusters_python.ipynb) | numpy + scipy + matplotlib. Each cell has an optional paired "Now in GenJAX" tutorial cell. |
-| **R** | [clusters_nosoln.Rmd](assignments/clusters/clusters_nosoln.Rmd) | base R + ggplot2. |
-| **Matlab** | available on request | Email Prof. Austerweil. |
+| Stencil | Open in Colab | Download | Notes |
+|---|---|---|---|
+| **GenJAX (canonical)** | [Open in Colab](https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/clusters/clusters.ipynb) | [clusters.ipynb](assignments/clusters/clusters.ipynb) | Recommended if you've done the Tutorial 2 GenJAX readings. Includes a bonus Part 2(e). |
+| **Python (no GenJAX)** | [Open in Colab](https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/clusters/clusters_python.ipynb) | [clusters_python.ipynb](assignments/clusters/clusters_python.ipynb) | numpy + scipy + matplotlib. Each cell has an optional paired "Now in GenJAX" tutorial cell. |
+| **R** | — (knit locally in RStudio) | [clusters_nosoln.Rmd](assignments/clusters/clusters_nosoln.Rmd) | base R + ggplot2. Colab does not run `.Rmd` files. |
+| **Matlab** | — | available on request | Email Prof. Austerweil. |
 
 **Other details:**
 
