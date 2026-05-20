@@ -358,9 +358,11 @@ def build_schedule():
 # ---------- Markdown -> HTML helpers ----------
 
 def md_to_html(md_text: str) -> str:
+    # `attr_list` lets markdown headings carry an explicit id (e.g.
+    # `### Clusters {#clusters}`) so in-page anchor links are stable.
     return markdown.markdown(
         md_text,
-        extensions=["extra", "sane_lists", "tables"],
+        extensions=["extra", "sane_lists", "tables", "attr_list"],
         output_format="html5",
     )
 

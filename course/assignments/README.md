@@ -8,7 +8,7 @@ You have **3 free late days** that can be used across the programming assignment
 
 | Assignment | Assigned | Due | Weight | Topic |
 |---|---|---|---|---|
-| [Clusters](assignments/clusters/clusters.pdf) | Week 3 (May 15) | **Fri Jun 5, 8 PM** | 7.5% | Mixture models & categorization |
+| [Clusters](#clusters) | Week 3 (May 15) | **Fri Jun 5, 8 PM** | 7.5% | Mixture models & categorization |
 | Generalization | Week 4 (May 22) | *TBA when released* | 7.5% | Bayesian generalization |
 | Monte Carlo | Week 7 (Jun 12) | *TBA when released* | 10.5% | Monte Carlo methods |
 | Reinforcement Learning | Week 8 (Jun 19) | *TBA when released* | 4.5% | MDPs & reinforcement learning |
@@ -17,7 +17,7 @@ Total assignments: **30%** of the course grade. The final-project proposal (pass
 
 ## Assignment details
 
-### Clusters (7.5%)
+### Clusters (7.5%) {#clusters}
 
 **Due: Fri Jun 5, 2026 at 8:00 PM.**
 
@@ -42,14 +42,14 @@ Investigate categorization and prediction in a 2-component Gaussian mixture mode
 - **GenJAX background:** [Tutorial 2, Chapters 0–4](https://josephausterweil.github.io/probintro/genjax/)
 - **Submit:** completed notebook (or knitted .Rmd) that runs end-to-end, plus derivations for Problem 2 parts (a) and (c).
 
-### Generalization (7.5%)
+### Generalization (7.5%) {#generalization}
 
 *Details will be posted when the assignment is released.*
 
-### Monte Carlo (10.5%)
+### Monte Carlo (10.5%) {#monte-carlo}
 
 *Details will be posted when the assignment is released.*
 
-### Reinforcement Learning (4.5%)
+### Reinforcement Learning (4.5%) {#reinforcement-learning}
 
 *Details will be posted when the assignment is released.*
