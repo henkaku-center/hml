@@ -84,8 +84,8 @@ Sequencing decision (confirmed with Prof. Austerweil):
 - **Likelihood** $p(X \mid h)$: how probable the examples are if $h$ is the true concept. (The size principle, Block 4, is a claim *about this term*.)
 - **Posterior** $p(h \mid X) \propto p(X \mid h)\,p(h)$.
 - **Generalization** = posterior-weighted vote:
-  $$p(y \in C \mid X) = \sum_{h} \,[\,y \in h\,]\; p(h \mid X)$$
-  Define the indicator $[\,y\in h\,]$ in a dim caption. Generalization to $y$ = total posterior mass on hypotheses that *contain* $y$.
+  $$p(y \in C \mid X) = \sum_{h} \mathbf{1}[\,y \in h\,]\; p(h \mid X)$$
+  Define the bold-1 indicator $\mathbf{1}[\,y\in h\,]$ in a dim caption. Generalization to $y$ = total posterior mass on hypotheses that *contain* $y$.
 - Emphasize: this one equation drives **both** games today. Continuous vs. discrete only changes what $\mathcal H$ is.
 
 ### Block 4: The size principle (10 min)

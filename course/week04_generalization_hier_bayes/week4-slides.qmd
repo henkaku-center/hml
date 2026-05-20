@@ -159,34 +159,53 @@ generalization is unavoidable is the hook — there is no "just match exactly"
 fallback, because nothing matches exactly. ~1.5 min.
 :::
 
-## [Shepard's universal law]{.lang-en}[シェパードの普遍法則]{.lang-ja} {.midbig}
+## [Shepard's universal law]{.lang-en}[シェパードの普遍法則]{.lang-ja} {.smaller}
 
 ::: {.lang-en}
 [Shepard (1987)]{.accent} — across species and domains, the probability of
 generalization **decays exponentially** with distance in **psychological
-space**.
-
-::: {.fragment}
-*Psychological space* — not raw physical/stimulus space. The perceived
-distance, after the mind has represented the stimulus.
-:::
+space** (*the perceived distance, after the mind represents the stimulus —
+not raw physical space*).
 :::
 
 ::: {.lang-ja}
 [Shepard (1987)]{.accent} — 種や領域を超えて、一般化の確率は
-**心理的空間**における距離とともに**指数関数的に減衰**する。
+**心理的空間**における距離とともに**指数関数的に減衰**する（*心が刺激を
+表現した後の知覚距離 — 生の物理的空間ではない*）。
+:::
 
-::: {.fragment}
-*心理的空間* — 生の物理的・刺激空間ではない。心が刺激を表現した後の、
-知覚された距離。
+:::: {.columns}
+::: {.column width="62%"}
+![](images/shepard_decay.png){fig-align="center" width="100%"}
+:::
+::: {.column width="38%"}
+<br>
+
+$$g(d) = e^{-d}$$
+
+::: {.lang-en}
+[$g$]{.accent} — probability of generalization
+
+[$d$]{.accent} — deviation in psychological space from the referent
+:::
+
+::: {.lang-ja}
+[$g$]{.accent} — 一般化の確率
+
+[$d$]{.accent} — 参照刺激からの心理的空間における隔たり
 :::
 :::
+::::
 
 ::: {.notes}
 "Psychological space" is the term to lock in — it's defined before use here.
-Shepard's law is remarkably robust empirically. The puzzle it leaves: WHY
-exponential? And what sets the psychological space? Today's Bayesian framework
-will answer the first — exponential decay falls out of the posterior. ~2 min.
+The plot: a referent stimulus sits at d = 0; the curve g(d) = exp(-d) is the
+generalization gradient. The vertical-line strip under the x-axis makes the
+dimension concrete — the stimulus is the length of a vertical line, and
+deviation d is how different a line looks from the referent. Shepard's law is
+remarkably robust empirically. The puzzle it leaves: WHY exponential? Today's
+Bayesian framework answers it — exponential decay falls out of the posterior.
+~2 min.
 :::
 
 ## [Poll — Shepard's universal law]{.lang-en}[ポール — シェパードの普遍法則]{.lang-ja} {.midbig}
@@ -367,7 +386,7 @@ Callback to this slide explicitly during NFL. ~1.5 min.
 
 ::: {.lang-en}
 Probability that the novel stimulus $y$ has the property:
-$$p(y \in C \mid X) \;=\; \sum_{h \in \mathcal{H}} [\,y \in h\,]\; p(h \mid X)$$
+$$p(y \in C \mid X) \;=\; \sum_{h \in \mathcal{H}} \mathbf{1}[\,y \in h\,]\; p(h \mid X)$$
 
 ::: {.fragment}
 Every hypothesis votes. Its vote is **its posterior weight**, and it votes "yes"
@@ -377,7 +396,7 @@ only if it *contains* $y$.
 
 ::: {.lang-ja}
 新しい刺激 $y$ がその性質を持つ確率:
-$$p(y \in C \mid X) \;=\; \sum_{h \in \mathcal{H}} [\,y \in h\,]\; p(h \mid X)$$
+$$p(y \in C \mid X) \;=\; \sum_{h \in \mathcal{H}} \mathbf{1}[\,y \in h\,]\; p(h \mid X)$$
 
 ::: {.fragment}
 すべての仮説が投票する。票の重みは**事後確率**であり、その仮説が $y$ を
@@ -385,7 +404,7 @@ $$p(y \in C \mid X) \;=\; \sum_{h \in \mathcal{H}} [\,y \in h\,]\; p(h \mid X)$$
 :::
 :::
 
-[$[\,y \in h\,]$ — the indicator: $1$ if $y$ is in the set $h$, else $0$.]{.dim}
+[$\mathbf{1}[\,y \in h\,]$ — the indicator: $1$ if $y$ is in the set $h$, else $0$.]{.dim}
 
 ::: {.notes}
 The indicator is defined in the dim caption per CLAUDE.md. THIS is the equation
@@ -756,7 +775,7 @@ slide in Block 5 if behind. ~1.5 min.
 The continuous concept learner is [**just the framework equation**]{.yellow}
 with $\mathcal{H}$ = intervals / rectangles.
 
-$$p(y \in C \mid X) = \sum_{h} [\,y \in h\,]\; p(h \mid X)$$
+$$p(y \in C \mid X) = \sum_{h} \mathbf{1}[\,y \in h\,]\; p(h \mid X)$$
 
 Nothing new — only the choice of $\mathcal{H}$.
 :::
@@ -765,7 +784,7 @@ Nothing new — only the choice of $\mathcal{H}$.
 連続的な概念の学習者は、$\mathcal{H}$ = 区間 / 長方形 とした
 [**枠組みの式そのもの**]{.yellow}。
 
-$$p(y \in C \mid X) = \sum_{h} [\,y \in h\,]\; p(h \mid X)$$
+$$p(y \in C \mid X) = \sum_{h} \mathbf{1}[\,y \in h\,]\; p(h \mid X)$$
 
 新しいものは何もない — $\mathcal{H}$ の選び方だけ。
 :::
@@ -984,7 +1003,7 @@ one example → 5× → graded; four examples → 625× → rule. Do NOT cut thi
 ::: {.lang-en}
 Same equation as the rectangle game — $\mathcal{H}$ is now **discrete**.
 
-$$p(y \in C \mid X) = \sum_{h} [\,y \in h\,]\; p(h \mid X)$$
+$$p(y \in C \mid X) = \sum_{h} \mathbf{1}[\,y \in h\,]\; p(h \mid X)$$
 
 Graded vs. rule-like generalization both [**fall out of the
 posterior**]{.yellow} — no extra mechanism. The size principle's exponent does
@@ -994,7 +1013,7 @@ the switching.
 ::: {.lang-ja}
 長方形ゲームと同じ式 — $\mathcal{H}$ が今度は**離散的**。
 
-$$p(y \in C \mid X) = \sum_{h} [\,y \in h\,]\; p(h \mid X)$$
+$$p(y \in C \mid X) = \sum_{h} \mathbf{1}[\,y \in h\,]\; p(h \mid X)$$
 
 段階的な一般化も規則的な一般化も、追加の仕組みなしに
 [**事後確率から導かれる**]{.yellow}。サイズ原理の指数が切り替えを担う。
