@@ -1,6 +1,6 @@
 # Human and Machine Learning SP26 — Assignments
 
-All four programming assignments are completed in **GenJAX** using Google Colab.
+All four programming assignments can be completed in **GenJAX** (the canonical stencil, run on Google Colab), or in **vanilla Python**, **R**, or **Matlab**. The GenJAX, Python, and R stencils are provided for each assignment; for the Matlab stencil, email the instructor.
 
 You have **3 free late days** that can be used across the programming assignments. See the [syllabus](syllabus.html) for the full late policy.
 
