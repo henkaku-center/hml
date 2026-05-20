@@ -2,12 +2,12 @@
 """Shepard's universal law of generalization — exponential decay curve.
 
 Renders a single dark-theme PNG for the Week 4 "Shepard's universal law" slide:
-the generalization gradient g(d) = exp(-d) plotted against deviation d in
+the generalization gradient g(d) = exp(-d) plotted against distance d in
 psychological space, with the referent stimulus at d = 0.
 
 The stimulus dimension is illustrated concretely as the length of a vertical
 line: short lines to the left of the referent, long lines to the right, the
-referent itself marked at d = 0. This makes "deviation in psychological space"
+referent itself marked at d = 0. This makes "distance in psychological space"
 tangible — it is how different a line's length looks from the referent's.
 
 Output: course/week04_generalization_hier_bayes/images/shepard_decay.png
@@ -35,7 +35,7 @@ OUT_DIR = (
 def build_shepard_decay() -> None:
     # Two stacked panels: the decay curve (tall) + a short strip for the
     # vertical-line stimulus glyphs. Sharing the x-axis keeps each line glyph
-    # aligned under its deviation value on the curve.
+    # aligned under its distance value on the curve.
     fig, (ax, axs) = plt.subplots(
         2, 1, figsize=(6.4, 4.3), dpi=150, facecolor=BG,
         sharex=True, gridspec_kw=dict(height_ratios=[4.0, 1.0], hspace=0.32),
@@ -74,10 +74,10 @@ def build_shepard_decay() -> None:
 
     # --- bottom panel: vertical-line stimuli, length encodes the dimension ---
     # The referent is a mid-length line at d = 0; comparison lines grow longer
-    # as deviation increases. Each glyph is aligned under its d on the curve.
+    # as distance increases. Each glyph is aligned under its d on the curve.
     line_xs = [0.0, 1.0, 2.0, 3.0, 4.0]
     base_len = 0.34          # referent half-height (panel data units)
-    grow = 0.13              # extra half-height per unit deviation
+    grow = 0.13              # extra half-height per unit distance
     for lx in line_xs:
         half = base_len + grow * lx
         col = YELLOW if lx == 0.0 else DIM
@@ -90,7 +90,7 @@ def build_shepard_decay() -> None:
              color=DIM, fontsize=8.5, ha="right", va="bottom")
 
     axs.set_ylim(-1.45, 1.55)
-    axs.set_xlabel("Deviation in psychological space from the referent  ($d$)",
+    axs.set_xlabel("Distance in psychological space from the referent  ($d$)",
                    color=TEXT, fontsize=11, labelpad=6)
     axs.set_xticks([0, 1, 2, 3, 4])
     axs.set_xticklabels(["0", "", "", "", ""], color=DIM)

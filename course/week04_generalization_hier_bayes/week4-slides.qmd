@@ -186,13 +186,13 @@ $$g(d) = e^{-d}$$
 ::: {.lang-en}
 [$g$]{.accent} — probability of generalization
 
-[$d$]{.accent} — deviation in psychological space from the referent
+[$d$]{.accent} — distance in psychological space from the referent
 :::
 
 ::: {.lang-ja}
 [$g$]{.accent} — 一般化の確率
 
-[$d$]{.accent} — 参照刺激からの心理的空間における隔たり
+[$d$]{.accent} — 参照刺激からの心理的空間における距離
 :::
 :::
 ::::
@@ -202,7 +202,7 @@ $$g(d) = e^{-d}$$
 The plot: a referent stimulus sits at d = 0; the curve g(d) = exp(-d) is the
 generalization gradient. The vertical-line strip under the x-axis makes the
 dimension concrete — the stimulus is the length of a vertical line, and
-deviation d is how different a line looks from the referent. Shepard's law is
+distance d is how different a line looks from the referent. Shepard's law is
 remarkably robust empirically. The puzzle it leaves: WHY exponential? Today's
 Bayesian framework answers it — exponential decay falls out of the posterior.
 ~2 min.
