@@ -303,4 +303,9 @@ If you complete this, mention it in your submission.
 
 ## Submission
 
-Submit this knitted .Rmd (run end-to-end with no errors) plus your derivations for Parts 2(a) and 2(c).
+**Submit by DM or email to the instructor.** You may submit *either*:
+
+- **your knitted `.Rmd`** (the rendered HTML/PDF) — it must run end-to-end with no errors and contain your figures, inline text answers, derivations, and descriptions; **or**
+- **a single PDF report** containing your code, figures, text answers, derivations, and descriptions.
+
+Derivations (Parts 2(a) and 2(c)) may be typeset inline, or handwritten/typeset and included as images — either is fine.

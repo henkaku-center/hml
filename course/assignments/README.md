@@ -40,7 +40,9 @@ Investigate categorization and prediction in a 2-component Gaussian mixture mode
 
 - **Prep reading:** [Textbook — Mixture Models (T3 Ch 5)](https://josephausterweil.github.io/probintro/intro2/05_mixture_models/)
 - **GenJAX background:** [Tutorial 2, Chapters 0–4](https://josephausterweil.github.io/probintro/genjax/)
-- **Submit:** completed notebook (or knitted .Rmd) that runs end-to-end, plus derivations for Problem 2 parts (a) and (c).
+- **Submit** (by DM or email to the instructor) **one** of the following:
+    - your completed notebook (or knitted `.Rmd`) — it must run end-to-end and contain your figures, inline text answers, derivations, and descriptions; **or**
+    - a single PDF report containing your code, figures, text answers, derivations, and descriptions.
 
 ### Generalization (7.5%) {#generalization}
 
