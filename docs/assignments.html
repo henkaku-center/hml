@@ -42,30 +42,30 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="https://colab.research.google.com/github/henkaku-center/hml/blob/main/assignments/clusters.ipynb">Clusters</a></td>
+<td><a href="assignments/clusters/clusters.pdf">Clusters</a></td>
 <td>Week 3 (May 15)</td>
-<td><strong>Sun Jun 7, 5 PM</strong></td>
+<td><strong>Fri Jun 5, 8 PM</strong></td>
 <td>7.5%</td>
 <td>Mixture models &amp; categorization</td>
 </tr>
 <tr>
 <td>Generalization</td>
 <td>Week 4 (May 22)</td>
-<td><strong>Sun Jun 21, 5 PM</strong></td>
+<td><em>TBA when released</em></td>
 <td>7.5%</td>
 <td>Bayesian generalization</td>
 </tr>
 <tr>
 <td>Monte Carlo</td>
 <td>Week 7 (Jun 12)</td>
-<td><strong>Sun Jul 5, 5 PM</strong></td>
+<td><em>TBA when released</em></td>
 <td>10.5%</td>
 <td>Monte Carlo methods</td>
 </tr>
 <tr>
 <td>Reinforcement Learning</td>
 <td>Week 8 (Jun 19)</td>
-<td><strong>Sun Jul 12, 5 PM</strong></td>
+<td><em>TBA when released</em></td>
 <td>4.5%</td>
 <td>MDPs &amp; reinforcement learning</td>
 </tr>
@@ -74,12 +74,49 @@
 <p>Total assignments: <strong>30%</strong> of the course grade. The final-project proposal (pass/fail, tracked in the syllabus) is due <strong>Sun Jun 28, 5 PM</strong> — one week after the Generalization assignment.</p>
 <h2>Assignment details</h2>
 <h3>Clusters (7.5%)</h3>
-<p><strong>Open in Colab:</strong> <a href="https://colab.research.google.com/github/henkaku-center/hml/blob/main/assignments/clusters.ipynb">clusters.ipynb</a></p>
-<p>Investigate categorization and prediction in a 2-component Gaussian mixture model. You will derive the posterior and marginal distributions using Bayes' rule and the Law of Total Probability, then implement the model in GenJAX.</p>
+<p><strong>Due: Fri Jun 5, 2026 at 8:00 PM.</strong></p>
+<p>Investigate categorization and prediction in a 2-component Gaussian mixture model. Problem 1 is the Gaussian-Gaussian conjugate update; Problem 2 derives the posterior and marginal distributions for a mixture using Bayes' rule and the Law of Total Probability.</p>
+<p><strong>Start here — the assignment:</strong></p>
+<ul>
+<li><strong><a href="assignments/clusters/clusters.pdf">Assignment PDF — clusters.pdf</a></strong> — the problem statements and all the math. Read this first.</li>
+</ul>
+<p><strong>Then pick one stencil to work in.</strong> All three cover the same problems with the same scaffolding — choose whichever language you prefer:</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Stencil</th>
+<th>File</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GenJAX (canonical)</strong></td>
+<td><a href="assignments/clusters/clusters.ipynb">clusters.ipynb</a></td>
+<td>Recommended if you've done the Tutorial 2 GenJAX readings. Includes a bonus Part 2(e).</td>
+</tr>
+<tr>
+<td><strong>Python (no GenJAX)</strong></td>
+<td><a href="assignments/clusters/clusters_python.ipynb">clusters_python.ipynb</a></td>
+<td>numpy + scipy + matplotlib. Each cell has an optional paired "Now in GenJAX" tutorial cell.</td>
+</tr>
+<tr>
+<td><strong>R</strong></td>
+<td><a href="assignments/clusters/clusters_nosoln.Rmd">clusters_nosoln.Rmd</a></td>
+<td>base R + ggplot2.</td>
+</tr>
+<tr>
+<td><strong>Matlab</strong></td>
+<td>available on request</td>
+<td>Email Prof. Austerweil.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Other details:</strong></p>
 <ul>
 <li><strong>Prep reading:</strong> <a href="https://josephausterweil.github.io/probintro/intro2/05_mixture_models/">Textbook — Mixture Models (T3 Ch 5)</a></li>
 <li><strong>GenJAX background:</strong> <a href="https://josephausterweil.github.io/probintro/genjax/">Tutorial 2, Chapters 0–4</a></li>
-<li><strong>Submit:</strong> completed notebook (runs end-to-end) plus derivations for parts (a) and (c).</li>
+<li><strong>Submit:</strong> completed notebook (or knitted .Rmd) that runs end-to-end, plus derivations for Problem 2 parts (a) and (c).</li>
 </ul>
 <h3>Generalization (7.5%)</h3>
 <p><em>Details will be posted when the assignment is released.</em></p>

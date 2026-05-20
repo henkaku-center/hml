@@ -29,6 +29,21 @@ TEMPLATES_DIR = DOCS_DIR / "_templates"
 SLIDES_OUT_DIR = DOCS_DIR / "slides"
 READINGS_OUT_DIR = DOCS_DIR / "readings"
 READINGS_PDF_SRC = REPO_ROOT / "resources" / "readings"
+ASSIGNMENTS_OUT_DIR = DOCS_DIR / "assignments"
+ASSIGNMENTS_SRC = COURSE_DIR / "assignments"
+
+# Stencil files to publish per assignment: {assignment_slug: [filenames]}.
+# These are copied from course/assignments/<slug>/ into docs/assignments/<slug>/
+# so students can download them from hml.chibatech.dev. Solution files under
+# course/assignments/solutions/ are deliberately NOT staged.
+ASSIGNMENT_STENCILS = {
+    "clusters": [
+        "clusters.ipynb",
+        "clusters_python.ipynb",
+        "clusters_nosoln.Rmd",
+        "clusters.pdf",
+    ],
+}
 
 TEXTBOOK_BASE = "https://josephausterweil.github.io/probintro"
 TEXTBOOK_CONTENT = REPO_ROOT / "textbook" / "content"
@@ -442,6 +457,25 @@ def _stage_reading_pdf(pdf_name: str) -> str:
     return f"readings/pdfs/{pdf_name}"
 
 
+def stage_assignment_stencils() -> None:
+    """Copy each assignment's stencil files from course/assignments/<slug>/ into
+    docs/assignments/<slug>/ so they publish to hml.chibatech.dev/assignments/.
+    Skips (with a warning) any source file that doesn't exist."""
+    for slug, filenames in ASSIGNMENT_STENCILS.items():
+        src_dir = ASSIGNMENTS_SRC / slug
+        dst_dir = ASSIGNMENTS_OUT_DIR / slug
+        for name in filenames:
+            src = src_dir / name
+            if not src.is_file():
+                print(f"  WARNING: assignment stencil not found: {src}")
+                continue
+            dst_dir.mkdir(parents=True, exist_ok=True)
+            dst = dst_dir / name
+            if not dst.is_file() or src.stat().st_mtime > dst.stat().st_mtime:
+                shutil.copy2(src, dst)
+                print(f"  staged assignments/{slug}/{name}")
+
+
 def _resolve_reading_link(entry: dict) -> str:
     """Prefer local PDF, fall back to external URL, empty if neither."""
     pdf = entry.get("pdf")
@@ -510,6 +544,7 @@ def render_readings(env):
 
 
 def render_assignments(env):
+    stage_assignment_stencils()
     src = (COURSE_DIR / "assignments" / "README.md").read_text(encoding="utf-8")
     content = render_assignments_content(src)
     template = env.get_template("page.html")
