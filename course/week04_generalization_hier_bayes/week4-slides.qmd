@@ -412,6 +412,87 @@ of the day. Say it plainly: generalization to y = total posterior mass sitting
 on hypotheses that contain y. Both games are this exact sum. ~2 min.
 :::
 
+## [One datum, many hypotheses]{.lang-en}[1つのデータ、多くの仮説]{.lang-ja} {.smaller}
+
+:::: {.columns}
+::: {.column width="58%"}
+![](images/tg_hypotheses.png){fig-align="center" width="100%"}
+:::
+::: {.column width="42%"}
+::: {.lang-en}
+Observe **one** datum $x$.
+
+Every interval that **contains $x$** is a live hypothesis $h$.
+
+Under strong sampling each gets likelihood [$1/|h|$]{.accent} — so the
+**smaller** the interval, the **taller** the bar.
+
+[Flat prior → posterior weight $\propto$ this likelihood.]{.yellow}
+:::
+
+::: {.lang-ja}
+**1つ**のデータ $x$ を観測する。
+
+$x$ を**含む**すべての区間が、生きた仮説 $h$。
+
+強いサンプリングの下で各仮説は尤度 [$1/|h|$]{.accent} を得る — 区間が
+**小さい**ほどバーは**高い**。
+
+[平坦な事前 → 事後確率はこの尤度に比例。]{.yellow}
+:::
+:::
+::::
+
+::: {.notes}
+The Tenenbaum & Griffiths (2001) BBS construction, step 1. One data point; a
+family of overlapping consequential intervals, each containing x. Bar thickness
+= likelihood = 1/|h| (size principle). With a flat prior the posterior weight
+of each hypothesis is just its normalised likelihood. Next slide: sum these up.
+~2 min.
+:::
+
+## [Sum the votes → the gradient]{.lang-en}[票を合計 → 勾配]{.lang-ja} {.smaller}
+
+:::: {.columns}
+::: {.column width="58%"}
+![](images/tg_gradient.png){fig-align="center" width="100%"}
+:::
+::: {.column width="42%"}
+::: {.lang-en}
+For each novel $y$, add up the posterior weight of **every hypothesis that
+contains $y$**:
+$$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
+
+Points near $x$ sit inside *many* intervals → tall bars. Far points sit
+inside *few* → short bars.
+
+[The discretized votes trace an **approximately exponential** decay —
+Shepard's law, **derived**.]{.yellow}
+:::
+
+::: {.lang-ja}
+新しい $y$ ごとに、**$y$ を含むすべての仮説**の事後確率を合計する:
+$$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
+
+$x$ の近くの点は*多くの*区間に入る → 高いバー。遠い点は*わずかな*区間に
+しか入らない → 低いバー。
+
+[離散化された票が**ほぼ指数関数的**な減衰を描く — シェパードの法則が
+**導出**された。]{.yellow}
+:::
+:::
+::::
+
+::: {.notes}
+Step 2 of the T&G construction. The posterior-weighted vote IS the sum over
+hypotheses. Walk it slowly: a y close to x is covered by nearly all the
+intervals, so its bar is tall; a far y is covered by only the few wide
+intervals, so its bar is short. The bar profile is a discretized exponential —
+this is where Shepard's universal law comes from in the Bayesian account. It is
+the same dashed yellow curve from the Shepard slide, now produced rather than
+posited. ~2.5 min, then move to the size principle.
+:::
+
 ## [The size principle]{.lang-en}[サイズ原理]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ::: {.notes}
