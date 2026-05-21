@@ -691,7 +691,7 @@ $n$ について指数関数的に。
 :::
 ::::
 
-[[$|h|$ — the size of hypothesis $h$ (how many stimuli it contains).  $n$ — number of examples.]{.lang-en}[$|h|$ — 仮説 $h$ の大きさ（含む刺激の数）。  $n$ — 例の数。]{.lang-ja}]{.dim}
+[[$|h|$ — the size of hypothesis $h$ (how many stimuli it contains).<br>$n$ — number of examples.]{.lang-en}[$|h|$ — 仮説 $h$ の大きさ（含む刺激の数）。<br>$n$ — 例の数。]{.lang-ja}]{.dim}
 
 ::: {.notes}
 Define |h| and n in the dim caption. The key contrast: weak sampling's
