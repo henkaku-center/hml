@@ -226,19 +226,21 @@ Bayesian framework answers it — exponential decay falls out of the posterior.
 
 ::: {.lang-en}
 Shepard's universal law of generalization says generalization …
+:::
+
+::: {.lang-ja}
+シェパードの一般化の普遍法則によれば、一般化は …
+:::
 
 ::: {.fragment}
+::: {.lang-en}
 - **A.** decays exponentially in psychological space
 - **B.** decays exponentially in stimulus space
 - **C.** grows exponentially in psychological space
 - **D.** grows exponentially in stimulus space
 :::
-:::
 
 ::: {.lang-ja}
-シェパードの一般化の普遍法則によれば、一般化は …
-
-::: {.fragment}
 - **A.** 心理的空間で指数関数的に減衰する
 - **B.** 刺激空間で指数関数的に減衰する
 - **C.** 心理的空間で指数関数的に増大する
@@ -255,7 +257,7 @@ if behind — the answer is also on the previous slide.
 
 ## [Poll — answer]{.lang-en}[ポール — 答え]{.lang-ja} {.bigger}
 
-[**A. Decays exponentially in psychological space.**]{.yellow}
+[[**A. Decays exponentially in psychological space.**]{.lang-en}[**A. 心理的空間で指数関数的に減衰する。**]{.lang-ja}]{.yellow}
 
 ::: {.lang-en}
 "Stimulus space" is the trap — generalization isn't governed by physical
@@ -401,24 +403,26 @@ Callback to this slide explicitly during NFL. ~1.5 min.
 ::: {.lang-en}
 Probability that the novel stimulus $y$ has the property:
 $$p(y \in C \mid X) \;=\; \sum_{h \in \mathcal{H}} \mathbf{1}[\,y \in h\,]\; p(h \mid X)$$
-
-::: {.fragment}
-Every hypothesis votes. Its vote is **its posterior weight**, and it votes "yes"
-only if it *contains* $y$.
-:::
 :::
 
 ::: {.lang-ja}
 新しい刺激 $y$ がその性質を持つ確率:
 $$p(y \in C \mid X) \;=\; \sum_{h \in \mathcal{H}} \mathbf{1}[\,y \in h\,]\; p(h \mid X)$$
+:::
 
 ::: {.fragment}
+::: {.lang-en}
+Every hypothesis votes. Its vote is **its posterior weight**, and it votes "yes"
+only if it *contains* $y$.
+:::
+
+::: {.lang-ja}
 すべての仮説が投票する。票の重みは**事後確率**であり、その仮説が $y$ を
 *含む*ときだけ「はい」に投票する。
 :::
 :::
 
-[$\mathbf{1}[\,y \in h\,]$ — the indicator: $1$ if $y$ is in the set $h$, else $0$.]{.dim}
+[[$\mathbf{1}[\,y \in h\,]$ — the indicator: $1$ if $y$ is in the set $h$, else $0$.]{.lang-en}[$\mathbf{1}[\,y \in h\,]$ — 指示関数: $y$ が集合 $h$ に属せば $1$、そうでなければ $0$。]{.lang-ja}]{.dim}
 
 ::: {.notes}
 The indicator is defined in the dim caption per CLAUDE.md. THIS is the equation
@@ -672,7 +676,7 @@ $h$ の*大きさ*には依存しない。
 $$p(X \mid h) = \left(\frac{1}{|h|}\right)^{n}$$
 :::
 
-[$|h|$ — the size of hypothesis $h$: how many stimuli it contains. $n$ — number of examples.]{.dim}
+[[$|h|$ — the size of hypothesis $h$: how many stimuli it contains. $n$ — number of examples.]{.lang-en}[$|h|$ — 仮説 $h$ の大きさ: 含む刺激の数。 $n$ — 例の数。]{.lang-ja}]{.dim}
 
 ::: {.notes}
 Define |h| and n in the dim caption. The key contrast: weak sampling's
@@ -741,19 +745,21 @@ got lucky, and Bayes discounts luck. ~2 min.
 
 ::: {.lang-en}
 What is **strong sampling**?
+:::
+
+::: {.lang-ja}
+**強いサンプリング**とは何か?
+:::
 
 ::: {.fragment}
+::: {.lang-en}
 - **A.** Each stimulus is generated uniformly at random from the true hypothesis
 - **B.** A stimulus has probability one given the true hypothesis
 - **C.** Larger hypotheses are given smaller prior probability
 - **D.** Smaller hypotheses are given smaller prior probability
 :::
-:::
 
 ::: {.lang-ja}
-**強いサンプリング**とは何か?
-
-::: {.fragment}
 - **A.** 各刺激は真の仮説から一様ランダムに生成される
 - **B.** 刺激は真の仮説の下で確率1を持つ
 - **C.** 大きい仮説には小さい事前確率が与えられる
@@ -770,7 +776,7 @@ principle (a likelihood claim) with the prior. The answer is A.
 
 ## [Poll — answer]{.lang-en}[ポール — 答え]{.lang-ja} {.bigger}
 
-[**A. Uniformly at random from the true hypothesis.**]{.yellow}
+[[**A. Uniformly at random from the true hypothesis.**]{.lang-en}[**A. 真の仮説から一様ランダムに。**]{.lang-ja}]{.yellow}
 
 ::: {.lang-en}
 **B** describes *weak* sampling — membership gives likelihood $1$, regardless of
@@ -863,11 +869,6 @@ Plot $p(y \in C \mid X)$ as $y$ moves along the dimension:
 
 - **High** inside the range of the examples
 - **Decays** as $y$ moves outside that range
-
-::: {.fragment}
-[The decay is *exponential* — Shepard's universal law, now **derived** rather
-than assumed.]{.yellow}
-:::
 :::
 
 ::: {.lang-ja}
@@ -875,11 +876,11 @@ $y$ が次元上を動くとき、$p(y \in C \mid X)$ をプロットする:
 
 - 例の範囲の**内側**では高い
 - $y$ がその範囲の外へ動くと**減衰**する
+:::
 
 ::: {.fragment}
-[減衰は*指数関数的* — シェパードの普遍法則が、仮定ではなく
-**導出**された。]{.yellow}
-:::
+[The decay is *exponential* — Shepard's universal law, now **derived** rather
+than assumed.]{.lang-en .yellow}[減衰は*指数関数的* — シェパードの普遍法則が、仮定ではなく**導出**された。]{.lang-ja .yellow}
 :::
 
 ::: {.notes}
@@ -1143,20 +1144,15 @@ numbers, then build the comparison over the next two slides. ~1.5 min.
 
 ::: {.lang-en}
 $$p(60 \mid \text{mult-2}) = \frac{1}{50} \qquad p(60 \mid \text{mult-10}) = \frac{1}{10}$$
-
-::: {.fragment}
-[Multiples of 10 is already **5×** more likely — but only 5×. With one example,
-many hypotheses stay in contention → **graded** generalization.]{.yellow}
-:::
 :::
 
 ::: {.lang-ja}
 $$p(60 \mid \text{2の倍数}) = \frac{1}{50} \qquad p(60 \mid \text{10の倍数}) = \frac{1}{10}$$
+:::
 
 ::: {.fragment}
-[10の倍数はすでに **5倍**起こりやすい — だが5倍だけ。例が1つだと、多くの
-仮説が競合に残る → **段階的**な一般化。]{.yellow}
-:::
+[Multiples of 10 is already **5×** more likely — but only 5×. With one example,
+many hypotheses stay in contention → **graded** generalization.]{.lang-en .yellow}[10の倍数はすでに **5倍**起こりやすい — だが5倍だけ。例が1つだと、多くの仮説が競合に残る → **段階的**な一般化。]{.lang-ja .yellow}
 :::
 
 ::: {.notes}
@@ -1169,28 +1165,24 @@ similarity. ~1.5 min.
 
 ::: {.lang-en}
 $$p(X \mid \text{mult-2}) = \left(\tfrac{1}{50}\right)^{4} \approx 1.6 \times 10^{-7}$$
-
-::: {.fragment}
-$$p(X \mid \text{mult-10}) = \left(\tfrac{1}{10}\right)^{4} = 10^{-4}$$
-:::
-
-::: {.fragment}
-[Now multiples of 10 is **~625×** more likely. The 5× edge got raised to the
-4th power → a crisp **rule**.]{.yellow}
-:::
 :::
 
 ::: {.lang-ja}
 $$p(X \mid \text{2の倍数}) = \left(\tfrac{1}{50}\right)^{4} \approx 1.6 \times 10^{-7}$$
+:::
 
 ::: {.fragment}
+::: {.lang-en}
+$$p(X \mid \text{mult-10}) = \left(\tfrac{1}{10}\right)^{4} = 10^{-4}$$
+:::
+::: {.lang-ja}
 $$p(X \mid \text{10の倍数}) = \left(\tfrac{1}{10}\right)^{4} = 10^{-4}$$
 :::
+:::
 
 ::: {.fragment}
-[今や10の倍数は **約625倍**起こりやすい。5倍の差が4乗された → 明確な
-**規則**。]{.yellow}
-:::
+[Now multiples of 10 is **~625×** more likely. The 5× edge got raised to the
+4th power → a crisp **rule**.]{.lang-en .yellow}[今や10の倍数は **約625倍**起こりやすい。5倍の差が4乗された → 明確な**規則**。]{.lang-ja .yellow}
 :::
 
 ::: {.notes}
@@ -1517,19 +1509,21 @@ inductive commitments NFL proves you cannot do without. ~2 min.
 
 ::: {.lang-en}
 What is the No Free Lunch theorem (for prediction)?
+:::
+
+::: {.lang-ja}
+ノーフリーランチ定理（予測について）とは何か?
+:::
 
 ::: {.fragment}
+::: {.lang-en}
 - **A.** When all hypotheses are possible, there's nothing you can learn to predict
 - **B.** Learning one hypothesis hurts learning other hypotheses
 - **C.** If someone gives you lunch for free, they'll expect something back
 - **D.** Generalizing to new stimuli can hurt a learner
 :::
-:::
 
 ::: {.lang-ja}
-ノーフリーランチ定理（予測について）とは何か?
-
-::: {.fragment}
 - **A.** すべての仮説が可能なとき、予測のために学べることは何もない
 - **B.** 1つの仮説を学ぶと、他の仮説の学習が損なわれる
 - **C.** 誰かが無料で昼食をくれたら、後で見返りを期待される
@@ -1545,8 +1539,7 @@ overran.
 
 ## [Poll — answer]{.lang-en}[ポール — 答え]{.lang-ja} {.bigger}
 
-[**A. When all hypotheses are possible, there's nothing you can learn to
-predict.**]{.yellow}
+[[**A. When all hypotheses are possible, there's nothing you can learn to predict.**]{.lang-en}[**A. すべての仮説が可能なとき、予測のために学べることは何もない。**]{.lang-ja}]{.yellow}
 
 ::: {.lang-en}
 A flat prior over every possible world means data carries no leverage — every
@@ -1718,20 +1711,13 @@ hierarchical is the principled middle. ~2.5 min.
 Built up, top to bottom:
 
 $$(a, b) \;\sim\; \text{prior}$$
-
-::: {.fragment}
-$$\theta_i \mid a, b \;\sim\; \text{Beta}(a, b)$$
-:::
-
-::: {.fragment}
-$$k_i \mid \theta_i \;\sim\; \text{Binomial}(n_i, \theta_i)$$
-:::
 :::
 
 ::: {.lang-ja}
 上から下へ組み上げる:
 
 $$(a, b) \;\sim\; \text{事前}$$
+:::
 
 ::: {.fragment}
 $$\theta_i \mid a, b \;\sim\; \text{Beta}(a, b)$$
@@ -1740,9 +1726,8 @@ $$\theta_i \mid a, b \;\sim\; \text{Beta}(a, b)$$
 ::: {.fragment}
 $$k_i \mid \theta_i \;\sim\; \text{Binomial}(n_i, \theta_i)$$
 :::
-:::
 
-[$k_i$ — tonkatsu count for student $i$.  $n_i$ — that student's total bentos.]{.dim}
+[[$k_i$ — tonkatsu count for student $i$.  $n_i$ — that student's total bentos.]{.lang-en}[$k_i$ — 学生 $i$ のとんかつの回数。  $n_i$ — その学生の弁当の総数。]{.lang-ja}]{.dim}
 
 ::: {.notes}
 Slide B5. Variant B only. Sequential reveal: hyperprior → per-student rate →

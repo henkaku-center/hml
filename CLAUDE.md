@@ -54,6 +54,11 @@ When building or revising any weekly lecture, **mine the SP25 quiz bank for audi
 2. Read the assessment_qti.xml and identify questions that (a) fit as a fast live poll (≤ 4 options, commit-before-reveal), (b) test concepts already covered by that point in the lecture, (c) don't require written prose.
 3. Integrate 2–4 polls per week as paired slides: `prompt` (question + options) → `reveal` (answer + 1-line justification), landed at natural block boundaries. Each pair should cost ≤ 1.5 min.
 4. Record which SP25 quiz item sourced each poll in the speaker notes, so reusing or retiring it is traceable.
+5. **Bilingual poll structure (Week 2+ decks).** A poll touches every bilingual-slide trap at once, so build it deliberately:
+   - **Prompt slide:** the question in paired `.lang-en`/`.lang-ja` divs, then the options in **one** `.fragment` that *wraps* the paired option divs — never a `.fragment` nested inside each lang div (that double-counts and breaks the reveal in JA — see the Fragments rule above).
+   - **Reveal slide:** the bolded answer line must be paired lang spans (`[EN]{.lang-en .yellow}[JA]{.lang-ja .yellow}`), not a bare `[…]{.yellow}` — a bare answer line stays English in JA mode. The justification goes in paired `.lang-en`/`.lang-ja` divs.
+   - Translate the options when porting: an SP25 quiz item is English-only; the JA option text must be authored, not left blank.
+   - Verify by toggling the rendered deck to JA (press `L`) and stepping through the poll — the options must appear on the *first* keypress and the answer line must be Japanese.
 
 Rationale: the SP25 quizzes are already-authored, already-pedagogy-tested concept checks on the exact same material. Recreating poll prompts from scratch is wasted effort, and the archived quizzes surface student misconceptions the SP25 cohort actually hit.
 - **Landing page**: `docs/index.html` is a single-file static site served by GitHub Pages. Assets in `docs/assets/` (Chiba Tech SDS logos) were fetched via pre-approved `curl` commands in `.claude/settings.local.json`.
@@ -87,7 +92,18 @@ English content — prose, KaTeX ($P(H \mid D)$), lists, everything.
 
 - **CSS-toggle, never re-render.** Both languages stay in the DOM at all times; KaTeX/Mermaid render once on page load and work in both. Re-rendering on toggle (which is what Ira's APS p5.js source does) would break math.
 - **Mermaid diagrams**: mermaid edge labels and node text don't inherit the language wrapper the way markdown prose does. If you need a bilingual mermaid diagram, either duplicate the entire `mermaid` block inside each lang div, or author it language-agnostic (English only — fine for formula-style diagrams).
-- **Fragments**: put `.fragment` elements *inside* the lang divs, not wrapping them. Reveal still counts hidden fragments as steps, which can miscount the build-up.
+- **Fragments on bilingual slides — wrap the lang divs, do NOT nest a fragment inside each.** A `.fragment` placed inside *both* `.lang-en` and `.lang-ja` produces **two** fragments. Reveal counts hidden fragments, so in JA mode the first keypress reveals the (invisible) EN fragment — a dead press — and the JA content only appears on the second. For a poll, the options then fail to appear when expected. The correct pattern is **one** fragment that *wraps* the paired lang divs:
+  ```markdown
+  ::: {.lang-en} prompt text :::
+  ::: {.lang-ja} prompt text :::
+
+  ::: {.fragment}
+  ::: {.lang-en} ...EN options... :::
+  ::: {.lang-ja} ...JA options... :::
+  :::
+  ```
+  For a single reveal of inline content, a fragment can also wrap two inline spans: `::: {.fragment}` `[EN]{.lang-en}[JA]{.lang-ja}` `:::`. Language-agnostic math (`$$...$$` with no prose) needs no lang wrapper inside the fragment — a bare `::: {.fragment}` around the equation is fine and correct.
+- **No bare prose on a bilingual slide.** Every piece of student-facing text on a slide that has *any* `.lang-ja` content must itself be wrapped — either in a `.lang-en`/`.lang-ja` div or as paired inline spans. Bare text (a `[**answer**]{.yellow}` line, a `[…]{.dim}` notation caption) has no language class, so it stays in English when the deck is toggled to JA — a mixed-language slide. This is easy to miss because the bare line *looks* fine in the default EN render. A styled span still needs the language class: write `[EN]{.lang-en .yellow}[JA]{.lang-ja .yellow}`, not a bare `[…]{.yellow}`. (Language-agnostic math and figures are exempt — they read the same in both.)
 - **Speaker notes**: one language per slide unless you wrap content inside `::: {.notes}` in paired lang divs too. Generally not worth it — instructor-only content can stay EN.
 - **Title slide**: Quarto's title/subtitle frontmatter fields don't accept nested divs. If a JA title is needed, use the title in both languages with an `&nbsp;&nbsp;·&nbsp;&nbsp;` separator.
 - **Keyboard**: `L` is free in Reveal. Avoid `f` (fullscreen), `s` (speaker notes), `b` (blackout), `?` (help), `esc`.

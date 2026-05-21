@@ -216,6 +216,21 @@ This converged to zero flagged slides on the APS-I Week 3 deck. Each cycle is
    ```
 
    Then `Read` the PNG.
+7. **JA-mode check (bilingual decks).** The fill audit and a default decktape
+   capture both see only the EN state — they cannot catch a deck that is
+   broken *in Japanese*. Two JA-only failure modes the audit will never flag:
+   - **Fragment miscount** — a `.fragment` nested inside *each* lang div is
+     two fragments; in JA mode the first keypress reveals the invisible EN
+     one (a dead press). Polls are the usual victim. Fix: one fragment
+     *wrapping* the paired lang divs (see CLAUDE.md → Fragments rule).
+   - **Bare prose** — a `[…]{.yellow}` / `[…]{.dim}` line with no language
+     class stays English under the JA toggle.
+
+   To check, load the rendered HTML in a headless browser, add
+   `document.body.classList.add('show-ja')`, and step through any slide with
+   fragments — the content must reveal on the *first* press and be Japanese.
+   A quick structural pre-check: every `.fragment` should *contain* the lang
+   divs, not sit inside one.
 
 ## When the loop oscillates
 
