@@ -174,25 +174,39 @@ not raw physical space*).
 表現した後の知覚距離 — 生の物理的空間ではない*）。
 :::
 
-:::: {.columns}
-::: {.column width="62%"}
+:::: {.columns .v-center}
+::: {.column width="56%"}
 ![](images/shepard_decay.png){fig-align="center" width="100%"}
 :::
-::: {.column width="38%"}
-<br>
-
+::: {.column width="44%"}
+::: {.lang-en}
+[**One law, one equation:**]{.accent}
 $$g(d) = e^{-d}$$
 
-::: {.lang-en}
-[$g$]{.accent} — probability of generalization
+- [$g$]{.accent} — probability of generalization
+- [$d$]{.accent} — distance in psychological space from the referent
 
-[$d$]{.accent} — distance in psychological space from the referent
+The same curve holds across **species, senses, and stimulus types** — pitch,
+colour, line length, faces. Shepard called it *universal* for that reason.
+
+[But the law is **descriptive**: it says generalization decays exponentially,
+not *why*. Today's Bayesian framework will **derive** that exponential —
+it falls out of the posterior.]{.yellow}
 :::
 
 ::: {.lang-ja}
-[$g$]{.accent} — 一般化の確率
+[**1つの法則、1つの式:**]{.accent}
+$$g(d) = e^{-d}$$
 
-[$d$]{.accent} — 参照刺激からの心理的空間における距離
+- [$g$]{.accent} — 一般化の確率
+- [$d$]{.accent} — 参照刺激からの心理的空間における距離
+
+同じ曲線が**種・感覚・刺激の種類**を超えて成り立つ — 音高、色、線の長さ、顔。
+だからシェパードは*普遍的*と呼んだ。
+
+[だがこの法則は**記述的**: 一般化が指数関数的に減衰すると言うだけで、
+*なぜ*かは言わない。今日のベイズの枠組みがその指数関数を**導出**する —
+事後確率から導かれる。]{.yellow}
 :::
 :::
 ::::
@@ -414,27 +428,37 @@ on hypotheses that contain y. Both games are this exact sum. ~2 min.
 
 ## [One datum → the posterior-weighted vote]{.lang-en}[1つのデータ → 事後確率による投票]{.lang-ja} {.smaller}
 
-:::: {.columns}
-::: {.column width="60%"}
+:::: {.columns .v-center}
+::: {.column width="54%"}
 ![](images/tg_vote.png){fig-align="center" width="100%"}
 :::
-::: {.column width="40%"}
+::: {.column width="46%"}
 ::: {.lang-en}
-**Top** — observe one datum $x$. Every interval that **contains $x$** is a
-live hypothesis $h$. Thickness $= 1/|h|$, its strong-sampling likelihood;
-flat prior → posterior $\propto$ likelihood.
+[**Top panel — the hypotheses.**]{.accent}
+Observe one datum $x$. Every interval that **contains $x$** is a live
+hypothesis $h$. Each bar's thickness is $1/|h|$, its strong-sampling
+likelihood — so a *smaller* interval is a *thicker* bar. With a flat prior,
+the posterior weight of each $h$ is just $\propto$ that likelihood.
 
-**Bottom** — the vote: for each $y$, sum the posterior of every $h$ that
-contains it.
+[**Bottom panel — the vote.**]{.accent}
+For each candidate $y$, sum the posterior of every $h$ that contains it:
 $$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
+
+[Next: walk $y$ outward — $x$, then $x{+}1$, then $x{+}2$ — and watch the
+vote shrink.]{.yellow}
 :::
 
 ::: {.lang-ja}
-**上** — 1つのデータ $x$ を観測。$x$ を**含む**すべての区間が生きた仮説
-$h$。太さ $= 1/|h|$（強サンプリング尤度）; 平坦な事前 → 事後 $\propto$ 尤度。
+[**上のパネル — 仮説。**]{.accent}
+1つのデータ $x$ を観測。$x$ を**含む**すべての区間が生きた仮説 $h$。
+各バーの太さは $1/|h|$（強サンプリング尤度）— *小さい*区間ほど*太い*バー。
+平坦な事前の下で、各 $h$ の事後確率はこの尤度に比例する。
 
-**下** — 投票: 各 $y$ について、$y$ を含むすべての $h$ の事後確率を合計。
+[**下のパネル — 投票。**]{.accent}
+各候補 $y$ について、$y$ を含むすべての $h$ の事後確率を合計:
 $$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
+
+[次: $y$ を外へ動かす — $x$、$x{+}1$、$x{+}2$ — 投票が縮むのを見る。]{.yellow}
 :::
 :::
 ::::
@@ -449,25 +473,32 @@ that exclude it so students see the vote shrink. ~1.5 min on this overview.
 
 ## [Vote for $y = x$]{.lang-en}[$y = x$ への投票]{.lang-ja} {.smaller}
 
-:::: {.columns}
-::: {.column width="60%"}
+:::: {.columns .v-center}
+::: {.column width="54%"}
 ![](images/tg_vote_y0.png){fig-align="center" width="100%"}
 :::
-::: {.column width="40%"}
+::: {.column width="46%"}
 ::: {.lang-en}
-Ask about $y = x$ — the datum itself.
+[**The question.**]{.accent} Does the property generalize to $y = x$ — the
+observed datum itself?
 
-[**Every** hypothesis contains $x$]{.yellow} — all 7 vote "yes".
+[**Who votes.**]{.accent} Every hypothesis was built to contain $x$, so
+[**all 7 of 7 vote "yes"**]{.yellow}. None drops out.
 
-The bar at $x$ sums *all* the posterior weight: the tallest possible vote.
+[**The bar.**]{.accent} The vote at $x$ sums *all* the posterior weight —
+this is the **tallest bar the gradient can have**. Generalization to the
+datum itself is near-certain.
 :::
 
 ::: {.lang-ja}
-$y = x$ — データそのものについて問う。
+[**問い。**]{.accent} 性質は $y = x$ — 観測したデータそのもの — に
+一般化するか?
 
-[**すべての**仮説が $x$ を含む]{.yellow} — 7つすべてが「はい」に投票。
+[**誰が投票するか。**]{.accent} すべての仮説は $x$ を含むように作られた
+ので、[**7つ中7つすべてが「はい」に投票**]{.yellow}。脱落なし。
 
-$x$ のバーは*すべて*の事後確率を合計 — 可能な限り高い投票。
+[**バー。**]{.accent} $x$ での投票は*すべて*の事後確率を合計 — これが
+**勾配が取りうる最も高いバー**。データ自体への一般化はほぼ確実。
 :::
 :::
 ::::
@@ -480,27 +511,32 @@ gradient. Greyed bars are the other y values, shown for context. ~1 min.
 
 ## [Vote for $y = x + 1$]{.lang-en}[$y = x + 1$ への投票]{.lang-ja} {.smaller}
 
-:::: {.columns}
-::: {.column width="60%"}
+:::: {.columns .v-center}
+::: {.column width="54%"}
 ![](images/tg_vote_y1.png){fig-align="center" width="100%"}
 :::
-::: {.column width="40%"}
+::: {.column width="46%"}
 ::: {.lang-en}
-Move one step away: $y = x + 1$.
+[**The question.**]{.accent} Move one step out: does the property generalize
+to $y = x + 1$?
 
-[The two smallest intervals no longer reach $y$]{.yellow} — they drop out
-(greyed). Only 5 of 7 vote.
+[**Who drops.**]{.accent} [The two smallest intervals no longer reach
+$y$]{.yellow} — they grey out. [**5 of 7 still vote.**]{.yellow}
 
-Fewer votes → a **shorter** bar.
+[**The bar.**]{.accent} Fewer hypotheses contribute → a **shorter** bar than
+at $x$. And note *which* dropped: the **smallest, most-likely** intervals.
+Losing the heavy-weight votes is why the gradient falls off quickly.
 :::
 
 ::: {.lang-ja}
-1歩離れる: $y = x + 1$。
+[**問い。**]{.accent} 1歩外へ: 性質は $y = x + 1$ に一般化するか?
 
-[最小の2区間はもう $y$ に届かない]{.yellow} — 脱落（グレー）。7つ中5つだけ
-が投票。
+[**誰が脱落するか。**]{.accent} [最小の2区間はもう $y$ に届かない]{.yellow}
+— グレーになる。[**7つ中5つがまだ投票。**]{.yellow}
 
-票が減る → バーが**低く**なる。
+[**バー。**]{.accent} 寄与する仮説が減る → $x$ より**低い**バー。しかも
+脱落したのは**最小・最尤**の区間。重みの大きい票を失うことが、勾配が速く
+落ちる理由。
 :::
 :::
 ::::
@@ -515,29 +551,37 @@ fast. ~1.5 min.
 
 ## [Vote for $y = x + 2$]{.lang-en}[$y = x + 2$ への投票]{.lang-ja} {.smaller}
 
-:::: {.columns}
-::: {.column width="60%"}
+:::: {.columns .v-center}
+::: {.column width="54%"}
 ![](images/tg_vote_y2.png){fig-align="center" width="100%"}
 :::
-::: {.column width="40%"}
+::: {.column width="46%"}
 ::: {.lang-en}
-Two steps away: $y = x + 2$.
+[**The question.**]{.accent} Two steps out: does the property generalize to
+$y = x + 2$?
 
-[Only the 2 widest intervals still reach $y$]{.yellow} — and those are the
-*least* likely. The bar is short.
+[**Who's left.**]{.accent} [Only the 2 widest intervals still reach
+$y$]{.yellow} — and those are the *least* likely (thinnest bars). [**2 of 7
+vote.**]{.yellow}
 
-Sweep $y$ across every point → [the bars trace an **approximately
-exponential** decay. Shepard's law, **derived**.]{.yellow}
+[**The bar.**]{.accent} Few votes, and only low-weight ones → the bar is
+short.
+
+[**The payoff.**]{.accent} Sweep $y$ across every point and the bar heights
+[trace an **approximately exponential** decay — Shepard's universal law,
+**derived** from the model, not assumed.]{.yellow}
 :::
 
 ::: {.lang-ja}
-2歩離れる: $y = x + 2$。
+[**問い。**]{.accent} 2歩外へ: 性質は $y = x + 2$ に一般化するか?
 
-[最も広い2区間だけが $y$ に届く]{.yellow} — しかもそれらは*最も*尤度が低い。
-バーは低い。
+[**誰が残るか。**]{.accent} [最も広い2区間だけが $y$ に届く]{.yellow} —
+しかもそれらは*最も*尤度が低い（最も細いバー）。[**7つ中2つが投票。**]{.yellow}
 
-$y$ を全点で動かす → [バーは**ほぼ指数関数的**な減衰を描く。シェパードの
-法則が**導出**された。]{.yellow}
+[**バー。**]{.accent} 票が少なく、しかも低重みのみ → バーは低い。
+
+[**結論。**]{.accent} $y$ を全点で動かすと、バーの高さは[**ほぼ指数関数的**な
+減衰を描く — シェパードの普遍法則が、仮定ではなくモデルから**導出**された。]{.yellow}
 :::
 :::
 ::::
@@ -1171,31 +1215,37 @@ assumptions. ~1.5 min.
 
 ## [Strong sampling — one example]{.lang-en}[強いサンプリング — 例が1つ]{.lang-ja} {.smaller}
 
-:::: {.columns}
+:::: {.columns .v-center}
 ::: {.column width="52%"}
 ![](images/suspicious_strong_1.png){fig-align="center" width="100%"}
 :::
 ::: {.column width="48%"}
 ::: {.lang-en}
-[$X = \{60\}$]{.accent}, strong sampling:
+[**The data:**]{.accent} $X = \{60\}$ — a single example. Strong sampling:
 $$p(h \mid X) \propto \left(\tfrac{1}{|h|}\right)^{1}\!\! \cdot 0.5$$
 
-- mult-10: $\tfrac{1}{10}$ · even: $\tfrac{1}{50}$
-- Normalize → [**0.83 vs. 0.17**]{.yellow}
+- mult-10: likelihood $\tfrac{1}{10}$ · even: $\tfrac{1}{50}$
+- Normalize the two → [**0.83 vs. 0.17**]{.yellow}
 
-One example already **tilts** belief toward the smaller hypothesis — but
-gently. Lots of mass still on "even".
+[**Read it:**]{.accent} one example already **tilts** belief toward the
+smaller hypothesis — but only gently. A 5:1 likelihood ratio is not decisive,
+so plenty of posterior mass still sits on "even numbers".
+
+[This is the **graded** regime — belief shifts, but no rule yet.]{.yellow}
 :::
 
 ::: {.lang-ja}
-[$X = \{60\}$]{.accent}、強いサンプリング:
+[**データ:**]{.accent} $X = \{60\}$ — 例が1つ。強いサンプリング:
 $$p(h \mid X) \propto \left(\tfrac{1}{|h|}\right)^{1}\!\! \cdot 0.5$$
 
-- 10の倍数: $\tfrac{1}{10}$ · 偶数: $\tfrac{1}{50}$
-- 正規化 → [**0.83 対 0.17**]{.yellow}
+- 10の倍数: 尤度 $\tfrac{1}{10}$ · 偶数: $\tfrac{1}{50}$
+- 2つを正規化 → [**0.83 対 0.17**]{.yellow}
 
-例が1つでもう、小さい仮説へ信念が**傾く** — だが穏やかに。「偶数」にも
-まだ多くの質量。
+[**読み方:**]{.accent} 例が1つでもう、小さい仮説へ信念が**傾く** —
+だが穏やかに。5:1 の尤度比は決定的ではないので、「偶数」にもまだ多くの
+事後確率の質量が残る。
+
+[これが**段階的**な領域 — 信念は動くが、まだ規則ではない。]{.yellow}
 :::
 :::
 ::::
@@ -1209,7 +1259,7 @@ of the number game. ~1.5 min.
 
 ## [Strong sampling — four examples]{.lang-en}[強いサンプリング — 例が4つ]{.lang-ja} {.smaller}
 
-:::: {.columns}
+:::: {.columns .v-center}
 ::: {.column width="52%"}
 ![](images/suspicious_strong_4.png){fig-align="center" width="100%"}
 :::
@@ -1247,7 +1297,7 @@ multiples of 10 by chance is a 625× coincidence, and Bayes discounts it. ~2 min
 
 ## [Weak sampling — the data never moves you]{.lang-en}[弱いサンプリング — データは信念を動かさない]{.lang-ja} {.smaller}
 
-:::: {.columns}
+:::: {.columns .v-center}
 ::: {.column width="52%"}
 ![](images/suspicious_weak.png){fig-align="center" width="100%"}
 :::

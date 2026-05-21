@@ -96,32 +96,107 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
     const sectionTopGap = (sectionContentTop / stageH) * 100;
     const sectionBottomGap = ((stageH - sectionContentBottom) / stageH) * 100;
 
-    // INNER CONTENT measurement (catches center:false short-content slides)
-    // Find the actual rendered content elements within the section, ignoring
-    // hidden language and fixed-position branding.
-    const els = present.querySelectorAll('h1, h2, h3, h4, p, li, table, .math, img, blockquote, pre');
-    let innerTop = Infinity;
-    let innerBottom = -Infinity;
-    for (const el of els) {
-      const r = el.getBoundingClientRect();
-      if (r.width === 0 || r.height === 0) continue;
-      const cs = getComputedStyle(el);
-      if (cs.display === 'none' || cs.visibility === 'hidden') continue;
-      if (cs.position === 'fixed') continue;
-      if (r.top < innerTop) innerTop = r.top;
-      if (r.bottom > innerBottom) innerBottom = r.bottom;
-    }
+    // measureBox: bounding box of the rendered content inside `root`, in
+    // stage-relative percentages. Ignores hidden language divs and fixed
+    // branding. Returns null when `root` has no visible content.
+    const measureBox = (root) => {
+      const els = root.querySelectorAll(
+        'h1, h2, h3, h4, p, li, table, .math, img, blockquote, pre');
+      let top = Infinity, bottom = -Infinity;
+      for (const el of els) {
+        const r = el.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0) continue;
+        const cs = getComputedStyle(el);
+        if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+        if (cs.position === 'fixed') continue;
+        if (r.top < top) top = r.top;
+        if (r.bottom > bottom) bottom = r.bottom;
+      }
+      if (top === Infinity) return null;
+      return {
+        fill: ((bottom - top) / stageH) * 100,
+        topGap: ((top - stageTop) / stageH) * 100,
+        bottomGap: ((stageTop + stageH - bottom) / stageH) * 100,
+        top: top - stageTop,
+        bottom: bottom - stageTop,
+      };
+    };
+
+    // INNER CONTENT measurement (catches center:false short-content slides):
+    // the bounding box across ALL content on the slide.
+    const inner = measureBox(present);
     let innerFill = 0, innerTopGap = 0, innerBottomGap = 100;
-    if (innerTop !== Infinity) {
-      innerFill = ((innerBottom - innerTop) / stageH) * 100;
-      innerTopGap = ((innerTop - stageTop) / stageH) * 100;
-      innerBottomGap = ((stageTop + stageH - innerBottom) / stageH) * 100;
+    if (inner) {
+      innerFill = inner.fill;
+      innerTopGap = inner.topGap;
+      innerBottomGap = inner.bottomGap;
     }
 
-    // The "real" fill is the more conservative (smaller) of the two.
-    // - If center:true and content is short, sectionFill is small (correct signal).
-    // - If center:false and content is short, sectionFill is ~100% but innerFill is small.
-    // Take the min so we never miss either failure mode.
+    // PER-COLUMN measurement (catches the two-column failure modes). A tall
+    // figure column can fill the slide while the text column beside it is
+    // (a) sparse — too little content — or (b) top-jammed — content pooled at
+    // the top of the column with a void below. The whole-slide inner box sees
+    // neither: the figure sets the bounds. So measure each Quarto
+    // `.columns > .column` on its own.
+    //
+    // Two things are measured per column, and BOTH are vs. the column's own
+    // `.columns` ROW (not the whole stage): the content fill, and where that
+    // content sits within the row. A column's content vertical spread is
+    // therefore handled independently for each column.
+    //  - columnFill   = min content-fill across columns (the sparse case).
+    //  - columnSkew   = max |topGap - bottomGap| within the row across columns
+    //                   (the imbalance case — content not vertically centered
+    //                   in its row). 0 = perfectly centered.
+    let columnFill = Infinity;       // min fill across columns; Infinity = no columns
+    let columnSkew = 0;              // worst within-row vertical imbalance
+    let nColumns = 0;
+    const columnSets = present.querySelectorAll('.columns');
+    for (const cs of columnSets) {
+      const cols = cs.querySelectorAll(':scope > .column');
+      if (cols.length < 2) continue;             // not a real multi-column row
+
+      // Measure every wide-enough column in this row first.
+      const colBoxes = [];
+      for (const col of cols) {
+        const cr = col.getBoundingClientRect();
+        if (cr.width < stageRect.width * 0.12) continue;  // ignore sliver columns
+        const box = measureBox(col);
+        if (!box) continue;                      // empty column (e.g. spacer)
+        colBoxes.push(box);
+        nColumns++;
+        if (box.fill < columnFill) columnFill = box.fill;
+      }
+      if (colBoxes.length < 2) continue;
+
+      // Within-row vertical balance: the row spans from the topmost column's
+      // content-top to the bottommost column's content-bottom. A short column
+      // is well-placed if its content is CENTERED in that span; it is
+      // top-jammed if its content hugs the span's top with a void below.
+      // columnSkew = how far the worst column's center sits from the row's
+      // center, as a % of the row span. 0 = every column centered.
+      // (Measured stage-relative — robust regardless of how the flexbox
+      // container itself reports its height.)
+      const rowTop = Math.min(...colBoxes.map((b) => b.top));
+      const rowBottom = Math.max(...colBoxes.map((b) => b.bottom));
+      const rowSpan = rowBottom - rowTop;
+      if (rowSpan > 0) {
+        const rowCenter = (rowTop + rowBottom) / 2;
+        for (const b of colBoxes) {
+          const colCenter = (b.top + b.bottom) / 2;
+          const skew = (Math.abs(colCenter - rowCenter) / rowSpan) * 100;
+          if (skew > columnSkew) columnSkew = skew;
+        }
+      }
+    }
+    const hasColumns = columnFill !== Infinity;
+
+    // fillPct is the WHOLE-SLIDE fill: the more conservative of the section
+    // box (catches center:true floating) and the all-content inner box
+    // (catches center:false short content). Per-column fill is deliberately
+    // NOT folded in here — otherwise a figure-heavy two-column slide gets
+    // mislabeled SHORT/FLOATING when the slide as a whole is fine and only
+    // the text column is thin. The thin-column case has its own signal:
+    // `columnFill` below + the COLUMN-THIN flag in classify().
     const fillPct = Math.min(sectionFill, innerFill);
     const topGapPct = Math.max(sectionTopGap, innerTopGap);
     const bottomGapPct = Math.max(sectionBottomGap, innerBottomGap);
@@ -136,16 +211,34 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
     return {
       stageH,
       sectionH: sectRect.height,
-      innerH: innerTop === Infinity ? 0 : innerBottom - innerTop,
+      innerH: inner ? inner.bottom - inner.top : 0,
       fillPct, topGapPct, bottomGapPct,
       sectionFill, sectionTopGap, sectionBottomGap,
       innerFill, innerTopGap, innerBottomGap,
+      hasColumns,
+      nColumns,
+      columnFill: hasColumns ? columnFill : null,
+      columnSkew: hasColumns ? columnSkew : null,
       contentTop: Math.min(sectionContentTop, innerTopGap * stageH / 100),
       contentBottom: Math.max(sectionContentBottom, stageH - innerBottomGap * stageH / 100),
       title, framed, titleSlide,
     };
   });
 }
+
+// A text column legitimately runs shorter than a figure beside it, so the
+// column threshold is well below the whole-slide one — flag only a genuinely
+// sparse column (a few words floating beside a full-height figure), not a
+// substantive 3-5 element text panel that simply isn't as tall as the figure.
+// Calibrated against real slides: genuinely-bad columns measured 20-38%;
+// substantive text panels beside a chart measured 44-60%. 42% cleanly
+// separates them. (The whole-slide threshold stays the stricter 75%.)
+const COLUMN_THRESHOLD = 42;
+// Max acceptable within-row vertical imbalance: how lopsided a column's
+// content may be inside its `.columns` row (|topGap - bottomGap|, % of row
+// height). A `.v-center`ed column should be ~0; a top-jammed column with a
+// big void below skews high. >34 means visibly off-center.
+const COLUMN_SKEW_LIMIT = 34;
 
 function classify(m, threshold) {
   if (!m) return 'NO-DATA';
@@ -155,6 +248,18 @@ function classify(m, threshold) {
   if (m.fillPct < threshold && m.bottomGapPct > 20) return 'BOTTOM-GAP';
   if (m.fillPct < threshold && m.topGapPct > 15) return 'PUSHED-DOWN';
   if (m.fillPct < threshold) return 'SHORT';
+  // Whole-slide fill is fine. But on a two-column slide a tall figure can
+  // mask the column beside it in two ways, each measured per-column:
+  //  - columnFill: the text column is too SPARSE (too little content), or
+  //  - columnSkew: a column's content is not vertically centered in its row
+  //    — top-jammed with a void below (add `.v-center` to the columns div).
+  // Either trips COLUMN-THIN; the whole-slide box sees neither.
+  if (m.hasColumns && m.columnFill !== null && m.columnFill < COLUMN_THRESHOLD) {
+    return 'COLUMN-THIN';
+  }
+  if (m.hasColumns && m.columnSkew !== null && m.columnSkew > COLUMN_SKEW_LIMIT) {
+    return 'COLUMN-SKEW';
+  }
   return 'OK';
 }
 
@@ -204,13 +309,19 @@ function classify(m, threshold) {
       const m = await measureSlideAtSize(page, i, size, slideIndices);
       const flag = classify(m, args.threshold);
       perSize.push({ size: size.label, ...m, flag });
-      const priority = { 'OVERFLOW': 6, 'FLOATING': 5, 'BOTTOM-GAP': 4, 'PUSHED-DOWN': 3, 'SHORT': 2, 'OK': 1, 'SKIP-FRAMED': 0, 'NO-DATA': 0 };
+      const priority = { 'OVERFLOW': 6, 'FLOATING': 5, 'BOTTOM-GAP': 4, 'PUSHED-DOWN': 3, 'COLUMN-THIN': 3, 'COLUMN-SKEW': 3, 'SHORT': 2, 'OK': 1, 'SKIP-FRAMED': 0, 'NO-DATA': 0 };
       if (priority[flag] > priority[worstFlag]) worstFlag = flag;
     }
 
     const nominal = perSize[0];
     const marker = worstFlag === 'OK' || worstFlag === 'SKIP-FRAMED' ? '  ' : '>>';
-    console.log(`${marker} ${String(i).padStart(3)}  [${worstFlag.padEnd(11)}] fill=${nominal.fillPct.toFixed(1).padStart(5)}%  top=${nominal.topGapPct.toFixed(1).padStart(5)}%  bot=${nominal.bottomGapPct.toFixed(1).padStart(5)}%  ${nominal.title}`);
+    // Show the thinnest-column fill and worst within-row skew in the trailing
+    // note when columns exist, so a two-column slide's report is legible
+    // without opening the JSON.
+    const colNote = nominal.hasColumns
+      ? `  (col=${nominal.columnFill.toFixed(1)}% skew=${nominal.columnSkew.toFixed(0)})`
+      : '';
+    console.log(`${marker} ${String(i).padStart(3)}  [${worstFlag.padEnd(11)}] fill=${nominal.fillPct.toFixed(1).padStart(5)}%  top=${nominal.topGapPct.toFixed(1).padStart(5)}%  bot=${nominal.bottomGapPct.toFixed(1).padStart(5)}%  ${nominal.title}${colNote}`);
 
     if ((sizes.length > 1 || args.verbose) && worstFlag !== 'OK' && worstFlag !== 'SKIP-FRAMED') {
       for (const r of perSize) {

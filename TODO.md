@@ -64,6 +64,7 @@
 - [ ] **Week 1 EN/JA retrofit.** Blocked on infrastructure: Week 1 uses Marp, not Quarto. Pandoc-style `::: {.lang-en}` fenced divs don't work in Marp. Options: (a) port week01.md to a .qmd (biggest effort, but unifies the stack); (b) rewrite Week 1's lang wrappers as raw HTML `<div class="lang-en">...</div>` and add the CSS/JS to Marp's custom theme. Week 1 already happened (Apr 17), so lower priority — but needed for future re-runs of the course. Recommendation: do (a) as part of any future Week 1 refresh.
 
 ### SP26 New — Slide infrastructure
+- [ ] **Mirror the `.columns.v-center` SCSS rule to lecture-plans.** Added to `sds-reveal/sds.scss` (2026-05-21) — a vertical-centering modifier for two-column slides. Per the cross-repo sync rule (CLAUDE.md), copy the `.reveal .columns.v-center` block into `lecture-plans/sds-reveal/sds.scss` so the two theme files stay byte-identical.
 - [ ] **Write a Quarto-qmd → pptx converter.** The Quarto deck is now the canonical slide source (week2-slides.qmd, etc.); the hand-written `build_slides_weekN.py` pptx track has diverged and is no longer maintained. Need a single-entry tool that reads the .qmd and emits a python-pptx Office deck preserving speaker notes, math (KaTeX → equation/image), the yellow-frame theme, and section breaks, so the pptx artifact can be regenerated from the canonical source instead of hand-edited in parallel. Until this exists, ignore the per-week `build_slides_weekN.py` scripts.
 
 ### SP26 New — Textbook & GenJAX

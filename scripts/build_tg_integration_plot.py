@@ -82,8 +82,12 @@ def hyp_likelihood(h: tuple[float, float]) -> float:
 def build_vote_figure(highlight_y: float | None, slug: str) -> None:
     """Stacked hypotheses + gradient panels. If highlight_y is set, mark that
     y, grey the hypotheses that exclude it, and grey every gradient bar but y."""
+    # Wider-than-tall aspect: beside a 54%-width text column the figure would
+    # otherwise render very tall and dwarf the text (the COLUMN-THIN case).
+    # A 8.4 x 4.6 canvas keeps both panels readable while bringing the figure
+    # column's height close to the text column's.
     fig, (axh, axg) = plt.subplots(
-        2, 1, figsize=(7.0, 5.4), dpi=150, facecolor=BG,
+        2, 1, figsize=(8.4, 4.6), dpi=150, facecolor=BG,
         gridspec_kw=dict(height_ratios=[1.55, 1.0], hspace=0.42),
     )
     axh.set_facecolor(BG)

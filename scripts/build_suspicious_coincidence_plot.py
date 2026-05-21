@@ -68,7 +68,7 @@ def weak_posterior() -> tuple[float, float]:
 
 def plot_posterior(p10: float, pE: float, title: str, subtitle: str,
                    slug: str) -> None:
-    fig, ax = plt.subplots(figsize=(5.4, 4.0), dpi=150, facecolor=BG)
+    fig, ax = plt.subplots(figsize=(5.6, 4.2), dpi=150, facecolor=BG)
     ax.set_facecolor(BG)
 
     labels = ["multiples\nof 10", "even\nnumbers"]

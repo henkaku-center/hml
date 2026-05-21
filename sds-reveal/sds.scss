@@ -322,6 +322,19 @@ div.reveal div.slides section.title-slide {
 }
 
 // ==========================================================================
+// Two-column slides — vertical-centering modifier
+// ==========================================================================
+// Quarto `.columns` is a flexbox that top-aligns its `.column` children. On a
+// figure + text slide the text column is shorter than the figure, so it jams
+// against the top with a void beneath — the COLUMN-THIN case in the fill
+// audit (see SLIDE_VISUAL_QA.md). Add `.v-center` to the columns div to
+// center each column's content against the tallest one:
+//
+//   :::: {.columns .v-center}
+//
+.reveal .columns.v-center { align-items: center; }
+
+// ==========================================================================
 // Content-slide course label (small top banner on framed slides)
 // ==========================================================================
 .reveal .course-label {
