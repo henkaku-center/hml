@@ -482,23 +482,33 @@ that exclude it so students see the vote shrink. ~1.5 min on this overview.
 [**The question.**]{.accent} Does the property generalize to $y = x$ — the
 observed datum itself?
 
-[**Who votes.**]{.accent} Every hypothesis was built to contain $x$, so
-[**all 7 of 7 vote "yes"**]{.yellow}. None drops out.
+[**Who votes.**]{.accent} Every hypothesis in $\mathcal{H}$ was built to
+contain $x$, so [**all 7 of 7 vote "yes"**]{.yellow}. Not a single one drops
+out — there is no hypothesis that excludes the very point you observed.
 
 [**The bar.**]{.accent} The vote at $x$ sums *all* the posterior weight —
-this is the **tallest bar the gradient can have**. Generalization to the
-datum itself is near-certain.
+$\sum_h p(h \mid x) = 1$. This is the **tallest bar the gradient can have**.
+
+[**The baseline.**]{.accent} Generalization to the datum itself is
+near-certain — and it is the peak that every other $y$ is measured against.
+As we step $y$ away from $x$, hypotheses start dropping out, and the bar can
+only fall.
 :::
 
 ::: {.lang-ja}
 [**問い。**]{.accent} 性質は $y = x$ — 観測したデータそのもの — に
 一般化するか?
 
-[**誰が投票するか。**]{.accent} すべての仮説は $x$ を含むように作られた
-ので、[**7つ中7つすべてが「はい」に投票**]{.yellow}。脱落なし。
+[**誰が投票するか。**]{.accent} $\mathcal{H}$ のすべての仮説は $x$ を
+含むように作られたので、[**7つ中7つすべてが「はい」に投票**]{.yellow}。
+1つも脱落しない — 観測した点そのものを除外する仮説は存在しない。
 
-[**バー。**]{.accent} $x$ での投票は*すべて*の事後確率を合計 — これが
-**勾配が取りうる最も高いバー**。データ自体への一般化はほぼ確実。
+[**バー。**]{.accent} $x$ での投票は*すべて*の事後確率を合計 —
+$\sum_h p(h \mid x) = 1$。これが**勾配が取りうる最も高いバー**。
+
+[**基準点。**]{.accent} データ自体への一般化はほぼ確実 — そして他のすべての
+$y$ がこれと比較される頂点。$y$ を $x$ から離すと仮説が脱落し始め、バーは
+下がるしかない。
 :::
 :::
 ::::
@@ -517,26 +527,35 @@ gradient. Greyed bars are the other y values, shown for context. ~1 min.
 :::
 ::: {.column width="46%"}
 ::: {.lang-en}
-[**The question.**]{.accent} Move one step out: does the property generalize
-to $y = x + 1$?
+[**The question.**]{.accent} Step one unit out from the datum: does the
+property generalize to $y = x + 1$?
 
 [**Who drops.**]{.accent} [The two smallest intervals no longer reach
-$y$]{.yellow} — they grey out. [**5 of 7 still vote.**]{.yellow}
+$y$]{.yellow} — $y$ falls outside them, so they grey out and vote "no".
+[**5 of 7 still vote "yes".**]{.yellow}
 
 [**The bar.**]{.accent} Fewer hypotheses contribute → a **shorter** bar than
-at $x$. And note *which* dropped: the **smallest, most-likely** intervals.
-Losing the heavy-weight votes is why the gradient falls off quickly.
+at $x$.
+
+[**Why it falls fast.**]{.accent} Note *which* hypotheses dropped: the
+**smallest** intervals — and by the size principle those carry the
+**most** posterior weight (thickest bars). Losing the heavy-weight votes
+first is exactly why the gradient decays steeply near $x$.
 :::
 
 ::: {.lang-ja}
-[**問い。**]{.accent} 1歩外へ: 性質は $y = x + 1$ に一般化するか?
+[**問い。**]{.accent} データから1単位外へ: 性質は $y = x + 1$ に
+一般化するか?
 
 [**誰が脱落するか。**]{.accent} [最小の2区間はもう $y$ に届かない]{.yellow}
-— グレーになる。[**7つ中5つがまだ投票。**]{.yellow}
+— $y$ がその外に出るので、グレーになり「いいえ」に投票。[**7つ中5つが
+まだ「はい」に投票。**]{.yellow}
 
-[**バー。**]{.accent} 寄与する仮説が減る → $x$ より**低い**バー。しかも
-脱落したのは**最小・最尤**の区間。重みの大きい票を失うことが、勾配が速く
-落ちる理由。
+[**バー。**]{.accent} 寄与する仮説が減る → $x$ より**低い**バー。
+
+[**なぜ速く落ちるか。**]{.accent} *どの*仮説が脱落したかに注目: **最小**の
+区間 — サイズ原理によりそれらは事後確率の重みが**最大**（最も太いバー）。
+重みの大きい票を最初に失うことが、勾配が $x$ の近くで急に減衰する理由。
 :::
 :::
 ::::
