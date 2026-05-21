@@ -1137,6 +1137,159 @@ the highest-value 90 seconds of the day — it explains both phenomena at once:
 one example → 5× → graded; four examples → 625× → rule. Do NOT cut this. ~2 min.
 :::
 
+## [From likelihood to posterior]{.lang-en}[尤度から事後確率へ]{.lang-ja} {.bigger}
+
+::: {.lang-en}
+Likelihoods aren't beliefs yet. Take a **two-hypothesis** model —
+$\mathcal{H} = \{\,$[**multiples of 10**]{.accent}, [**even numbers**]{.yellow}$\,\}$,
+both containing every example — with a flat prior, and turn the crank:
+
+$$p(h \mid X) = \frac{p(X \mid h)\,p(h)}{\sum_{h'} p(X \mid h')\,p(h')}$$
+
+[Next: the posterior under **strong** vs. **weak** sampling, for $X = \{60\}$
+then $X = \{60, 80, 10, 30\}$.]{.yellow}
+:::
+
+::: {.lang-ja}
+尤度はまだ信念ではない。**2仮説**モデル —
+$\mathcal{H} = \{\,$[**10の倍数**]{.accent}, [**偶数**]{.yellow}$\,\}$、
+どちらも全例を含む — に平坦な事前を置いて計算する:
+
+$$p(h \mid X) = \frac{p(X \mid h)\,p(h)}{\sum_{h'} p(X \mid h')\,p(h')}$$
+
+[次: **強い**サンプリングと**弱い**サンプリングでの事後確率を、$X = \{60\}$ と
+$X = \{60, 80, 10, 30\}$ について。]{.yellow}
+:::
+
+::: {.notes}
+Bridge slide. We just computed likelihoods; a posterior needs a prior and a
+hypothesis space. Keep it to TWO hypotheses (multiples of 10, even numbers) so
+the bar charts are readable. Flat prior. The next three slides plug the
+likelihoods from the previous two slides into Bayes' rule, under both sampling
+assumptions. ~1.5 min.
+:::
+
+## [Strong sampling — one example]{.lang-en}[強いサンプリング — 例が1つ]{.lang-ja} {.smaller}
+
+:::: {.columns}
+::: {.column width="52%"}
+![](images/suspicious_strong_1.png){fig-align="center" width="100%"}
+:::
+::: {.column width="48%"}
+::: {.lang-en}
+[$X = \{60\}$]{.accent}, strong sampling:
+$$p(h \mid X) \propto \left(\tfrac{1}{|h|}\right)^{1}\!\! \cdot 0.5$$
+
+- mult-10: $\tfrac{1}{10}$ · even: $\tfrac{1}{50}$
+- Normalize → [**0.83 vs. 0.17**]{.yellow}
+
+One example already **tilts** belief toward the smaller hypothesis — but
+gently. Lots of mass still on "even".
+:::
+
+::: {.lang-ja}
+[$X = \{60\}$]{.accent}、強いサンプリング:
+$$p(h \mid X) \propto \left(\tfrac{1}{|h|}\right)^{1}\!\! \cdot 0.5$$
+
+- 10の倍数: $\tfrac{1}{10}$ · 偶数: $\tfrac{1}{50}$
+- 正規化 → [**0.83 対 0.17**]{.yellow}
+
+例が1つでもう、小さい仮説へ信念が**傾く** — だが穏やかに。「偶数」にも
+まだ多くの質量。
+:::
+:::
+::::
+
+::: {.notes}
+Strong sampling, n = 1. Posterior ∝ likelihood × flat prior. mult-10 gets
+1/10, even gets 1/50; the 5:1 likelihood ratio becomes a 0.83 / 0.17
+posterior. The shift is real but soft — this is the "graded similarity" regime
+of the number game. ~1.5 min.
+:::
+
+## [Strong sampling — four examples]{.lang-en}[強いサンプリング — 例が4つ]{.lang-ja} {.smaller}
+
+:::: {.columns}
+::: {.column width="52%"}
+![](images/suspicious_strong_4.png){fig-align="center" width="100%"}
+:::
+::: {.column width="48%"}
+::: {.lang-en}
+[$X = \{60, 80, 10, 30\}$]{.accent}, strong sampling:
+$$p(h \mid X) \propto \left(\tfrac{1}{|h|}\right)^{4}\!\! \cdot 0.5$$
+
+- The $5{:}1$ ratio is now $5^4 = 625{:}1$
+- Normalize → [**0.998 vs. 0.002**]{.yellow}
+
+[Four "even" numbers, none of them odd-looking — that's the **suspicious
+coincidence**. Strong sampling all but rules "even" out.]{.yellow}
+:::
+
+::: {.lang-ja}
+[$X = \{60, 80, 10, 30\}$]{.accent}、強いサンプリング:
+$$p(h \mid X) \propto \left(\tfrac{1}{|h|}\right)^{4}\!\! \cdot 0.5$$
+
+- $5{:}1$ の比が今や $5^4 = 625{:}1$
+- 正規化 → [**0.998 対 0.002**]{.yellow}
+
+[4つとも偶数で、しかも10の倍数 — これが**怪しい偶然**。強いサンプリングは
+「偶数」をほぼ排除する。]{.yellow}
+:::
+:::
+::::
+
+::: {.notes}
+Strong sampling, n = 4. The likelihood ratio is now 625:1, so the posterior is
+0.998 / 0.002 — essentially a rule. This is the suspicious-coincidence
+argument made quantitative: if the concept were "even numbers", drawing four
+multiples of 10 by chance is a 625× coincidence, and Bayes discounts it. ~2 min.
+:::
+
+## [Weak sampling — the data never moves you]{.lang-en}[弱いサンプリング — データは信念を動かさない]{.lang-ja} {.smaller}
+
+:::: {.columns}
+::: {.column width="52%"}
+![](images/suspicious_weak.png){fig-align="center" width="100%"}
+:::
+::: {.column width="48%"}
+::: {.lang-en}
+Weak sampling: likelihood is [**$1$ for any $h$ that contains the
+data**]{.accent}, $0$ otherwise — *no $|h|$ dependence*.
+
+Both hypotheses contain every example, so:
+$$p(h \mid X) = \frac{1 \cdot 0.5}{1\cdot 0.5 + 1\cdot 0.5} = 0.5$$
+
+[The posterior just **reverts to the prior** — $0.5$ here only because the
+space has 2 hypotheses with a flat prior. No size principle, no suspicious
+coincidence: weak sampling **can't** explain the number game.]{.yellow}
+:::
+
+::: {.lang-ja}
+弱いサンプリング: 尤度は[**データを含む $h$ なら $1$**]{.accent}、それ以外は
+$0$ — *$|h|$ に依存しない*。
+
+両仮説とも全例を含むので:
+$$p(h \mid X) = \frac{1 \cdot 0.5}{1\cdot 0.5 + 1\cdot 0.5} = 0.5$$
+
+[事後確率は**事前確率に戻る**だけ — ここで $0.5$ なのは、空間が平坦な事前を
+持つ2仮説だから。サイズ原理も怪しい偶然もない: 弱いサンプリングは数当て
+ゲームを**説明できない**。]{.yellow}
+:::
+:::
+::::
+
+::: {.notes}
+Weak sampling. The key teaching point — and the answer to "why is it 0.5":
+under weak sampling the likelihood is size-blind (1 or 0), so the posterior is
+just the renormalised prior over the hypotheses that survive. Here that is
+0.5 / 0.5 — but ONLY because there are exactly two hypotheses and the prior is
+flat. With five consistent hypotheses it would be 0.2 each. The robust claim:
+under weak sampling the data carries no discriminating signal, so the
+posterior never leaves the prior — no matter how many examples. That is why
+the number game's behaviour (few examples → a rule) REQUIRES strong sampling.
+~2 min.
+:::
+
 ## [The number game in one line]{.lang-en}[数当てゲームを一言で]{.lang-ja} {.bigger}
 
 ::: {.lang-en}

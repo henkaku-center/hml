@@ -124,6 +124,11 @@ Sequencing decision (confirmed with Prof. Austerweil):
   - Concept "multiples of 10": 10 numbers, so $p(x \mid h) = 1/10 = 10\%$ each.
   - One example $x=60$: $p(60\mid \text{mult-2}) = 1/50$ vs. $p(60\mid\text{mult-10}) = 1/10$ — mult-10 already 5× better.
   - Four examples {10,30,60,80}: $p \mid \text{mult-2} = (1/50)^4 \approx 1.6\times10^{-7}$; $p \mid \text{mult-10} = (1/10)^4 = 10^{-4}$ — now ~625× better. *This* is why four examples produce a rule and one example produces graded similarity.
+- **Likelihood → posterior — strong vs. weak sampling (4-slide sub-sequence).** Turns the likelihood arithmetic into an explicit posterior over a two-hypothesis space $\mathcal H = \{$multiples of 10, even numbers$\}$ with a flat prior, then contrasts the sampling assumptions:
+  - *From likelihood to posterior* — bridge: state the 2-hypothesis model, flat prior, Bayes' rule.
+  - *Strong sampling, $X=\{60\}$* — posterior $\approx 0.83 / 0.17$ (5:1 likelihood ratio). Graded.
+  - *Strong sampling, $X=\{60,80,10,30\}$* — posterior $\approx 0.998 / 0.002$ ($5^4 = 625{:}1$). Rule-like; the suspicious coincidence made quantitative.
+  - *Weak sampling* — likelihood is $1$/$0$ (size-blind), so the posterior **reverts to the prior**: $0.5/0.5$ here. Emphasize the $0.5$ is an artefact of *two hypotheses + flat prior*, not a property of weak sampling — the robust point is the posterior never leaves the prior, so weak sampling cannot explain the number game. Figures: `scripts/build_suspicious_coincidence_plot.py` → `images/suspicious_strong_1.png`, `suspicious_strong_4.png`, `suspicious_weak.png`.
 - Tie back: same equation as the rectangle game, $\mathcal H$ now discrete. Both phenomena (graded vs. rule-like) fall out of the posterior — no extra mechanism.
 
 ### Block 7: Bridge → Shohei's paper (2 min)
