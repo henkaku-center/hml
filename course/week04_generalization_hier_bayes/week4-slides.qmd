@@ -97,6 +97,22 @@ categorization is a special case of the thing we're studying today:
 generalization."
 :::
 
+## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
+
+- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
+- [The generalization problem]{.highlight}  [0:10]{.time}
+- The Bayesian generalization framework + size principle  [0:18]{.time}
+- Rectangle game + number game  [0:40]{.time}
+- Break  [1:08]{.time}
+- Student presentation — Shohei  [1:15]{.time}
+- No Free Lunch  [1:40]{.time}
+- Hierarchical Bayes + close  [1:50]{.time}
+
+::: {.notes}
+Recap agenda — ~10s. Clusters walkthrough done; moving into the
+generalization content. Don't read it out, just orient.
+:::
+
 ## [The generalization problem]{.lang-en}[一般化の問題]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ::: {.notes}
@@ -275,6 +291,22 @@ framework supplies next.
 ::: {.notes}
 ~1 min. The bridge sentence matters: "a model of generalization needs a model
 of psychological space" → motivates the hypothesis space.
+:::
+
+## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
+
+- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
+- [The generalization problem]{.done}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.highlight}  [0:18]{.time}
+- Rectangle game + number game  [0:40]{.time}
+- Break  [1:08]{.time}
+- Student presentation — Shohei  [1:15]{.time}
+- No Free Lunch  [1:40]{.time}
+- Hierarchical Bayes + close  [1:50]{.time}
+
+::: {.notes}
+Recap — ~10s. The generalization problem is framed; now the Bayesian
+framework and its engine, the size principle.
 :::
 
 ## [The Bayesian generalization framework]{.lang-en}[ベイズ的一般化の枠組み]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
@@ -818,6 +850,22 @@ $1$。**C / D** は仮説の*事前*の話; サイズ原理は事前ではなく
 "Let's watch the size principle do its job — first on continuous concepts."
 :::
 
+## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
+
+- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
+- [The generalization problem]{.done}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.done}  [0:18]{.time}
+- [Rectangle game + number game]{.highlight}  [0:40]{.time}
+- Break  [1:08]{.time}
+- Student presentation — Shohei  [1:15]{.time}
+- No Free Lunch  [1:40]{.time}
+- Hierarchical Bayes + close  [1:50]{.time}
+
+::: {.notes}
+Recap — ~10s. Framework + size principle done; now we run the framework
+twice — continuous (rectangle game), then discrete (number game).
+:::
+
 ## [Rectangle game — continuous concepts]{.lang-en}[長方形ゲーム — 連続的な概念]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ::: {.notes}
@@ -859,28 +907,43 @@ knowledge. Healthy-levels framing is Tenenbaum's. Start 1-D on the next slide
 for clarity, then go 2-D. ~2 min.
 :::
 
-## [Start in 1-D]{.lang-en}[まず1次元で]{.lang-ja} {.bigger}
+## [Start in 1-D]{.lang-en}[まず1次元で]{.lang-ja} {.smaller}
 
+:::: {.columns .v-center}
+::: {.column width="56%"}
+![](images/cc_1d.png){fig-align="center" width="100%"}
+:::
+::: {.column width="44%"}
 ::: {.lang-en}
 Concept = an [**interval**]{.accent} $[\ell, u]$ on one dimension.
 
-- Hypothesis space $\mathcal{H}$ = *all* intervals
+- $\mathcal{H}$ = *all* intervals
 - Strong sampling → likelihood $\propto \left(\dfrac{1}{u - \ell}\right)^{n}$
-- Size of the hypothesis = the **length** $u - \ell$
+- Hypothesis size = the **length** $u - \ell$
+
+Every interval that contains the data is a hypothesis; the **snug** ones get
+the most posterior weight.
 :::
 
 ::: {.lang-ja}
 概念 = 1つの次元上の[**区間**]{.accent} $[\ell, u]$。
 
-- 仮説空間 $\mathcal{H}$ = *すべての*区間
+- $\mathcal{H}$ = *すべての*区間
 - 強いサンプリング → 尤度 $\propto \left(\dfrac{1}{u - \ell}\right)^{n}$
 - 仮説の大きさ = **長さ** $u - \ell$
+
+データを含むすべての区間が仮説; **ぴったり**したものが最も多くの
+事後確率を得る。
 :::
+:::
+::::
 
 ::: {.notes}
 1-D first so the size principle is literally "shorter interval = higher
-likelihood." Smallest interval consistent with the data is the one containing
-the data exactly — but it isn't the only survivor. ~2 min.
+likelihood." The figure: observed examples on a line, candidate intervals
+above them drawn heavier/darker the more posterior weight they carry. The
+smallest interval consistent with the data is heaviest — but it isn't the
+only survivor. ~2 min.
 :::
 
 ## [The generalization gradient]{.lang-en}[一般化勾配]{.lang-ja} {.midbig}
@@ -934,62 +997,156 @@ action. This is the same mechanism that will make the number game produce
 rules. ~2 min.
 :::
 
-## [Into 2-D — the rectangle experiment]{.lang-en}[2次元へ — 長方形実験]{.lang-ja} {.midbig}
+## [Into 2-D — the rectangle game]{.lang-en}[2次元へ — 長方形ゲーム]{.lang-ja} {.smaller}
 
+:::: {.columns .v-center}
+::: {.column width="56%"}
+![](images/cc_2d.png){fig-align="center" width="100%"}
+:::
+::: {.column width="44%"}
 ::: {.lang-en}
-Same machinery: hypothesis = an axis-aligned **rectangle**.
+Same machinery, one dimension up: a concept is an axis-aligned
+**rectangle**.
 
-Tenenbaum's experiment: subjects see dots from "an arbitrary rectangle of
-healthy levels" and guess the rectangle.
+- Observe $n$ dots inside the true rectangle
+- Every rectangle that **encloses all $n$** is a hypothesis
+- Smaller rectangle → bigger likelihood (brighter / thicker)
 
-- Measure how far $d$ people extend **beyond** the data range $r$
-- $d$ shrinks as $r$ grows and as the number of dots $n$ grows
-- The Bayesian model predicts this $d$-vs-$r$-vs-$n$ pattern
+[$r$ — the range the data spans.  $d$ — how far a rectangle extends past
+that range.]{.accent}
 :::
 
 ::: {.lang-ja}
-同じ仕組み: 仮説 = 軸平行な**長方形**。
+同じ仕組みを1次元上へ: 概念は軸平行な**長方形**。
 
-テネンバウムの実験: 被験者は「健康な水準の任意の長方形」からの点を見て、
-長方形を推測する。
+- 真の長方形の中の $n$ 個の点を観測
+- $n$ 個**すべてを囲む**長方形が仮説
+- 長方形が小さいほど尤度が大きい（明るい / 太い）
 
-- 人々がデータ範囲 $r$ を**超えて**どれだけ $d$ 拡張するかを測定
-- $d$ は $r$ が大きくなるほど、点の数 $n$ が増えるほど縮む
-- ベイズモデルはこの $d$-対-$r$-対-$n$ のパターンを予測する
+[$r$ — データが広がる範囲。  $d$ — 長方形がその範囲をどれだけ超えて
+広がるか。]{.accent}
 :::
+:::
+::::
 
 ::: {.notes}
-r = the spread of the observed dots, d = how far past them subjects still say
-"gnarble". Empirically d depends on both r and n exactly as the model predicts.
-This is the quantitative win. ~2.5 min.
+The 2-D rectangle game — the framework with H = axis-aligned rectangles.
+The figure shows the nested candidate rectangles (brightest = smallest =
+highest posterior), with r (data range), d (extension past it), and n
+(dot count) labelled. Lock in r and d here — the next two slides use them.
+~2 min.
 :::
 
-## [One fix — an exponential prior]{.lang-en}[1つの修正 — 指数事前]{.lang-ja} {.midbig}
+## [The rectangle experiment]{.lang-en}[長方形実験]{.lang-ja} {.midbig}
 
 ::: {.lang-en}
-Pure size principle slightly **over-extends** the rectangle.
+[Tenenbaum (1999) ran this as a behavioural experiment.]{.accent}
 
-The fix: an [**exponential prior over rectangle size**]{.accent} — larger
-rectangles are a priori less likely.
-
-Justified by the task framing (the monitor's edges, prior experience with
-rectangles). With it, the model fits the human data.
+- On each trial, subjects saw [**$n$ dots**]{.yellow} drawn from "an arbitrary
+  rectangle of healthy insulin / cholesterol levels"
+- They drew the rectangle they thought the dots came from
+- $n$ varied from **2 to 50**; the data range $r$ varied across trials
+- The measure: [**$d$**]{.yellow} — how far past the data range $r$ the
+  drawn rectangle extends
 :::
 
 ::: {.lang-ja}
-純粋なサイズ原理では、長方形をわずかに**拡張しすぎる**。
+[Tenenbaum (1999) はこれを行動実験として実施した。]{.accent}
 
-修正: [**長方形の大きさに対する指数事前**]{.accent} — 大きい長方形ほど
-事前に起こりにくい。
-
-課題の枠組み（モニターの縁、長方形への事前経験）から正当化される。
-これにより、モデルは人間のデータに適合する。
+- 各試行で被験者は「健康なインスリン / コレステロール値の任意の長方形」
+  から抽出された [**$n$ 個の点**]{.yellow} を見た
+- 点がどの長方形から来たと思うかを描いた
+- $n$ は **2から50**まで変化; データ範囲 $r$ も試行ごとに変化
+- 測定量: [**$d$**]{.yellow} — 描かれた長方形がデータ範囲 $r$ を
+  どれだけ超えて広がるか
 :::
 
 ::: {.notes}
-State the result; do not derive the exponential prior. The lesson: likelihood
-(size principle) + prior together fit the data — neither alone. Most cuttable
-slide in Block 5 if behind. ~1.5 min.
+Experiment details. The key design: vary n and r, measure d. The question
+is whether human d tracks the Bayesian prediction. d is the behavioural
+readout of "how much do you generalize beyond what you saw." ~1.5 min.
+:::
+
+## [The result — $d$ vs. $r$, by $n$]{.lang-en}[結果 — $n$ ごとの $d$ 対 $r$]{.lang-ja} {.smaller}
+
+:::: {.columns .v-center}
+::: {.column width="62%"}
+![](images/tg_results.png){fig-align="center" width="100%"}
+:::
+::: {.column width="38%"}
+::: {.lang-en}
+Each curve is one value of $n$.
+
+- [**Fewer examples → generalize further**]{.yellow} ($n=2$ on top)
+- More examples → $d$ collapses toward the data ($n=50$ at the bottom)
+- $d$ grows gently with $r$
+
+[The size principle, measured in **human behaviour**: more data tightens the
+concept — and the Bayesian model reproduces every curve.]{.accent}
+:::
+
+::: {.lang-ja}
+各曲線が1つの $n$ の値。
+
+- [**例が少ない → 遠くまで一般化**]{.yellow}（$n=2$ が一番上）
+- 例が多い → $d$ はデータの方へ収束（$n=50$ が一番下）
+- $d$ は $r$ とともに緩やかに増加
+
+[**人間の行動**で測定されたサイズ原理: データが増えるほど概念が引き締まる
+— そしてベイズモデルはすべての曲線を再現する。]{.accent}
+:::
+:::
+::::
+
+::: {.notes}
+The Tenenbaum & Griffiths (2001) result figure, recreated in the dark theme
+(data eyeballed from the published Fig. a). The n = 2 curve sits well above
+n = 50 — exactly the size principle, now measured in people. The Bayesian
+model reproduces this family of curves. ~2 min.
+:::
+
+## [One fix — an exponential prior]{.lang-en}[1つの修正 — 指数事前]{.lang-ja} {.smaller}
+
+:::: {.columns .v-center}
+::: {.column width="52%"}
+![](images/cc_exp_prior.png){fig-align="center" width="100%"}
+:::
+::: {.column width="48%"}
+::: {.lang-en}
+The size principle alone slightly **over-extends** the rectangle. The fix: a
+prior that makes large rectangles less likely.
+
+[**The exponential distribution**]{.accent} — our first new distribution
+today. For a size $s \ge 0$:
+$$p(s) = \lambda\, e^{-\lambda s}$$
+
+- Always decreasing — **small $s$ favoured**
+- One parameter $\lambda > 0$; the mean is $1/\lambda$
+- Larger $\lambda$ → faster decay → stronger pull toward small rectangles
+:::
+
+::: {.lang-ja}
+サイズ原理だけでは長方形を少し**拡張しすぎる**。修正: 大きい長方形を
+起こりにくくする事前。
+
+[**指数分布**]{.accent} — 今日初めての新しい分布。サイズ $s \ge 0$ について:
+$$p(s) = \lambda\, e^{-\lambda s}$$
+
+- 常に減少 — **小さい $s$ が好まれる**
+- パラメータは1つ $\lambda > 0$; 平均は $1/\lambda$
+- $\lambda$ が大きいほど減衰が速く、小さい長方形への引きが強い
+:::
+:::
+::::
+
+::: {.notes}
+This is the first time the class meets the exponential distribution — define
+it properly: density λ·exp(-λs) on s ≥ 0, one rate parameter λ, mean 1/λ,
+monotonically decreasing. The plot shows the shape. Then the point: an
+exponential prior over rectangle size penalizes big rectangles, and size
+principle (likelihood) + this prior together fit the human data — neither
+alone. Justified by the task framing (monitor edges, prior experience with
+rectangles). ~2 min.
 :::
 
 ## [The rectangle game in one line]{.lang-en}[長方形ゲームを一言で]{.lang-ja} {.bigger}
@@ -1412,6 +1569,22 @@ H) are ONE model. This is the take-home of the whole pre-break lecture. ~1.5
 min, then break.
 :::
 
+## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
+
+- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
+- [The generalization problem]{.done}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.done}  [0:18]{.time}
+- [Rectangle game + number game]{.done}  [0:40]{.time}
+- [Break]{.highlight}  [1:08]{.time}
+- Student presentation — Shohei  [1:15]{.time}
+- No Free Lunch  [1:40]{.time}
+- Hierarchical Bayes + close  [1:50]{.time}
+
+::: {.notes}
+Recap — ~10s. Both games done — the whole framework is delivered. Break,
+then Shohei presents.
+:::
+
 ## [Break]{.lang-en}[休憩]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ::: {.notes}
@@ -1462,6 +1635,22 @@ row is a coincidence. Hand off, start the 5-min swap buffer.
 questions) + 5 min swap/setup buffer. Instructor stays hands-off during
 discussion unless it stalls. Stall-breaker: "How does the size principle show
 up in their word-learning data?"
+:::
+
+## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
+
+- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
+- [The generalization problem]{.done}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.done}  [0:18]{.time}
+- [Rectangle game + number game]{.done}  [0:40]{.time}
+- [Break]{.done}  [1:08]{.time}
+- [Student presentation — Shohei]{.done}  [1:15]{.time}
+- [No Free Lunch]{.highlight}  [1:40]{.time}
+- Hierarchical Bayes + close  [1:50]{.time}
+
+::: {.notes}
+Recap — ~10s. Thank Shohei. Two blocks left: No Free Lunch (why a prior is
+unavoidable), then hierarchical Bayes.
 :::
 
 ## [No Free Lunch]{.lang-en}[ノーフリーランチ]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
@@ -1588,6 +1777,22 @@ can learn it. Transition to Block 10.
 <!-- Variant B. To run Variant A: present A1-A3, then SKIP the     -->
 <!-- Variant-B block and jump to the Close section.                -->
 <!-- ============================================================ -->
+
+## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
+
+- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
+- [The generalization problem]{.done}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.done}  [0:18]{.time}
+- [Rectangle game + number game]{.done}  [0:40]{.time}
+- [Break]{.done}  [1:08]{.time}
+- [Student presentation — Shohei]{.done}  [1:15]{.time}
+- [No Free Lunch]{.done}  [1:40]{.time}
+- [Hierarchical Bayes + close]{.highlight}  [1:50]{.time}
+
+::: {.notes}
+Recap — ~10s. Last block: hierarchical Bayes (where a learner *acquires* the
+prior NFL just said it needs), then close.
+:::
 
 ## [Hierarchical Bayes]{.lang-en}[階層ベイズ]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 

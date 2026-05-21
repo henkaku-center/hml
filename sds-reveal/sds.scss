@@ -316,6 +316,11 @@ div.reveal div.slides section.title-slide {
     // Highlight may be either on the <li> or on a span inside the label.
     &.highlight, .highlight { color: $sds-accent; font-weight: 700; }
     &.highlight .time, .highlight + .time { color: $sds-accent; }
+    // Completed item — dimmed, for "where are we" recap agendas re-shown at
+    // block boundaries. Like `.highlight`, may be on the <li> or a span
+    // inside the label.
+    &.done, .done { color: $sds-text-dim; opacity: 0.55; }
+    &.done .time, .done + .time { opacity: 0.55; }
   }
   // Opt-in denser variant for agendas with 11+ items.
   &.dense li { font-size: 0.82em; padding: 0.06em 0; }

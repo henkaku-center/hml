@@ -29,6 +29,8 @@ Sequencing decision (confirmed with Prof. Austerweil):
 
 **Chibany continuity.** Where it doesn't strain the canonical Tenenbaum examples, the framework is motivated through Chibany: generalization = "Chibany saw three tonkatsu lunches near 500g — is a 480g lunch also tonkatsu?" The rectangle and number games stay in their canonical Tenenbaum form (gnarbles, the number game) because those are exactly what Shohei's paper and the textbook build on — but the *opening* motivation and the hier-Bayes teaser are Chibany-framed.
 
+**"Where we are" recap slides.** At each major block boundary the deck re-shows the agenda as a `{.agenda .dense}` slide with finished blocks dimmed (`.done`) and the upcoming block highlighted (`.highlight`). Six recaps: before the generalization problem, the framework, the rectangle game, the break, No Free Lunch, and hierarchical Bayes. Each is a ~10s orientation beat, not read aloud. (The `.done` dim style is a shared-SCSS addition — see TODO for the cross-repo mirror.)
+
 ---
 
 ## Session Plan
@@ -106,12 +108,14 @@ Sequencing decision (confirmed with Prof. Austerweil):
 ### Block 5: Rectangle game — continuous concept learning (15 min)
 
 - **Gnarbles** (Tenenbaum's healthy-levels framing): a gnarble is a rectangle whose width lies in some interval; equivalently, a 2-D concept = an axis-aligned rectangle in (e.g.) insulin × cholesterol space.
-- Build up in order:
-  1. **1-D first.** Concept = an interval $[\ell, u]$. Observe a few points. Hypothesis space = all intervals. Strong sampling → likelihood $\propto (1/\text{length})^n$.
+- Build up in order (each step has a dark-theme figure from `scripts/build_continuous_concept_plots.py`):
+  1. **1-D first.** Concept = an interval $[\ell, u]$. Observe a few points. Hypothesis space = all intervals. Strong sampling → likelihood $\propto (1/\text{length})^n$. *Figure `cc_1d.png`*: observed points on a line, candidate intervals above them at opacity/thickness ∝ posterior weight.
   2. **Generalization gradient.** Plot $p(y \in C \mid X)$ as a function of $y$: high inside the data range, decaying outside. The decay rate is set by the posterior — this *recovers Shepard's exponential law* as a consequence, not an assumption.
   3. **Effect of $n$.** More examples → tighter generalization (size principle: large intervals lose likelihood fast). One example → broad, diffuse generalization.
-  4. **2-D rectangle.** Same machinery, hypothesis = axis-aligned rectangle. Tenenbaum's experiment: subjects guess the rectangle from dots; the model predicts how far $d$ they extend beyond the data range $r$, as a function of $r$ and $n$.
-  5. **The exponential prior.** Pure size principle slightly over-extends; an **exponential prior over rectangle size** (justified by monitor framing / prior experience) fixes the fit. State it; don't derive it.
+  4. **2-D rectangle.** Same machinery, hypothesis = axis-aligned rectangle. *Figure `cc_2d.png`*: dots in a plane, nested candidate rectangles (brightest/thickest = smallest = highest posterior), with $r$ (data range), $d$ (extension past $r$), and $n$ (dot count) all labelled.
+  4b. **The rectangle experiment** (own slide): Tenenbaum (1999) ran it behaviourally — subjects saw $n$ dots ($n$ from 2 to 50), drew the rectangle, measure = $d$.
+  4c. **The result** (own slide): *Figure `tg_results.png`* — $d$ vs $r$, one curve per $n$, recreated dark-theme from Tenenbaum & Griffiths (2001) Fig. a. Fewer examples → generalize further; the Bayesian model reproduces the family.
+  5. **The exponential prior.** Pure size principle slightly over-extends; an **exponential prior over rectangle size** fixes the fit. *Figure `cc_exp_prior.png`* + the density $p(s)=\lambda e^{-\lambda s}$ — this is the **first time the class meets the exponential distribution**, so define it properly (rate $\lambda>0$, mean $1/\lambda$, monotonically decreasing).
 - Payoff line: the *continuous* concept learner is just the framework equation with $\mathcal H$ = intervals/rectangles.
 
 ### Block 6: Number game — discrete concept learning (13 min)
