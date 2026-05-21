@@ -1314,7 +1314,7 @@ argument made quantitative: if the concept were "even numbers", drawing four
 multiples of 10 by chance is a 625× coincidence, and Bayes discounts it. ~2 min.
 :::
 
-## [Weak sampling — the data never moves you]{.lang-en}[弱いサンプリング — データは信念を動かさない]{.lang-ja} {.smaller}
+## [Weak sampling — eliminate, but don't rank]{.lang-en}[弱いサンプリング — 除外はするが、順位はつけない]{.lang-ja} {.smaller}
 
 :::: {.columns .v-center}
 ::: {.column width="52%"}
@@ -1322,41 +1322,55 @@ multiples of 10 by chance is a 625× coincidence, and Bayes discounts it. ~2 min
 :::
 ::: {.column width="48%"}
 ::: {.lang-en}
-Weak sampling: likelihood is [**$1$ for any $h$ that contains the
+Weak-sampling likelihood is [**$1$ for any $h$ that contains the
 data**]{.accent}, $0$ otherwise — *no $|h|$ dependence*.
 
-Both hypotheses contain every example, so:
+[**What it can do:**]{.accent} a datum *outside* $h$ kills it — likelihood
+$0$. Weak sampling **does** move the posterior, by **ruling hypotheses out**.
+
+[**What it can't do:**]{.accent} among the hypotheses that *all still
+contain the data*, it has no preference — every survivor keeps likelihood
+$1$, so the posterior over them stays at the **prior**.
+
+Here both hypotheses contain every example — nothing is ruled out:
 $$p(h \mid X) = \frac{1 \cdot 0.5}{1\cdot 0.5 + 1\cdot 0.5} = 0.5$$
 
-[The posterior just **reverts to the prior** — $0.5$ here only because the
-space has 2 hypotheses with a flat prior. No size principle, no suspicious
-coincidence: weak sampling **can't** explain the number game.]{.yellow}
+[So weak sampling can't see the suspicious coincidence — it can't tell
+"multiples of 10" from "even numbers".]{.yellow}
 :::
 
 ::: {.lang-ja}
-弱いサンプリング: 尤度は[**データを含む $h$ なら $1$**]{.accent}、それ以外は
+弱サンプリングの尤度は[**データを含む $h$ なら $1$**]{.accent}、それ以外は
 $0$ — *$|h|$ に依存しない*。
 
-両仮説とも全例を含むので:
+[**できること:**]{.accent} $h$ の*外*のデータはその $h$ を消す — 尤度 $0$。
+弱サンプリングは**仮説を除外することで**事後確率を**動かす**。
+
+[**できないこと:**]{.accent} *データを含み続ける*仮説の間では、優劣をつけ
+られない — 生き残りはすべて尤度 $1$ なので、それらの事後確率は**事前**の
+まま。
+
+ここでは両仮説とも全例を含む — 除外されるものはない:
 $$p(h \mid X) = \frac{1 \cdot 0.5}{1\cdot 0.5 + 1\cdot 0.5} = 0.5$$
 
-[事後確率は**事前確率に戻る**だけ — ここで $0.5$ なのは、空間が平坦な事前を
-持つ2仮説だから。サイズ原理も怪しい偶然もない: 弱いサンプリングは数当て
-ゲームを**説明できない**。]{.yellow}
+[だから弱サンプリングは怪しい偶然を見抜けない — 「10の倍数」と「偶数」を
+区別できない。]{.yellow}
 :::
 :::
 ::::
 
 ::: {.notes}
-Weak sampling. The key teaching point — and the answer to "why is it 0.5":
-under weak sampling the likelihood is size-blind (1 or 0), so the posterior is
-just the renormalised prior over the hypotheses that survive. Here that is
-0.5 / 0.5 — but ONLY because there are exactly two hypotheses and the prior is
-flat. With five consistent hypotheses it would be 0.2 each. The robust claim:
-under weak sampling the data carries no discriminating signal, so the
-posterior never leaves the prior — no matter how many examples. That is why
-the number game's behaviour (few examples → a rule) REQUIRES strong sampling.
-~2 min.
+Weak sampling, made precise. Correct the common over-statement: weak sampling
+is NOT inert. A datum that falls outside a hypothesis gives it likelihood 0 —
+the hypothesis is ruled out, and the posterior moves. What weak sampling
+cannot do is *rank* the hypotheses that all still contain the data: every
+survivor keeps likelihood 1, so the posterior over the survivors is just the
+renormalised prior. In THIS example both hypotheses contain every example, so
+nothing is eliminated and the posterior sits at 0.5 / 0.5 (and the 0.5 is an
+artefact of two hypotheses + a flat prior — five survivors would give 0.2
+each). The teaching point: weak sampling can eliminate but cannot prefer the
+smaller hypothesis, so it cannot produce the suspicious-coincidence effect —
+that needs strong sampling. ~2 min.
 :::
 
 ## [The number game in one line]{.lang-en}[数当てゲームを一言で]{.lang-ja} {.bigger}

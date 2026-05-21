@@ -54,14 +54,17 @@ def strong_posterior(n: int) -> tuple[float, float]:
 
 
 def weak_posterior() -> tuple[float, float]:
-    """Posterior under weak sampling: the likelihood is 1 for every hypothesis
-    that contains the data, so the posterior is just the renormalised prior
-    over the surviving hypotheses — independent of n AND of |h|.
+    """Posterior under weak sampling for THIS example (both hypotheses contain
+    every example). The weak-sampling likelihood is 1 for any hypothesis that
+    contains the data and 0 otherwise. Weak sampling therefore CAN move the
+    posterior — by eliminating any hypothesis a datum falls outside of — but it
+    cannot rank the hypotheses that all still contain the data: every survivor
+    keeps likelihood 1, so the posterior over the survivors is the renormalised
+    prior, independent of n and of |h|.
 
-    With this 2-hypothesis space and a flat prior that renormalised prior is
-    0.5 / 0.5. The value 0.5 is therefore an artefact of (a) two hypotheses
-    and (b) a flat prior — NOT a property of weak sampling itself. The robust
-    statement is: under weak sampling the posterior never moves off the prior.
+    Here nothing is ruled out, so the posterior over the two survivors is the
+    flat prior, 0.5 / 0.5. The 0.5 is an artefact of (a) two surviving
+    hypotheses and (b) a flat prior — not a property of weak sampling itself.
     """
     return PRIOR, PRIOR
 
@@ -123,10 +126,11 @@ def main() -> None:
                    "X = {60, 80, 10, 30}   ·   four examples",
                    "suspicious_strong_4")
 
-    # weak sampling — posterior reverts to the flat prior, regardless of data
+    # weak sampling — nothing ruled out here, so the posterior over the two
+    # surviving hypotheses stays at the flat prior
     p10, pE = weak_posterior()
     plot_posterior(p10, pE, "Weak sampling",
-                   "posterior = prior (flat, 2 hypotheses) — data adds nothing",
+                   "both hypotheses survive → posterior = prior (0.5 / 0.5)",
                    "suspicious_weak")
     print("Done.")
 
