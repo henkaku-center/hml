@@ -655,28 +655,43 @@ hands you items, you check membership. Strong: a teacher (or process) picks
 items FROM the concept. ~2 min.
 :::
 
-## [The two likelihoods]{.lang-en}[2つの尤度]{.lang-ja} {.smaller}
+## [The two likelihoods]{.lang-en}[2つの尤度]{.lang-ja}
+
+:::: {.columns .v-center}
+::: {.column width="50%"}
+[[**Weak sampling**]{.lang-en}[**弱いサンプリング**]{.lang-ja}]{.accent}
+
+$$p(X \mid h) = \begin{cases} 1 & \text{all } x_i \in h \\ 0 & \text{else}\end{cases}$$
 
 ::: {.lang-en}
-[**Weak sampling:**]{.accent}
-$$p(X \mid h) = \begin{cases} 1 & \text{if every } x_i \in h \\ 0 & \text{otherwise}\end{cases}$$
-Does not depend on the *size* of $h$.
-
-[**Strong sampling:**]{.accent}  $p(x \mid h) = \dfrac{1}{|h|}$ for $x \in h$, so
-$$p(X \mid h) = \left(\frac{1}{|h|}\right)^{n}$$
+Size-blind: a hypothesis either contains the data or it doesn't. **Does not
+depend on $|h|$.**
 :::
 
 ::: {.lang-ja}
-[**弱いサンプリング:**]{.accent}
-$$p(X \mid h) = \begin{cases} 1 & \text{すべての } x_i \in h \text{ のとき} \\ 0 & \text{それ以外}\end{cases}$$
-$h$ の*大きさ*には依存しない。
-
-[**強いサンプリング:**]{.accent}  $x \in h$ について $p(x \mid h) = \dfrac{1}{|h|}$、
-よって
-$$p(X \mid h) = \left(\frac{1}{|h|}\right)^{n}$$
+大きさに鈍感: 仮説はデータを含むか含まないかのどちらか。**$|h|$ には
+依存しない。**
+:::
 :::
 
-[[$|h|$ — the size of hypothesis $h$: how many stimuli it contains. $n$ — number of examples.]{.lang-en}[$|h|$ — 仮説 $h$ の大きさ: 含む刺激の数。 $n$ — 例の数。]{.lang-ja}]{.dim}
+::: {.column width="50%"}
+[[**Strong sampling**]{.lang-en}[**強いサンプリング**]{.lang-ja}]{.accent}
+
+$$p(x \mid h) = \frac{1}{|h|} \;\;\Rightarrow\;\; p(X \mid h) = \left(\frac{1}{|h|}\right)^{\!n}$$
+
+::: {.lang-en}
+Each example drawn *uniformly from inside* $h$. **Smaller $|h|$ → higher
+likelihood**, exponentially so in $n$.
+:::
+
+::: {.lang-ja}
+各例は $h$ の*中から一様に*抽出。**$|h|$ が小さいほど尤度が高い** —
+$n$ について指数関数的に。
+:::
+:::
+::::
+
+[[$|h|$ — the size of hypothesis $h$ (how many stimuli it contains).  $n$ — number of examples.]{.lang-en}[$|h|$ — 仮説 $h$ の大きさ（含む刺激の数）。  $n$ — 例の数。]{.lang-ja}]{.dim}
 
 ::: {.notes}
 Define |h| and n in the dim caption. The key contrast: weak sampling's
