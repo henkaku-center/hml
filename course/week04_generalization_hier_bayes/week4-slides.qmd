@@ -699,13 +699,16 @@ likelihood is size-blind (1 or 0); strong sampling's likelihood is
 (1/|h|)^n — and that exponent is the whole story of the next slide. ~2 min.
 :::
 
-## [The size principle]{.lang-en}[サイズ原理]{.lang-ja} {.bigger}
+## [The size principle]{.lang-en}[サイズ原理]{.lang-ja} {.midbig}
 
 ::: {.lang-en}
 Under strong sampling: [**smaller hypotheses get higher likelihood**]{.yellow}
 — and *exponentially* more so as the number of examples $n$ grows.
 
-$$p(X \mid h) = \left(\frac{1}{|h|}\right)^{n} \;\;\Rightarrow\;\; \text{small } |h| \text{ wins, and wins faster with more data}$$
+$$p(X \mid h) = \left(\frac{1}{|h|}\right)^{n}$$
+
+So a small $|h|$ wins — and **wins faster with more data**, because the
+exponent $n$ magnifies any size advantage.
 
 [*The* mechanism behind both games today.]{.accent}
 :::
@@ -714,7 +717,10 @@ $$p(X \mid h) = \left(\frac{1}{|h|}\right)^{n} \;\;\Rightarrow\;\; \text{small }
 強いサンプリングの下では: [**小さい仮説ほど高い尤度を得る**]{.yellow}
 — しかも例の数 $n$ が増えるほど*指数関数的に*そうなる。
 
-$$p(X \mid h) = \left(\frac{1}{|h|}\right)^{n} \;\;\Rightarrow\;\; \text{小さい } |h| \text{ が勝ち、データが増えるほど速く勝つ}$$
+$$p(X \mid h) = \left(\frac{1}{|h|}\right)^{n}$$
+
+だから小さい $|h|$ が勝つ — そして**データが増えるほど速く勝つ**。指数 $n$ が
+大きさの優位を増幅するから。
 
 [今日の両方のゲームを動かす*中心的*な仕組み。]{.accent}
 :::
@@ -1628,21 +1634,23 @@ student i's tonkatsu rate. ~1.5 min.
 ## [Priors over priors]{.lang-en}[事前の上の事前]{.lang-ja} {.bigger}
 
 ::: {.lang-en}
-Put a prior on the **parameters of the prior**:
-$$\theta_i \sim \text{Beta}(a, b), \qquad (a, b) \text{ themselves unknown}$$
+Put a prior on the **parameters of the prior** — and treat $(a, b)$
+themselves as unknown:
+$$\theta_i \sim \text{Beta}(a, b)$$
 
-The two-level model:
-$$(a, b) \;\longrightarrow\; \theta_i \;\longrightarrow\; \text{observed bentos}$$
+The two-level model: $(a, b) \;\longrightarrow\; \theta_i \;\longrightarrow\;$
+observed bentos.
 
 [$(a, b)$ is the *shared* structure; each $\theta_i$ is a student.]{.accent}
 :::
 
 ::: {.lang-ja}
-**事前のパラメータ**の上に、さらに事前を置く:
-$$\theta_i \sim \text{Beta}(a, b), \qquad (a, b) \text{ 自体も未知}$$
+**事前のパラメータ**の上に、さらに事前を置く — そして $(a, b)$ 自体を
+未知として扱う:
+$$\theta_i \sim \text{Beta}(a, b)$$
 
-2階層モデル:
-$$(a, b) \;\longrightarrow\; \theta_i \;\longrightarrow\; \text{観測された弁当}$$
+2階層モデル: $(a, b) \;\longrightarrow\; \theta_i \;\longrightarrow\;$
+観測された弁当。
 
 [$(a, b)$ が*共有*された構造; 各 $\theta_i$ が1人の学生。]{.accent}
 :::
