@@ -412,85 +412,143 @@ of the day. Say it plainly: generalization to y = total posterior mass sitting
 on hypotheses that contain y. Both games are this exact sum. ~2 min.
 :::
 
-## [One datum, many hypotheses]{.lang-en}[1つのデータ、多くの仮説]{.lang-ja} {.smaller}
+## [One datum → the posterior-weighted vote]{.lang-en}[1つのデータ → 事後確率による投票]{.lang-ja} {.smaller}
 
 :::: {.columns}
-::: {.column width="58%"}
-![](images/tg_hypotheses.png){fig-align="center" width="100%"}
+::: {.column width="60%"}
+![](images/tg_vote.png){fig-align="center" width="100%"}
 :::
-::: {.column width="42%"}
+::: {.column width="40%"}
 ::: {.lang-en}
-Observe **one** datum $x$.
+**Top** — observe one datum $x$. Every interval that **contains $x$** is a
+live hypothesis $h$. Thickness $= 1/|h|$, its strong-sampling likelihood;
+flat prior → posterior $\propto$ likelihood.
 
-Every interval that **contains $x$** is a live hypothesis $h$.
-
-Under strong sampling each gets likelihood [$1/|h|$]{.accent} — so the
-**smaller** the interval, the **taller** the bar.
-
-[Flat prior → posterior weight $\propto$ this likelihood.]{.yellow}
+**Bottom** — the vote: for each $y$, sum the posterior of every $h$ that
+contains it.
+$$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
 :::
 
 ::: {.lang-ja}
-**1つ**のデータ $x$ を観測する。
+**上** — 1つのデータ $x$ を観測。$x$ を**含む**すべての区間が生きた仮説
+$h$。太さ $= 1/|h|$（強サンプリング尤度）; 平坦な事前 → 事後 $\propto$ 尤度。
 
-$x$ を**含む**すべての区間が、生きた仮説 $h$。
-
-強いサンプリングの下で各仮説は尤度 [$1/|h|$]{.accent} を得る — 区間が
-**小さい**ほどバーは**高い**。
-
-[平坦な事前 → 事後確率はこの尤度に比例。]{.yellow}
+**下** — 投票: 各 $y$ について、$y$ を含むすべての $h$ の事後確率を合計。
+$$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
 :::
 :::
 ::::
 
 ::: {.notes}
-The Tenenbaum & Griffiths (2001) BBS construction, step 1. One data point; a
-family of overlapping consequential intervals, each containing x. Bar thickness
-= likelihood = 1/|h| (size principle). With a flat prior the posterior weight
-of each hypothesis is just its normalised likelihood. Next slide: sum these up.
-~2 min.
+The Tenenbaum & Griffiths (2001) BBS construction. Two stacked panels: the
+candidate consequential intervals (each containing x, thickness = 1/|h| =
+likelihood), and the posterior-weighted vote below. The next three slides walk
+a specific y across the dimension — y = x, x+1, x+2 — graying the hypotheses
+that exclude it so students see the vote shrink. ~1.5 min on this overview.
 :::
 
-## [Sum the votes → the gradient]{.lang-en}[票を合計 → 勾配]{.lang-ja} {.smaller}
+## [Vote for $y = x$]{.lang-en}[$y = x$ への投票]{.lang-ja} {.smaller}
 
 :::: {.columns}
-::: {.column width="58%"}
-![](images/tg_gradient.png){fig-align="center" width="100%"}
+::: {.column width="60%"}
+![](images/tg_vote_y0.png){fig-align="center" width="100%"}
 :::
-::: {.column width="42%"}
+::: {.column width="40%"}
 ::: {.lang-en}
-For each novel $y$, add up the posterior weight of **every hypothesis that
-contains $y$**:
-$$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
+Ask about $y = x$ — the datum itself.
 
-Points near $x$ sit inside *many* intervals → tall bars. Far points sit
-inside *few* → short bars.
+[**Every** hypothesis contains $x$]{.yellow} — all 7 vote "yes".
 
-[The discretized votes trace an **approximately exponential** decay —
-Shepard's law, **derived**.]{.yellow}
+The bar at $x$ sums *all* the posterior weight: the tallest possible vote.
 :::
 
 ::: {.lang-ja}
-新しい $y$ ごとに、**$y$ を含むすべての仮説**の事後確率を合計する:
-$$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
+$y = x$ — データそのものについて問う。
 
-$x$ の近くの点は*多くの*区間に入る → 高いバー。遠い点は*わずかな*区間に
-しか入らない → 低いバー。
+[**すべての**仮説が $x$ を含む]{.yellow} — 7つすべてが「はい」に投票。
 
-[離散化された票が**ほぼ指数関数的**な減衰を描く — シェパードの法則が
-**導出**された。]{.yellow}
+$x$ のバーは*すべて*の事後確率を合計 — 可能な限り高い投票。
 :::
 :::
 ::::
 
 ::: {.notes}
-Step 2 of the T&G construction. The posterior-weighted vote IS the sum over
-hypotheses. Walk it slowly: a y close to x is covered by nearly all the
-intervals, so its bar is tall; a far y is covered by only the few wide
-intervals, so its bar is short. The bar profile is a discretized exponential —
-this is where Shepard's universal law comes from in the Bayesian account. It is
-the same dashed yellow curve from the Shepard slide, now produced rather than
-posited. ~2.5 min, then move to the size principle.
+Step 1 of the walk-through. y = x: every consequential interval contains the
+datum, so all 7 hypotheses vote. The bar at x is the full sum — the peak of the
+gradient. Greyed bars are the other y values, shown for context. ~1 min.
+:::
+
+## [Vote for $y = x + 1$]{.lang-en}[$y = x + 1$ への投票]{.lang-ja} {.smaller}
+
+:::: {.columns}
+::: {.column width="60%"}
+![](images/tg_vote_y1.png){fig-align="center" width="100%"}
+:::
+::: {.column width="40%"}
+::: {.lang-en}
+Move one step away: $y = x + 1$.
+
+[The two smallest intervals no longer reach $y$]{.yellow} — they drop out
+(greyed). Only 5 of 7 vote.
+
+Fewer votes → a **shorter** bar.
+:::
+
+::: {.lang-ja}
+1歩離れる: $y = x + 1$。
+
+[最小の2区間はもう $y$ に届かない]{.yellow} — 脱落（グレー）。7つ中5つだけ
+が投票。
+
+票が減る → バーが**低く**なる。
+:::
+:::
+::::
+
+::: {.notes}
+Step 2. y = x+1: the two tightest intervals (biggest likelihood, but smallest
+support) no longer contain y, so they grey out. 5 of 7 still vote. The
+highlighted bar is visibly shorter than the y = x bar. Point out: the
+hypotheses that drop are the *most likely* ones — that's why the bar falls
+fast. ~1.5 min.
+:::
+
+## [Vote for $y = x + 2$]{.lang-en}[$y = x + 2$ への投票]{.lang-ja} {.smaller}
+
+:::: {.columns}
+::: {.column width="60%"}
+![](images/tg_vote_y2.png){fig-align="center" width="100%"}
+:::
+::: {.column width="40%"}
+::: {.lang-en}
+Two steps away: $y = x + 2$.
+
+[Only the 2 widest intervals still reach $y$]{.yellow} — and those are the
+*least* likely. The bar is short.
+
+Sweep $y$ across every point → [the bars trace an **approximately
+exponential** decay. Shepard's law, **derived**.]{.yellow}
+:::
+
+::: {.lang-ja}
+2歩離れる: $y = x + 2$。
+
+[最も広い2区間だけが $y$ に届く]{.yellow} — しかもそれらは*最も*尤度が低い。
+バーは低い。
+
+$y$ を全点で動かす → [バーは**ほぼ指数関数的**な減衰を描く。シェパードの
+法則が**導出**された。]{.yellow}
+:::
+:::
+::::
+
+::: {.notes}
+Step 3. y = x+2: only the 2 widest intervals still contain y, and those carry
+the least posterior weight — so the bar is short. Close the construction: as y
+sweeps across the dimension, the bar profile IS the discretized exponential
+gradient. This is where Shepard's universal law comes from in the Bayesian
+account — the same dashed curve from the Shepard slide, now produced rather
+than posited. ~1.5 min, then move to the size principle.
 :::
 
 ## [The size principle]{.lang-en}[サイズ原理]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
