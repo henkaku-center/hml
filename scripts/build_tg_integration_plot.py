@@ -82,13 +82,13 @@ def hyp_likelihood(h: tuple[float, float]) -> float:
 def build_vote_figure(highlight_y: float | None, slug: str) -> None:
     """Stacked hypotheses + gradient panels. If highlight_y is set, mark that
     y, grey the hypotheses that exclude it, and grey every gradient bar but y."""
-    # Aspect tuned so that, at a 54%-width column, the figure fills most of
-    # the slide's vertical space without dwarfing the text column beside it
-    # (the text column is `.v-center`ed against it). Tall enough to avoid the
-    # BOTTOM-GAP void, not so tall it triggers COLUMN-THIN on the text.
+    # Aspect tuned so that at a 54%-width column the figure fills the slide's
+    # vertical space without overflowing it. The two panels are pulled apart
+    # (large hspace) so they read as two distinct rows — the hypotheses above,
+    # the vote gradient below — without needing "top/bottom panel" labels.
     fig, (axh, axg) = plt.subplots(
-        2, 1, figsize=(7.4, 5.5), dpi=150, facecolor=BG,
-        gridspec_kw=dict(height_ratios=[1.55, 1.0], hspace=0.42),
+        2, 1, figsize=(7.4, 6.0), dpi=150, facecolor=BG,
+        gridspec_kw=dict(height_ratios=[1.55, 1.0], hspace=0.78),
     )
     axh.set_facecolor(BG)
     axg.set_facecolor(BG)

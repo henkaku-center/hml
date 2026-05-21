@@ -434,31 +434,30 @@ on hypotheses that contain y. Both games are this exact sum. ~2 min.
 :::
 ::: {.column width="46%"}
 ::: {.lang-en}
-[**Top panel — the hypotheses.**]{.accent}
-Observe one datum $x$. Every interval that **contains $x$** is a live
-hypothesis $h$. Each bar's thickness is $1/|h|$, its strong-sampling
-likelihood — so a *smaller* interval is a *thicker* bar. With a flat prior,
-the posterior weight of each $h$ is just $\propto$ that likelihood.
+[**The hypotheses.**]{.accent} Observe one datum $x$. Every interval that
+**contains $x$** is a live hypothesis $h$. A bar's thickness is its
+strong-sampling likelihood $1/|h|$ — a *smaller* interval is a *thicker*
+bar. Flat prior, so each $h$'s posterior weight $\propto$ its likelihood.
 
-[**Bottom panel — the vote.**]{.accent}
-For each candidate $y$, sum the posterior of every $h$ that contains it:
+[**The vote.**]{.accent} For each candidate $y$, add up the posterior of
+every $h$ that contains it:
 $$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
 
-[Next: walk $y$ outward — $x$, then $x{+}1$, then $x{+}2$ — and watch the
-vote shrink.]{.yellow}
+[Next three slides: walk $y$ outward — $x$, $x{+}1$, $x{+}2$ — and watch
+the vote shrink as hypotheses drop out.]{.yellow}
 :::
 
 ::: {.lang-ja}
-[**上のパネル — 仮説。**]{.accent}
-1つのデータ $x$ を観測。$x$ を**含む**すべての区間が生きた仮説 $h$。
-各バーの太さは $1/|h|$（強サンプリング尤度）— *小さい*区間ほど*太い*バー。
-平坦な事前の下で、各 $h$ の事後確率はこの尤度に比例する。
+[**仮説。**]{.accent} 1つのデータ $x$ を観測。$x$ を**含む**すべての区間が
+生きた仮説 $h$。バーの太さは強サンプリング尤度 $1/|h|$ — *小さい*区間ほど
+*太い*バー。平坦な事前なので、各 $h$ の事後確率は尤度に比例。
 
-[**下のパネル — 投票。**]{.accent}
-各候補 $y$ について、$y$ を含むすべての $h$ の事後確率を合計:
+[**投票。**]{.accent} 各候補 $y$ について、$y$ を含むすべての $h$ の
+事後確率を合計:
 $$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
 
-[次: $y$ を外へ動かす — $x$、$x{+}1$、$x{+}2$ — 投票が縮むのを見る。]{.yellow}
+[次の3枚: $y$ を外へ動かす — $x$、$x{+}1$、$x{+}2$ — 仮説が脱落して投票が
+縮むのを見る。]{.yellow}
 :::
 :::
 ::::
