@@ -11,16 +11,16 @@ format:
   pptx: default
 ---
 
-## Agenda {.agenda .dense}
+## [Agenda]{.lang-en}[本日の予定]{.lang-ja} {.agenda .dense}
 
-- Welcome + Clusters walkthrough  [0:00]{.time}
-- The generalization problem  [0:10]{.time}
-- The Bayesian generalization framework + size principle  [0:18]{.time}
-- Rectangle game + number game  [0:40]{.time}
-- Break  [1:08]{.time}
-- Student presentation — Shohei  [1:15]{.time}
-- No Free Lunch  [1:40]{.time}
-- Hierarchical Bayes + close  [1:50]{.time}
+- [Welcome + Clusters walkthrough]{.lang-en}[ようこそ + クラスタ課題の説明]{.lang-ja}  [0:00]{.time}
+- [The generalization problem]{.lang-en}[一般化の問題]{.lang-ja}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.lang-en}[ベイズ一般化の枠組み + サイズ原理]{.lang-ja}  [0:18]{.time}
+- [Rectangle game + number game]{.lang-en}[長方形ゲーム + 数当てゲーム]{.lang-ja}  [0:40]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja}  [1:08]{.time}
+- [Student presentation — Shohei]{.lang-en}[学生発表 — ショウヘイ]{.lang-ja}  [1:15]{.time}
+- [No Free Lunch]{.lang-en}[ノーフリーランチ]{.lang-ja}  [1:40]{.time}
+- [Hierarchical Bayes + close]{.lang-en}[階層ベイズ + まとめ]{.lang-ja}  [1:50]{.time}
 
 ::: {.notes}
 ~2 min agenda overview. Today's spine: one framework, shown twice — once on
@@ -99,14 +99,14 @@ generalization."
 
 ## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
 
-- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
-- [The generalization problem]{.highlight}  [0:10]{.time}
-- The Bayesian generalization framework + size principle  [0:18]{.time}
-- Rectangle game + number game  [0:40]{.time}
-- Break  [1:08]{.time}
-- Student presentation — Shohei  [1:15]{.time}
-- No Free Lunch  [1:40]{.time}
-- Hierarchical Bayes + close  [1:50]{.time}
+- [Welcome + Clusters walkthrough]{.lang-en .done}[ようこそ + クラスタ課題の説明]{.lang-ja .done}  [0:00]{.time}
+- [The generalization problem]{.lang-en .highlight}[一般化の問題]{.lang-ja .highlight}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.lang-en}[ベイズ一般化の枠組み + サイズ原理]{.lang-ja}  [0:18]{.time}
+- [Rectangle game + number game]{.lang-en}[長方形ゲーム + 数当てゲーム]{.lang-ja}  [0:40]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja}  [1:08]{.time}
+- [Student presentation — Shohei]{.lang-en}[学生発表 — ショウヘイ]{.lang-ja}  [1:15]{.time}
+- [No Free Lunch]{.lang-en}[ノーフリーランチ]{.lang-ja}  [1:40]{.time}
+- [Hierarchical Bayes + close]{.lang-en}[階層ベイズ + まとめ]{.lang-ja}  [1:50]{.time}
 
 ::: {.notes}
 Recap agenda — ~10s. Clusters walkthrough done; moving into the
@@ -295,14 +295,14 @@ of psychological space" → motivates the hypothesis space.
 
 ## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
 
-- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
-- [The generalization problem]{.done}  [0:10]{.time}
-- [The Bayesian generalization framework + size principle]{.highlight}  [0:18]{.time}
-- Rectangle game + number game  [0:40]{.time}
-- Break  [1:08]{.time}
-- Student presentation — Shohei  [1:15]{.time}
-- No Free Lunch  [1:40]{.time}
-- Hierarchical Bayes + close  [1:50]{.time}
+- [Welcome + Clusters walkthrough]{.lang-en .done}[ようこそ + クラスタ課題の説明]{.lang-ja .done}  [0:00]{.time}
+- [The generalization problem]{.lang-en .done}[一般化の問題]{.lang-ja .done}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.lang-en .highlight}[ベイズ一般化の枠組み + サイズ原理]{.lang-ja .highlight}  [0:18]{.time}
+- [Rectangle game + number game]{.lang-en}[長方形ゲーム + 数当てゲーム]{.lang-ja}  [0:40]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja}  [1:08]{.time}
+- [Student presentation — Shohei]{.lang-en}[学生発表 — ショウヘイ]{.lang-ja}  [1:15]{.time}
+- [No Free Lunch]{.lang-en}[ノーフリーランチ]{.lang-ja}  [1:40]{.time}
+- [Hierarchical Bayes + close]{.lang-en}[階層ベイズ + まとめ]{.lang-ja}  [1:50]{.time}
 
 ::: {.notes}
 Recap — ~10s. The generalization problem is framed; now the Bayesian
@@ -852,14 +852,14 @@ $1$。**C / D** は仮説の*事前*の話; サイズ原理は事前ではなく
 
 ## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
 
-- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
-- [The generalization problem]{.done}  [0:10]{.time}
-- [The Bayesian generalization framework + size principle]{.done}  [0:18]{.time}
-- [Rectangle game + number game]{.highlight}  [0:40]{.time}
-- Break  [1:08]{.time}
-- Student presentation — Shohei  [1:15]{.time}
-- No Free Lunch  [1:40]{.time}
-- Hierarchical Bayes + close  [1:50]{.time}
+- [Welcome + Clusters walkthrough]{.lang-en .done}[ようこそ + クラスタ課題の説明]{.lang-ja .done}  [0:00]{.time}
+- [The generalization problem]{.lang-en .done}[一般化の問題]{.lang-ja .done}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.lang-en .done}[ベイズ一般化の枠組み + サイズ原理]{.lang-ja .done}  [0:18]{.time}
+- [Rectangle game + number game]{.lang-en .highlight}[長方形ゲーム + 数当てゲーム]{.lang-ja .highlight}  [0:40]{.time}
+- [Break]{.lang-en}[休憩]{.lang-ja}  [1:08]{.time}
+- [Student presentation — Shohei]{.lang-en}[学生発表 — ショウヘイ]{.lang-ja}  [1:15]{.time}
+- [No Free Lunch]{.lang-en}[ノーフリーランチ]{.lang-ja}  [1:40]{.time}
+- [Hierarchical Bayes + close]{.lang-en}[階層ベイズ + まとめ]{.lang-ja}  [1:50]{.time}
 
 ::: {.notes}
 Recap — ~10s. Framework + size principle done; now we run the framework
@@ -1691,14 +1691,14 @@ min, then break.
 
 ## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
 
-- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
-- [The generalization problem]{.done}  [0:10]{.time}
-- [The Bayesian generalization framework + size principle]{.done}  [0:18]{.time}
-- [Rectangle game + number game]{.done}  [0:40]{.time}
-- [Break]{.highlight}  [1:08]{.time}
-- Student presentation — Shohei  [1:15]{.time}
-- No Free Lunch  [1:40]{.time}
-- Hierarchical Bayes + close  [1:50]{.time}
+- [Welcome + Clusters walkthrough]{.lang-en .done}[ようこそ + クラスタ課題の説明]{.lang-ja .done}  [0:00]{.time}
+- [The generalization problem]{.lang-en .done}[一般化の問題]{.lang-ja .done}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.lang-en .done}[ベイズ一般化の枠組み + サイズ原理]{.lang-ja .done}  [0:18]{.time}
+- [Rectangle game + number game]{.lang-en .done}[長方形ゲーム + 数当てゲーム]{.lang-ja .done}  [0:40]{.time}
+- [Break]{.lang-en .highlight}[休憩]{.lang-ja .highlight}  [1:08]{.time}
+- [Student presentation — Shohei]{.lang-en}[学生発表 — ショウヘイ]{.lang-ja}  [1:15]{.time}
+- [No Free Lunch]{.lang-en}[ノーフリーランチ]{.lang-ja}  [1:40]{.time}
+- [Hierarchical Bayes + close]{.lang-en}[階層ベイズ + まとめ]{.lang-ja}  [1:50]{.time}
 
 ::: {.notes}
 Recap — ~10s. Both games done — the whole framework is delivered. Break,
@@ -1759,14 +1759,14 @@ up in their word-learning data?"
 
 ## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
 
-- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
-- [The generalization problem]{.done}  [0:10]{.time}
-- [The Bayesian generalization framework + size principle]{.done}  [0:18]{.time}
-- [Rectangle game + number game]{.done}  [0:40]{.time}
-- [Break]{.done}  [1:08]{.time}
-- [Student presentation — Shohei]{.done}  [1:15]{.time}
-- [No Free Lunch]{.highlight}  [1:40]{.time}
-- Hierarchical Bayes + close  [1:50]{.time}
+- [Welcome + Clusters walkthrough]{.lang-en .done}[ようこそ + クラスタ課題の説明]{.lang-ja .done}  [0:00]{.time}
+- [The generalization problem]{.lang-en .done}[一般化の問題]{.lang-ja .done}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.lang-en .done}[ベイズ一般化の枠組み + サイズ原理]{.lang-ja .done}  [0:18]{.time}
+- [Rectangle game + number game]{.lang-en .done}[長方形ゲーム + 数当てゲーム]{.lang-ja .done}  [0:40]{.time}
+- [Break]{.lang-en .done}[休憩]{.lang-ja .done}  [1:08]{.time}
+- [Student presentation — Shohei]{.lang-en .done}[学生発表 — ショウヘイ]{.lang-ja .done}  [1:15]{.time}
+- [No Free Lunch]{.lang-en .highlight}[ノーフリーランチ]{.lang-ja .highlight}  [1:40]{.time}
+- [Hierarchical Bayes + close]{.lang-en}[階層ベイズ + まとめ]{.lang-ja}  [1:50]{.time}
 
 ::: {.notes}
 Recap — ~10s. Thank Shohei. Two blocks left: No Free Lunch (why a prior is
@@ -1951,14 +1951,14 @@ can learn it. Transition to Block 10.
 
 ## [Where we are]{.lang-en}[現在地]{.lang-ja} {.agenda .dense}
 
-- [Welcome + Clusters walkthrough]{.done}  [0:00]{.time}
-- [The generalization problem]{.done}  [0:10]{.time}
-- [The Bayesian generalization framework + size principle]{.done}  [0:18]{.time}
-- [Rectangle game + number game]{.done}  [0:40]{.time}
-- [Break]{.done}  [1:08]{.time}
-- [Student presentation — Shohei]{.done}  [1:15]{.time}
-- [No Free Lunch]{.done}  [1:40]{.time}
-- [Hierarchical Bayes + close]{.highlight}  [1:50]{.time}
+- [Welcome + Clusters walkthrough]{.lang-en .done}[ようこそ + クラスタ課題の説明]{.lang-ja .done}  [0:00]{.time}
+- [The generalization problem]{.lang-en .done}[一般化の問題]{.lang-ja .done}  [0:10]{.time}
+- [The Bayesian generalization framework + size principle]{.lang-en .done}[ベイズ一般化の枠組み + サイズ原理]{.lang-ja .done}  [0:18]{.time}
+- [Rectangle game + number game]{.lang-en .done}[長方形ゲーム + 数当てゲーム]{.lang-ja .done}  [0:40]{.time}
+- [Break]{.lang-en .done}[休憩]{.lang-ja .done}  [1:08]{.time}
+- [Student presentation — Shohei]{.lang-en .done}[学生発表 — ショウヘイ]{.lang-ja .done}  [1:15]{.time}
+- [No Free Lunch]{.lang-en .done}[ノーフリーランチ]{.lang-ja .done}  [1:40]{.time}
+- [Hierarchical Bayes + close]{.lang-en .highlight}[階層ベイズ + まとめ]{.lang-ja .highlight}  [1:50]{.time}
 
 ::: {.notes}
 Recap — ~10s. Last block: hierarchical Bayes (where a learner *acquires* the
