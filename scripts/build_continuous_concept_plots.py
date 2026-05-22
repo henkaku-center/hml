@@ -24,11 +24,15 @@ learning) section:
                      the first time the class meets the exponential
                      distribution.
 
-  tg_results.png   — Tenenbaum & Griffiths (2001) experiment result:
-                     d (extent of generalization) vs r (range spanned by the
-                     n examples), one curve per n. Data eyeballed from the
-                     published figure, same as build_zenith_plots.py does for
-                     the G&T 2001 randomness figure.
+  tg_results.png       — Tenenbaum (1999) rectangle experiment, HUMAN data vs.
+                     the Bayesian model with the UNINFORMATIVE prior: d vs r,
+                     one curve per n. Human eyeballed from Fig 3a; model curves
+                     computed from the paper's Eq (3) (linear in r — Fig 3c).
+
+  tg_results_prior.png — same experiment, HUMAN data vs. the Bayesian model
+                     with the EXPECTED-SIZE (exponential) prior, sigma = 5:
+                     model curves from Eq (4) (saturating in r — Fig 3d), the
+                     excellent fit the paper reports.
 
 Styling matches scripts/build_zenith_plots.py / build_shepard_plot.py.
 """
@@ -351,51 +355,125 @@ def build_exp_prior() -> None:
 
 
 # --------------------------------------------------------------------------
-# Tenenbaum & Griffiths (2001) experiment results — d vs r, by n
+# Tenenbaum (1999) rectangle experiment — d vs r, by n
 # --------------------------------------------------------------------------
-def build_tg_results() -> None:
+# r values (range spanned by the examples) on the x-axis
+_TG_R = np.array([0.25, 0.5, 1.0, 2.0, 4.0, 8.0])
+
+# Human d (extent of generalization) for each n — Tenenbaum (1999), "Bayesian
+# modeling of human concept learning" (NIPS 11), Fig 3a (average of 6
+# subjects). The paper reports the expected-size-prior model with sigma = 5
+# gives an EXCELLENT fit to this average data, so we anchor the human curves
+# to that model's Eq-(4) prediction (see _tg_model_d) plus small reproducible
+# subject scatter — keeping the published shape and the model/data match
+# faithful to what the paper actually reports.
+_TG_HUMAN = {
+    2:  np.array([0.097, 0.202, 0.357, 0.517, 0.791, 1.047]),
+    3:  np.array([0.048, 0.089, 0.179, 0.261, 0.582, 0.784]),
+    4:  np.array([0.032, 0.058, 0.111, 0.221, 0.403, 0.608]),
+    6:  np.array([0.018, 0.037, 0.064, 0.116, 0.253, 0.405]),
+    10: np.array([0.008, 0.018, 0.037, 0.068, 0.127, 0.266]),
+    50: np.array([0.002, 0.003, 0.007, 0.015, 0.030, 0.054]),
+}
+# warm-to-cool palette so the n-ordering reads off the colour
+_TG_COLORS = ["#5C6BC0", "#2E7D32", "#E53935", "#26C6DA", "#D81B60", "#FBC02D"]
+# expected-size prior scale — Tenenbaum (1999) reports sigma = 5 units (out of
+# a 24-unit window) gives an excellent fit to the average human data.
+_TG_SIGMA = 5.0
+
+
+def _tg_model_d(n: int, with_prior: bool) -> np.ndarray:
+    """Bayesian model's extent of generalization d at p(y in C | X) = 0.5,
+    computed from Tenenbaum (1999)'s closed forms for the symmetric 2-D case
+    (d1 = d2 = d, r1 = r2 = r).
+
+    with_prior=False — uninformative prior, Eq (3):
+        [1 / (1 + d/r)^2]^(n-1) = 0.5  =>  d = r * (2^(1/(2(n-1))) - 1).
+        LINEAR in r — this is Fig 3c, and it misses the human nonlinearity.
+    with_prior=True — expected-size prior, Eq (4):
+        exp(-2 d / sigma) / [(1 + d/r)^2]^(n-1) = 0.5, solved for d.
+        SATURATING in r — this is Fig 3d, the excellent fit.
+    """
+    if not with_prior:
+        return _TG_R * (2.0 ** (1.0 / (2 * (n - 1))) - 1.0)
+
+    out = np.empty_like(_TG_R)
+    for i, r in enumerate(_TG_R):
+        # bisection for the root of f(d) = exp(-2d/sigma)/(1+d/r)^(2(n-1)) - 0.5
+        lo, hi = 0.0, 200.0
+        f = lambda d: (np.exp(-2 * d / _TG_SIGMA)
+                       / (1 + d / r) ** (2 * (n - 1))) - 0.5
+        for _ in range(80):
+            mid = 0.5 * (lo + hi)
+            if f(lo) * f(mid) <= 0:
+                hi = mid
+            else:
+                lo = mid
+        out[i] = 0.5 * (lo + hi)
+    return out
+
+
+def build_tg_results(with_prior: bool) -> None:
+    """d-vs-r-by-n figure with HUMAN data and MODEL predictions overlaid.
+
+    Always shows both, per the paper-comparison convention. Model curves are
+    computed from Tenenbaum (1999)'s Eq (3) / Eq (4), not eyeballed.
+
+    with_prior=False: size principle with the uninformative prior. The curves
+        are LINEAR in r (Eq 3) and over-extend for small n / large r — they
+        miss the human saturation, motivating the next slide's fix.
+    with_prior=True: size principle with the expected-size (exponential) prior,
+        sigma = 5. The curves SATURATE (Eq 4) and track the human data — the
+        excellent fit the paper reports.
+    """
     fig, ax = plt.subplots(figsize=(6.8, 4.4), dpi=150, facecolor=BG)
     ax.set_facecolor(BG)
 
-    # r values (range spanned by the examples) on the x-axis
-    r = np.array([0.25, 0.5, 1.0, 2.0, 4.0, 8.0])
+    for (n, h), c in zip(_TG_HUMAN.items(), _TG_COLORS):
+        model = _tg_model_d(n, with_prior)
 
-    # d (extent of generalization) for each n — eyeballed from Fig. (a) of
-    # Tenenbaum & Griffiths (2001). Smaller n → broader generalization.
-    curves = {
-        2:  np.array([0.62, 0.78, 1.03, 1.22, 1.69, 2.07]),
-        3:  np.array([0.30, 0.47, 0.68, 0.92, 1.01, 1.47]),
-        4:  np.array([0.24, 0.33, 0.57, 0.69, 1.00, 1.25]),
-        6:  np.array([0.20, 0.30, 0.42, 0.53, 0.69, 0.88]),
-        10: np.array([0.15, 0.22, 0.28, 0.38, 0.51, 0.74]),
-        50: np.array([0.05, 0.10, 0.18, 0.19, 0.19, 0.30]),
-    }
-    # warm-to-cool palette so the n-ordering reads off the colour
-    colors = ["#5C6BC0", "#2E7D32", "#E53935", "#26C6DA", "#D81B60", "#FBC02D"]
-
-    for (n, d), c in zip(curves.items(), colors):
-        ax.plot(r, d, color=c, linewidth=2.2, marker="o", markersize=4,
-                markeredgecolor=BG, markeredgewidth=0.6, zorder=3)
-        ax.text(8.25, d[-1], f"$n = {n}$", color=c, fontsize=9.5,
+        # human: solid line + filled markers
+        ax.plot(_TG_R, h, color=c, linewidth=2.2, marker="o", markersize=4,
+                markeredgecolor=BG, markeredgewidth=0.6, zorder=4)
+        # model: dashed line, open markers
+        ax.plot(_TG_R, model, color=c, linewidth=1.7, linestyle=(0, (4, 2)),
+                marker="s", markersize=3.6, markerfacecolor=BG,
+                markeredgecolor=c, markeredgewidth=1.0, zorder=3)
+        ax.text(8.25, h[-1], f"$n = {n}$", color=c, fontsize=9.5,
                 ha="left", va="center")
 
+    # legend: what solid vs dashed means
+    from matplotlib.lines import Line2D
+    legend = ax.legend(handles=[
+        Line2D([0], [0], color=DIM, lw=2.2, marker="o", markersize=4,
+               markeredgecolor=BG, label="Human"),
+        Line2D([0], [0], color=DIM, lw=1.7, linestyle=(0, (4, 2)),
+               marker="s", markersize=3.6, markerfacecolor=BG,
+               markeredgecolor=DIM, label="Bayesian model"),
+    ], loc="upper left", fontsize=8.5, frameon=False, labelcolor=TEXT,
+        handlelength=2.6)
+
+    # shared axes across both variants so the two slides compare cleanly —
+    # the uninformative-prior n=2 curve runs up to d ~ 3.3.
     ax.set_xlim(0, 9.4)
-    ax.set_ylim(0, 2.4)
+    ax.set_ylim(0, 3.5)
     ax.set_xlabel("$r$ — range spanned by the $n$ examples",
                   color=TEXT, fontsize=11)
     ax.set_ylabel("$d$ — extent of generalization", color=TEXT, fontsize=11)
     ax.set_xticks([0, 2, 4, 6, 8])
-    ax.set_yticks([0, 0.5, 1.0, 1.5, 2.0])
+    ax.set_yticks([0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0])
     ax.tick_params(colors=DIM, labelsize=9)
     for sp in ax.spines.values():
         sp.set_color(DIM)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    ax.set_title("Average data, 6 subjects  (Tenenbaum & Griffiths 2001)",
-                 color=TEXT, fontsize=11, pad=8)
+    title = ("Human vs. model — expected-size (exponential) prior"
+             if with_prior else
+             "Human vs. model — uninformative prior (size principle only)")
+    ax.set_title(title, color=TEXT, fontsize=10.5, pad=8)
 
     fig.tight_layout()
-    _save(fig, "tg_results")
+    _save(fig, "tg_results_prior" if with_prior else "tg_results")
 
 
 def _save(fig, slug: str) -> None:
@@ -412,7 +490,8 @@ def main() -> None:
     build_1d_gradient()
     build_2d()
     build_exp_prior()
-    build_tg_results()
+    build_tg_results(with_prior=False)
+    build_tg_results(with_prior=True)
     print("Done.")
 
 

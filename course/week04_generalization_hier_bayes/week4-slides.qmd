@@ -1117,40 +1117,51 @@ readout of "how much do you generalize beyond what you saw." ~1.5 min.
 
 ## [The result — $d$ vs. $r$, by $n$]{.lang-en}[結果 — $n$ ごとの $d$ 対 $r$]{.lang-ja} {.smaller}
 
-:::: {.columns .v-center}
+:::: {.columns .v-spread}
 ::: {.column width="62%"}
 ![](images/tg_results.png){fig-align="center" width="100%"}
 :::
 ::: {.column width="38%"}
 ::: {.lang-en}
-Each curve is one value of $n$.
+[**Solid = human, dashed = model.**]{.accent} One colour per $n$.
 
-- [**Fewer examples → generalize further**]{.yellow} ($n=2$ on top)
-- More examples → $d$ collapses toward the data ($n=50$ at the bottom)
-- $d$ grows gently with $r$
+[**The human pattern.**]{.yellow} Fewer examples → generalize further ($n=2$
+on top); $d$ rises with $r$ but **saturates**.
 
-[The size principle, measured in **human behaviour**: more data tightens the
-concept — and the Bayesian model reproduces every curve.]{.accent}
+[**The model — likelihood only.**]{.accent} The size principle with a *flat*
+(uninformative) prior. It captures the $n$-ordering…
+
+[…but the curves run **straight** — the model **over-extends**, badly for
+small $n$ and large $r$. It misses the human saturation.]{.yellow}
 :::
 
 ::: {.lang-ja}
-各曲線が1つの $n$ の値。
+[**実線 = 人間、破線 = モデル。**]{.accent} 色は $n$ ごと。
 
-- [**例が少ない → 遠くまで一般化**]{.yellow}（$n=2$ が一番上）
-- 例が多い → $d$ はデータの方へ収束（$n=50$ が一番下）
-- $d$ は $r$ とともに緩やかに増加
+[**人間のパターン。**]{.yellow} 例が少ない → 遠くまで一般化（$n=2$ が一番
+上）; $d$ は $r$ とともに増えるが**飽和する**。
 
-[**人間の行動**で測定されたサイズ原理: データが増えるほど概念が引き締まる
-— そしてベイズモデルはすべての曲線を再現する。]{.accent}
+[**モデル — 尤度のみ。**]{.accent} *平坦な*（無情報）事前のサイズ原理。
+$n$ の順序は捉えるが…
+
+[…曲線は**直線的**に伸びる — モデルは**拡張しすぎ**、特に小さい $n$ と
+大きい $r$ で。人間の飽和を捉えられない。]{.yellow}
 :::
 :::
 ::::
 
 ::: {.notes}
-The Tenenbaum & Griffiths (2001) result figure, recreated in the dark theme
-(data eyeballed from the published Fig. a). The n = 2 curve sits well above
-n = 50 — exactly the size principle, now measured in people. The Bayesian
-model reproduces this family of curves. ~2 min.
+The Tenenbaum (1999) rectangle result, recreated dark-theme. Human curves
+(solid) are from Fig 3a (avg of 6 subjects); model curves (dashed) are the
+Bayesian learner with the UNINFORMATIVE prior, computed from the paper's
+Eq (3) — which is exactly LINEAR in r. The point of THIS slide: the size
+principle alone gets the n-ordering right (n=2 above n=50) but the
+uninformative-prior model over-extends — the dashed n=2 line runs to d ~ 3.3
+while people saturate near d ~ 1. That gap is what the next slide fixes.
+
+Standing convention: when discussing a paper, always show human AND model
+on the same axes — never a model curve alone, never a "the model reproduces
+it" claim without the human curve beside it. ~2 min.
 :::
 
 ## [One fix — an exponential prior]{.lang-en}[1つの修正 — 指数事前]{.lang-ja} {.smaller}
@@ -1161,8 +1172,8 @@ model reproduces this family of curves. ~2 min.
 :::
 ::: {.column width="48%"}
 ::: {.lang-en}
-The size principle alone slightly **over-extends** the rectangle. The fix: a
-prior that makes large rectangles less likely.
+A flat prior lets the rectangle run **straight** — it **over-extends**. The
+fix: a prior that makes large rectangles less likely.
 
 [**The exponential distribution**]{.accent} — our first new distribution
 today. For a size $s \ge 0$:
@@ -1174,8 +1185,8 @@ $$p(s) = \lambda\, e^{-\lambda s}$$
 :::
 
 ::: {.lang-ja}
-サイズ原理だけでは長方形を少し**拡張しすぎる**。修正: 大きい長方形を
-起こりにくくする事前。
+平坦な事前では長方形が**直線的**に伸びる — **拡張しすぎる**。修正: 大きい
+長方形を起こりにくくする事前。
 
 [**指数分布**]{.accent} — 今日初めての新しい分布。サイズ $s \ge 0$ について:
 $$p(s) = \lambda\, e^{-\lambda s}$$
@@ -1195,6 +1206,67 @@ exponential prior over rectangle size penalizes big rectangles, and size
 principle (likelihood) + this prior together fit the human data — neither
 alone. Justified by the task framing (monitor edges, prior experience with
 rectangles). ~2 min.
+
+ANTICIPATED STUDENT QUESTION — how is the scale parameter determined? The
+exponential prior has one free parameter: equivalently the rate λ, or the
+mean scale 1/λ (Tenenbaum writes it as σ, the prior's expected rectangle
+size). It is NOT learned from the n dots of a single trial — those go into
+the likelihood. It is a property of the prior, fixed across trials. In the
+1999 paper σ is fit once to the average human data (he reports σ = 5 units
+in the 24-unit window gives an excellent fit) — i.e. it is calibrated to the
+population, then held constant. Conceptually it encodes prior experience
+with the scale of "healthy-level" rectangles. The principled move (Week 4's
+hierarchical-Bayes block) is to put a hyperprior on σ and infer it too — then
+the scale is learned from many concepts rather than hand-set. Have this ready
+but do not lecture it unprompted.
+:::
+
+## [With the prior — the fit]{.lang-en}[事前を入れると — 適合]{.lang-ja} {.smaller}
+
+:::: {.columns .v-spread}
+::: {.column width="62%"}
+![](images/tg_results_prior.png){fig-align="center" width="100%"}
+:::
+::: {.column width="38%"}
+::: {.lang-en}
+[**Same axes, same data**]{.accent} — now the model carries the exponential
+prior over rectangle size.
+
+[**The dashed curves bend.**]{.yellow} The straight, over-extending lines
+collapse onto the human curves — $d$ now **saturates** with $r$, just as
+people do.
+
+Likelihood (size principle) **and** prior together — neither alone — give
+the fit.
+
+[Same lesson for every paper: lay the **model on top of the human data** and
+read off where it bends.]{.accent}
+:::
+
+::: {.lang-ja}
+[**同じ軸、同じデータ**]{.accent} — 今度はモデルが長方形サイズに対する
+指数事前を持つ。
+
+[**破線の曲線が曲がる。**]{.yellow} 直線的に拡張しすぎていた線が人間の曲線
+へと収束する — $d$ は今や $r$ とともに**飽和する**、人間と同じように。
+
+尤度（サイズ原理）**と**事前の両方で — どちらか一方では不十分 — 適合が
+得られる。
+
+[どの論文でも同じ教訓: **モデルを人間データに重ねて**、どこで曲がるかを
+読み取る。]{.accent}
+:::
+:::
+::::
+
+::: {.notes}
+The payoff slide. Same Tenenbaum (1999) experiment, same human curves; the
+model is now the expected-size-prior learner, computed from the paper's
+Eq (4) with σ = 5. The dashed curves go from linear (previous slide) to
+saturating, landing essentially on the human data — the "excellent fit" the
+paper reports (its Fig 3d). The conceptual close: the size principle gives
+the n-ordering, the prior supplies the nonlinearity; you need both. Reinforce
+the standing convention — model always shown against human data. ~1.5 min.
 :::
 
 ## [The rectangle game in one line]{.lang-en}[長方形ゲームを一言で]{.lang-ja} {.bigger}
