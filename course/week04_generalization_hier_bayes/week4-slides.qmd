@@ -1781,32 +1781,83 @@ the hypothesis space (Block 3) are not optional bookkeeping but the entire
 reason generalization is possible.
 :::
 
-## [The No Free Lunch theorem]{.lang-en}[ノーフリーランチ定理]{.lang-ja} {.midbig}
+## [The No Free Lunch theorem]{.lang-en}[ノーフリーランチ定理]{.lang-ja} {.smaller}
 
 ::: {.lang-en}
 [Wolpert (1996)]{.accent} — averaged over **all possible worlds**, no learning
-algorithm beats any other.
-
-Sequence prediction: you see $x_1, x_2$, predict $x_3$.
-
-- If *every* hypothesis about the sequence is equally possible …
-- … then for any data, every prediction is exactly **50/50**.
+algorithm beats any other. Here is *why*, concretely.
 :::
 
 ::: {.lang-ja}
 [Wolpert (1996)]{.accent} — **あらゆる可能な世界**にわたって平均すると、
-どの学習アルゴリズムも他のどれにも勝らない。
-
-系列予測: $x_1, x_2$ を見て $x_3$ を予測する。
-
-- もし系列に関する*すべての*仮説が等しく可能なら …
-- … どんなデータに対しても、あらゆる予測はちょうど **50/50**。
+どの学習アルゴリズムも他のどれにも勝らない。具体的に、その*理由*。
 :::
 
+:::: {.columns .v-spread}
+::: {.column width="50%"}
+::: {.lang-en}
+[**The task.**]{.accent} You see the bits $\,0, 1\,$ and must predict $x_3$.
+
+[**Your rule.**]{.accent} Say it predicts $x_3 = 0$. In the world
+$\,0,1,\mathbf{0}\,$ it is **right**.
+
+[**The mirror world.**]{.yellow} But the world $\,0,1,\mathbf{1}\,$ is *just
+as possible* — same data $0,1$, opposite answer. There your rule is **wrong**.
+:::
+
+::: {.lang-ja}
+[**課題。**]{.accent} ビット列 $\,0, 1\,$ を見て $x_3$ を予測する。
+
+[**あなたの規則。**]{.accent} $x_3 = 0$ と予測するとしよう。世界
+$\,0,1,\mathbf{0}\,$ では**正解**。
+
+[**鏡の世界。**]{.yellow} だが世界 $\,0,1,\mathbf{1}\,$ も*同じくらい可能* —
+同じデータ $0,1$、逆の答え。そこではあなたの規則は**不正解**。
+:::
+:::
+
+::: {.column width="50%"}
+::: {.lang-en}
+[**They pair off.**]{.accent} Every world where your rule scores a point has a
+mirror world — identical data, flipped continuation — where it loses one.
+
+[**Sum the pair.**]{.accent} Right + wrong $= 1$ hit out of $2$. Average over
+*all* worlds: every algorithm, every rule, scores **exactly $1/2$**.
+
+[No rule can win the average, because the data $0,1$ says **nothing** about
+$x_3$ until you assume some worlds are more likely than others.]{.yellow}
+:::
+
+::: {.lang-ja}
+[**ペアになる。**]{.accent} あなたの規則が得点する世界には必ず鏡の世界が
+ある — 同じデータ、反転した継続 — そこでは失点する。
+
+[**ペアを合計。**]{.accent} 正解 + 不正解 $= 2$ 回中 $1$ 回的中。*すべて*の
+世界で平均すると、どのアルゴリズムも、どの規則も、**ちょうど $1/2$**。
+
+[どの規則も平均で勝てない。データ $0,1$ は、ある世界が他より起こりやすいと
+仮定するまで $x_3$ について**何も**語らないから。]{.yellow}
+:::
+:::
+::::
+
 ::: {.notes}
-The result feels paradoxical the first time. The trick: for every world where
-your rule predicts well, there's a mirror world where it predicts badly, and
-they cancel. ~2.5 min.
+Walk the concrete instance, slowly — this is the intuition pump for the whole
+NFL → prior payoff.
+
+The setup: data is the two bits 0,1; predict the third bit. There are exactly
+two continuations, 0,1,0 and 0,1,1, and with a flat prior over worlds they are
+equally likely. Whatever your rule outputs, it is right in one of those two
+worlds and wrong in the other. Worlds pair off: for every world your rule
+gets right, the mirror world (same observed data, opposite continuation)
+cancels it. So averaged over all worlds the score is exactly 1/2 — and this is
+true of EVERY rule, including the cleverest one, including "always predict the
+majority bit." That is the No Free Lunch theorem made concrete.
+
+The escape hatch (next slide): the only way out is to drop the flat prior —
+to assert that 0,1,0 is more likely than 0,1,1 (or vice versa). That
+assertion IS the inductive bias. NFL doesn't say learning is impossible; it
+says learning is impossible WITHOUT a prior. ~2.5 min.
 :::
 
 ## [What NFL means for us]{.lang-en}[NFLが意味すること]{.lang-ja} {.bigger}

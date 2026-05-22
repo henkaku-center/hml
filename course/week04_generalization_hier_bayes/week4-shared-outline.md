@@ -150,7 +150,7 @@ Sequencing decision (confirmed with Prof. Austerweil):
 
 ### Block 9: No Free Lunch (10 min)
 
-- **Wolpert's No Free Lunch theorem.** Averaged over *all possible worlds*, no learning algorithm beats any other. Sequence-prediction illustration: given $x_1, x_2$, predict $x_3$ — with all hypotheses equally weighted, every prediction is 50/50.
+- **Wolpert's No Free Lunch theorem.** Averaged over *all possible worlds*, no learning algorithm beats any other. The slide walks a **concrete worked instance** (two-column): data is the bits $0,1$, predict $x_3$; whatever your rule outputs it is right in the world $0,1,0$ and wrong in the mirror world $0,1,1$; worlds pair off, so averaged over all worlds every rule scores exactly $1/2$. The mirror-world cancellation is the intuition pump for why the flat prior must be dropped.
 - The point for this course: a learner only works because the **distribution over worlds is constrained** — i.e., because it has a non-flat **prior**. Generalization is impossible without inductive bias.
 - This closes the loop on the whole day: the prior $p(h)$ and the hypothesis space $\mathcal H$ in the framework equation are not bookkeeping — they are *the entire reason generalization is possible at all*.
 - **Poll 3** (SP25 quiz, item "No free lunch"): *"What is the No Free Lunch theorem (for prediction)?"* Options: when all hypotheses are possible, there's nothing you can learn to predict (correct); learning one hyp hurts another; free-lunch social-debt joke; generalizing can hurt a learner. Reveal: option 1 — and connect to "this is why your prior matters."
