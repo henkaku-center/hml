@@ -1705,10 +1705,11 @@ Recap — ~10s. Both games done — the whole framework is delivered. Break,
 then Shohei presents.
 :::
 
-## [Break]{.lang-en}[休憩]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+## [Break]{.lang-en}[休憩]{.lang-ja} {.section-break .photo-break background-image="images/calliejimMay2025.jpg" background-size="cover" background-position="center"}
 
 ::: {.notes}
-5 min break. After the break: one bridge slide, then Shohei presents.
+5 min break. The background is Callie and Jim (May 2025). After the break:
+one bridge slide, then Shohei presents.
 :::
 
 ## [Bridge — Shohei's paper]{.lang-en}[橋渡し — ショウヘイの論文]{.lang-ja} {.midbig}
