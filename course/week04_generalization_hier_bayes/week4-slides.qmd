@@ -318,7 +318,7 @@ hypothesis space. Credit: Shepard (1987), Tenenbaum (1999), Tenenbaum &
 Griffiths (2001).
 :::
 
-## [The idea — concepts as hypotheses]{.lang-en}[考え方 — 概念を仮説として]{.lang-ja} {.midbig}
+## [The idea — concepts as hypotheses]{.lang-en}[考え方 — 概念を仮説として]{.lang-ja}
 
 ::: {.lang-en}
 Instead of measuring distance directly, posit a **space of candidate concepts**
@@ -327,6 +327,8 @@ and let Bayes do the generalizing.
 - A concept = a **set of stimuli** that share the property
 - Shepard's term: a [**consequential subset**]{.accent} — the subset of things
   the property "applies to"
+- A [**feature**]{.accent} is a hypothesis too: "has stripes" picks out a set of
+  stimuli — generalization is just asking which feature-sets the examples imply
 - Generalization becomes: *which concepts are consistent with the examples,
   and do they contain the new stimulus?*
 :::
@@ -338,13 +340,18 @@ and let Bayes do the generalizing.
 - 概念 = その性質を共有する**刺激の集合**
 - シェパードの用語: [**結果的部分集合（consequential subset）**]{.accent}
   — 性質が「当てはまる」ものの部分集合
+- [**特徴（feature）**]{.accent}も仮説である: 「縞模様がある」は刺激の集合を
+  選び出す — 一般化とは例がどの特徴集合を含意するかを問うこと
 - 一般化はこうなる: *どの概念が例と整合し、その概念は新しい刺激を含むか?*
 :::
 
 ::: {.notes}
 "Consequential subset" is Shepard's term — define it here, it recurs. The
 conceptual move: a concept is a SET. Generalization to y = "is y in the sets
-that survived the data?" ~2 min.
+that survived the data?" The feature bullet is the unifying point — a feature
+("has stripes", "is poisonous") is itself a hypothesis: it carves out a set of
+stimuli, so learning a feature and learning a concept are the same inference.
+~2 min.
 :::
 
 ## [Notation lock-in]{.lang-en}[記号の確認]{.lang-ja} {.midbig}
@@ -464,36 +471,33 @@ on hypotheses that contain y. Both games are this exact sum. ~2 min.
 
 ## [One datum → the posterior-weighted vote]{.lang-en}[1つのデータ → 事後確率による投票]{.lang-ja} {.smaller}
 
-:::: {.columns .v-center}
+:::: {.columns .v-spread}
 ::: {.column width="54%"}
 ![](images/tg_vote.png){fig-align="center" width="100%"}
 :::
 ::: {.column width="46%"}
 ::: {.lang-en}
-[**The hypotheses.**]{.accent} Observe one datum $x$. Every interval that
-**contains $x$** is a live hypothesis $h$. A bar's thickness is its
-strong-sampling likelihood $1/|h|$ — a *smaller* interval is a *thicker*
-bar. Flat prior, so each $h$'s posterior weight $\propto$ its likelihood.
+[**The hypotheses.**]{.accent} Observe one datum $x$. Every interval
+**containing $x$** is a live hypothesis $h$. Bar thickness $= 1/|h|$ (the
+strong-sampling likelihood); flat prior, so posterior $\propto$ likelihood.
 
-[**The vote.**]{.accent} For each candidate $y$, add up the posterior of
-every $h$ that contains it:
+[**The vote.**]{.accent} For each candidate $y$, sum the posterior of every
+$h$ that contains it:
 $$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
 
-[Next three slides: walk $y$ outward — $x$, $x{+}1$, $x{+}2$ — and watch
-the vote shrink as hypotheses drop out.]{.yellow}
+[Next three slides: walk $y$ outward — $x$, $x{+}1$, $x{+}2$.]{.yellow}
 :::
 
 ::: {.lang-ja}
 [**仮説。**]{.accent} 1つのデータ $x$ を観測。$x$ を**含む**すべての区間が
-生きた仮説 $h$。バーの太さは強サンプリング尤度 $1/|h|$ — *小さい*区間ほど
-*太い*バー。平坦な事前なので、各 $h$ の事後確率は尤度に比例。
+生きた仮説 $h$。バーの太さ $= 1/|h|$（強サンプリング尤度）; 平坦な事前なので
+事後 $\propto$ 尤度。
 
 [**投票。**]{.accent} 各候補 $y$ について、$y$ を含むすべての $h$ の
 事後確率を合計:
 $$p(y \in C \mid x) = \sum_{h} \mathbf{1}[\,y \in h\,]\, p(h \mid x)$$
 
-[次の3枚: $y$ を外へ動かす — $x$、$x{+}1$、$x{+}2$ — 仮説が脱落して投票が
-縮むのを見る。]{.yellow}
+[次の3枚: $y$ を外へ動かす — $x$、$x{+}1$、$x{+}2$。]{.yellow}
 :::
 :::
 ::::
@@ -508,42 +512,36 @@ that exclude it so students see the vote shrink. ~1.5 min on this overview.
 
 ## [Vote for $y = x$]{.lang-en}[$y = x$ への投票]{.lang-ja} {.smaller}
 
-:::: {.columns .v-center}
+:::: {.columns .v-spread}
 ::: {.column width="54%"}
 ![](images/tg_vote_y0.png){fig-align="center" width="100%"}
 :::
 ::: {.column width="46%"}
 ::: {.lang-en}
-[**The question.**]{.accent} Does the property generalize to $y = x$ — the
+[**The question.**]{.accent} Does the property generalize to $y = x$, the
 observed datum itself?
 
-[**Who votes.**]{.accent} Every hypothesis in $\mathcal{H}$ was built to
-contain $x$, so [**all 7 of 7 vote "yes"**]{.yellow}. Not a single one drops
-out — there is no hypothesis that excludes the very point you observed.
+[**Who votes.**]{.accent} Every hypothesis was built to contain $x$, so
+[**all 7 of 7 vote "yes"**]{.yellow}.
 
-[**The bar.**]{.accent} The vote at $x$ sums *all* the posterior weight —
-$\sum_h p(h \mid x) = 1$. This is the **tallest bar the gradient can have**.
+[**The bar.**]{.accent} The vote sums *all* the posterior weight —
+$\sum_h p(h \mid x) = 1$. The **tallest bar the gradient can have**.
 
-[**The baseline.**]{.accent} Generalization to the datum itself is
-near-certain — and it is the peak that every other $y$ is measured against.
-As we step $y$ away from $x$, hypotheses start dropping out, and the bar can
-only fall.
+[**The baseline.**]{.accent} This peak is what every other $y$ is measured
+against — step away and the bar can only fall.
 :::
 
 ::: {.lang-ja}
-[**問い。**]{.accent} 性質は $y = x$ — 観測したデータそのもの — に
-一般化するか?
+[**問い。**]{.accent} 性質は $y = x$、観測したデータそのものに一般化するか?
 
-[**誰が投票するか。**]{.accent} $\mathcal{H}$ のすべての仮説は $x$ を
-含むように作られたので、[**7つ中7つすべてが「はい」に投票**]{.yellow}。
-1つも脱落しない — 観測した点そのものを除外する仮説は存在しない。
+[**誰が投票するか。**]{.accent} すべての仮説は $x$ を含むように作られたので、
+[**7つ中7つすべてが「はい」に投票**]{.yellow}。
 
-[**バー。**]{.accent} $x$ での投票は*すべて*の事後確率を合計 —
-$\sum_h p(h \mid x) = 1$。これが**勾配が取りうる最も高いバー**。
+[**バー。**]{.accent} 投票は*すべて*の事後確率を合計 —
+$\sum_h p(h \mid x) = 1$。**勾配が取りうる最も高いバー**。
 
-[**基準点。**]{.accent} データ自体への一般化はほぼ確実 — そして他のすべての
-$y$ がこれと比較される頂点。$y$ を $x$ から離すと仮説が脱落し始め、バーは
-下がるしかない。
+[**基準点。**]{.accent} この頂点が他のすべての $y$ の比較対象 — 離れれば
+バーは下がるしかない。
 :::
 :::
 ::::
@@ -556,41 +554,39 @@ gradient. Greyed bars are the other y values, shown for context. ~1 min.
 
 ## [Vote for $y = x + 1$]{.lang-en}[$y = x + 1$ への投票]{.lang-ja} {.smaller}
 
-:::: {.columns .v-center}
+:::: {.columns .v-spread}
 ::: {.column width="54%"}
 ![](images/tg_vote_y1.png){fig-align="center" width="100%"}
 :::
 ::: {.column width="46%"}
 ::: {.lang-en}
-[**The question.**]{.accent} Step one unit out from the datum: does the
-property generalize to $y = x + 1$?
+[**The question.**]{.accent} Step one unit out: does the property generalize
+to $y = x + 1$?
 
 [**Who drops.**]{.accent} [The two smallest intervals no longer reach
-$y$]{.yellow} — $y$ falls outside them, so they grey out and vote "no".
-[**5 of 7 still vote "yes".**]{.yellow}
+$y$]{.yellow} — they grey out and vote "no". [**5 of 7 still vote
+"yes".**]{.yellow}
 
 [**The bar.**]{.accent} Fewer hypotheses contribute → a **shorter** bar than
 at $x$.
 
-[**Why it falls fast.**]{.accent} Note *which* hypotheses dropped: the
-**smallest** intervals — and by the size principle those carry the
-**most** posterior weight (thickest bars). Losing the heavy-weight votes
-first is exactly why the gradient decays steeply near $x$.
+[**Why it falls fast.**]{.accent} The dropouts are the **smallest**
+intervals — by the size principle the **heaviest**-weight votes. Losing those
+first is why the gradient decays steeply near $x$.
 :::
 
 ::: {.lang-ja}
-[**問い。**]{.accent} データから1単位外へ: 性質は $y = x + 1$ に
-一般化するか?
+[**問い。**]{.accent} 1単位外へ: 性質は $y = x + 1$ に一般化するか?
 
 [**誰が脱落するか。**]{.accent} [最小の2区間はもう $y$ に届かない]{.yellow}
-— $y$ がその外に出るので、グレーになり「いいえ」に投票。[**7つ中5つが
-まだ「はい」に投票。**]{.yellow}
+— グレーになり「いいえ」に投票。[**7つ中5つがまだ「はい」に
+投票。**]{.yellow}
 
 [**バー。**]{.accent} 寄与する仮説が減る → $x$ より**低い**バー。
 
-[**なぜ速く落ちるか。**]{.accent} *どの*仮説が脱落したかに注目: **最小**の
-区間 — サイズ原理によりそれらは事後確率の重みが**最大**（最も太いバー）。
-重みの大きい票を最初に失うことが、勾配が $x$ の近くで急に減衰する理由。
+[**なぜ速く落ちるか。**]{.accent} 脱落したのは**最小**の区間 — サイズ原理に
+よれば事後確率の重みが**最大**の票。それを最初に失うことが、勾配が $x$ の
+近くで急に減衰する理由。
 :::
 :::
 ::::
@@ -605,7 +601,7 @@ fast. ~1.5 min.
 
 ## [Vote for $y = x + 2$]{.lang-en}[$y = x + 2$ への投票]{.lang-ja} {.smaller}
 
-:::: {.columns .v-center}
+:::: {.columns .v-spread}
 ::: {.column width="54%"}
 ![](images/tg_vote_y2.png){fig-align="center" width="100%"}
 :::
@@ -696,13 +692,15 @@ items FROM the concept. ~2 min.
 $$p(X \mid h) = \begin{cases} 1 & \text{all } x_i \in h \\ 0 & \text{else}\end{cases}$$
 
 ::: {.lang-en}
-Size-blind: a hypothesis either contains the data or it doesn't. **Does not
-depend on $|h|$.**
+Size-blind: a hypothesis either contains the data or it doesn't.
+
+**Does not depend on $|h|$.**
 :::
 
 ::: {.lang-ja}
-大きさに鈍感: 仮説はデータを含むか含まないかのどちらか。**$|h|$ には
-依存しない。**
+大きさに鈍感: 仮説はデータを含むか含まないかのどちらか。
+
+**$|h|$ には依存しない。**
 :::
 :::
 
@@ -712,13 +710,15 @@ depend on $|h|$.**
 $$p(x \mid h) = \frac{1}{|h|} \;\;\Rightarrow\;\; p(X \mid h) = \left(\frac{1}{|h|}\right)^{\!n}$$
 
 ::: {.lang-en}
-Each example drawn *uniformly from inside* $h$. **Smaller $|h|$ → higher
-likelihood**, exponentially so in $n$.
+Each example drawn *uniformly from inside* $h$.
+
+**Smaller $|h|$ → higher likelihood**, exponentially so in $n$.
 :::
 
 ::: {.lang-ja}
-各例は $h$ の*中から一様に*抽出。**$|h|$ が小さいほど尤度が高い** —
-$n$ について指数関数的に。
+各例は $h$ の*中から一様に*抽出。
+
+**$|h|$ が小さいほど尤度が高い** — $n$ について指数関数的に。
 :::
 :::
 ::::
@@ -909,7 +909,7 @@ for clarity, then go 2-D. ~2 min.
 
 ## [Start in 1-D]{.lang-en}[まず1次元で]{.lang-ja} {.smaller}
 
-:::: {.columns .v-center}
+:::: {.columns .v-spread}
 ::: {.column width="56%"}
 ![](images/cc_1d.png){fig-align="center" width="100%"}
 :::
@@ -973,6 +973,52 @@ empirically; here it FALLS OUT of the posterior sum over intervals. We didn't
 put it in. ~2 min.
 :::
 
+## [The 1-D gradient — built from votes]{.lang-en}[1次元の勾配 — 投票から構築]{.lang-ja} {.smaller}
+
+:::: {.columns .v-spread}
+::: {.column width="56%"}
+![](images/cc_1d_gradient.png){fig-align="center" width="100%"}
+:::
+::: {.column width="44%"}
+::: {.lang-en}
+The same posterior-weighted vote as the number-line construction — now with
+**several examples** $X$.
+
+[**Who votes.**]{.accent} Every interval that **contains all of $X$** is a
+live hypothesis; a snugger interval is thicker (more posterior).
+
+[**The gradient.**]{.accent} Sum the posterior of every interval that
+contains $y$:
+$$p(y \in C \mid X) = \sum_h \mathbf{1}[\,y \in h\,]\,p(h \mid X)$$
+
+[Flat across the data, decaying outside — the gradient *is* the
+posterior-weighted vote, one $y$ at a time.]{.yellow}
+:::
+
+::: {.lang-ja}
+数直線の構築と同じ事後確率による投票 — 今度は**複数の例** $X$ で。
+
+[**誰が投票するか。**]{.accent} $X$ の**すべてを含む**区間が生きた仮説;
+ぴったりした区間ほど太い（事後確率が大きい）。
+
+[**勾配。**]{.accent} $y$ を含むすべての区間の事後確率を合計:
+$$p(y \in C \mid X) = \sum_h \mathbf{1}[\,y \in h\,]\,p(h \mid X)$$
+
+[データ全体で平坦、外側で減衰 — 勾配*そのもの*が、$y$ を1点ずつ見た
+事後確率による投票。]{.yellow}
+:::
+:::
+::::
+
+::: {.notes}
+The continuous analog of the y = x / x+1 / x+2 walk-through, but with several
+examples at once: each consistent interval votes with its posterior weight,
+and the summed votes trace the generalization gradient. The plateau is exactly
+the data range; outside it, intervals drop out and the vote falls. Same
+equation as the discrete construction — only H changed from number-sets to
+intervals. ~1.5 min.
+:::
+
 ## [More examples → tighter generalization]{.lang-en}[例が増えると → 一般化が引き締まる]{.lang-ja} {.midbig}
 
 ::: {.lang-en}
@@ -999,7 +1045,7 @@ rules. ~2 min.
 
 ## [Into 2-D — the rectangle game]{.lang-en}[2次元へ — 長方形ゲーム]{.lang-ja} {.smaller}
 
-:::: {.columns .v-center}
+:::: {.columns .v-spread}
 ::: {.column width="56%"}
 ![](images/cc_2d.png){fig-align="center" width="100%"}
 :::
@@ -1012,8 +1058,9 @@ Same machinery, one dimension up: a concept is an axis-aligned
 - Every rectangle that **encloses all $n$** is a hypothesis
 - Smaller rectangle → bigger likelihood (brighter / thicker)
 
-[$r$ — the range the data spans.  $d$ — how far a rectangle extends past
-that range.]{.accent}
+[$r$ — the range the data spans.]{.accent}
+
+[$d$ — how far a rectangle extends past that range.]{.accent}
 :::
 
 ::: {.lang-ja}
@@ -1023,8 +1070,9 @@ that range.]{.accent}
 - $n$ 個**すべてを囲む**長方形が仮説
 - 長方形が小さいほど尤度が大きい（明るい / 太い）
 
-[$r$ — データが広がる範囲。  $d$ — 長方形がその範囲をどれだけ超えて
-広がるか。]{.accent}
+[$r$ — データが広がる範囲。]{.accent}
+
+[$d$ — 長方形がその範囲をどれだけ超えて広がるか。]{.accent}
 :::
 :::
 ::::

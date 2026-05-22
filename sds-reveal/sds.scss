@@ -339,6 +339,47 @@ div.reveal div.slides section.title-slide {
 //
 .reveal .columns.v-center { align-items: center; }
 
+// `.v-spread` goes a step further: the columns are stretched to equal height
+// and a text column's block children (paragraphs, lists, equations) are
+// distributed with even gaps top-to-bottom, so a short text column fills the
+// full vertical extent of the figure beside it instead of clustering. Apply to
+// the columns div; only `.column`s holding a `.lang-en`/`.lang-ja` text block
+// are spread — a figure-only column is unaffected.
+//
+//   :::: {.columns .v-spread}
+//
+.reveal .columns.v-spread {
+  align-items: stretch;
+  // A figure column must not dictate row height beyond the stage: cap its
+  // image so the columns row stays within the slide.
+  .column img { max-height: 68vh; width: auto; max-width: 100%; }
+
+  // Distribute a text column's blocks evenly top-to-bottom. The language
+  // block is made a vertical flex container with `space-between`, and given a
+  // definite `min-height` in viewport units so the distribution has a box to
+  // fill — a `%` height won't resolve (the column's height comes from
+  // `align-items: stretch`, which is a *used* not *computed* height).
+  //
+  // CRITICAL: scope `display: flex` to the *currently visible* language only.
+  // A plain `.lang-ja { display: flex }` out-specifies lang-toggle.css's
+  // `.lang-ja { display: none }` and renders BOTH languages stacked. So
+  // style `.lang-en` for EN mode and `body.show-ja .lang-ja` for JA mode;
+  // the hidden language keeps `display: none` and stays out of layout.
+  .column > .lang-en {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 62vh;
+  }
+}
+body.show-ja .reveal .columns.v-spread .column > .lang-en { display: none; }
+body.show-ja .reveal .columns.v-spread .column > .lang-ja {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 62vh;
+}
+
 // ==========================================================================
 // Content-slide course label (small top banner on framed slides)
 // ==========================================================================

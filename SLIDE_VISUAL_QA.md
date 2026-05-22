@@ -131,13 +131,31 @@ beside it is fine and won't flag.
 3. **Let the figure carry more.** Widen the figure to ~70% and make the text a
    short single caption-style line beneath it (one column, not two) — for
    slides where the text genuinely is just a caption.
-4. **Vertically center the short column.** Wrapping the text column's content
-   so it centers against the figure removes the "text jammed at the top,
-   void below" look even when the text is genuinely brief.
+4. **Vertically center the short column** — add `.v-center` to the `.columns`
+   div. Wrapping the text column's content so it centers against the figure
+   removes the "text jammed at the top, void below" look when the text is
+   genuinely brief.
+5. **Vertically *spread* the text column** — add `.v-spread` to the `.columns`
+   div. Where `.v-center` clusters the text and centers the cluster, `.v-spread`
+   distributes the text column's block children (paragraphs, lists, equations)
+   with even gaps top-to-bottom, so a moderately-full text column fills the
+   figure's full vertical extent rather than floating. Use this for the
+   figure-plus-several-paragraphs pattern (e.g. the Week 4 vote / rectangle-game
+   slides). Caveat: `.v-spread` exposes real overflow that `.v-center` would
+   mask by centering — if a slide overflows after switching, the text is
+   genuinely too long and must be trimmed, not re-centered.
 
 Do NOT "fix" COLUMN-THIN by shrinking the figure until the boxes match — that
 usually makes the figure too small to read. Balance by *adding* to the thin
 side or *re-proportioning*, not by degrading the strong side.
+
+**`.v-spread` and the language toggle.** `.v-spread` sets `display: flex` on
+the visible language block. That rule MUST be scoped to the currently-visible
+language (`.lang-en` outside `body.show-ja`; `.lang-ja` under `body.show-ja`) —
+a bare `.lang-ja { display: flex }` out-specifies `lang-toggle.css`'s
+`.lang-ja { display: none }` and renders BOTH languages stacked. The shared
+`sds.scss` already does this correctly; if you copy the pattern elsewhere,
+keep the toggle scoping.
 
 ## The five-tier sizing system
 

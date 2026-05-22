@@ -9,6 +9,11 @@ learning) section:
                      weight. Smaller intervals (tighter to the data) are
                      darker/heavier.
 
+  cc_1d_gradient.png — multi-example analog of the T&G vote figure: candidate
+                     intervals consistent with several observed examples,
+                     thickness = posterior, summed into the 1-D generalization
+                     gradient (flat over the data, decaying outside).
+
   cc_2d.png        — 2-D rectangle game: dots in a plane, candidate
                      axis-aligned rectangles at varying linewidth + grey level
                      (heavier/darker = larger posterior). r (data range), the
@@ -73,6 +78,7 @@ def build_1d() -> None:
 
     row_gap = 1.0
     n = len(intervals)
+    top_y = (n - 1) * row_gap             # y of the snug (top) interval
     for i, ((l, u), w) in enumerate(zip(intervals, weights)):
         y0 = (n - 1 - i) * row_gap        # snug interval near the top
         # opacity + linewidth encode posterior weight
@@ -82,6 +88,17 @@ def build_1d() -> None:
         for x in (l, u):
             ax.plot([x, x], [y0 - 0.22, y0 + 0.22], color=ACCENT,
                     alpha=0.25 + 0.75 * w, linewidth=1.6, zorder=2)
+
+    # label the endpoints of the snug (top) interval as the lower / upper
+    # bounds [l, u] — the notation used on the slide
+    snug_l, snug_u = intervals[0]
+    ax.text(snug_l, top_y + 0.42, r"$\ell$", color=ACCENT, fontsize=12,
+            ha="center", va="bottom", fontweight="bold")
+    ax.text(snug_u, top_y + 0.42, r"$u$", color=ACCENT, fontsize=12,
+            ha="center", va="bottom", fontweight="bold")
+    ax.text((snug_l + snug_u) / 2, top_y + 0.42,
+            r"interval $[\ell,\, u]$", color=DIM, fontsize=8.5,
+            ha="center", va="bottom")
 
     # observed data points: yellow dots on a baseline below the intervals
     base_y = -1.0
@@ -112,6 +129,98 @@ def build_1d() -> None:
 
     fig.tight_layout()
     _save(fig, "cc_1d")
+
+
+# --------------------------------------------------------------------------
+# 1-D generalization gradient for multiple examples
+# --------------------------------------------------------------------------
+def build_1d_gradient() -> None:
+    """Multi-example analog of the T&G vote figure: with several observed
+    examples, every consistent interval votes (weighted by posterior), and the
+    posterior-weighted sum traces the 1-D generalization gradient.
+    """
+    fig, (ax_h, ax_g) = plt.subplots(
+        2, 1, figsize=(7.4, 6.0), dpi=150, facecolor=BG,
+        gridspec_kw=dict(height_ratios=[1.55, 1.0], hspace=0.42))
+    for ax in (ax_h, ax_g):
+        ax.set_facecolor(BG)
+
+    # several observed examples spanning a range on the dimension
+    data = np.array([3.6, 4.3, 5.1, 5.8])
+    dlo, dhi = data.min(), data.max()
+
+    # candidate intervals [l, u] that contain ALL the examples. Smaller =
+    # higher strong-sampling likelihood = higher posterior (flat prior).
+    intervals = [
+        (3.4, 6.0),    # snug
+        (2.9, 6.6),
+        (2.2, 7.4),
+        (1.3, 8.4),
+        (0.4, 9.4),    # loose
+    ]
+    liks = np.array([1.0 / (u - l) for l, u in intervals])
+    post = liks / liks.sum()              # posterior weights, sum to 1
+    wmax = post.max()
+
+    # --- top panel: the consistent intervals, thickness = posterior ----------
+    row_gap = 1.0
+    n = len(intervals)
+    for i, ((l, u), w) in enumerate(zip(intervals, post)):
+        y0 = (n - 1 - i) * row_gap
+        rel = w / wmax
+        ax_h.plot([l, u], [y0, y0], color=ACCENT, alpha=0.30 + 0.70 * rel,
+                  linewidth=2 + 7 * rel, solid_capstyle="butt", zorder=2)
+        for x in (l, u):
+            ax_h.plot([x, x], [y0 - 0.22, y0 + 0.22], color=ACCENT,
+                      alpha=0.30 + 0.70 * rel, linewidth=1.6, zorder=2)
+
+    # observed examples, baseline below the intervals
+    base_y = -1.05
+    ax_h.scatter(data, [base_y] * len(data), s=80, color=YELLOW,
+                 edgecolor=BG, linewidth=1.0, zorder=5)
+    ax_h.text(data.mean(), base_y - 0.55, "observed examples $X$",
+              color=YELLOW, fontsize=9.5, ha="center", va="top")
+    for x in (dlo, dhi):
+        ax_h.plot([x, x], [base_y, (n - 1) * row_gap + 0.5],
+                  color=YELLOW, linewidth=0.9, linestyle=(0, (2, 3)), zorder=1)
+    ax_h.text(9.9, (n - 1) * row_gap,
+              "every interval\ncontaining $X$\nvotes — thicker\n= more posterior",
+              color=DIM, fontsize=8.2, ha="left", va="center")
+
+    ax_h.set_xlim(-0.4, 12.6)
+    ax_h.set_ylim(base_y - 1.5, (n - 1) * row_gap + 0.9)
+    ax_h.set_ylabel("Candidate intervals $h$", color=TEXT, fontsize=10)
+    ax_h.set_xticks([]); ax_h.set_yticks([])
+    for sp in ax_h.spines.values():
+        sp.set_visible(False)
+
+    # --- bottom panel: the posterior-weighted vote = generalization gradient -
+    grid = np.linspace(-0.4, 12.6, 600)
+    gradient = np.zeros_like(grid)
+    for (l, u), w in zip(intervals, post):
+        gradient += w * ((grid >= l) & (grid <= u))
+    ax_g.fill_between(grid, gradient, color=ACCENT, alpha=0.32, zorder=2)
+    ax_g.plot(grid, gradient, color=ACCENT, linewidth=2.2, zorder=3)
+    for x in (dlo, dhi):
+        ax_g.plot([x, x], [0, 1.05], color=YELLOW, linewidth=0.9,
+                  linestyle=(0, (2, 3)), zorder=1)
+    ax_g.scatter(data, [-0.12] * len(data), s=80, color=YELLOW,
+                 edgecolor=BG, linewidth=1.0, zorder=5, clip_on=False)
+    ax_g.text(11.3, 0.80, "flat over $X$,\ndecays outside",
+              color=DIM, fontsize=8.2, ha="center", va="center")
+
+    ax_g.set_xlim(-0.4, 12.6)
+    ax_g.set_ylim(0, 1.12)
+    ax_g.set_xlabel("Novel stimulus $y$  (one stimulus dimension)",
+                    color=TEXT, fontsize=10.5, labelpad=14)
+    ax_g.set_ylabel(r"$p(y \in C \mid X)$", color=TEXT, fontsize=10.5)
+    ax_g.set_xticks([]); ax_g.set_yticks([])
+    for sp in ax_g.spines.values():
+        sp.set_color(DIM)
+    ax_g.spines["top"].set_visible(False)
+    ax_g.spines["right"].set_visible(False)
+
+    _save(fig, "cc_1d_gradient")
 
 
 # --------------------------------------------------------------------------
@@ -148,26 +257,38 @@ def build_2d() -> None:
     ax.scatter(dots_x, dots_y, s=95, color=YELLOW, edgecolor=BG,
                linewidth=1.2, zorder=6)
     # n: label above the whole nest of rectangles, clear of every edge
-    ax.text((xlo + xhi) / 2, yhi + margins[-1] + 0.55,
+    ax.text((xlo + xhi) / 2, yhi + margins[-1] + 0.70,
             f"$n = {n_dots}$ observed dots", color=YELLOW, fontsize=9.5,
             ha="center", va="bottom")
 
     # --- annotate r (data range) and d (extension) ---
-    # r: the horizontal span of the data. Draw the double-arrow spanning the
-    # data above the dots, with the label above it, clear of the dots.
-    r_y = yhi + 0.32
+    # r: the horizontal span of the data. Place the arrow + label in the gap
+    # ABOVE the snuggest rectangle's top edge (yhi + margins[0]) so neither
+    # the arrow nor its label sits on a rectangle line. A short yellow tick
+    # at each end ties the span back to the data extent it measures.
+    r_y = yhi + margins[0] + 0.45
+    for x_end in (xlo, xhi):
+        ax.plot([x_end, x_end], [yhi + margins[0] + 0.06, r_y],
+                color=YELLOW, lw=1.0, zorder=3)
     ax.annotate("", xy=(xlo, r_y), xytext=(xhi, r_y),
                 arrowprops=dict(arrowstyle="<->", color=YELLOW, lw=1.8))
-    ax.text((xlo + xhi) / 2, r_y + 0.14, "$r$ — range of the data",
+    ax.text((xlo + xhi) / 2, r_y + 0.16, "$r$ — range of the data",
             color=YELLOW, fontsize=9.0, ha="center", va="bottom")
 
-    # d: how far a looser rectangle extends beyond the data range, on the
-    # right edge — measured from the data edge to the 2nd rectangle
-    d_x = xhi + margins[1]
-    d_y = ylo + (yhi - ylo) / 2
-    ax.annotate("", xy=(xhi, d_y), xytext=(d_x, d_y),
+    # d: how far a candidate rectangle extends past the data range. Measure on
+    # the right side, from the data edge (xhi) out to the LOOSEST rectangle's
+    # edge (xhi + margins[-1]) — a long, unambiguous span. Put it on a row
+    # comfortably below the dots and below the snug rectangle's bottom edge so
+    # the arrow crosses no dot; the label sits fully clear to the right.
+    d_y = ylo - margins[1] - 0.55
+    d_x_data = xhi
+    d_x_loose = xhi + margins[-1]
+    for x_end, ytop in ((d_x_data, ylo), (d_x_loose, ylo - margins[-1])):
+        ax.plot([x_end, x_end], [d_y, ytop], color=ACCENT, lw=1.0,
+                linestyle=":", zorder=3)
+    ax.annotate("", xy=(d_x_data, d_y), xytext=(d_x_loose, d_y),
                 arrowprops=dict(arrowstyle="<->", color=ACCENT, lw=1.8))
-    ax.text(d_x + 0.2, d_y, "$d$ — how far a\nrectangle extends\npast the data",
+    ax.text(d_x_loose + 0.45, d_y, "$d$ — how far a rectangle\nextends past the data",
             color=ACCENT, fontsize=8.8, ha="left", va="center")
 
     ax.text(xlo - margins[-1] - 0.55, ylo + (yhi - ylo) / 2,
@@ -288,6 +409,7 @@ def _save(fig, slug: str) -> None:
 def main() -> None:
     print("Building continuous-concept-learning figures...")
     build_1d()
+    build_1d_gradient()
     build_2d()
     build_exp_prior()
     build_tg_results()
