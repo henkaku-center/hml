@@ -43,6 +43,12 @@ ASSIGNMENT_STENCILS = {
         "clusters_nosoln.Rmd",
         "clusters.pdf",
     ],
+    "generalization": [
+        "generalization.ipynb",
+        "generalization_python.ipynb",
+        "generalization_nosoln.Rmd",
+        "generalization.pdf",
+    ],
 }
 
 TEXTBOOK_BASE = "https://josephausterweil.github.io/probintro"

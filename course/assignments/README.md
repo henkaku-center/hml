@@ -9,7 +9,7 @@ You have **3 free late days** that can be used across the programming assignment
 | Assignment | Assigned | Due | Weight | Topic |
 |---|---|---|---|---|
 | [Clusters](#clusters) | Week 3 (May 15) | **Fri Jun 5, 8 PM** | 7.5% | Mixture models & categorization |
-| Generalization | Week 4 (May 22) | *TBA when released* | 7.5% | Bayesian generalization |
+| [Generalization](#generalization) | Week 4 (May 22) | **Fri Jun 19, 8 PM** | 7.5% | Bayesian generalization |
 | Monte Carlo | Week 7 (Jun 12) | *TBA when released* | 10.5% | Monte Carlo methods |
 | Reinforcement Learning | Week 8 (Jun 19) | *TBA when released* | 4.5% | MDPs & reinforcement learning |
 
@@ -46,7 +46,30 @@ Investigate categorization and prediction in a 2-component Gaussian mixture mode
 
 ### Generalization (7.5%) {#generalization}
 
-*Details will be posted when the assignment is released.*
+**Due: Fri Jun 19, 2026 at 8:00 PM.**
+
+Build your own Bayesian generalization model for six animals (Cow, Dolphin, Chicken, Seal, Penguin, Bat). You design the hypothesis space, define a prior, then compute posteriors and predictive distributions under both weak and strong sampling. The final problem expands to all $2^6 - 1 = 63$ hypotheses to illustrate the No Free Lunch theorem. **There is no single correct hypothesis space** — the assignment is about how the framework behaves under your choice of $\mathcal{H}$.
+
+**Start here — the assignment:**
+
+- **[Assignment PDF — generalization.pdf](assignments/generalization/generalization.pdf)** — the problem statements and all the math. Read this first.
+
+**Then pick one stencil to work in.** All three cover the same five problems with the same scaffolding:
+
+| Stencil | Open in Colab | Download | Notes |
+|---|---|---|---|
+| **GenJAX (canonical)** | [Open in Colab](https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/generalization/generalization.ipynb) | [generalization.ipynb](assignments/generalization/generalization.ipynb) | Hypothesis space as `jnp.array`, posterior by enumeration, `@gen` model with `categorical` over the hypothesis index. |
+| **Python (no GenJAX)** | [Open in Colab](https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/generalization/generalization_python.ipynb) | [generalization_python.ipynb](assignments/generalization/generalization_python.ipynb) | numpy + matplotlib. Each cell has an optional paired "Now in GenJAX" tutorial cell. |
+| **R** | — (knit locally in RStudio) | [generalization_nosoln.Rmd](assignments/generalization/generalization_nosoln.Rmd) | base R + ggplot2. Colab does not run `.Rmd` files. |
+| **Matlab** | — | available on request | Email Prof. Austerweil. |
+
+**Other details:**
+
+- **Prep reading:** A textbook chapter on Bayesian generalization is forthcoming in Tutorial 3 of the [Probability Tutorial](https://josephausterweil.github.io/probintro/); until then, the Week 4 lecture slides are the canonical reference.
+- **Lecture:** Week 4 covers the Bayesian generalization framework, size principle, and No Free Lunch.
+- **Submit** (by DM or email to the instructor) **one** of the following:
+    - your completed notebook (or knitted `.Rmd`) — it must run end-to-end and contain your figures, inline text answers, and descriptions; **or**
+    - a single PDF report containing your code, figures, text answers, and descriptions.
 
 ### Monte Carlo (10.5%) {#monte-carlo}
 

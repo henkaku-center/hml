@@ -71,10 +71,13 @@
 - [ ] Map textbook homework readings to each week's PLAN.md
 - [x] GenJAX setup pointer for students (Week 2 homework — Tutorial 2 Ch 0-1, referenced in Week 1 PLAN.md)
 - [x] Clusters assignment — GenJAX stencil: `course/assignments/clusters/clusters.ipynb`
-- [ ] **Separate planning session:** scope GenJAX ports for generalization / MC / RL (depth, textbook chapter mapping, solution-notebook sources, sequencing by due-week)
-- [ ] Port generalization assignment to GenJAX *(blocked on scoping session above)*
+- [x] Generalization assignment — three stencils (GenJAX/Python/R) + PDF: `course/assignments/generalization/`, done 2026-05-27
+- [ ] **Separate planning session:** scope GenJAX ports for MC / RL (depth, textbook chapter mapping, solution-notebook sources, sequencing by due-week)
 - [ ] Port MC assignment to GenJAX *(blocked on scoping session above)*
 - [ ] Port RL assignment to GenJAX *(blocked on scoping session above)*
+- [ ] **Write Tutorial 3 Bayesian-Generalization chapter** — see `textbook/CHIBANY_T3_GENERALIZATION_PLAN.md`. Week 4 has no textbook reading; generalization.pdf + course/assignments/README.md currently link to a forthcoming URL.
+- [ ] **Write Tutorial 3 Hierarchical-Bayes chapter** — see `textbook/CHIBANY_T3_GENERALIZATION_PLAN.md`. Also Week 4. Decision on numbering (insert vs. append, relative to `CHIBANY_T3_CH7-10_PLAN.md`) deferred until the writing agent picks up either plan.
+- [ ] Write Tutorial 3 Bayes-nets / causal / info-theory chapters — see `textbook/CHIBANY_T3_CH7-10_PLAN.md` (Week 5).
 - [ ] Plan which new textbook chapters to write during semester
 - [ ] Add GenJAX exercises to Weeks 6, 8, 11
 
@@ -84,3 +87,6 @@
 - [ ] Consider adding content on: scaling laws, in-context learning, mechanistic interpretability, multimodal models
 - [ ] Week 12 (Deep NNs): consider transformer architecture, attention mechanisms
 - [ ] Week 13 (Ethics): update with recent AI safety/alignment developments
+
+### Next-year (SP27) revisions — defer
+- [ ] **Generalization assignment: add a reflective follow-up to Problem 5.** After computing the NFL collapse, ask the student to look back at their *own* hypothesis space and answer: which features of the properties they chose made the model generalize well, and could they predict (without running code) which animal pairs would generalize? Converts the assignment from "compute these things" to "introspect on what you built." Identified 2026-05-27 in conversation while solving the SP26 stencils end-to-end — deferred to SP27 so we keep momentum on tutorials + lectures for SP26.
