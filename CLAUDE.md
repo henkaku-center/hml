@@ -33,6 +33,7 @@ Each `course/weekNN_…/PLAN.md` follows a fixed template: Topics, SP25 Content 
 - **Textbook is a separate project.** `textbook/` is a Hugo site with its own `CLAUDE.md`, code-block validator (`validate_code_blocks.py`), and date-frontmatter rule. When working inside `textbook/`, switch to those conventions. The textbook is published separately at https://josephausterweil.github.io/probintro/ — this repo contains a working copy/drafts.
 - **Syllabus:** The SP26 syllabus is `course/syllabus/SP26_syllabus.md` — edit this when making syllabus changes. `course/syllabus/PSYC841_Spring2025_reference.*` are SP25 UW-Madison reference material only; do not treat them as current.
 - **Define technical terms/acronyms at first use on slides.** Whenever a new technical term, notation, or acronym first appears in a deck (PMF, PDF, MLE, Σ, $\binom{n}{k}$, indicator, posterior, likelihood, etc.), its first on-slide appearance must include a definition — either inline or on the immediately preceding slide. This includes symbols: if Σ, ∫, or $\binom{n}{k}$ shows up in a formula before it has been defined, either define it in a dim caption beneath the formula or add a one-line notation-lock-in slide before it. If the term reappears after a long gap (e.g. a block break, or > ~15 min of lecture time), briefly redefine it in situ rather than assuming retention. When porting SP25 content, audit for the "suddenly appears without definition" pattern — it is the most common source of student confusion and red-team hits. Applies to slides and speaker notes; the textbook has its own introduction order.
+- **Introduce the symbol when you name the variable.** A specialization of the rule above for the concrete-example case. When a slide names a domain variable in prose ("Weather", "Bento", "the patient's age"), introduce the math symbol *simultaneously* — usually as `**Weather** ($W$)` — so the formula that lands two slides later has nothing for the student to decode. If a formula uses $W, D, R, B$ and the prose-introduction slide spelled out the words without symbols, the formula slide will lose 30 seconds to "wait, which one was W again?". Add the symbols on the introduction slide, not retroactively. Apply bilingually — both `.lang-en` and `.lang-ja` need the parenthetical symbol. When a slide introduces a *set* of variables, close it with a dim one-liner noting the shorthand will be used going forward (e.g. `[We'll use $W$, $D$, $R$, $B$ as shorthand for these from here on.]{.dim}`).
 
 ## Cross-cutting SP26 themes (affect almost every edit)
 
@@ -153,6 +154,23 @@ Rule: edit the shared-outline first → edit the build script (speaker notes as 
 `sds_slides.SDSDeck` helpers: `title_slide`, `agenda_slide`, `section_break`, `content_slide`, `break_slide`. Each accepts a `notes=` kwarg. Theme colors are module constants (`deck.ACCENT`, `deck.DIM`, `deck.YELLOW`, etc.) — reuse them rather than introducing new hex values.
 
 Week 1's `LECTURE_NOTES.md` predates this pattern and will NOT be retrofitted — it's a historical artifact of the first session.
+
+## Visual density baseline for new lecture decks
+
+First-draft decks default to text+KaTeX walls and underweight figures, build-up sequences, and two-column structure. Week 4 was iterated heavily to fix this (initial scaffold: 60 slides, 0 figures, 0 column layouts → final: 78 slides, 14 figures, 16 column layouts, plus two 3–4-slide build-up sequences). For new weeks, **plan visuals in the shared-outline before writing the qmd**, and apply these baselines.
+
+**Per-block visual budget.** Each non-section-break block should contain:
+- **At least one figure** if the block introduces a model, a result, or a phenomenon. If no SP25 figure is reusable, list the figure-to-make in the outline as `figure-todo: <name>.png — <what it shows>` so it's an explicit TODO, not a hope.
+- **At least one two-column slide** if the block contains structural parallelism — strong vs. weak sampling, prior vs. posterior, human vs. model, two competing hypotheses, before vs. after intervention. Default to `::: {.columns}`, not a bulleted list.
+- **Build-up as N sibling slides, not N fragments**, whenever a derivation/result has 3+ steps that each deserve attention. The Tenenbaum & Griffiths vote sequence is canonical: a 1-slide equation with reveals (initial Week 4) is wrong; a 4-slide sequence (`Vote → y=x → y=x+1 → y=x+2`), each with its own figure, is right. Fragments are for *minor* reveals within a single conceptual beat; sibling slides are for *separate* beats.
+
+**Outline-level requirement.** The `weekN-shared-outline.md` must list, per block: (a) the figures that block needs (existing or to-be-made), (b) which slides will be two-column, (c) which insight gets a sibling-slide build-up. If a block's plan reads "explain X, then Y, then state Z" without naming a figure or a column layout, that's a sign the block is being scoped as text — push back before authoring the qmd.
+
+**Figure-to-make convention.** When a figure doesn't exist in `slides/sp25_reference/` or `images/`, the outline lists it as `figure-todo: <filename>.png — <one-line description>`. On the first authoring pass, scaffold the slide with a `<!-- TODO figure: filename.png -->` placeholder, then generate the figure (a small matplotlib script under the week directory) before declaring the draft done. The audit catches stubs, but the rule is "scaffold then generate," not "ship the stub."
+
+**Reuse SP25 figures aggressively.** The SP25 .pptx files in `slides/sp25_reference/` contain figures (Shepard decay, T&G results, rectangle-game panels, etc.) that can be extracted via LibreOffice and dropped into `images/`. Do this on first pass — recreating a figure that already exists is wasted effort.
+
+**When in doubt, copy Week 4's final rhythm.** Look at the final `week4-slides.qmd` for the recurring shape: section-break → setup slide → motivating-figure slide → build-up sequence → poll → recap. Reproduce that rhythm.
 
 ## Slide visual-QA loops (two pipelines)
 
