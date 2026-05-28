@@ -1,0 +1,249 @@
+---
+title: "Human and Machine Learning — Assignment 2: Bayesian Generalization"
+subtitle: "R (no-GenJAX) stencil"
+author: "Joseph Austerweil"
+date: "Spring 2026 (due Fri Jun 19, 2026 at 8:00pm)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is the **R stencil** for Assignment 2. Problems are solved with base R + `ggplot2`. If you would prefer the Python or GenJAX (canonical) stencils, see `generalization_python.ipynb` and `generalization.ipynb` in the same directory. Matlab stencil available on request — DM Joe.
+
+**Corresponding textbook chapter:** [Tutorial 3 Ch 6 — Generalization](https://josephausterweil.github.io/probintro/intro2/06_generalization/) (and revisit T1 Ch 5 on Bayesian inference).
+
+```{r libraries, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(tibble)
+```
+
+# Background
+
+You will build a **Bayesian generalization model** for six animals: Cow, Dolphin, Chicken, Seal, Penguin, and Bat. There is no single "right" hypothesis space — *you* design it.
+
+Given that you observe one or more animals have some novel property, how likely is it that the other animals also have that property? The framework:
+
+1. **Hypothesis space** $\mathcal{H}$: each hypothesis $h$ is a binary vector of length 6 (1 if the animal has the property, 0 if not).
+2. **Posterior**: $P(h \mid \mathbf{x}) = \frac{P(h)\,\prod_n P(x_n \mid h)}{\sum_{h' \in \mathcal{H}} P(h')\,\prod_n P(x_n \mid h')}$.
+3. **Predictive**: $P(y \text{ has property} \mid \mathbf{x}) = \sum_{h:\, y \in h} P(h \mid \mathbf{x})$.
+
+**Weak sampling:** $P(x \mid h) = 1$ if $x \in h$, else $0$.
+
+**Strong sampling:** $P(x \mid h) = 1/|h|$ if $x \in h$, else $0$.
+
+```{r constants}
+ANIMALS <- c("cow", "dolphin", "chicken", "seal", "penguin", "bat")
+N_ANIMALS <- length(ANIMALS)
+ANIMALS
+```
+
+# Problem 1: Define your hypothesis space
+
+Write down your hypotheses. Each hypothesis is a binary vector of length 6 (one entry per animal in the order Cow, Dolphin, Chicken, Seal, Penguin, Bat). Give each hypothesis a 1–4 word label.
+
+**Constraints:**
+- Include a **catch-all** hypothesis containing all six animals.
+- Use **more than 4** and **fewer than 63** hypotheses.
+
+```{r hypothesis-space}
+# fill me
+#
+# Suggested approach:
+#   1. Build hypothesis_matrix as a numeric matrix with one row per hypothesis,
+#      one column per animal. Use 1/0.
+#   2. Set rownames(hypothesis_matrix) to your hypothesis labels.
+#   3. Set colnames(hypothesis_matrix) <- ANIMALS.
+#   4. Don't forget the catch-all (a row of all 1s).
+#   5. Keep more than 4 and fewer than 63 rows.
+#
+# Example shape (replace with your own):
+#   hypothesis_matrix <- rbind(
+#     "catch-all (any animal)" = c(1, 1, 1, 1, 1, 1),
+#     "lives in water"         = c(0, 1, 0, 1, 1, 0),
+#     ...
+#   )
+#   colnames(hypothesis_matrix) <- ANIMALS
+
+hypothesis_matrix <- NULL   # replace with your matrix
+
+# Sanity checks (uncomment after you fill in):
+# stopifnot(ncol(hypothesis_matrix) == N_ANIMALS)
+# stopifnot(nrow(hypothesis_matrix) > 4 && nrow(hypothesis_matrix) < 63)
+# stopifnot(all(rowSums(hypothesis_matrix) > 0))
+# stopifnot(any(apply(hypothesis_matrix, 1, function(r) all(r == 1))))
+# cat("H =", nrow(hypothesis_matrix), "hypotheses\n")
+```
+
+*(1–2 sentences describing the properties you chose.)*
+
+# Problem 2: Prior
+
+Define a prior $P(h)$ over your hypotheses. A uniform prior is fine. Write 1–2 sentences justifying your choice.
+
+```{r prior}
+# fill me
+#
+# Suggested approach:
+#   1. Uniform: prior <- rep(1 / nrow(hypothesis_matrix), nrow(hypothesis_matrix))
+#   2. Set names(prior) <- rownames(hypothesis_matrix) so you can index by label.
+#   3. stopifnot(abs(sum(prior) - 1) < 1e-9)
+
+prior <- NULL
+```
+
+*(1–2 sentences justifying your prior.)*
+
+# Problem 3: Posterior
+
+Compute the posterior over hypotheses under both weak and strong sampling.
+
+```{r posterior}
+# fill me
+#
+# Suggested approach: write a function `posterior(observed_animals, sampling, hyp_mat, pri)` that
+#   1. Computes per-hypothesis likelihood:
+#        weak:   P(x|h) = h[animal] (1 or 0); product across observed animals.
+#        strong: P(x|h) = h[animal]/sum(h);   product across observed animals.
+#   2. Multiplies by the prior and normalizes.
+#
+# Tip: `apply(hyp_mat, 1, function(h) ...)` is the natural R idiom.
+
+posterior <- function(observed_animals, sampling = c("weak", "strong"),
+                      hyp_mat = hypothesis_matrix, pri = prior) {
+  sampling <- match.arg(sampling)
+  # fill me
+}
+```
+
+## Problem 3(a): One observation
+
+Pick one animal and compute the posterior under weak and strong sampling. Plot both as bar charts.
+
+**Write 1–2 sentences:** how does the posterior change after observing one animal? Are there differences between weak and strong sampling?
+
+```{r posterior-one-obs}
+# fill me
+one_observation <- c("chicken")   # change to whatever you want
+
+post_weak_1   <- NULL   # posterior(one_observation, "weak")
+post_strong_1 <- NULL   # posterior(one_observation, "strong")
+
+# Plot (uncomment after filling above):
+#
+# tibble(
+#   hypothesis = rownames(hypothesis_matrix),
+#   weak       = post_weak_1,
+#   strong     = post_strong_1
+# ) |>
+#   pivot_longer(cols = c(weak, strong), names_to = "sampling", values_to = "probability") |>
+#   ggplot(aes(x = hypothesis, y = probability, fill = sampling)) +
+#     geom_bar(stat = "identity") +
+#     facet_wrap(~ sampling) +
+#     coord_flip() +
+#     labs(title = paste("Posterior given", paste(one_observation, collapse = ", "))) +
+#     theme_minimal()
+```
+
+**Your answer (3a).** *(1–2 sentences.)*
+
+## Problem 3(b): Three observations
+
+Add two more animals (so three observations total) and recompute. Plot. Describe how the posterior has changed and how weak vs. strong differ.
+
+```{r posterior-three-obs}
+# fill me
+three_observations <- c("chicken", "bat", "penguin")   # change if you like
+
+post_weak_3   <- NULL
+post_strong_3 <- NULL
+
+# Plot (same template as 3a, swap the inputs):
+# tibble(
+#   hypothesis = rownames(hypothesis_matrix),
+#   weak       = post_weak_3,
+#   strong     = post_strong_3
+# ) |> ...
+```
+
+**Your answer (3b).** *(1–2 sentences.)*
+
+# Problem 4: Predictive distribution
+
+For each animal $y$ in `ANIMALS`, compute
+$$P(y \text{ has property} \mid \mathbf{x}) = \sum_{h:\, y \in h} P(h \mid \mathbf{x}).$$
+
+Make **four** bar charts (1-obs weak, 1-obs strong, 3-obs weak, 3-obs strong) — one bar per animal.
+
+```{r predictive}
+# fill me
+#
+# Suggested approach: write `predictive(post, hyp_mat = hypothesis_matrix)` that returns
+# a named numeric vector of length N_ANIMALS where the y-th entry is sum(post[h: h[y] == 1]).
+#
+# Hint: this is just a vector–matrix product. `as.vector(post %*% hyp_mat)` gives you the answer.
+
+predictive <- function(post, hyp_mat = hypothesis_matrix) {
+  # fill me
+}
+
+# Build the four predictives:
+#   pred_weak_1   <- predictive(post_weak_1)
+#   pred_strong_1 <- predictive(post_strong_1)
+#   pred_weak_3   <- predictive(post_weak_3)
+#   pred_strong_3 <- predictive(post_strong_3)
+
+# Plot — 2x2 facet grid (rows = #obs, cols = sampling) reads well.
+# Combine into a long-form tibble first, then ggplot:
+#
+# bind_rows(
+#   tibble(animal = ANIMALS, prob = pred_weak_1,   n_obs = "1 obs", sampling = "weak"),
+#   tibble(animal = ANIMALS, prob = pred_strong_1, n_obs = "1 obs", sampling = "strong"),
+#   tibble(animal = ANIMALS, prob = pred_weak_3,   n_obs = "3 obs", sampling = "weak"),
+#   tibble(animal = ANIMALS, prob = pred_strong_3, n_obs = "3 obs", sampling = "strong"),
+# ) |>
+#   ggplot(aes(x = animal, y = prob)) +
+#     geom_bar(stat = "identity") +
+#     facet_grid(rows = vars(n_obs), cols = vars(sampling)) +
+#     labs(title = "Predictive distribution over animals") +
+#     theme_minimal()
+```
+
+**Your answer (Problem 4).** *(A paragraph. Which animals get high predictive probability under each condition? Tie back to which hypotheses survived in the posterior. How does weak vs. strong differ?)*
+
+# Problem 5: Break your model
+
+Now expand the hypothesis space to all $2^6 - 1 = 63$ non-empty binary vectors of length 6. Use a uniform prior. Recompute the posterior and predictive distributions.
+
+```{r expanded-hypothesis-space}
+# fill me
+#
+# Suggested approach:
+#   1. expand.grid(rep(list(c(0, 1)), N_ANIMALS)) gives all 64 binary 6-vectors.
+#   2. Drop the all-zeros row, coerce to a matrix, set colnames <- ANIMALS.
+#   3. Set rownames to indices (e.g. paste0("h_", seq_len(nrow(...)))) so plots don't break.
+#   4. Uniform prior over the new (63-row) matrix.
+#   5. Reuse posterior() and predictive() — they take hyp_mat and pri as args.
+
+all_hyp_matrix <- NULL
+all_prior      <- NULL
+
+# Recompute the 1-obs and 3-obs posteriors + predictives under the expanded space and plot.
+# You only need the predictive (length 6) for the write-up — a 2x2 of bar charts works.
+
+# your code + plotting here
+```
+
+**Write a few sentences:** what happened to the posterior and predictive probabilities? Why? **Relate this to a theorem we covered in class.** (Hint: think about what a uniform prior over *all possible* hypotheses encodes — and what it does *not* encode.)
+
+**Your answer (Problem 5).** *(A few sentences.)*
+
+# Submission
+
+Submit by DM or email to the instructor **one** of:
+
+- your completed and knitted `.Rmd` (knit to HTML) — it must run end-to-end and contain your figures, inline text answers, and descriptions; **or**
+- a single PDF report containing your code, figures, text answers, and descriptions.
