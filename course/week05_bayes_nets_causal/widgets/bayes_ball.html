@@ -279,7 +279,15 @@ let state = {
   // Per-origin set of "(location|fromDir)" strings already visited.
   // Bayes-Ball doesn't re-traverse a node from the same direction, which
   // otherwise causes spurious ping-pong between adjacent nodes.
-  visited: {}
+  visited: {},
+  // Per-origin set of node names the ball has ever OCCUPIED. A node is
+  // d-connected to the origin iff a ball reached it — so this set is the
+  // reachable set we report. It's monotonic: once reached, a node stays
+  // reached even after the ball moves on or is absorbed. (The "blocked"
+  // story is told by which nodes are ABSENT, not by a label on a node the
+  // ball legitimately occupied — B is reached from A in a chain even when
+  // the ball can't pass through B to C.)
+  reached: {}
 };
 
 function canPropagate(node, fromDir, outDir) {
@@ -294,22 +302,30 @@ function canPropagate(node, fromDir, outDir) {
 
 function nextBallsFrom(ball) {
   // From the ball's current location, compute all legal next positions.
-  // Returns array of { location, fromDir } describing each clone.
-  const { location, fromDir } = ball;
+  // Returns array of { location, fromDir, from } describing each clone.
+  const { location, fromDir, from } = ball;
   const adj = SCENARIOS[state.scenario]._adj[location];
   const out = [];
+  // A ball never turns around and exits along the same edge it arrived on
+  // — Bayes-Ball only passes a ball THROUGH to *other* edges. Skipping the
+  // previous node is what lets a ball come to REST at a leaf node (e.g. a
+  // root A whose only neighbor is the child it just came up from): with
+  // nowhere else legal to go, the ball is absorbed there and A counts as
+  // reached, instead of bouncing A→B→A and vanishing.
   // Outgoing along parent edges: ball travels UP to a parent. From the
   // parent's perspective, the ball arrives via a CHILD edge.
   for (const parent of adj.parents) {
+    if (parent === from) continue;
     if (canPropagate(location, fromDir, "parent")) {
-      out.push({ location: parent, fromDir: "child" });
+      out.push({ location: parent, fromDir: "child", from: location });
     }
   }
   // Outgoing along child edges: ball travels DOWN to a child. From the
   // child's perspective, the ball arrives via a PARENT edge.
   for (const child of adj.children) {
+    if (child === from) continue;
     if (canPropagate(location, fromDir, "child")) {
-      out.push({ location: child, fromDir: "parent" });
+      out.push({ location: child, fromDir: "parent", from: location });
     }
   }
   return out;
@@ -377,11 +393,14 @@ function launchBall(origin) {
   // Step fans it out along all edges with no blocking.
   if (!state.visited[origin]) state.visited[origin] = new Set();
   state.visited[origin].add(origin + "|start");
+  if (!state.reached[origin]) state.reached[origin] = new Set();
+  state.reached[origin].add(origin);
   const b = {
     id: state.nextId++,
     origin,
     location: origin,
     fromDir: "start",
+    from: null,        // no previous node — the launch point
     dead: false
   };
   state.balls.push(b);
@@ -412,13 +431,16 @@ function step() {
       // this ball is done: mark dead, leave at current location.
       newBalls.push({ ...b, dead: true });
     } else {
+      if (!state.reached[b.origin]) state.reached[b.origin] = new Set();
       for (const n of fresh) {
         visited.add(n.location + "|" + n.fromDir);
+        state.reached[b.origin].add(n.location);
         newBalls.push({
           id: state.nextId++,
           origin: b.origin,
           location: n.location,
           fromDir: n.fromDir,
+          from: n.from,
           dead: false
         });
       }
@@ -434,31 +456,25 @@ function step() {
 
 function updateStatus() {
   const resultEl = document.getElementById("result");
-  if (state.balls.length === 0) {
+  const origins = Object.keys(state.reached || {});
+  if (origins.length === 0) {
     resultEl.textContent = "";
     return;
   }
-  const live = state.balls.filter(b => !b.dead);
-  const dead = state.balls.filter(b => b.dead);
-  // Group live + dead by origin and final location.
-  const summary = {};
-  for (const b of state.balls) {
-    const key = b.origin;
-    if (!summary[key]) summary[key] = { live: new Set(), blocked: new Set() };
-    if (b.dead) summary[key].blocked.add(b.location);
-    else        summary[key].live.add(b.location);
-  }
+  // Report, per origin, the OTHER nodes the ball reached — i.e. the set
+  // d-connected to the origin. A node's absence is the "blocked" story;
+  // we never label an occupied node as "blocked" (B is reached from A in a
+  // chain even when the ball can't continue through B to C).
+  const allNodes = Object.keys(SCENARIOS[state.scenario].nodes);
   const parts = [];
-  for (const origin of Object.keys(summary).sort()) {
-    const live = [...summary[origin].live].sort().join(",");
-    const blocked = [...summary[origin].blocked].sort().join(",");
-    let frag = origin + ": ";
-    if (live)    frag += "at {" + live + "}";
-    if (live && blocked) frag += "; ";
-    if (blocked) frag += "blocked at {" + blocked + "}";
+  for (const origin of origins.sort()) {
+    const reached = [...state.reached[origin]].filter(n => n !== origin).sort();
+    const unreached = allNodes.filter(n => n !== origin && !state.reached[origin].has(n));
+    let frag = origin + " reaches {" + reached.join(",") + "}";
+    if (unreached.length) frag += " — d-separated from " + unreached.join(",");
     parts.push(frag);
   }
-  resultEl.textContent = parts.join("  ·  ");
+  resultEl.textContent = parts.join("   ·   ");
 }
 
 function loadScenario(key) {
@@ -466,6 +482,7 @@ function loadScenario(key) {
   state.balls = [];
   state.nextId = 1;
   state.visited = {};
+  state.reached = {};
   drawScenario(key);
   document.getElementById("scenario-label").textContent = SCENARIOS[key].label;
   document.getElementById("description").textContent = SCENARIOS[key].description;
@@ -493,6 +510,7 @@ function reset() {
   state.balls = [];
   state.nextId = 1;
   state.visited = {};
+  state.reached = {};
   updateStatus();
 }
 
