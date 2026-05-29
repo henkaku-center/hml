@@ -79,11 +79,11 @@ This is your pocket guide for the semester. Three things happen every week, and 
 
 - **Wed May 13, 2026** — deadline to DM Prof. Austerweil your paper-presentation preference.
 - **Fri May 15, 2026** — final presentation assignments published. First student presentations begin Week 4 (May 22).
-- **Fri Jun 5, 2026, 8 PM** — **Clusters assignment due** (7.5%).
-- **Sun Jun 21, 2026, 5 PM** — **Generalization assignment due** (7.5%).
-- **Sun Jun 28, 2026, 5 PM** — **Final-project proposal due** (pass/fail, ~1 page).
-- **Sun Jul 5, 2026, 5 PM** — **Monte Carlo assignment due** (10.5%).
-- **Sun Jul 12, 2026, 5 PM** — **Reinforcement Learning assignment due** (4.5%).
+- **Fri Jun 5, 2026, 8:00 PM** — **Clusters assignment due** (7.5%).
+- **Fri Jun 19, 2026, 8:00 PM** — **Generalization assignment due** (7.5%).
+- **Sun Jun 28, 2026, 8:00 PM** — **Final-project proposal due** (pass/fail, ~1 page).
+- **Sun Jul 5, 2026, 8:00 PM** — **Monte Carlo assignment due** (10.5%).
+- **Sun Jul 12, 2026, 8:00 PM** — **Reinforcement Learning assignment due** (4.5%).
 - **Fri Jul 17, 2026** — Week 12. Final project presentations.
 
 You get **3 free late days** that can be used across the 4 programming assignments. See the [syllabus](syllabus.html) for the full late policy.

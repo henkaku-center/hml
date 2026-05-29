@@ -8,12 +8,12 @@ You have **3 free late days** that can be used across the programming assignment
 
 | Assignment | Assigned | Due | Weight | Topic |
 |---|---|---|---|---|
-| [Clusters](#clusters) | Week 3 (May 15) | **Fri Jun 5, 8 PM** | 7.5% | Mixture models & categorization |
-| [Generalization](#generalization) | Week 4 (May 22) | **Fri Jun 19, 8 PM** | 7.5% | Bayesian generalization |
+| [Clusters](#clusters) | Week 3 (May 15) | **Fri Jun 5, 8:00 PM** | 7.5% | Mixture models & categorization |
+| [Generalization](#generalization) | Week 4 (May 22) | **Fri Jun 19, 8:00 PM** | 7.5% | Bayesian generalization |
 | Monte Carlo | Week 7 (Jun 12) | *TBA when released* | 10.5% | Monte Carlo methods |
 | Reinforcement Learning | Week 8 (Jun 19) | *TBA when released* | 4.5% | MDPs & reinforcement learning |
 
-Total assignments: **30%** of the course grade. The final-project proposal (pass/fail, tracked in the syllabus) is due **Sun Jun 28, 5 PM** — one week after the Generalization assignment.
+Total assignments: **30%** of the course grade. The final-project proposal (pass/fail, tracked in the syllabus) is due **Sun Jun 28, 8:00 PM** — one week after the Generalization assignment. See the [project guidelines](project.html) for full details.
 
 ## Assignment details
 

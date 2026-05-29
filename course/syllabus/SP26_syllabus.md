@@ -57,11 +57,11 @@ Three (non-exclusive) categories of project:
 2. **Modeling / ML** — take some human behavior (from class, from the literature, or from data you scrape) and model it with your own or an advanced ML method.
 3. **Math / theory** — a mathematical analysis of a learning problem or model.
 
-Project deliverables:
+Project deliverables (see the [project guidelines](project.html) for full details):
 
-- **Proposal** (~1 page, due mid-semester; exact date announced in class): background, question, method, and at least three references. Pass/fail.
-- **In-class presentation** (late semester): ~10 minutes. Background, question, method, preliminary results.
-- **Final paper** (~6 pages single-spaced): motivate and present your results clearly. Detailed guidelines will be announced.
+- **Proposal** (~1 page, due **Sun Jun 28, 2026, 8:00 PM**): background, question, method, and at least three references. Pass/fail.
+- **In-class presentation** (**Fri Jul 17, 2026** — Week 12, the final session): ~10 minutes. Background, question, method, preliminary results.
+- **Final paper** (~6 pages single-spaced, due **Fri Jul 24, 2026, 8:00 PM**): motivate and present your results clearly.
 
 ## Weekly written reflections
 

@@ -10,6 +10,7 @@ Writes:
   docs/index.html        - landing page (schedule driven from PLAN files)
   docs/syllabus.html     - rendered syllabus
   docs/assignments.html  - rendered assignments index
+  docs/project.html      - rendered final-project guidelines (from docs/project.md)
 
 Run from the repo root: python docs/_build.py
 """
@@ -578,6 +579,25 @@ def render_assignments(env):
     print(f"  wrote assignments.html ({len(html):,} bytes)")
 
 
+def render_project(env):
+    src_path = DOCS_DIR / "project.md"
+    if not src_path.is_file():
+        return
+    src = src_path.read_text(encoding="utf-8")
+    content = render_assignments_content(src)  # strips H1, turns markdown into HTML
+    template = env.get_template("page.html")
+    html = template.render(
+        page_key="project",
+        rel_root="",
+        page_title="Final Project",
+        eyebrow="Spring 2026",
+        page_sub="Proposal, in-class presentation, and final paper — the capstone of the course.",
+        content=content,
+    )
+    (DOCS_DIR / "project.html").write_text(html, encoding="utf-8")
+    print(f"  wrote project.html ({len(html):,} bytes)")
+
+
 def render_presentation_guidelines(env):
     src_path = DOCS_DIR / "presentation-guidelines.md"
     if not src_path.is_file():
@@ -608,6 +628,7 @@ def main():
     render_landing(env)
     render_syllabus(env)
     render_assignments(env)
+    render_project(env)
     render_readings(env)
     render_game_plan(env)
     render_presentation_guidelines(env)

@@ -40,6 +40,7 @@
 - [x] Draft SP26 syllabus source (`course/syllabus/SP26_syllabus.md`) and publish to the site
 - [x] Update grading to reflect 6 students / 12 sessions: reflections 15%→12.5% (8-of-13 → 6-of-12); new paper-presentation line at 7.5%; participation folded in
 - [x] Add Paper presentations section to syllabus (rubric + Griffiths framing questions)
+- [x] Port SP25 project guidelines to SP26 (`course/syllabus/SP26_project_guidelines.md` + `docs/project.html`); pinned dates: proposal Sun Jun 28 8:00 PM, presentation Fri Jul 17, paper Fri Jul 24 8:00 PM. Standardized all deadline times to 8:00 PM. *(done 2026-05-29)*
 - [ ] Fill in late-policy details (placeholder in SP26_syllabus.md)
 - [ ] Pick office hours, update syllabus, rebuild site
 - [x] Reconcile 13 course/week directories vs. 12 actual sessions — done: merged old week4/5/6 (generalization/hier-bayes/causal) into new weeks 4 (generalization + hier-bayes) and 5 (bayes nets + causal); renumbered weeks 7–13 down to 6–12. All 12 directories now match the 12-session calendar.
@@ -89,4 +90,5 @@
 - [ ] Week 13 (Ethics): update with recent AI safety/alignment developments
 
 ### Next-year (SP27) revisions — defer
+- [ ] **Move the final-project proposal deadline earlier.** SP26 landed it on Sun Jun 28 (one week after the Generalization assignment, Week 9 of 12) to avoid moving a date students may already have planned around. That leaves only ~3 weeks between proposal feedback and the presentation/paper — tight for a 50%-weight capstone. For SP27, set the proposal in the first half of the term (target ~Week 4–5) so students get feedback with real runway to execute. Identified 2026-05-29 while porting the project guidelines to SP26.
 - [ ] **Generalization assignment: add a reflective follow-up to Problem 5.** After computing the NFL collapse, ask the student to look back at their *own* hypothesis space and answer: which features of the properties they chose made the model generalize well, and could they predict (without running code) which animal pairs would generalize? Converts the assignment from "compute these things" to "introspect on what you built." Identified 2026-05-27 in conversation while solving the SP26 stencils end-to-end — deferred to SP27 so we keep momentum on tutorials + lectures for SP26.
