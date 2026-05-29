@@ -318,6 +318,16 @@ def sync_slide_html(wk_num: int, wk_dir: Path) -> str:
             if dst_images.exists():
                 shutil.rmtree(dst_images)
             shutil.copytree(images_src, dst_images)
+        # Copy any interactive widgets the deck embeds via a relative iframe
+        # (e.g., <iframe src="widgets/bayes_ball.html">). The iframe path is
+        # resolved relative to docs/slides/weekNN.html, so the widgets dir must
+        # land at docs/slides/widgets/ — otherwise GitHub Pages 404s the embed.
+        widgets_src = qmd.parent / "widgets"
+        if widgets_src.is_dir():
+            dst_widgets = SLIDES_OUT_DIR / "widgets"
+            if dst_widgets.exists():
+                shutil.rmtree(dst_widgets)
+            shutil.copytree(widgets_src, dst_widgets)
         return f"slides/week{wk_num:02d}.html"
 
     return ""
