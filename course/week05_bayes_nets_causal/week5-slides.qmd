@@ -1085,7 +1085,8 @@ joint over parents, which means they're now dependent.
 ::: {.lang-en}
 Three nodes: **Rain** ($R$), **Sprinkler** ($S$), **Wet grass** ($W$). Two independent causes of wet grass. A priori,
 $$P(R) = 0.3, \quad P(S) = 0.3, \quad P(R, S) = P(R)\,P(S).$$
-Rain and Sprinkler are **independent**.
+Rain and Sprinkler are **independent**. The grass is wet if **either** cause fires:
+$$W = 1 \iff (R = 1)\ \text{or}\ (S = 1). \quad\text{(deterministic OR)}$$
 
 [$R$, $S$, $W$ from here on.]{.dim}
 :::
@@ -1093,7 +1094,8 @@ Rain and Sprinkler are **independent**.
 ::: {.lang-ja}
 3つのノード：**雨** ($R$)、**スプリンクラー** ($S$)、**濡れた芝生** ($W$)。濡れた芝生の独立な2つの原因。事前分布は、
 $$P(R) = 0.3, \quad P(S) = 0.3, \quad P(R, S) = P(R)\,P(S).$$
-雨とスプリンクラーは **独立**。
+雨とスプリンクラーは **独立**。**どちらか** の原因が起これば芝生は濡れる：
+$$W = 1 \iff (R = 1)\ \text{または}\ (S = 1). \quad\text{(決定的 OR)}$$
 
 [以降、$R$, $S$, $W$ と略記。]{.dim}
 :::
@@ -1109,20 +1111,20 @@ of each other. Standard collider setup.
 
 ::: {.lang-en}
 Now we walk outside: the grass is wet ($W = 1$). Both probabilities **rise**:
-$$P(R \mid W) \approx 0.65, \quad P(S \mid W) \approx 0.65.$$
+$$P(R \mid W) \approx 0.59, \quad P(S \mid W) \approx 0.59.$$
 Either cause is now more plausible — the observation supports both.
 :::
 
 ::: {.lang-ja}
 さて、外に出ると：芝生が濡れている ($W = 1$)。両方の確率が **上がる**：
-$$P(R \mid W) \approx 0.65, \quad P(S \mid W) \approx 0.65.$$
+$$P(R \mid W) \approx 0.59, \quad P(S \mid W) \approx 0.59.$$
 どちらの原因も今や確からしくなる — 観測は両方を支持する。
 :::
 
 ::: {.notes}
 ~75 sec. The "competition" hasn't happened yet — the wetness elevates both
-hypotheses. Numbers chosen so the rise is visible (0.3 → 0.65, roughly
-doubled).
+hypotheses. Under the deterministic OR these are exact: P(R|W) = P(S|W) =
+10/17 ≈ 0.59 (0.3 → 0.59, roughly doubled).
 :::
 
 ## [Also learn sprinkler was on]{.lang-en}[さらに、スプリンクラーが作動していたと知る]{.lang-ja} {.smaller}
@@ -1131,9 +1133,9 @@ doubled).
 
 ::: {.lang-en}
 A neighbor mentions: "I saw your sprinkler running this morning." So $S = 1$. Now:
-$$P(R \mid W, S = 1) \approx 0.35.$$
-Rain's probability **drops** — sprinkler "explains" the wetness, so we no
-longer need rain to do that work.
+$$P(R \mid W, S = 1) = 0.3 = P(R).$$
+Rain's probability **drops all the way back to its prior** — sprinkler already
+"explains" the wetness, so wet grass tells us **nothing more** about rain.
 
 **Conditioning on the collider's parents *and* the collider itself induces this
 competition.** That's explaining away.
@@ -1141,18 +1143,23 @@ competition.** That's explaining away.
 
 ::: {.lang-ja}
 近所の人が言う：「今朝あなたのスプリンクラーが動いているのを見たよ。」つまり $S = 1$。今度は：
-$$P(R \mid W, S = 1) \approx 0.35.$$
-雨の確率が **下がる** — スプリンクラーが濡れていることを「説明」したので、
-もう雨にその役割を担わせる必要がない。
+$$P(R \mid W, S = 1) = 0.3 = P(R).$$
+雨の確率が **事前分布まで完全に戻る** — スプリンクラーが濡れていることを既に「説明」したので、
+濡れた芝生は雨について **もう何も教えてくれない**。
 
 **コライダーの親 *と* コライダー自身に条件付けることで、この競合が生まれる。**
 これが説明はがし。
 :::
 
 ::: {.notes}
-~90 sec. THE key numerical reveal. Note rain went from 0.3 → 0.65 → 0.35 —
-above prior, but well below the wet-only conditioning. The sprinkler observation
-"steals" probability mass from rain.
+~90 sec. THE key numerical reveal. Rain went 0.3 → 0.59 → 0.30 — it rises on
+wet grass, then returns EXACTLY to its prior once the sprinkler is known on.
+With a deterministic OR, S=1 makes wet grass certain regardless of rain, so W
+carries zero further information about R: P(R|W,S=1) = P(R) = 0.3 exactly. The
+sprinkler fully "explains" the wetness. (A noisy OR would leave R slightly
+above prior — the residual is the signature of non-determinism; we keep the
+clean deterministic version here.) Aside worth saying aloud: if instead the
+grass were wet with S=0, only rain is left to explain it, so P(R|W,S=0)=1.
 :::
 
 ## [What just happened]{.lang-en}[今、何が起きたのか]{.lang-ja}
@@ -1166,10 +1173,10 @@ above prior, but well below the wet-only conditioning. The sprinkler observation
 | Conditioning set | $P(R = 1)$ |
 |---|---:|
 | nothing | 0.30 |
-| $W = 1$ | 0.65 |
-| $W = 1,\, S = 1$ | 0.35 |
+| $W = 1$ | 0.59 |
+| $W = 1,\, S = 1$ | 0.30 |
 
-Rain rose, then fell. The fall is **explaining away**.
+Rain rose, then fell back to its prior. The fall is **explaining away**.
 :::
 
 ::: {.lang-ja}
@@ -1178,10 +1185,10 @@ Rain rose, then fell. The fall is **explaining away**.
 | 条件付け | $P(R = 1)$ |
 |---|---:|
 | なし | 0.30 |
-| $W = 1$ | 0.65 |
-| $W = 1,\, S = 1$ | 0.35 |
+| $W = 1$ | 0.59 |
+| $W = 1,\, S = 1$ | 0.30 |
 
-雨の確率は上がり、また下がった。下がる部分が **説明はがし**。
+雨の確率は上がり、事前分布まで戻った。下がる部分が **説明はがし**。
 :::
 :::
 

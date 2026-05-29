@@ -113,12 +113,12 @@ Per the CLAUDE.md "visual density baseline for new lecture decks" rule. Each blo
 
 ### Block 5: Explaining away (12 min)
 
-- **Sibling-slide build-up (3 slides) — Sprinkler / Rain / Wet-Grass** (was 4 in draft 1; tightened):
-  - *Setup — Sprinkler ⊥ Rain a priori* (each has independent prior; show the 3-node DAG with no conditioning).
-  - *Observe Wet-Grass — both probabilities go up* (numerical: $P(\text{Sprinkler}) = 0.3 \to P(\text{Sprinkler} \mid \text{Wet}) = 0.6$; similarly for Rain).
-  - *Also observe Rain — Sprinkler probability drops back* ($P(\text{Sprinkler} \mid \text{Wet}, \text{Rain}) = 0.35$, much lower than 0.6). **This is explaining away.** Rain "explains" the wetness, reducing the need for Sprinkler.
+- **Sibling-slide build-up (3 slides) — Sprinkler / Rain / Wet-Grass** (was 4 in draft 1; tightened). **Model: deterministic OR** — $W = 1 \iff (R = 1)\ \text{or}\ (S = 1)$, with $P(R) = P(S) = 0.3$ independent. State the CPT on the setup slide so the numbers are reproducible (CLAUDE.md "introduce the model" rule):
+  - *Setup — Rain ⊥ Sprinkler a priori* (each has independent prior $0.3$; show the 3-node DAG; state the deterministic-OR CPT for $W$).
+  - *Observe Wet-Grass — both probabilities go up* (exact under det-OR: $P(R \mid W) = P(S \mid W) = 10/17 \approx 0.59$).
+  - *Also observe Sprinkler on — Rain drops back to its prior* ($P(R \mid W, S = 1) = 0.3 = P(R)$ **exactly**, because $S = 1$ makes $W$ certain regardless of $R$, so $W$ carries zero further info about $R$). **This is explaining away.** Sprinkler fully "explains" the wetness. (A noisy-OR would leave $R$ slightly above prior — the residual is the signature of non-determinism; the deterministic version is kept for clean arithmetic.)
   - **Figure (reuse):** SP25 Week 4 slide 40 — `figure-todo: explaining_away_srw.png`. Standout SP25 figure.
-- **Two-column slide — what just happened:** LHS the numerical sequence ($P(S) = 0.3 \to 0.6 \to 0.35$); RHS the take-home in one sentence: *"Conditioning on a common effect makes independent causes dependent — and conditioning on one cause then *reduces* support for the other."* **Column layout required (numbers + interpretation).**
+- **Two-column slide — what just happened:** LHS the numerical sequence ($P(R) = 0.30 \to 0.59 \to 0.30$); RHS the take-home in one sentence: *"Conditioning on a common effect makes independent causes dependent — and conditioning on one cause then *reduces* support for the other."* **Column layout required (numbers + interpretation).**
 - **Monty Hall callback (1 slide, no formal poll):** "Remember Chibany's switching dilemma? The cafeteria worker opening Bento 2 *is* a collider observation. The other unopened bento got 'explained up' — that's why switching gives you 2/3." Audience: show of hands, who switches now?
 
 ### Block 6: Observation → intervention (10 min, post-break)
