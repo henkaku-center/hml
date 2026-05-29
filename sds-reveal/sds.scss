@@ -274,30 +274,54 @@ div.reveal div.slides section.title-slide {
 // Background frame set from the .qmd via slide header attributes:
 //   ## Section Title {.section-break background-image="…/sds_frame.png"}
 // ==========================================================================
-.reveal .section-break {
-  // Flex-center the heading so 1-line and 2-line titles both sit at the
-  // geometric center of the slide. Previously used margin-top: 2.6em which
-  // pushed 2-line titles visibly below center.
+// Quarto adds .title-slide to level-1 headings (our section-break uses #).
+// Its compiled CSS has:
+//   div.reveal div.slides section.title-slide { padding:80px 110px !important; text-align:left !important }
+// We need higher specificity than that to override padding/alignment.
+div.reveal div.slides section.title-slide.section-break {
   display: flex !important;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
-  text-align: center;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  text-align: center !important;
+  // Fill the parent stack EXACTLY so flex-center lines up with the visible
+  // yellow frame. Do not also set min-height in px — combining height:100%
+  // with min-height makes the section overflow the parent when Reveal
+  // scales the slide to viewports taller than 700px.
+  height: 100% !important;
+  min-height: 0 !important;
 
   h1, h2 {
     color: $sds-text-white;
     font-size: 1.05em;
     line-height: 1.25;
-    margin: 0 auto;
-    // Wide enough that typical 1-line section titles don't wrap inside the
-    // yellow frame even when fonts render slightly larger than in headless
-    // Chrome (which is what the audit script uses). 92% leaves a small
-    // margin inside the frame; long titles will still wrap to 2 lines.
+    margin: 0 auto !important;
     max-width: 92%;
-    text-align: center;
+    text-align: center !important;
     overflow-wrap: break-word;
     hyphens: auto;
   }
+}
+
+// Quarto's compiled CSS includes a high-specificity rule for `.title-slide h1`
+// (`div.reveal div.slides section.title-slide h1.title { margin:60px 0 16px 0
+// !important; text-align:left !important }`) that wins over the
+// `section.title-slide.section-break h1` rule above (which has lower
+// specificity on h1 — only the h2 selector inside the block matches Quarto's
+// path). On a section-break slide that lands the title at the top-left
+// instead of the flex-centered position. Mirror Quarto's depth on h1
+// explicitly so our centering wins.
+div.reveal div.slides section.title-slide.section-break h1,
+div.reveal div.slides section.title-slide.section-break h1.title {
+  color: $sds-text-white !important;
+  font-size: 1.05em !important;
+  line-height: 1.25 !important;
+  margin: 0 auto !important;
+  max-width: 92% !important;
+  text-align: center !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
 }
 
 // `.photo-break` — a section-break whose background is a photo instead of the
