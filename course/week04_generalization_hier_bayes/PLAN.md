@@ -14,6 +14,8 @@
 ## Textbook Chapters
 - T3 Ch 4: `intro2/04_bayesian_learning.md` (Bayesian learning — natural bridge from Week 3's conjugacy)
 - T3 Ch 5: `intro2/05_mixture_models.md` (mixture models — touchstone for hierarchical structure)
+- T3 Ch 7: `intro2/07_generalization/` (Bayesian Generalization — the direct companion: number game, size principle, Shepard's law, No Free Lunch)
+- T3 Ch 12: `intro2/12_hierarchical_bayes.md` (Hierarchical Bayes — the second half of this lecture)
 
 ## GenJAX Integration
 - T2 Ch 4: `genjax/04_conditioning.md` (conditioning is the inference primitive for hierarchical models)

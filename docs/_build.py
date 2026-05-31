@@ -60,18 +60,28 @@ ASSIGNMENTS_URL = "assignments.html"
 
 
 def build_chapter_map() -> dict:
-    """Scan textbook/content/{tutorial}/ for numbered chapters (NN_slug.md).
-    Returns {tutorial_number: {chapter_number: slug_without_ext}}."""
-    CH_RE = re.compile(r"^(\d{2})_(.+)\.md$")
+    """Scan textbook/content/{tutorial}/ for numbered chapters and return
+    {tutorial_number: {chapter_number: slug}}.
+
+    A chapter is either a single file ``NN_slug.md`` or a Hugo page *bundle*
+    directory ``NN_slug/`` containing ``_index.md`` (e.g. ``07_generalization/``).
+    Both render at the URL ``.../{tutorial}/NN_slug/``, so they map the same way.
+    """
+    FILE_RE = re.compile(r"^(\d{2})_(.+)\.md$")
+    DIR_RE = re.compile(r"^(\d{2})_(.+)$")
     out = {}
     for tnum, sub in TUTORIAL_PATH.items():
         tut_dir = TEXTBOOK_CONTENT / sub
         chapters = {}
         if tut_dir.is_dir():
             for f in tut_dir.iterdir():
-                m = CH_RE.match(f.name)
+                m = FILE_RE.match(f.name)
                 if m:
                     chapters[int(m.group(1))] = f.stem  # e.g. '01_goals'
+                elif f.is_dir() and (f / "_index.md").is_file():
+                    md = DIR_RE.match(f.name)
+                    if md:
+                        chapters[int(md.group(1))] = f.name  # e.g. '07_generalization'
         out[tnum] = chapters
     return out
 

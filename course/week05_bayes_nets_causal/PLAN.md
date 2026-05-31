@@ -12,6 +12,7 @@
 
 ## Textbook Chapters
 - T3 Ch 5: `intro2/05_mixture_models.md` (review — overlaps with Week 4)
+- T3 Ch 12: `intro2/12_hierarchical_bayes.md` (Hierarchical Bayes — review/bridge link from Week 4's second half)
 - Bayes-nets chapter: none yet in the textbook; consider writing one during the semester (existing TODO under Textbook & GenJAX).
 
 ## GenJAX Integration
