@@ -12,13 +12,18 @@
 - **Quiz:** "Gaussian and Binomial Bayes"
 
 ## Textbook Chapters
-- T3 Ch 4: `intro2/04_bayesian_learning.md` (Bayesian learning — natural bridge from Week 3's conjugacy)
-- T3 Ch 5: `intro2/05_mixture_models.md` (mixture models — touchstone for hierarchical structure)
-- T3 Ch 7: `intro2/07_generalization/` (Bayesian Generalization — the direct companion: number game, size principle, Shepard's law, No Free Lunch)
-- T3 Ch 12: `intro2/12_hierarchical_bayes.md` (Hierarchical Bayes — the second half of this lecture)
+
+<!-- Card links: prefer the order-robust NAME form `T3: <chapter-name>` over `T3 Ch N`.
+     The name maps to the chapter's directory slug minus its NN_ prefix, so renumbering
+     chapters in the textbook never breaks these links (the builder re-derives the URL).
+     The numeric `T3 Ch N` form still works for older entries. -->
+- T3: bayesian learning — `intro2/04_bayesian_learning.md` (Bayesian learning — natural bridge from Week 3's conjugacy)
+- T3: mixture models — `intro2/05_mixture_models.md` (mixture models — touchstone for hierarchical structure)
+- T3: generalization — `intro2/07_generalization/` (Bayesian Generalization — the direct companion: number game, size principle, Shepard's law, No Free Lunch)
+- T3: hierarchical bayes — `intro2/12_hierarchical_bayes.md` (Hierarchical Bayes — the second half of this lecture)
 
 ## GenJAX Integration
-- T2 Ch 4: `genjax/04_conditioning.md` (conditioning is the inference primitive for hierarchical models)
+- T2: conditioning — `genjax/04_conditioning.md` (conditioning is the inference primitive for hierarchical models)
 - Hands-on exercise: extend `bento_day()` from Week 2 to a hierarchical version where the tonkatsu rate is itself drawn from a Beta prior — infer the rate from observed bentos across multiple students
 
 ## Contemporary ML Notes

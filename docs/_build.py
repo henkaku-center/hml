@@ -86,7 +86,30 @@ def build_chapter_map() -> dict:
     return out
 
 
-CHAPTER_MAP = None  # populated lazily in main()
+def build_chapter_name_map() -> dict:
+    """Return {tutorial_number: {stable_name: full_slug}} for NAME-based links.
+
+    The *stable name* is the chapter slug with its ``NN_`` ordering prefix
+    stripped — e.g. ``07_generalization`` → ``generalization``. This is what
+    makes landing-page links robust to chapter REORDERING: a PLAN can tag a
+    chapter by name (``T3: generalization``) instead of number (``T3 Ch 7``),
+    so renumbering the chapter (07_ → 09_) only changes the directory name and
+    the builder re-derives the URL automatically — the PLAN tag and the rendered
+    card never change. The numeric ``build_chapter_map`` form still works too.
+    """
+    NUM_RE = re.compile(r"^\d{2}_")
+    out = {}
+    for tnum, chapters in (CHAPTER_MAP or build_chapter_map()).items():
+        names = {}
+        for full_slug in chapters.values():
+            name = NUM_RE.sub("", full_slug)  # '07_generalization' -> 'generalization'
+            names[name] = full_slug
+        out[tnum] = names
+    return out
+
+
+CHAPTER_MAP = None       # {tut: {num: slug}}      — populated lazily in main()
+CHAPTER_NAME_MAP = None  # {tut: {name: slug}}     — populated lazily in main()
 
 # ---------- hand-curated bits that live with the generator, not in Markdown ----------
 
@@ -203,40 +226,95 @@ def parse_plan_section(plan_text: str, section_name: str) -> str:
 def _tag_url(label: str) -> str:
     """Map a tag label to its destination URL.
 
-    Examples:
-      'T1 Ch 1-3' → https://.../intro/01_goals/  (first chapter in range)
-      'T2 Ch 0'   → https://.../genjax/00_getting_started/
-      'GenJAX'    → assignments.html
-      unknown     → '' (renders as plain, unlinked tag)
+    Two textbook-tag forms are supported:
+      NUMERIC   'T1 Ch 1-3' → https://.../intro/01_goals/  (first chapter in range)
+                'T2 Ch 0'   → https://.../genjax/00_getting_started/
+      NAME      'T3 Generalization' → resolves by stable name (order-robust;
+                see build_chapter_name_map). The name is matched case- and
+                separator-insensitively against the chapter slug.
+      'GenJAX'  → assignments.html
+      unknown   → '' (renders as plain, unlinked tag)
     """
-    m = re.match(r"T(\d)\s*Ch\s*(\d+)(?:-(\d+))?", label)
+    # NUMERIC form: 'T3 Ch 7' / 'T1 Ch 1-3'
+    m = re.match(r"T(\d)\s*Ch\s*(\d+)(?:-(\d+))?$", label)
     if m:
         tnum = int(m.group(1))
         first_ch = int(m.group(2))
         tut = TUTORIAL_PATH.get(tnum)
-        chapters = (CHAPTER_MAP or {}).get(tnum, {})
-        slug = chapters.get(first_ch)
+        slug = (CHAPTER_MAP or {}).get(tnum, {}).get(first_ch)
         if tut and slug:
             return f"{TEXTBOOK_BASE}/{tut}/{slug}/"
         if tut:  # chapter not found — fall back to tutorial index
+            return f"{TEXTBOOK_BASE}/{tut}/"
+    # NAME form: 'T3 Generalization' / 'T3 Hierarchical Bayes'
+    mn = re.match(r"T(\d)\s+(.+)$", label)
+    if mn:
+        tnum = int(mn.group(1))
+        tut = TUTORIAL_PATH.get(tnum)
+        slug = _resolve_chapter_name(tnum, mn.group(2))
+        if tut and slug:
+            return f"{TEXTBOOK_BASE}/{tut}/{slug}/"
+        if tut:
             return f"{TEXTBOOK_BASE}/{tut}/"
     if label == "GenJAX":
         return ASSIGNMENTS_URL
     return ""
 
 
+def _norm_name(s: str) -> str:
+    """Canonicalize a chapter name for matching: lowercase, non-alnum → '_'."""
+    return re.sub(r"[^a-z0-9]+", "_", s.lower()).strip("_")
+
+
+def _resolve_chapter_name(tnum: int, name: str):
+    """Find a chapter's full slug from a stable name, separator-insensitively.
+    'Generalization' / 'generalization' / 'Hierarchical Bayes' all resolve."""
+    target = _norm_name(name)
+    names = (CHAPTER_NAME_MAP or {}).get(tnum, {})
+    if target in names:
+        return names[target]
+    # also accept a name that is a prefix of the slug-name (e.g. 'bayes' won't,
+    # but 'hierarchical_bayes' matches '12_hierarchical_bayes'); exact-normalized
+    # match is the contract, this is just a tolerant fallback.
+    for nm, slug in names.items():
+        if _norm_name(nm) == target:
+            return slug
+    return None
+
+
+def _labels_from_section(text: str) -> list:
+    """Extract textbook-chapter tag labels from one PLAN section, supporting both
+    the NUMERIC form (``T3 Ch 7``, ``T1 Ch 1-3``) and the order-robust NAME form
+    (``T3: generalization``). Labels are returned in PLAN source order.
+
+    The name form is written ``T<tut>: <name-or-csv>`` and yields a label
+    ``T<tut> <Title Case Name>`` that renders on the card and resolves via the
+    chapter name map (so reordering chapters never touches the PLAN). The numeric
+    form is matched only when NOT immediately followed by ``:`` so ``T3: foo`` is
+    never mis-read as a numeric tag."""
+    # One alternation scanned left-to-right keeps tags in PLAN line order
+    # regardless of whether each is the name or numeric form.
+    NAME = r"T(?P<nt>\d)\s*:\s*(?P<name>[A-Za-z][\w ,&\-]*)"
+    NUM = r"T(?P<ct>\d)\s*Ch\s*(?P<ch>[\d\-]+)\b"
+    labels = []
+    for m in re.finditer(rf"{NAME}|{NUM}", text):
+        if m.group("name") is not None:
+            for raw in m.group("name").split(","):
+                name = raw.strip()
+                if name:
+                    labels.append(f"T{m.group('nt')} {name.replace('_', ' ').title()}")
+        else:
+            labels.append(f"T{m.group('ct')} Ch {m.group('ch')}")
+    return labels
+
+
 def extract_tags_from_plan(plan_text: str) -> list:
     """Pull short tags for the schedule: textbook shorthand + GenJAX markers.
     Returns list of {label, url} dicts (url may be empty)."""
-    labels = []
-    tb = parse_plan_section(plan_text, "Textbook Chapters")
-    for m in re.finditer(r"\bT(\d)\s*Ch\s*([\d\-]+)\b", tb):
-        labels.append(f"T{m.group(1)} Ch {m.group(2)}")
+    labels = list(_labels_from_section(parse_plan_section(plan_text, "Textbook Chapters")))
     gj = parse_plan_section(plan_text, "GenJAX Integration")
     if gj and gj.strip().lower() not in ("none this week.", "none this week", "none."):
-        gj_labels = []
-        for m in re.finditer(r"\bT(\d)\s*Ch\s*([\d\-]+)\b", gj):
-            gj_labels.append(f"T{m.group(1)} Ch {m.group(2)}")
+        gj_labels = _labels_from_section(gj)
         if gj_labels:
             labels.extend(gj_labels)
         else:
@@ -628,11 +706,12 @@ def render_presentation_guidelines(env):
 
 
 def main():
-    global CHAPTER_MAP
+    global CHAPTER_MAP, CHAPTER_NAME_MAP
     if not TEMPLATES_DIR.is_dir():
         print(f"ERROR: templates dir not found: {TEMPLATES_DIR}", file=sys.stderr)
         sys.exit(1)
     CHAPTER_MAP = build_chapter_map()
+    CHAPTER_NAME_MAP = build_chapter_name_map()
     env = make_env()
     print("Building course website...")
     render_landing(env)

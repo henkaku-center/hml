@@ -11,12 +11,12 @@
 - **Quiz:** "Bayesian Generalization" (ungraded self-check, covers Week 4 material)
 
 ## Textbook Chapters
-- T3 Ch 5: `intro2/05_mixture_models.md` (review — overlaps with Week 4)
-- T3 Ch 12: `intro2/12_hierarchical_bayes.md` (Hierarchical Bayes — review/bridge link from Week 4's second half)
+- T3: mixture models — `intro2/05_mixture_models.md` (review — overlaps with Week 4)
+- T3: hierarchical bayes — `intro2/12_hierarchical_bayes.md` (Hierarchical Bayes — review/bridge link from Week 4's second half)
 - Bayes-nets chapter: none yet in the textbook; consider writing one during the semester (existing TODO under Textbook & GenJAX).
 
 ## GenJAX Integration
-- T2 Ch 6: `genjax/06_building_models.md` (composing generative models — a Bayes net IS a structured generative model)
+- T2: building models — `genjax/06_building_models.md` (composing generative models — a Bayes net IS a structured generative model)
 - Optional: a short "model comparison via intervention" GenJAX exercise (see TODO below)
 
 ## Contemporary ML Notes
