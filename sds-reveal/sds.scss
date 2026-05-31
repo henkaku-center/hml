@@ -340,6 +340,34 @@ div.reveal div.slides section.title-slide.section-break h1.title {
 }
 
 // ==========================================================================
+// Image placement (mirrored from APS-I lecture-plans, June 2026)
+// ==========================================================================
+// MINIMAL & SAFE. History: setting `display:flex` on the figure column
+// COLLAPSED Quarto's two-column layout (figure dropped full-width below the
+// text). Quarto's `.columns` is `display:initial` (NOT flex) here, so columns
+// sit side-by-side only because the `.column`s keep their default display +
+// inline width. Overriding a column's `display` drops it onto its own line.
+// Lesson: NEVER change `.columns`/`.column` display — center via margins only.
+//
+// (1) SINGLE-COLUMN slides: center a standalone figure horizontally. Scope to
+//     figures NOT inside a .column so we never touch column images.
+.reveal .slides section > figure,
+.reveal .slides section > p > img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// (2) TWO-COLUMN figure column: nudge the image toward the column's vertical
+//     middle via auto top/bottom margin, WITHOUT changing the column's display
+//     (keep it block so the row stays intact). Text column stays top-aligned.
+.reveal .slides section .column > p:has(img),
+.reveal .slides section .column > figure {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+// ==========================================================================
 // Agenda slide — two-column timed list
 // ==========================================================================
 .reveal .agenda {
