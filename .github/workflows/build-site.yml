@@ -46,6 +46,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The textbook lives in a SEPARATE public repo (josephausterweil/probintro)
+      # and is NOT vendored here. _build.py scans textbook/content/ to map each
+      # week's "T3 Ch 7 / T3: generalization" tag to its specific chapter URL;
+      # without it, every card silently falls back to the bare tutorial index
+      # (/intro2/) instead of deep-linking the chapter. Shallow-clone it so the
+      # CI build produces the same chapter-specific links as a local build.
+      - name: Fetch textbook (for chapter-link resolution)
+        run: |
+          git clone --depth 1 https://github.com/josephausterweil/probintro textbook
+          echo "textbook chapters visible to the builder:"
+          ls textbook/content/intro2 textbook/content/genjax textbook/content/intro 2>/dev/null | head -40
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
