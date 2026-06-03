@@ -150,6 +150,40 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
     let columnFill = Infinity;       // min fill across columns; Infinity = no columns
     let columnSkew = 0;              // worst within-row vertical imbalance
     let nColumns = 0;
+    // CAPTION ALIGNMENT (multi-column figure rows): when each column ends in a
+    // short text "caption" directly under an image, the captions should share a
+    // baseline (vertical alignment) and sit centred under their figure
+    // (horizontal alignment). Measured per `.columns` row:
+    //  - captionVMisalign = max vertical spread of caption baselines across the
+    //    row, as a % of stage height. 0 = all captions on one line.
+    //  - captionHMisalign = worst |captionCenterX − figureCenterX| in a column,
+    //    as a % of that column's width. 0 = every caption centred under its image.
+    let captionVMisalign = 0;
+    let captionHMisalign = 0;
+    let hasCaptions = false;
+    // helper: the "caption" of a column = its last visible block-text element
+    // (p / figcaption / li) that sits BELOW the column's image, if any.
+    const captionOf = (col) => {
+      const img = col.querySelector('img');
+      if (!img) return null;
+      const ir = img.getBoundingClientRect();
+      if (ir.height === 0) return null;
+      const texts = col.querySelectorAll('p, figcaption, .dim, li');
+      let best = null;
+      for (const t of texts) {
+        const r = t.getBoundingClientRect();
+        const cs = getComputedStyle(t);
+        if (r.width === 0 || r.height === 0) continue;
+        if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+        if (cs.position === 'fixed') continue;
+        if (t.querySelector('img')) continue;       // skip the image's own wrapper
+        if (r.top < ir.bottom - 2) continue;         // must be BELOW the image
+        if (!best || r.top > best.top) best = r;     // lowest text = the caption
+      }
+      return best ? { capCx: best.left + best.width / 2, capY: best.bottom,
+                      figCx: ir.left + ir.width / 2, colW: col.getBoundingClientRect().width }
+                  : null;
+    };
     const columnSets = present.querySelectorAll('.columns');
     for (const cs of columnSets) {
       const cols = cs.querySelectorAll(':scope > .column');
@@ -157,6 +191,7 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
 
       // Measure every wide-enough column in this row first.
       const colBoxes = [];
+      const caps = [];
       for (const col of cols) {
         const cr = col.getBoundingClientRect();
         if (cr.width < stageRect.width * 0.12) continue;  // ignore sliver columns
@@ -165,6 +200,19 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
         colBoxes.push(box);
         nColumns++;
         if (box.fill < columnFill) columnFill = box.fill;
+        const cap = captionOf(col);
+        if (cap) caps.push(cap);
+      }
+      // Caption alignment only meaningful when ≥2 columns each have a caption.
+      if (caps.length >= 2) {
+        hasCaptions = true;
+        const capYs = caps.map((c) => c.capY);
+        const vSpread = (Math.max(...capYs) - Math.min(...capYs)) / stageH * 100;
+        if (vSpread > captionVMisalign) captionVMisalign = vSpread;
+        for (const c of caps) {
+          const h = c.colW > 0 ? Math.abs(c.capCx - c.figCx) / c.colW * 100 : 0;
+          if (h > captionHMisalign) captionHMisalign = h;
+        }
       }
       if (colBoxes.length < 2) continue;
 
@@ -208,6 +256,81 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
     const framed = present.classList.contains('sds-framed') || present.classList.contains('section-break');
     const titleSlide = present.classList.contains('title-slide') || present.classList.contains('quarto-title-block');
 
+    // EMPTY-SLIDE detection. A bare `# {.section-break}` (no title, no body)
+    // renders as an empty frame — the most embarrassing defect, and one the
+    // old SKIP-FRAMED blanket let through. Count the slide's VISIBLE,
+    // non-hidden-language, non-fixed content elements (excluding the title
+    // itself), and record whether the slide has a real title at all.
+    let contentCount = 0;
+    {
+      const els = present.querySelectorAll('h3, h4, p, li, table, .math, img, blockquote, pre');
+      for (const el of els) {
+        const r = el.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0) continue;
+        const cs = getComputedStyle(el);
+        if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+        if (cs.position === 'fixed') continue;
+        // skip the in-frame language badge / nav chrome if any slipped through
+        if (el.closest('.lang-badge, .controls, .progress')) continue;
+        contentCount++;
+      }
+    }
+    const hasTitle = !!(titleEl && titleEl.innerText.trim().length > 0);
+
+    // Title vertical position within the stage (for jammed-title detection on
+    // framed slides — a section-break title should sit comfortably inside the
+    // frame, not pinned to its top edge).
+    let titleTopPct = null;
+    if (titleEl) {
+      const tr = titleEl.getBoundingClientRect();
+      if (tr.height > 0) titleTopPct = ((tr.top - stageTop) / stageH) * 100;
+    }
+
+    // RUN-ON CAPTION detection. A caption/description paragraph that packs 2+
+    // parallel bold-led clauses ("**State** = … . **Transition** = … .") onto
+    // ONE line is hard to scan — each clause should get its own line (a bullet
+    // list) when the slide has the vertical room. We look at visible <p>
+    // elements (Quarto wraps a bracketed `[…]{.dim}` caption in a <p>) that:
+    //   - contain ≥2 <strong>/<b> children whose bold text is immediately
+    //     followed by '=' or ':' (the "labeled clause" signature), AND
+    //   - render as essentially ONE line (height ≈ a single line-box).
+    // runonCaption = true if any such paragraph exists. The classify() step
+    // additionally requires the slide to have spare vertical room, so we only
+    // nag when splitting onto more lines would actually fit.
+    let runonCaption = false;
+    {
+      const paras = present.querySelectorAll('p');
+      for (const p of paras) {
+        const r = p.getBoundingClientRect();
+        const cs = getComputedStyle(p);
+        if (r.width === 0 || r.height === 0) continue;
+        if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+        if (cs.position === 'fixed') continue;
+        // count bold-led "label =" / "label:" clauses
+        const bolds = p.querySelectorAll('strong, b');
+        if (bolds.length < 2) continue;
+        let labeledClauses = 0;
+        for (const bEl of bolds) {
+          // text right after the bold run, within the same paragraph
+          let after = '';
+          let n = bEl.nextSibling;
+          while (n && after.trim().length === 0) {
+            after += (n.textContent || '');
+            n = n.nextSibling;
+          }
+          const head = after.replace(/^\s+/, '').slice(0, 2);
+          if (head.startsWith('=') || head.startsWith(':') || head.startsWith('：') ||
+              head.startsWith('＝')) labeledClauses++;
+        }
+        // 2+ bold-led "label =/:" clauses in ONE paragraph is the run-on
+        // signature — flag it regardless of whether it wraps to 1 or 2 lines
+        // (a run-on that already wraps is still the defect; splitting each
+        // clause onto its own bullet is the fix). The "is there room to split"
+        // judgement is left to classify()'s bottom-gap gate.
+        if (labeledClauses >= 2) { runonCaption = true; break; }
+      }
+    }
+
     return {
       stageH,
       sectionH: sectRect.height,
@@ -219,9 +342,13 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
       nColumns,
       columnFill: hasColumns ? columnFill : null,
       columnSkew: hasColumns ? columnSkew : null,
+      hasCaptions,
+      captionVMisalign: hasCaptions ? captionVMisalign : null,
+      captionHMisalign: hasCaptions ? captionHMisalign : null,
+      runonCaption,
       contentTop: Math.min(sectionContentTop, innerTopGap * stageH / 100),
       contentBottom: Math.max(sectionContentBottom, stageH - innerBottomGap * stageH / 100),
-      title, framed, titleSlide,
+      title, framed, titleSlide, contentCount, hasTitle, titleTopPct,
     };
   });
 }
@@ -239,11 +366,42 @@ const COLUMN_THRESHOLD = 42;
 // height). A `.v-center`ed column should be ~0; a top-jammed column with a
 // big void below skews high. >34 means visibly off-center.
 const COLUMN_SKEW_LIMIT = 34;
+// Caption alignment in a multi-column figure row (e.g. three portraits each
+// with a label beneath). Captions should share a baseline and sit centred
+// under their figure. Calibrated against the broken Markov-timeline slide
+// (captions on three different lines, one left-aligned): vertical spread was
+// ~6% of stage and horizontal offset ~30% of column width. Aligned captions
+// measure ~0 on both. Thresholds leave headroom for a one-line font-descender
+// difference (~1.5% V) and a hair of centring slop (~8% H).
+const CAPTION_V_LIMIT = 2.5;   // max caption baseline spread, % of stage height
+const CAPTION_H_LIMIT = 12;    // max caption-vs-figure horizontal offset, % of col width
 
 function classify(m, threshold) {
   if (!m) return 'NO-DATA';
-  if (m.framed || m.titleSlide) return 'SKIP-FRAMED';
+  // EMPTY-FRAME: a slide (framed or not) with no title AND essentially no
+  // content is a rendering defect — e.g. a bare `# {.section-break}` that
+  // renders as an empty yellow frame. This is checked BEFORE the framed-slide
+  // skip so section-breaks can no longer hide an empty slide. The Quarto title
+  // slide is exempt (its title lives in a separate block).
+  if (!m.titleSlide && !m.hasTitle && m.contentCount === 0) return 'EMPTY-FRAME';
+  // A framed/section-break slide is SUPPOSED to be title-only — but only if it
+  // actually has a title. Title present → skip the fill checks (legit sparse).
+  if ((m.framed || m.titleSlide) && (m.hasTitle || m.titleSlide)) {
+    // JAMMED-TITLE: a framed title pinned to the very top edge of the frame
+    // (title top < 6% of stage) reads as broken — it should sit inside the
+    // frame, vertically centered-ish. Flag it; otherwise the framed slide is OK.
+    if (m.framed && m.titleTopPct !== null && m.titleTopPct < 6) return 'JAMMED-TITLE';
+    return 'SKIP-FRAMED';
+  }
   if (m.contentTop < -2 || m.contentBottom > m.stageH + 2) return 'OVERFLOW';
+  // RUNON-CAPTION: a caption paragraph crams 2+ bold-led clauses onto one line,
+  // AND the slide has vertical room to spare (bottom gap > 10%), so splitting
+  // each clause onto its own line would fit. Checked BEFORE the fill flags: a
+  // run-on caption is a content/scannability issue independent of fill, and a
+  // slide with a run-on caption usually ALSO trips a borderline BOTTOM-GAP
+  // (the unused room is exactly why the split would fit) — the caption is the
+  // actionable defect, so report it first. Only nag when the fix is free.
+  if (m.runonCaption && m.bottomGapPct > 10) return 'RUNON-CAPTION';
   if (m.fillPct < threshold && m.topGapPct > 8 && m.bottomGapPct > 8) return 'FLOATING';
   if (m.fillPct < threshold && m.bottomGapPct > 20) return 'BOTTOM-GAP';
   if (m.fillPct < threshold && m.topGapPct > 15) return 'PUSHED-DOWN';
@@ -259,6 +417,15 @@ function classify(m, threshold) {
   }
   if (m.hasColumns && m.columnSkew !== null && m.columnSkew > COLUMN_SKEW_LIMIT) {
     return 'COLUMN-SKEW';
+  }
+  // CAPTION-MISALIGN: in a multi-column figure row, the per-column captions are
+  // either on different baselines (V) or not centred under their figure (H).
+  // Fix by composing the panels into ONE figure, or padding the images to a
+  // common height + centring the caption text.
+  if (m.hasCaptions &&
+      ((m.captionVMisalign !== null && m.captionVMisalign > CAPTION_V_LIMIT) ||
+       (m.captionHMisalign !== null && m.captionHMisalign > CAPTION_H_LIMIT))) {
+    return 'CAPTION-MISALIGN';
   }
   return 'OK';
 }
@@ -309,7 +476,7 @@ function classify(m, threshold) {
       const m = await measureSlideAtSize(page, i, size, slideIndices);
       const flag = classify(m, args.threshold);
       perSize.push({ size: size.label, ...m, flag });
-      const priority = { 'OVERFLOW': 6, 'FLOATING': 5, 'BOTTOM-GAP': 4, 'PUSHED-DOWN': 3, 'COLUMN-THIN': 3, 'COLUMN-SKEW': 3, 'SHORT': 2, 'OK': 1, 'SKIP-FRAMED': 0, 'NO-DATA': 0 };
+      const priority = { 'EMPTY-FRAME': 8, 'JAMMED-TITLE': 7, 'OVERFLOW': 6, 'CAPTION-MISALIGN': 5.5, 'FLOATING': 5, 'RUNON-CAPTION': 4.5, 'BOTTOM-GAP': 4, 'PUSHED-DOWN': 3, 'COLUMN-THIN': 3, 'COLUMN-SKEW': 3, 'SHORT': 2, 'OK': 1, 'SKIP-FRAMED': 0, 'NO-DATA': 0 };
       if (priority[flag] > priority[worstFlag]) worstFlag = flag;
     }
 
@@ -321,7 +488,10 @@ function classify(m, threshold) {
     const colNote = nominal.hasColumns
       ? `  (col=${nominal.columnFill.toFixed(1)}% skew=${nominal.columnSkew.toFixed(0)})`
       : '';
-    console.log(`${marker} ${String(i).padStart(3)}  [${worstFlag.padEnd(11)}] fill=${nominal.fillPct.toFixed(1).padStart(5)}%  top=${nominal.topGapPct.toFixed(1).padStart(5)}%  bot=${nominal.bottomGapPct.toFixed(1).padStart(5)}%  ${nominal.title}${colNote}`);
+    const capNote = nominal.hasCaptions
+      ? `  (capV=${nominal.captionVMisalign.toFixed(1)}% capH=${nominal.captionHMisalign.toFixed(0)}%)`
+      : '';
+    console.log(`${marker} ${String(i).padStart(3)}  [${worstFlag.padEnd(11)}] fill=${nominal.fillPct.toFixed(1).padStart(5)}%  top=${nominal.topGapPct.toFixed(1).padStart(5)}%  bot=${nominal.bottomGapPct.toFixed(1).padStart(5)}%  ${nominal.title}${colNote}${capNote}`);
 
     if ((sizes.length > 1 || args.verbose) && worstFlag !== 'OK' && worstFlag !== 'SKIP-FRAMED') {
       for (const r of perSize) {

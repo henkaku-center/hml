@@ -158,45 +158,41 @@ GRADING = [
 
 # Week dates (SP26 calendar: Apr 17 through Jul 17, no class May 1 or May 8)
 # Keys are *directory* week numbers (weekNN_ dirs); values are display dates.
-# Week 6 (Causal Bayes Nets) is dropped from the schedule.
+# Course directories were renumbered to 12 contiguous sessions (week01..week12),
+# so directory number == display week number == the dates below. (Earlier this
+# map skipped a dropped "week 6" and ran to 13 — that predated the renumber.)
 WEEK_DATES = {
     1: "Apr 17",
     2: "Apr 24",
     3: "May 15",
     4: "May 22",
     5: "May 29",
-    # 6 dropped (Causal Bayes Nets eliminated)
-    7: "Jun 5",
-    8: "Jun 12",
-    9: "Jun 19",
-    10: "Jun 26",
-    11: "Jul 3",
-    12: "Jul 10",
-    13: "Jul 17",
+    6: "Jun 5",
+    7: "Jun 12",
+    8: "Jun 19",
+    9: "Jun 26",
+    10: "Jul 3",
+    11: "Jul 10",
+    12: "Jul 17",
 }
 
-# Display week number (1-12) for each directory week number
-WEEK_DISPLAY_NUM = {
-    1: 1, 2: 2, 3: 3, 4: 4, 5: 5,
-    # 6 skipped
-    7: 6, 8: 7, 9: 8, 10: 9, 11: 10, 12: 11, 13: 12,
-}
+# Display week number == directory number (1:1 after the renumber).
+WEEK_DISPLAY_NUM = {n: n for n in range(1, 13)}
 
 # Short topic labels for schedule table (kept short even if PLAN.md h1 is longer)
 TOPIC_OVERRIDES = {
     1: "Introduction & Basic Bayes",
-    2: "Basic Bayes cont'd",
+    2: "Levels of Analysis & Bayes cont'd",
     3: "Conjugate Bayes & Topic Models",
     4: "Generalization & Hierarchical Bayes",
-    5: "Hierarchical Bayes & Bayes Nets",
-    # 6 dropped
-    7: "Markov Chains & Networks",
-    8: "Monte Carlo Methods",
-    9: "SDT, MDPs & Reinforcement Learning",
-    10: "Inverse Reinforcement Learning",
-    11: "Bayesian Nonparametrics",
-    12: "Deep Neural Networks",
-    13: "Ethics & Adversarial ML",
+    5: "Bayes Nets & Causal Bayes Nets",
+    6: "Markov Chains & Networks",
+    7: "Monte Carlo Methods",
+    8: "SDT, MDPs & Reinforcement Learning",
+    9: "Inverse Reinforcement Learning",
+    10: "Bayesian Nonparametrics",
+    11: "Deep Neural Networks",
+    12: "Ethics & Adversarial ML",
 }
 
 # ---------- PLAN.md parsing ----------
@@ -401,12 +397,14 @@ def sync_slide_html(wk_num: int, wk_dir: Path) -> str:
                 shutil.rmtree(dst_sds)
             shutil.copytree(sds_root, dst_sds)
         # Copy images referenced from the qmd dir (e.g., binomial_pmf.png).
+        # MERGE into the shared docs/slides/images/ dir — do NOT rmtree it, or
+        # each week clobbers the previous weeks' figures (all decks share this
+        # one images dir). dirs_exist_ok overwrites same-named files in place.
         images_src = qmd.parent / "images"
         if images_src.is_dir():
             dst_images = SLIDES_OUT_DIR / "images"
-            if dst_images.exists():
-                shutil.rmtree(dst_images)
-            shutil.copytree(images_src, dst_images)
+            dst_images.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(images_src, dst_images, dirs_exist_ok=True)
         # Copy any interactive widgets the deck embeds via a relative iframe
         # (e.g., <iframe src="widgets/bayes_ball.html">). The iframe path is
         # resolved relative to docs/slides/weekNN.html, so the widgets dir must

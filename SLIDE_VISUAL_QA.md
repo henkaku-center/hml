@@ -19,6 +19,27 @@ math, and `r-stretch` all behave inconsistently between the two engines.
 
 The failure modes you must hunt for:
 
+- **EMPTY-FRAME** — a slide with **no title and essentially no content** that
+  still renders its background (e.g. a bare `# {.section-break ...}` that paints
+  an empty yellow frame). The single most embarrassing defect, and the one a
+  naive audit hides: the old audit blanket-skipped every `.section-break` slide
+  (`SKIP-FRAMED`), so an *empty* section-break sailed through. The fixed audit
+  counts each slide's visible content elements and flags zero-content,
+  zero-title slides regardless of framing. **Cause:** authoring a section break
+  as TWO slides — a bare `# {.section-break}` immediately followed by a
+  `## [Title] {.section-break}`. Use only the titled `##` form; delete the bare
+  `#`. (One bare `#` per break = one empty yellow box.)
+- **JAMMED-TITLE** — a section-break (or other framed) slide whose title is
+  pinned to the very TOP edge of the frame instead of vertically centered
+  inside it (title top < 6% of stage). Reads as broken even though the slide
+  "has content." **Cause here:** the `.section-break` centering rule in
+  `sds-reveal/sds.scss` was scoped to `section.title-slide.section-break`, but
+  Quarto only adds `.title-slide` to LEVEL-1 (`#`) headings — the common
+  LEVEL-2 (`## Title {.section-break}`) form gets `section.slide.level2.section-break`
+  with NO `.title-slide`, so the rule silently missed and the title fell to the
+  top-left. Fix: scope the rule to plain `div.reveal div.slides section.section-break`
+  (matches both heading levels). A correctly-centered section-break measures
+  `top≈bot≈46%`; a jammed one measures `top=0% bot=91%`.
 - **OVERFLOW** — content past slide bounds, clipped, or triggering Reveal's
   auto-shrink-to-fit. Visible in both engines. Easy to spot in PNGs.
 - **FLOATING** — short content block symmetrically padded by `center: true`.
@@ -32,10 +53,39 @@ The failure modes you must hunt for:
   invisible to both a PPTX preview *and* a naive HTML audit that measures one
   box across the whole slide. The fixed audit measures each column on its
   own; see "Two-column slides" below.
+- **CAPTION-MISALIGN** — a multi-column figure row (e.g. three portraits each
+  with a label beneath) where the per-column captions are on **different
+  baselines** (vertical spread > ~2.5% of stage) or **not centred under their
+  figure** (horizontal offset > ~12% of column width). Happens when columns
+  hold images of mismatched heights with bottom-anchored captions — each
+  caption hangs at its own image's bottom, so they stair-step, and a
+  `fig-align` quirk can leave one left-aligned. The audit measures, per
+  `.columns` row, the spread of caption baselines (`capV`) and the worst
+  caption-vs-figure horizontal offset (`capH`). **Fix:** compose the panels
+  into ONE figure (a single matplotlib image with the labels + any arrows
+  baked in) — alignment is then guaranteed by construction; or pad every image
+  to a common height and centre the caption text. The Week 6 "Markov / Really
+  past → Past → Less past" slide is the canonical example: three portraits of
+  different aspect ratios, fixed by composing them into `markov_timeline.png`.
+- **RUNON-CAPTION** — a caption/description paragraph packs **2+ parallel
+  bold-led clauses** onto one line (`**State** = … . **Transition** = … .
+  **Next ordering** …`) when the slide has vertical room (bottom gap > 10%).
+  Hard to scan — the eye can't find where one clause ends. The audit looks for
+  a `<p>` with ≥2 `<strong>` runs each followed by `=`/`:`. **Fix:** split each
+  bold-led clause onto its own line — a bullet list (`- [**State** = …]{.dim}`).
+  Same "each labeled item on its own line" principle as the poll-options rule.
+  Checked *before* the fill flags, since a run-on caption usually also trips a
+  borderline BOTTOM-GAP (the unused room is exactly why the split fits) and the
+  caption is the actionable defect. Only fires when splitting would fit, so the
+  fix is always free. Canonical example: the Week 6 card-shuffle "State /
+  Transition / Next ordering" caption.
 
 A PPTX-only check catches OVERFLOW reliably and misses
-FLOATING/PUSHED-DOWN/COLUMN-THIN entirely. Don't trust an "all clean" report
-based only on LibreOffice rasterizations.
+EMPTY-FRAME/JAMMED-TITLE/FLOATING/PUSHED-DOWN/COLUMN-THIN entirely. Don't trust
+an "all clean" report based only on LibreOffice rasterizations. EMPTY-FRAME and
+JAMMED-TITLE both ride on `.section-break` slides — the exact class the audit
+used to skip — so always re-run the audit after editing section breaks or the
+theme's section-break rules.
 
 ## The audit script
 

@@ -1,25 +1,88 @@
 # Week 6 (Jun 5): Markov Chains + Networks
 
 ## Topics
-- Markov chains
-- Network theory and random walks on networks
+- Markov chains: the Markov property, transition matrices, stationary distributions
+- Networks: graphs as structure; random walks on networks; stationary distribution = degree
+- **Memory search as a random walk** (Abbott et al. 2012) — the cognitive payoff
+- PageRank = stationary distribution of a random walk (Griffiths et al. 2007, *Google and the mind* — promised in the Week 6 Slack discussion thread)
+- Bridge to Week 7: from *finding* a chain's stationary distribution to *designing* one (MCMC)
 
 ## SP25 Content
-- **Slides:** Week06_MarkovChainsNetworks.pptx (+ PDF)
-- **Wiki pages:** markov-chains-and-networks.html
-- **Quiz:** Bayes Net
+- **Slides:** `slides/Week06_MarkovChainsNetworks.pptx` (+ PDF) — 46 slides. SP25 skipped the word-association/network-meaning slides because four student presentations ran; SP26 teaches that material itself (Abbott/Zemla, instructor-led).
+- **Wiki pages:** `wiki_pages/markov-chains-and-networks.html`
+- **Quiz:** *Markov chains and networks* (`gefe6f0bdb37a0476e57d5ebb0d3ffcb4`) — 3×3 transition-matrix / stationary-distribution computation. *(The PLAN previously listed "Bayes Net"; that was the Week-5 quiz. Corrected.)*
 
 ## Textbook Chapters
-None this week.
+None this week (no Markov/MC chapter exists in the textbook yet).
 
 ## GenJAX Integration
 None this week.
 
 ## Contemporary ML Notes
-None this week.
+None this week. (Random walks on graphs underlie PageRank, node2vec, and graph neural networks — mention only if a student asks.)
+
+## Required reading (pre-class)
+- **Abbott, J. T., Austerweil, J. L., & Griffiths, T. L. (2012).** *Human memory search as a random walk in a semantic network.* NeurIPS. — memory retrieval **is** a random walk on a network; the payoff that ties the whole session together. Instructor-led this year (no student presenter).
 
 ## Status
-Carried from SP25.
+**Built for SP26 (2026-06-01).** Shared-outline + 52-slide Quarto deck authored and reviewed. This is the next session to run (Jun 5). Markov chains are introduced **here**, one week before Week 7's Monte Carlo / MCMC builds on them.
+
+## SP26 artifacts
+- `week6-shared-outline.md` — **SOURCE OF TRUTH**: timing table + per-block key points + figure budget + poll sourcing + contingencies.
+- `week6-slides.qmd` — **built.** 52-slide Quarto RevealJS deck; shared SCSS theme (`../../sds-reveal/sds.scss`, Week-3+ five-tier); EN/JA `.lang-*` divs (148 lang-ja spans); KaTeX; three polls (hospital/LLN teaser, start-doesn't-matter, degree). Eight blocks + fenced optional Block 7. Multi-slide build-ups: the H/T sample run, the power-iteration convergence, and a 4-slide random-walk trace (animation via sibling slides). Two-column layouts on every figure+text slide.
+
+**Visual fill audit** (`scripts/audit_slide_fill.js`, Puppeteer, all 8 viewport sizes, run against the final render): **0 OVERFLOW, 0 EMPTY-FRAME, 0 JAMMED-TITLE** (no slide clips content; all section breaks render with their title centered in the yellow frame). Remaining flags are all benign BOTTOM-GAP (intentionally sparse slides: polls, the "Try it yourself" fluency prompt, content slides that fill in EN) and COLUMN-THIN (the 4 walk-trace build-up slides + 1 optional slide, where a short text column sits beside a figure). Spot-checked the riskiest slides via decktape PNGs read with the Read tool.
+
+**Section-break + audit fixes (2026-06-02).** Found and fixed a theme regression: `sds-reveal/sds.scss`'s `.section-break` centering rule was scoped to `section.title-slide.section-break`, which only matches level-1 `#` headings — so the standard level-2 `## Title {.section-break}` form jammed its title against the top edge of the frame (a near-empty-looking yellow box). Rescoped to plain `section.section-break`. Also extended `scripts/audit_slide_fill.js` with two new checks — **EMPTY-FRAME** (section-break with no title/content) and **JAMMED-TITLE** (framed title pinned to the top edge) — that the old blanket `SKIP-FRAMED` logic missed; documented in `SLIDE_VISUAL_QA.md`. Cross-repo SCSS mirror to lecture-plans is tracked in `TODO.md`.
+
+**Chibany framing (2026-06-02).** The Markov-chain opener was reframed to stay consistent with Chibany canon: students now bring Chibany **both** a tonkatsu and a hamburger bento each day, and Chibany **chooses** which to eat — giving an observable day-to-day choice sequence (vs. Weeks 1–2, where bentos were brought and we inferred hidden contents). A dim line on the slide makes the narrative shift explicit. Admin slide updated to **Assignment 2 (Generalization, due Jun 19)** with a walkthrough link; questions routed to DM / the class channel (no `#assignments` channel exists).
+
+**70/30 stationary + Markov portraits (2026-06-02).** The Chibany transition matrix was tuned so its **stationary distribution is 70% tonkatsu / 30% hamburger** — matching Chibany's canonical "loves tonkatsu, 70/30" prior from Week 2. Values: T→T 0.65, T→H 0.35, H→T 0.82, H→H 0.18 (π_T = 0.82/(0.35+0.82) = 0.70, verified). The figure (`chibany_bento_markov.png`) emphasizes the dominant tonkatsu flows. Block 3's stationary-distribution slide now anchors on Chibany ("what fraction of Chibany's lunches are tonkatsu?") and the speaker notes call out the 70/30 payoff. A new **"Markov" portraits slide** (Really past → Past → Less past — three Andrey Markov portraits extracted from the SP25 deck) introduces the Markov-property intuition *before* the formula, per the SP25 "Really Past / Past / Less Past" gag. The three portraits are **composed into one figure** (`markov_timeline.png`, built by `make_figures.py`): square-cropped to equal size, framed in matching dark rounded panels, with **aligned centered captions and arrows** between them — composing them solved the caption-misalignment + white-border problems that the per-column layout had. Deck now 53 slides.
+
+**New QA check — CAPTION-MISALIGN (2026-06-02).** Extended `scripts/audit_slide_fill.js` to flag multi-column figure rows whose per-column captions are on different baselines (`capV`) or not centred under their figure (`capH`) — the exact defect the first 3-column Markov slide had. Documented in `SLIDE_VISUAL_QA.md`; mirrored to the APS `lecture-plans` audit script + CLAUDE.md. Regression-tested: the broken 3-column layout flags `capV=3.4% capH=45%`; the composed figure passes clean.
+
+**New QA check — RUNON-CAPTION (2026-06-03).** Flags a caption paragraph that crams 2+ parallel bold-led clauses onto one line (`**State** = … . **Transition** = … .`) when the slide has room to split them. **Authoring rule added to CLAUDE.md:** one keyword-clause per line (a bullet list) when there's vertical space — generalizes the poll-options rule. Applied to the card-shuffle ("State / Transition / Next ordering") and ER-vs-scale-free captions. Regression-tested; mirrored to APS. 
+
+**Optional slides moved after network properties + AD network-stats added (2026-06-03).** The optional extensions (foraging optimum + clinical) were moved from between the Abbott segment and network-properties to **after** network properties (post-PageRank, before the Monte-Carlo bridge) — so the Abbott core flows straight into Discuss → network properties, with the optional research extensions at the end. Added a new **"Alzheimer's changes the network"** slide with `ad_network_stats.png` showing the actual **Zemla & Austerweil (2019)** structural differences (41 AD patients vs. controls): smaller **mean degree** (fewer associates), higher **edge density** (more spurious associations), less **small-world-like** (less organized) = an *impaired representation*, plus a separate *retrieval* (monitoring) deficit. The clinic slide was reframed around the network as a **measurement instrument** (invert the walk → estimate the network → compare groups).
+
+**Abbott 2012 model completed: censoring + the matching result (2026-06-03).** The Abbott segment previously described the model as just "recall is a random walk," omitting the **censoring function** — the actual link between the latent walk and the data. Added: (1) **"The catch: the walk ≠ the list"** — a random walk revisits nodes and wanders through non-animals, so you *report a word only the first time the walk hits it, and only if it's an animal* (the censoring function; $\tau(k)$ = first hitting time; gaps → IRT). (2) **"Censoring — worked example"** with `censoring.png` (the paper's own example: animal→dog→house→dog→cat → reported "dog, cat"; house + the second dog censored; IRT(cat)=5−2+3=6 to walk through). (3) **"The signature: slow down, then switch"** — the optimal-foraging behavioral result (Hills et al.): first word of a new patch is slowest (the switch cost). (4) **"…and the random walk reproduces it"** with `irt_patch_switch.png` — a two-panel **human vs random-walk-model** IRT-by-patch-position bar chart (Abbott Fig 1a vs Fig 3) showing the censored walk reproduces the human curve **with no explicit switch rule** — one process, the paper's headline. The Zemla MVT-curve slide became a complementary optional extension ("do people actually leave at the optimum?"). Also fixed the broken **PageRank figure** (a giant yellow blob from radius∝PageRank overflowing the layout) → circular layout, capped node radii, clipped directed edges.
+
+**Matrix alignment + degree-poll spoiler fix (2026-06-03).** The explicit-L matrix's row/column labels were misaligned (hand-built `\overset` + separate label array drifted; the `~`-spaced header showed visible tildes). Rewrote as a single bordered `\begin{array}{r|cccccc}` with `\hline` — row labels (Dog…Zebra) and column headers (D W C L T Z) now share the matrix grid and align perfectly. Degree poll: the figure highlighted Cat (the answer) on the *prompt* — a spoiler. Added a no-highlight figure variant (`animal_net_degree_nohi.png`, degrees shown, no lit node) for the prompt; the highlighted figure now appears only on the *answer* slide. Poll options put one-per-line (bullet list) instead of `A. · B. · C. · D.` on one line.
+
+**Animal-network redesign + explicit L + break photo (2026-06-03).** The recurring animal network had a Lion–Wolf edge that visually overlapped the Cat–Lion edge (looked like a double edge). Redrawn as a clean two-cluster layout with **no overlapping edges**: pets triangle (Dog-Wolf-Cat) + big-animals triangle (Lion-Tiger-Zebra) joined at Cat. **Cat is now the unique degree-4 hub** (the bridge) — a *better* story than the old Lion hub, since bridge-node-most-visited ties directly to the Abbott category-switch payoff. Updated: the walk trace (now Wolf→Dog→Cat→Lion→Tiger→Zebra, all valid edges, crosses the bridge at Cat), the degree poll (answer Cat, not Lion; Cat added as an option). Added a **"The graph as a matrix"** slide showing the explicit **adjacency matrix $L$** (with Dog/Wolf/Cat/Lion/Tiger/Zebra row+col labels) side-by-side with the network, large, before the normalize-to-$P$ recipe. Break-slide photo changed to `catsJune5_2026.jpg` (two cats — on-theme). Fill-improved "Graphs are everywhere" (added Road-map + brain rows) and "From a graph to a transition matrix" (wider figure, default tier).
+
+**Graph concept introduced generically + examples (2026-06-03).** The "Semantic networks" slide was split into two: (1) **"What's a graph?"** — the graph abstraction $G=(V,E)$ generically (nodes/edges, directed/undirected/weighted) with an explicit **callback to Week 5** (a Bayes net IS a directed graph — there edges meant "depends on," here "is related to"); (2) **"Graphs are everywhere"** — a node/edge table across domains (semantic network, the Web → foreshadows PageRank, co-authorship, social), landing on the semantic network as today's focus. Concept-first, then examples, per the show-the-general-then-specific request.
+
+**Poll ordering + 3-state poll context + terminology (2026-06-03).** (a) The Chibany "does the start matter?" poll now comes **before** the convergence figure (was after — students were polled on something the figure already answered); the figure slide is now "Two different starts — the reveal" with the answer, followed by a "Why? The chain mixes" (ergodicity) slide. (b) Both 3-state polls ("guess before we compute", "does the start matter? again") now show the **network diagram + transition matrix** in a two-column layout, so students can actually reason about the question while polling (the prompt says "look at the matrix" — now it's on the slide). (c) Student-facing **"block" → "lecture segment"** (the word "block" is ambiguous); speaker notes that reference a lecture segment updated too; the numbered internal "Block N" organizational labels in notes/PLAN/outline are left as-is.
+
+**Transition-diagram clarity + card-shuffle reframe (2026-06-03).** The 2-state transition diagrams (`chibany_bento_markov.png`, `ht_fsa.png`) had crossing cross-arrows that made the T→H vs H→T direction ambiguous on the "two views" slide; redrawn as two non-crossing parallel lanes with explicit "T → H" / "H → T" direction labels so the figure matches the matrix exactly. Card shuffling was **moved out of Block 2 to OPEN the stationary-distribution block, split over two slides**: (1) *process only* — the shuffle mechanic + "what's the *computational goal* of shuffling?" (no "stationary" word yet, students answer aloud); (2) *the goal* — every ordering equally likely = a uniform distribution that **stops changing** under more shuffling, which IS stationarity → bridges into the formal definition. The figure's spoiler caption was removed so slide 1 shows pure process. Deck now 58 slides.
+
+**One consistent chain + a second worked example (2026-06-03).** Block 2–3 previously used three different chains (Chibany, a generic H/T coin, and a 3-state matrix) — confusing. Now **Chibany's chain (T/H, 0.65/0.35/0.82/0.18) is used throughout**: the two-views FSA + matrix, the "matrix is a sampler" example (u=0.42 < 0.65 → stay T), the sample-run sequences (real Chibany runs, ~70% T), and the **power-iteration convergence (→ 70/30 stationary)**. After the full Chibany arc lands (definition → power iteration → 70/30 → eigenvector), a **second worked example fully presents the SP25 3-state quiz matrix** (5 slides): setup + network/matrix, a *guess-before-compute* intuition poll (which state is visited most?), the power-iteration build-up, the *does-the-start-matter* poll (the SP25 quiz Q4), and the stationary reveal π ≈ (0.42, 0.13, 0.45). Reinforces that the machinery generalises (2 states → 3 states → 52! card orderings). New figures: `ht_fsa.png` (Chibany FSA), `power_iteration_convergence.png` (Chibany 2-state), `power_iteration_3state.png`, `quiz3_network.png`. Deck now 57 slides.
+
+**Hospital poll moved to Week 7 (2026-06-03).** The Kahneman–Tversky hospital / law-of-large-numbers poll was removed from Week 6 (it's a Monte-Carlo concept check, not a Markov-chains one) and logged as a TODO in `course/week07_monte_carlo/PLAN.md`. The end-of-class "we've been doing Monte Carlo" bridge was rewritten to pay off via the chain-sampling examples (H/T coin, card shuffle) instead. Deck back to 52 slides; now two polls (start-doesn't-matter, degree).
+- `make_figures.py` — generates the themed figures (Chibany bento chain, H/T FSA, power-iteration bars, animal-network walk trace ×4, fluency communities, ER vs scale-free, PageRank, card shuffle). Real research-data panels (MVT foraging, control-vs-AD networks) extracted from the Shizuoka deck for the optional Block 7.
+- `week6-slides.html` — generated (`quarto render`).
+- `week6-audit/` — RevealJS fill-audit JSON (`scripts/audit_slide_fill.js`).
+
+**Clarity review.** A student-perspective agent (role: non-math SDS student who attended Weeks 1–5) read the rendered deck in order and returned **MOSTLY CLEAR** with a passing comprehension check (could explain memory-search-as-random-walk back correctly). All flagged gaps fixed: expanded the "FSA" acronym, gave the Uniform(0,1) sampler its own worked micro-slide (u=0.73 → stay), glossed `∝` at first use, added a "hold this answer" cue to the hospital teaser, relabeled the walk build-up consecutively, glossed "patch = category" in the optional MVT block, and tied the eigenvector definition back to the power-iteration bar charts.
+
+**Session design.** Full ~110-min instructor-led lecture, **1 break**, **3 audience polls** (no student presentation — Prof. Austerweil covers Abbott/Zemla himself, drawing on existing decks). Spine: Markov chain → random walk on a network → memory search as a random walk (Abbott 2012). Stationary distribution taught via **intuition + power iteration** (the SP25 PCA/SVD eigenvector aside is cut). Chibany opens the Markov-chain idea (his bento depends only on yesterday's); canonical examples (card shuffle, H/T coin FSA, animal semantic net) carry the mechanics.
+
+**Source decks to mine** (none ported wholesale — see outline for the figure map):
+- `slides/Week06_MarkovChainsNetworks.pptx` — skeleton + the Meow/Lion/Cat/Dog random-walk example.
+- `../../MCMCPCulturalEvoCOSMOS2025.pptx` (repo root) — polished Markov-chain intro (H/T two-views, card shuffle). *Its MCMC half is Week-7 material.*
+- `../../AusterweilShizuokaUJan2026.pptx` (repo root) — the cognitive payoff (random walk on a semantic net, fluency lists, MVT foraging, Alzheimer's networks).
+
+**Flexible Week 6 ↔ Week 7 boundary.** Monte Carlo isn't fenced off to Week 7: estimating a distribution by *running* a chain is already a Monte Carlo idea. Week 6 opens with an MC teaser (the hospital problem / LLN poll) and closes with an explicit MC→MCMC bridge into Week 7.
+
+**Block 7 is optional** (Zemla foraging / Marginal Value Theorem + Alzheimer's-network material), fenced `<!-- BLOCK 7 OPTIONAL -->` and cut under time pressure — exactly like Week 4's hier-Bayes Variant B. The required reading (Abbott) lives in the protected Block 6.
 
 ## TODOs
-- [ ] Fix Bayes Net quiz wording
+- [ ] Build `week6-slides.qmd` from the shared-outline (Quarto RevealJS, theme line, EN/JA, three polls).
+- [ ] Make two figures: `chibany-bento-markov.png`, `power-iteration-convergence.png` (scaffold-then-generate).
+- [ ] Extract reusable figures from the three source decks (several EMF/TIFF in the Shizuoka deck need conversion).
+- [ ] Run the RevealJS fill audit before lecture-ready; spot-check riskiest slides with decktape + Read PNG.
+- [ ] Native-speaker proof of Week 6 JA translations once authored.
+- [ ] Confirm no Week 6 presenter in `readings_map.yml` before class (currently `presenter: null`).
+- [ ] Decide whether to assign the SP25 *Markov chains and networks* quiz (3×3 stationary-distribution computation) as a short check.
+- [x] ~~Fix Bayes Net quiz wording~~ *(that's the Week-5 quiz; tracked under Week 5, not here — the PLAN's old "Quiz: Bayes Net" line was a mismatch, now corrected to "Markov chains and networks").*

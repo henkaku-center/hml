@@ -274,11 +274,17 @@ div.reveal div.slides section.title-slide {
 // Background frame set from the .qmd via slide header attributes:
 //   ## Section Title {.section-break background-image="…/sds_frame.png"}
 // ==========================================================================
-// Quarto adds .title-slide to level-1 headings (our section-break uses #).
-// Its compiled CSS has:
-//   div.reveal div.slides section.title-slide { padding:80px 110px !important; text-align:left !important }
-// We need higher specificity than that to override padding/alignment.
-div.reveal div.slides section.title-slide.section-break {
+// Section-break slides come in TWO heading forms and BOTH must center:
+//   ## Title {.section-break ...}  → Quarto emits `section.slide.level2.section-break`
+//                                     (NO .title-slide class — most common form)
+//   #  Title {.section-break ...}  → Quarto emits `section.title-slide.section-break`
+// The selector must therefore match plain `.section-break`, NOT
+// `.title-slide.section-break` — the latter silently fails on the level-2 `##`
+// form and jams the title against the top of the frame (caught by the audit's
+// JAMMED-TITLE check). We still need higher specificity than Quarto's
+// `div.reveal div.slides section.title-slide { padding:80px 110px !important }`,
+// so qualify with `div.reveal div.slides` and `!important`.
+div.reveal div.slides section.section-break {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
@@ -293,14 +299,14 @@ div.reveal div.slides section.title-slide.section-break {
   min-height: 0 !important;
 
   h1, h2 {
-    color: $sds-text-white;
-    font-size: 1.05em;
-    line-height: 1.25;
+    color: $sds-text-white !important;
+    font-size: 1.05em !important;
+    line-height: 1.25 !important;
     margin: 0 auto !important;
-    max-width: 92%;
+    max-width: 92% !important;
     text-align: center !important;
-    overflow-wrap: break-word;
-    hyphens: auto;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
   }
 }
 
