@@ -93,7 +93,8 @@
 - [ ] Port RL assignment to GenJAX *(blocked on scoping session above)*
 - [ ] **Write Tutorial 3 Bayesian-Generalization chapter** — see `textbook/CHIBANY_T3_GENERALIZATION_PLAN.md`. Week 4 has no textbook reading; generalization.pdf + course/assignments/README.md currently link to a forthcoming URL.
 - [ ] **Write Tutorial 3 Hierarchical-Bayes chapter** — see `textbook/CHIBANY_T3_GENERALIZATION_PLAN.md`. Also Week 4. Decision on numbering (insert vs. append, relative to `CHIBANY_T3_CH7-10_PLAN.md`) deferred until the writing agent picks up either plan.
-- [ ] Write Tutorial 3 Bayes-nets / causal / info-theory chapters — see `textbook/CHIBANY_T3_CH7-10_PLAN.md` (Week 5).
+- [ ] Write Tutorial 3 Bayes-nets / causal / info-theory chapters — see `textbook/CHIBANY_T3_CH7-10_PLAN.md` (Week 5). *(Ch 8–11 are now BUILT per that plan; the file header records it.)*
+- [ ] **Write Tutorial 3 Markov-chains chapters (Ch 13–15) — see `textbook/CHIBANY_T3_MARKOV_NETWORKS_PLAN.md`** (Week 6, plan written 2026-06-03, committed to probintro `95a1cde`). Ch 13 Markov chains / 14 random walks on networks / 15 memory search (Abbott 2012 censored walk). NOT yet built — start a fresh session with the briefing at the top of that plan. Source: the shipped Week 6 lecture (`course/week06_markov_chains_networks/`).
 - [ ] Plan which new textbook chapters to write during semester
 - [ ] Add GenJAX exercises to Weeks 6, 8, 11
 
