@@ -13,7 +13,9 @@
 - **Quiz:** *Markov chains and networks* (`gefe6f0bdb37a0476e57d5ebb0d3ffcb4`) — 3×3 transition-matrix / stationary-distribution computation. *(The PLAN previously listed "Bayes Net"; that was the Week-5 quiz. Corrected.)*
 
 ## Textbook Chapters
-None this week (no Markov/MC chapter exists in the textbook yet).
+- T3: markov chains — `intro2/13_markov_chains.md` (the chain machinery: Markov property, transition matrix, stationary distribution, power iteration)
+- T3: random walks networks — `intro2/14_random_walks_networks.md` (random walks on networks: graphs → transition matrix, π ∝ degree, PageRank)
+- T3: memory search — `intro2/15_memory_search.md` (Abbott et al. 2012: recall as a censored random walk on a semantic network)
 
 ## GenJAX Integration
 None this week.
