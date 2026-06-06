@@ -243,13 +243,21 @@ def fig_quiz3_network():
     # directed edges with probs (from the quiz matrix A, rows = from)
     edges = [(1, 2, "0.1"), (1, 3, "0.9"), (2, 1, "0.5"), (2, 3, "0.5"),
              (3, 1, "0.8"), (3, 2, "0.2")]
+    RAD = 0.16
     for a, b, lab in edges:
         pa, pb = np.array(pos[a]), np.array(pos[b])
         d = pb - pa; d = d / np.linalg.norm(d)
         s = pa + d * 0.32; e = pb - d * 0.32
-        ax.add_patch(FancyArrowPatch(s, e, connectionstyle="arc3,rad=0.16",
+        ax.add_patch(FancyArrowPatch(s, e, connectionstyle=f"arc3,rad={RAD}",
                      arrowstyle="-|>", mutation_scale=15, lw=1.8, color=DIM, zorder=1))
-        mid = (pa + pb) / 2 + np.array([-d[1], d[0]]) * 0.17
+        # Place the label on the SAME side the arc bows toward, so each label
+        # sits next to its own directed arrow (not the antiparallel one). For
+        # matplotlib's arc3 with positive rad, the curve bows to (dy, -dx); the
+        # arc midpoint is offset from the chord midpoint by 0.5*rad along the
+        # full chord-perpendicular. Nudge a touch further out for legibility.
+        chord = e - s
+        bow = np.array([chord[1], -chord[0]])  # rotate chord -90° (arc3 +rad side)
+        mid = (s + e) / 2 + bow * (0.5 * RAD + 0.16)
         ax.text(*mid, lab, ha="center", va="center", color=WHITE, fontsize=11, zorder=4)
     for n, p in pos.items():
         ax.add_patch(Circle(p, 0.30, fc="#1A1A2E", ec=cols[n], lw=2.6, zorder=2))
