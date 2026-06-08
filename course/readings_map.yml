@@ -173,14 +173,14 @@ weeks:
     date: 2026-06-12
     theme: Monte Carlo approximation
     required:
-      - citation: "Vul, E., Goodman, N. D., Griffiths, T. L., & Tenenbaum, J. B. (2009). One and done? Optimal decisions from very few samples. Proc. CogSci."
-        pdf: VulGoodmanGriffithsTenenbaum-cogsci-2009.pdf
-        why: "Why people may be rational *samplers* even when they look irrational — direct application of MC."
-    optional: []
-    presentation_candidates:
       - citation: "Sanborn, A. N., & Griffiths, T. L. (2008). Markov chain Monte Carlo with people. NIPS."
         pdf: SanbornGriffiths2007.pdf
-        why: "MCMC-with-people as a method for measuring perceptual categories."
+        why: "MCMC-with-people: a person becomes the accept/reject step of an MCMC chain, reading out the categories in their head. Picks up directly from Week 6's Markov-chains/MCMC hand-off and anchors Friday's MCMCP block."
+    optional:
+      - citation: "Vul, E., Goodman, N. D., Griffiths, T. L., & Tenenbaum, J. B. (2009). One and done? Optimal decisions from very few samples. Proc. CogSci."
+        pdf: VulGoodmanGriffithsTenenbaum-cogsci-2009.pdf
+        why: "Why people may be rational *samplers* even when they look irrational — direct application of MC. (Was the Week 7 required reading; demoted to alternative when the discussion thread refocused on MCMC/MCMCP per the Week 6 hand-off.)"
+    presentation_candidates:
       - citation: "Griffiths, T. L., & Tenenbaum, J. B. (2006). Optimal predictions in everyday cognition. Psychological Science, 17(9), 767–773."
         pdf: Griffiths06-preds.pdf
         why: "People's predictions match Bayesian posteriors — the paper that argued we're MC samplers."
