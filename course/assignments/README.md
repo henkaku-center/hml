@@ -10,7 +10,7 @@ You have **3 free late days** that can be used across the programming assignment
 |---|---|---|---|---|
 | [Clusters](#clusters) | Week 3 (May 15) | **Fri Jun 5, 8:00 PM** | 7.5% | Mixture models & categorization |
 | [Generalization](#generalization) | Week 4 (May 22) | **Fri Jun 19, 8:00 PM** | 7.5% | Bayesian generalization |
-| Monte Carlo | Week 7 (Jun 12) | *TBA when released* | 10.5% | Monte Carlo methods |
+| [Monte Carlo](#monte-carlo) | Week 7 (Jun 12) | **Fri Jul 10, 8:00 PM** | 10.5% | Monte Carlo, importance sampling, MCMC |
 | Reinforcement Learning | Week 8 (Jun 19) | *TBA when released* | 4.5% | MDPs & reinforcement learning |
 
 Total assignments: **30%** of the course grade. The final-project proposal (pass/fail, tracked in the syllabus) is due **Sun Jun 28, 8:00 PM** — one week after the Generalization assignment. See the [project guidelines](project.html) for full details.
@@ -73,7 +73,30 @@ Build your own Bayesian generalization model for six animals (Cow, Dolphin, Chic
 
 ### Monte Carlo (10.5%) {#monte-carlo}
 
-*Details will be posted when the assignment is released.*
+**Due: Fri Jul 10, 2026 at 8:00 PM.**
+
+Explore three Monte Carlo methods. **Problem 1:** compare naive Monte Carlo with importance sampling for a tail probability $P(Y>2)$, $Y\sim N(0,1)$. **Problem 2:** build a Markov chain Monte Carlo sampler — interleaving **Gibbs** (for the per-bag proportions) and **Metropolis–Hastings** (for the hyperparameters) — for the hierarchical Beta-Binomial model of Kemp, Perfors & Tenenbaum (2007), parameterized by mean $\varphi$ and concentration $\kappa$. **Problem 3:** quantify sampler efficiency with the effective sample size, and work through why a weight-based ESS measures proposal quality rather than estimator accuracy.
+
+**Start here — the assignment:**
+
+- **[Assignment PDF — mc_approx.pdf](assignments/mc/mc_approx.pdf)** — the problem statements and all the math. Read this first.
+
+**Then pick one stencil to work in.** All three cover the same three problems with the same scaffolding:
+
+| Stencil | Open in Colab | Download | Notes |
+|---|---|---|---|
+| **GenJAX (canonical)** | [Open in Colab](https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/mc/mc_approx.ipynb) | [mc_approx.ipynb](assignments/mc/mc_approx.ipynb) | GenJAX distribution primitives (`beta.sample`, `beta.logpdf`, `normal.logpdf`) inside a hand-assembled Gibbs+MH loop, with `jax.vmap`/`jax.lax.scan` for speed. |
+| **Python (no GenJAX)** | [Open in Colab](https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/mc/mc_approx_python.ipynb) | [mc_approx_python.ipynb](assignments/mc/mc_approx_python.ipynb) | numpy + scipy + matplotlib. Each problem has a short "Now in GenJAX" translation note. |
+| **R** | — (knit locally in RStudio) | [mcmc_approx.Rmd](assignments/mc/mcmc_approx.Rmd) | base R + ggplot2. Colab does not run `.Rmd` files. |
+| **Matlab** | — | available on request | Email Prof. Austerweil. |
+
+**Other details:**
+
+- **Prep reading:** [Textbook — Tutorial 3 Ch 12 (Hierarchical Bayes / approximate inference)](https://josephausterweil.github.io/probintro/intro2/12_hierarchical_bayes/) (carried from the Week 4 hand-off).
+- **Lecture:** Week 7 covers Monte Carlo, importance sampling, particle filtering, and MCMC (Metropolis–Hastings + Gibbs), and walks through the Kemp-model sampler this assignment asks you to implement.
+- **Submit** (by DM or email to the instructor) **one** of the following:
+    - your completed notebook (or knitted `.Rmd`) — it must run end-to-end and contain your figures, inline text answers, and descriptions; **or**
+    - a single PDF report containing your code, figures, text answers, and descriptions.
 
 ### Reinforcement Learning (4.5%) {#reinforcement-learning}
 

@@ -55,3 +55,6 @@ docs/slides/sds-reveal/
 docs/slides/images/
 
 /.quarto/
+
+# MC assignment verified answer-keys / SP25 solution references (instructor-only, do not publish)
+course/assignments/mc/.solution_reference/

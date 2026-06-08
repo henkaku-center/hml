@@ -1,0 +1,122 @@
+---
+title: "Human and Machine Learning — Assignment 3: Approximation via Monte Carlo"
+subtitle: "R (no-GenJAX) stencil"
+author: "Joseph Austerweil"
+date: "Spring 2026 (due Fri Jul 10, 2026 at 8:00pm)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is the **R stencil** for Assignment 3. Problems are solved with base R + `ggplot2`. If you would prefer the Python or GenJAX (canonical) stencils, see `mc_approx_python.ipynb` and `mc_approx.ipynb` in the same directory. Matlab stencil available on request — DM Joe.
+
+**Read `mc_approx.pdf` first** — it has the full problem statements and all the math. Cells marked `# fill me` are for you to complete.
+
+**Textbook background:** Tutorial 3 Ch 12 (hierarchical Bayes / approximate inference). The Week 7 lecture covers Monte Carlo, importance sampling, and MCMC (Metropolis–Hastings + Gibbs).
+
+```{r libraries, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+set.seed(123)
+```
+
+# Problem 1: Monte Carlo vs. importance sampling
+
+Estimate $P(Y>2)$ for $Y\sim N(0,1)$ two ways, with $T=1000$ samples.
+
+- **(a) Naive MC.** Draw $x^{(1)},\dots,x^{(T)}\sim N(0,1)$ and form the cumulative estimate $f_{MC}(t) = \frac{1}{t}\sum_{s\le t}\mathbb{1}[x^{(s)}>2]$. Plot it; report $f_{MC}(T)$; explain the shape.
+- **(b) Importance sampling.** Draw $x\sim q=N(2,1)$ and form the cumulative IS estimate with weight $e^{-2x+2}\,\mathbb{1}[x>2]$. Plot it; report $f_{IS}(T)$.
+- **(c)** Compare the two curves and state a broad lesson about Monte Carlo approximation.
+
+```{r problem1}
+T <- 1000
+
+# fill me -- Problem 1
+# (a) x <- rnorm(T); ind <- (x > 2); f_mc <- cumsum(ind) / seq_len(T)
+# (b) xis <- 2 + rnorm(T); w <- exp(-2*xis + 2) * (xis > 2); f_is <- cumsum(w) / seq_len(T)
+# Plot f_mc and f_is vs t (e.g. with ggplot2), with a reference line at 1 - pnorm(2).
+```
+
+# Problem 2: MCMC for the Kemp hierarchical Beta-Binomial model
+
+You observe $M$ bags of marbles; bag $i$ shows $y_i$ white of $n_i$. The model is
+$$\theta_i \mid \kappa,\varphi \sim \mathrm{Beta}(\kappa\varphi,\ \kappa(1-\varphi)), \qquad y_i \mid n_i,\theta_i \sim \mathrm{Binomial}(\theta_i; n_i),$$
+parameterized by the **mean** $\varphi$ and **concentration** $\kappa$ (so $a=\kappa\varphi$, $b=\kappa(1-\varphi)$). Priors: $\varphi\sim\mathrm{Uniform}(0,1)$ and $\log\kappa\sim N(\log 10,\ 1.5^2)$ (a weak log-normal on $\kappa$). See `mc_approx.pdf` for the full derivation.
+
+```{r problem2-setup}
+MU0 <- log(10); S0 <- 1.5
+ab <- function(kappa, phi) c(a = kappa * phi, b = kappa * (1 - phi))
+
+# Bag set I: 10 bags, each 9 white of 20.   Bag set II: 5 bags 1/20, 5 bags 19/20.
+bagset_I  <- list(y = rep(9, 10),               n = rep(20, 10))
+bagset_II <- list(y = c(rep(1, 5), rep(19, 5)), n = rep(20, 10))
+```
+
+**(a)** For each $(\kappa,\varphi)$ pair in the PDF, plot the prior $\mathrm{Beta}(a,b)$ and the posteriors after $(1,0)$, $(5,5)$, $(9,1)$ white/black, using the conjugate update $\mathrm{Beta}(a+y,\ b+(n-y))$.
+
+```{r problem2a}
+grid <- seq(1e-3, 1 - 1e-3, length.out = 400)
+
+# fill me -- Problem 2(a)
+# For a (kappa, phi): p <- ab(kappa, phi); plot dbeta(grid, p["a"], p["b"]) for the prior
+# and dbeta(grid, p["a"]+y, p["b"]+(n-y)) for each (y, n) observation, all on one plot.
+```
+
+**(b), (c)** Implement the Gibbs + MH sampler.
+
+```{r problem2bc}
+# fill me -- Problem 2(b)+(c): the Gibbs + MH sampler.
+sampler <- function(y, n, T = 3000, burn = 500, s_phi = 0.04, s_ell = 0.30) {
+  M <- length(y); phi <- 0.5; ell <- log(10); theta <- rep(0.5, M)
+  ks <- numeric(0); ps <- numeric(0); nacc <- 0
+  for (t in seq_len(T)) {
+    kappa <- exp(ell); p <- ab(kappa, phi); a <- p["a"]; b <- p["b"]
+    # 1. GIBBS: for each bag i (random order, sample(M)),
+    #    theta[i] <- rbeta(1, a + y[i], b + (n[i] - y[i]))
+    # 2. MH propose: phi_p <- phi + s_phi*rnorm(1); ell_p <- ell + s_ell*rnorm(1)
+    # 3. accept iff 0<phi_p<1 and log(runif(1)) < log_c, where
+    #    log_c <- sum(dbeta(theta, ap, bp, log=TRUE)) - sum(dbeta(theta, a, b, log=TRUE)) +
+    #             dnorm(ell_p, MU0, S0, log=TRUE)      - dnorm(ell, MU0, S0, log=TRUE)
+    #    (ap, bp from ab(exp(ell_p), phi_p)). On reject keep (phi, ell). Record after burn-in.
+    # fill me
+  }
+  list(kappa = ks, phi = ps, acc = nacc / T)
+}
+```
+
+**(d)** Run on bag sets I and II; histogram $\kappa$ and $\varphi$ for each; report $\bar\kappa$, $\bar\varphi$, and the predictive probability a new bag's marble is white ($=\bar\varphi$).
+
+```{r problem2d}
+# fill me -- Problem 2(d)
+# r1 <- sampler(bagset_I$y,  bagset_I$n,  s_phi = 0.04, s_ell = 0.30)
+# r2 <- sampler(bagset_II$y, bagset_II$n, s_phi = 0.05, s_ell = 0.40)
+# hist(r1$kappa); hist(r1$phi); mean(r1$kappa); mean(r1$phi); etc.
+```
+
+**(e)** Report the acceptance rate per set and tune `s_phi`, `s_ell` to land each in ~0.2–0.5. Explain (too-small vs too-large step; why the two sets differ; connect to mixing — see PDF).
+
+```{r problem2e}
+# fill me -- Problem 2(e): report acc (r$acc); tune the step sizes; write the explanation in text below.
+```
+
+# Problem 3: Effective sample size
+
+$$N_{\mathrm{eff}} = \frac{1}{\sum_t (w^{(t)})^2}, \qquad w^{(t)}\ge 0,\ \textstyle\sum_t w^{(t)}=1.$$
+
+- **(a)** With $p=N(0,1)$ and $w\propto p/q$, compute $N_{\mathrm{eff}}$ for a **good** $q=N(0,1.5^2)$ and a **bad** $q=N(4,1)$. (Do *not* use $q=N(2,1)$ here — that is part (b).)
+- **(b)** Compute $N_{\mathrm{eff}}$ for IS ($q=N(2,1)$, $w\propto p/q$) vs plain MC ($w=1/T$), and resolve the puzzle in writing (see PDF).
+
+```{r problem3}
+ess <- function(w) { w <- w / sum(w); 1 / sum(w^2) }
+
+# fill me -- Problem 3
+# (a) good: xq <- 0 + 1.5*rnorm(1000); w <- dnorm(xq,0,1)/dnorm(xq,0,1.5); ess(w)
+#     bad:  xq <- 4 +     rnorm(1000); w <- dnorm(xq,0,1)/dnorm(xq,4,1);   ess(w)
+# (b) IS:   xis <- 2 + rnorm(1000); w_is <- dnorm(xis,0,1)/dnorm(xis,2,1); ess(w_is)
+#     MC:   ess(rep(1, 1000))   # uniform weights -> 1000
+```
+
+*Write your answers (the explanations the PDF asks for in 1c, 2a, 2e, 3a, 3b) in the text between the code chunks.*
