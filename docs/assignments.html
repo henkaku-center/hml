@@ -60,11 +60,11 @@
 <td>Bayesian generalization</td>
 </tr>
 <tr>
-<td>Monte Carlo</td>
+<td><a href="#monte-carlo">Monte Carlo</a></td>
 <td>Week 7 (Jun 12)</td>
-<td><em>TBA when released</em></td>
+<td><strong>Fri Jul 10, 8:00 PM</strong></td>
 <td>10.5%</td>
-<td>Monte Carlo methods</td>
+<td>Monte Carlo, importance sampling, MCMC</td>
 </tr>
 <tr>
 <td>Reinforcement Learning</td>
@@ -186,7 +186,59 @@
 </li>
 </ul>
 <h3 id="monte-carlo">Monte Carlo (10.5%)</h3>
-<p><em>Details will be posted when the assignment is released.</em></p>
+<p><strong>Due: Fri Jul 10, 2026 at 8:00 PM.</strong></p>
+<p>Explore three Monte Carlo methods. <strong>Problem 1:</strong> compare naive Monte Carlo with importance sampling for a tail probability $P(Y&gt;2)$, $Y\sim N(0,1)$. <strong>Problem 2:</strong> build a Markov chain Monte Carlo sampler — interleaving <strong>Gibbs</strong> (for the per-bag proportions) and <strong>Metropolis–Hastings</strong> (for the hyperparameters) — for the hierarchical Beta-Binomial model of Kemp, Perfors &amp; Tenenbaum (2007), parameterized by mean $\varphi$ and concentration $\kappa$. <strong>Problem 3:</strong> quantify sampler efficiency with the effective sample size, and work through why a weight-based ESS measures proposal quality rather than estimator accuracy.</p>
+<p><strong>Start here — the assignment:</strong></p>
+<ul>
+<li><strong><a href="assignments/mc/mc_approx.pdf">Assignment PDF — mc_approx.pdf</a></strong> — the problem statements and all the math. Read this first.</li>
+</ul>
+<p><strong>Then pick one stencil to work in.</strong> All three cover the same three problems with the same scaffolding:</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Stencil</th>
+<th>Open in Colab</th>
+<th>Download</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GenJAX (canonical)</strong></td>
+<td><a href="https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/mc/mc_approx.ipynb">Open in Colab</a></td>
+<td><a href="assignments/mc/mc_approx.ipynb">mc_approx.ipynb</a></td>
+<td>GenJAX distribution primitives (<code>beta.sample</code>, <code>beta.logpdf</code>, <code>normal.logpdf</code>) inside a hand-assembled Gibbs+MH loop, with <code>jax.vmap</code>/<code>jax.lax.scan</code> for speed.</td>
+</tr>
+<tr>
+<td><strong>Python (no GenJAX)</strong></td>
+<td><a href="https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/mc/mc_approx_python.ipynb">Open in Colab</a></td>
+<td><a href="assignments/mc/mc_approx_python.ipynb">mc_approx_python.ipynb</a></td>
+<td>numpy + scipy + matplotlib. Each problem has a short "Now in GenJAX" translation note.</td>
+</tr>
+<tr>
+<td><strong>R</strong></td>
+<td>— (knit locally in RStudio)</td>
+<td><a href="assignments/mc/mcmc_approx.Rmd">mcmc_approx.Rmd</a></td>
+<td>base R + ggplot2. Colab does not run <code>.Rmd</code> files.</td>
+</tr>
+<tr>
+<td><strong>Matlab</strong></td>
+<td>—</td>
+<td>available on request</td>
+<td>Email Prof. Austerweil.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Other details:</strong></p>
+<ul>
+<li><strong>Prep reading:</strong> <a href="https://josephausterweil.github.io/probintro/intro2/12_hierarchical_bayes/">Textbook — Tutorial 3 Ch 12 (Hierarchical Bayes / approximate inference)</a> (carried from the Week 4 hand-off).</li>
+<li><strong>Lecture:</strong> Week 7 covers Monte Carlo, importance sampling, particle filtering, and MCMC (Metropolis–Hastings + Gibbs), and walks through the Kemp-model sampler this assignment asks you to implement.</li>
+<li><strong>Submit</strong> (by DM or email to the instructor) <strong>one</strong> of the following:<ul>
+<li>your completed notebook (or knitted <code>.Rmd</code>) — it must run end-to-end and contain your figures, inline text answers, and descriptions; <strong>or</strong></li>
+<li>a single PDF report containing your code, figures, text answers, and descriptions.</li>
+</ul>
+</li>
+</ul>
 <h3 id="reinforcement-learning">Reinforcement Learning (4.5%)</h3>
 <p><em>Details will be posted when the assignment is released.</em></p>
     </div>

@@ -17,6 +17,12 @@
 ## Textbook Chapters
 - **Assign T3 Ch 12** (Hierarchical Bayes / approximate inference) — students carry it from the Week 4 hand-off; Week 7 is where it pays off and gets sharpened from importance sampling to MCMC.
 
+<!-- Card links: order-robust NAME form `T3: <chapter-name>` (stable-name = slug minus NN_, _→spaces). -->
+- T3: monte carlo — `intro2/16_monte_carlo.md` (Monte Carlo estimator, rejection/importance sampling, effective sample size — supports Assignment 3 Problems 1 & 3)
+- T3: particle filtering — `intro2/17_particle_filtering.md` (sequential importance sampling, weight→resample→propagate, particles as a process model)
+- T3: markov chain monte carlo — `intro2/18_markov_chain_monte_carlo.md` (Metropolis–Hastings, Gibbs, mixing/burn-in — supports the Assignment 3 sampler mechanics)
+- T3: sampling the mind — `intro2/19_sampling_the_mind.md` (MCMC with People + a Gibbs/Metropolis sampler for the Kemp hierarchical Beta-Binomial)
+
 ## GenJAX Integration
 - **In the lecture (built):** classical-method ⇄ GenJAX bridge, authored **both ways** — recurring "in GenJAX:" callouts on the MC/IS/MH slides + a one-slide summary (LIGHT), and a fenced dedicated deep-dive block (HEAVY) that assembles an MH kernel from `simulate`/`importance`/`assess`/`update`. Authored against genjax 0.10.3; names v1.0.10 `hmc()`/`chain()` as upstream-only.
 - **Follow-on (needs creation):** the GenJAX sampling exercise = the Kemp sampler (the lecture gives the recipe; the assignment is the artifact). Expand the T2 GenJAX tutorial (currently Ch 0–4, 6; no MCMC/SMC) to cover MCMC + the Kemp sampler — per the "slides first, then tutorial" workflow.
