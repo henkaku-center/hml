@@ -62,7 +62,39 @@ quizzes.
 
 ::: {.notes}
 ~1.5 min. Frame the whole session as building toward the assignment. Don't
-re-tour the assignments page. Then straight into the warm-up poll.
+re-tour the assignments page. Then the project-proposal slide, then the warm-up poll.
+:::
+
+## [Admin — final project proposal]{.lang-en}[連絡 — 最終プロジェクト提案書]{.lang-ja}
+
+::: {.lang-en}
+[**Final project proposal due Sun Jun 28, 8:00 PM** — about one page, graded pass/fail.]{.yellow}
+
+- Four sections: **Background · Question · Method · References** (at least 3).
+- Three (non-exclusive) categories: **experiment** · **modeling/ML** · **math/theory** — any topic in human and machine learning, not just class material.
+- **Talk to me about your idea before the deadline** — DM or email for 5 minutes.
+- [**Full guidelines:** [hml.chibatech.dev/project.html](https://hml.chibatech.dev/project.html)]{.accent}
+
+[Looking ahead: presentations Fri Jul 17 (final session) · paper due Fri Jul 24.]{.dim}
+:::
+
+::: {.lang-ja}
+[**最終プロジェクトの提案書：6月28日（日）20:00締切** — 約1ページ、合否判定。]{.yellow}
+
+- 4つのセクション：**背景 · 問い · 方法 · 参考文献**（3件以上）。
+- 3つの（重複可の）カテゴリ：**実験** · **モデリング／ML** · **数理／理論** — 授業の内容に限らず、人間と機械の学習に関する話題なら何でも。
+- **締切前にアイデアを相談してください** — DMかメールで5分の面談を。
+- [**詳細ガイドライン：** [hml.chibatech.dev/project.html](https://hml.chibatech.dev/project.html)]{.accent}
+
+[今後の予定：最終回（7月17日（金））に発表 · 最終レポートは7月24日（金）締切。]{.dim}
+:::
+
+::: {.notes}
+~1.5 min. The proposal is the first project deliverable (5%) and the deadline is
+just over two weeks out — this is the main announcement window. Emphasize the
+pre-deadline chat: a 5-minute conversation catches too-big/too-small/already-
+answered questions. Point at the project page for the rubric; don't tour it.
+Then straight into the warm-up poll.
 :::
 
 ## [Poll — the hospital problem]{.lang-en}[ポール — 病院問題]{.lang-ja} {.poll-slide .smaller}

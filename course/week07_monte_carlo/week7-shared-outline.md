@@ -73,7 +73,7 @@ Two cross-cutting threads run the whole deck:
 
 | Time | Block | Min | What happens |
 |------|-------|-----|--------------|
-| 0:00 | **1. Welcome + "what *was* Monte Carlo?"** | 8 | Admin (1 slide). **Poll 1 REVEAL** of the Week 6 hospital poll → smaller hospital (LLN); name it: *that* was Monte Carlo. Marr "why approximate? → rational process models." |
+| 0:00 | **1. Welcome + "what *was* Monte Carlo?"** | 8 | Admin (2 slides: assignment + final-project proposal). **Poll 1 REVEAL** of the Week 6 hospital poll → smaller hospital (LLN); name it: *that* was Monte Carlo. Marr "why approximate? → rational process models." |
 | 0:08 | **2. Basic Monte Carlo** | 15 | MC estimator; die-roll convergence; **π-via-darts** (two uniform draws → indicator → π̂=4·in/total, 4-stage build-up); consistent/unbiased/asymptotically-normal; inverse-CDF + rejection. GenJAX callout: `simulate`+`vmap`. |
 | 0:23 | **3. Importance sampling** | 15 | Sample wrong q, reweight; weight variance = quality (good/bad q); likelihood weighting w∝p(d\|h); Nosofsky exemplar bridge; the **"blunt tool"** for Kemp. GenJAX callout: `importance`→(trace, log_weight); `assess`; `smc.ImportanceK`. Poll 4 (optional). |
 | 0:38 | **4. Particle filtering** | 10 | SIS: yesterday's posterior = today's prior; particle-filter algorithm (weight→resample→propagate); rational process models. GenJAX callout: SMC chained over observations. |
@@ -93,7 +93,7 @@ Two cross-cutting threads run the whole deck:
 
 ### Block 1: Welcome + "what *was* Monte Carlo?" (8 min)
 
-- Admin (1 slide): the MC programming assignment + GenJAX sampling exercise; pooled late days. No re-tour.
+- Admin (2 slides): (a) the MC programming assignment + GenJAX sampling exercise; pooled late days. No re-tour. (b) **Final project proposal** — due Sun Jun 28, 8:00 PM; ~1 page, pass/fail; four sections (Background / Question / Method / ≥3 References); three non-exclusive categories (experiment, modeling/ML, math/theory); urge a 5-min idea chat with Joe before the deadline; full guidelines at hml.chibatech.dev/project.html.
 - **Pay off the Week 6 teaser** (the "show" happened last week). Reprise the hospital-poll slide verbatim (git history); students already committed → here it's **reveal-only**: the *smaller* hospital, small samples vary more (LLN). Payoff line: *"You were doing Monte Carlo — estimating a quantity by averaging samples, and more samples means a better estimate. Today that's the central tool."*
 - **Marr framing (SP25 opener):** exact Bayesian inference is intractable; borrow good samplers from CS/statistics, then ask whether they're *psychological processes* → **rational process models** (Sanborn 2010; Shi 2010). Umbrella for both payoffs. *Define:* Monte Carlo.
 
