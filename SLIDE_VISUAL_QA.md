@@ -44,7 +44,23 @@ The failure modes you must hunt for:
   auto-shrink-to-fit. Visible in both engines. Easy to spot in PNGs.
 - **FLOATING** — short content block symmetrically padded by `center: true`.
   Top gap >15% AND bottom gap >15%, fill <55% of stage height.
-  **Invisible in PPTX previews.** Only visible in HTML.
+  **Invisible in PPTX previews.** Only visible in HTML. NOTE: these decks render
+  **`center: false`**, so dead space pools at the BOTTOM (top-gap ≈ 0) and
+  FLOATING almost never fires — the same physical defect lands as **BOTTOM-GAP**
+  instead. "Few FLOATING flags" ≠ "few sparse slides."
+- **BOTTOM-GAP** — content top-aligned with a void below it (fill < 75%,
+  bottom gap > 20%). Because of `center: false`, **this is the primary
+  sparse-slide flag**, not FLOATING — treat it with equal seriousness. It is
+  **not auto-benign**: a poll/definition/recap at 38% fill is as broken as one
+  that overflows, only in the opposite direction. The systemic fix is the
+  **fill-the-slide flex layout** (content `<section>` = full-height flex column,
+  `justify-content: space-between`) — apply that first; it clears most
+  BOTTOM-GAP wholesale. After it, remaining cases: fill < 55% → must fix (tier
+  up: `.midbig`→`.bigger`→`.biggerplus`→`.biggest`, or a poll-box / `.v-center`
+  layout); fill 55–75% → fix by a tier bump if it fits, else record a one-line
+  per-slide justification in the PLAN. A blanket "remaining flags are benign
+  BOTTOM-GAP / just the polls" dismissal is **forbidden** — it is the exact
+  sentence that propagated half-empty slides across Weeks 6–7.
 - **PUSHED-DOWN** — content sits below the middle. Rare; usually a misplaced
   div or stray empty paragraph.
 - **COLUMN-THIN** — a two-column slide where one column (almost always the
@@ -108,9 +124,28 @@ node scripts/audit_slide_fill.js --threshold 75              # nominal viewport 
 node scripts/audit_slide_fill.js --threshold 75 --all-sizes  # 8 viewports
 ```
 
-`--all-sizes` tests nominal (1050×700) plus ±50px wobble and several 16:9
-ratios (720p, 1080p, laptop). Catches "works at exactly the design size, breaks
-at a slightly different aspect ratio" bugs.
+`--all-sizes` tests nominal plus ±50px wobble and several 16:9 ratios (720p,
+1080p, laptop). Catches "works at exactly the design size, breaks at a slightly
+different aspect ratio" bugs.
+
+**Two fixes (2026-06-08) make the audit's numbers trustworthy again** — apply
+the same to any forked copy:
+1. **Fragments are revealed before measuring.** Un-revealed `.fragment` content
+   is `visibility:hidden` (laid out but excluded from the content bbox), so
+   poll options / answers / build-up steps used to be invisible to the
+   measurement and every poll false-flagged as sparse. The audit now adds
+   `.visible` to each `.fragment` (skipping `.fade-out`-style) before measuring,
+   so a flagged poll is now a REAL sparse/clip defect — don't dismiss it.
+2. **The measurement viewport matches the deck's real aspect ratio.** It was
+   hardcoded 1050×700 (3:2); the decks are 960×540 (16:9), so content that fit
+   the real slide overflowed the taller test viewport — phantom OVERFLOW. The
+   audit now auto-reads `Reveal.getConfig()` width/height and measures at that
+   aspect. A small ~1.5%-of-height tolerance also means a slide that *fills to
+   the bottom edge* (good, `fill≈100%`, no clip) is no longer mis-flagged as
+   OVERFLOW — only genuine spill is.
+**The one true-overflow test:** read the present section's `scrollHeight` vs
+`clientHeight` after revealing fragments — `scrollHeight > clientHeight` is a
+real clip (defect); equal is just a full slide (good).
 
 ### What the script measures (the trap to avoid)
 

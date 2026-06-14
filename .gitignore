@@ -58,3 +58,10 @@ docs/slides/images/
 
 # MC assignment verified answer-keys / SP25 solution references (instructor-only, do not publish)
 course/assignments/mc/.solution_reference/
+
+**/*.quarto_ipynb
+
+# Synology Drive sync conflict copies (e.g. foo_beancupter_..._Conflict.pptx).
+# Never commit these; git-autosync.sh also quarantines them out of the tree.
+*_Conflict.*
+*-Conflict.*

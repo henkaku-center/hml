@@ -226,7 +226,7 @@ formula has nothing to decode. ~2 min.
 ![](images/ht_fsa.png){fig-align="center" width="100%"}
 
 ::: {.lang-en}
-[**Picture view:** Chibany's chain — states + labelled arrows (the same one from "Draw the habit").]{.dim}
+[**Picture view:** Chibany's chain — states + labeled arrows (the same one from "Draw the habit").]{.dim}
 :::
 ::: {.lang-ja}
 [**絵の見方：** チバニーの連鎖 — 状態 + ラベル付き矢印（「クセを図にする」と同じもの）。]{.dim}
@@ -616,7 +616,7 @@ $$A = \begin{pmatrix} 0 & 0.1 & 0.9 \\ 0.5 & 0 & 0.5 \\ 0.8 & 0.2 & 0 \end{pmatr
 ::: {.notes}
 The SECOND worked example, fully presented (the SP25 "Markov chains and
 networks" quiz matrix). Goal: show the SAME machinery — power iteration →
-stationary π — generalises beyond the 2-state Chibany chain. Read the matrix
+stationary π — generalizes beyond the 2-state Chibany chain. Read the matrix
 together: from state 1 you go to 2 w.p. 0.1 or to 3 w.p. 0.9, etc. Then poll
 intuitions BEFORE computing. ~1.5 min.
 :::
@@ -748,7 +748,7 @@ $$\pi \approx (\,0.42,\; 0.13,\; 0.45\,)$$
 :::
 
 ::: {.notes}
-The payoff: the machinery generalises. pi ≈ (0.42, 0.13, 0.45) — states 1 and 3
+The payoff: the machinery generalizes. pi ≈ (0.42, 0.13, 0.45) — states 1 and 3
 dominate, state 2 is rare, matching the pre-compute poll. Tie it together: the
 same power-iteration → stationary recipe worked for Chibany (2 states), this
 walk (3 states), and the card shuffle (52! states). The assignment has them
@@ -893,7 +893,7 @@ Next slide: normalize rows → transition matrix P. ~2 min.
 1. List the edges in an **adjacency matrix** $L$: $L_{ij} = 1$ if $i$–$j$ are connected (or a positive weight).
 2. **Normalize each row** to sum to 1 → a transition matrix $P$.
 
-Now $P$ describes a walker who, at each node, **steps to a random neighbour**.
+Now $P$ describes a walker who, at each node, **steps to a random neighbor**.
 
 [Structure (the graph) + process (the walk) — a Markov chain whose states are nodes.]{.yellow}
 :::
@@ -946,7 +946,7 @@ Block 5. The Meow/Cat/Dog walk build-up; the degree result; the degree poll.
 :::
 ::: {.column width="42%"}
 ::: {.lang-en}
-Start at **Wolf**. Pick a random neighbour → **Dog**.
+Start at **Wolf**. Pick a random neighbor → **Dog**.
 
 [The sequence of nodes we visit *is* a Markov chain.]{.dim}
 :::
@@ -972,7 +972,7 @@ where the walker is now; blue edges = the path so far.
 :::
 ::: {.column width="42%"}
 ::: {.lang-en}
-**Dog** → random neighbour → **Cat**.
+**Dog** → random neighbor → **Cat**.
 :::
 ::: {.lang-ja}
 **Dog** → ランダムな隣 → **Cat**。
@@ -1114,7 +1114,7 @@ most edges (degree 4) — but let students figure that out. ~1 min.
 ::: {.column width="60%"}
 ::: {.lang-en}
 $\pi_i \propto \deg(i)$, and **Cat** touches the most edges (degree 4) — it's
-the **bridge** between the two clusters. Long-run behaviour is dictated by
+the **bridge** between the two clusters. Long-run behavior is dictated by
 **structure**: no extra assumption needed, and **no eigen-solve** for an
 undirected graph — the degree *is* the answer.
 
@@ -1283,7 +1283,7 @@ node sequence — it isn't the fluency list and can't be compared to IRT data.
 Censoring = report each unique animal only on FIRST hit; everything else
 (revisits, non-animals) is hidden. tau(k) = first hitting time of the k-th
 unique animal; IRT = gap between consecutive first-hits (+ word length). This
-is what links the latent walk to the observed behaviour. Worked example next.
+is what links the latent walk to the observed behavior. Worked example next.
 ~2 min.
 :::
 
@@ -1358,11 +1358,11 @@ headline. ~2 min.
 ::: {.lang-en}
 The same **structure + process** split we've used since Marr (Week 2):
 
-- **Structure** — the semantic network (estimated from *other* behaviour, e.g. word-association norms)
+- **Structure** — the semantic network (estimated from *other* behavior, e.g. word-association norms)
 - **Process** — the random walk (a Markov chain — *memoryless*)
-- **Behaviour** — the fluency list (which animals, in which order, with which pauses)
+- **Behavior** — the fluency list (which animals, in which order, with which pauses)
 
-[Structure + process **jointly predict** behaviour — and they fit human data well, with no recall-specific machinery bolted on.]{.yellow}
+[Structure + process **jointly predict** behavior — and they fit human data well, with no recall-specific machinery bolted on.]{.yellow}
 :::
 
 ::: {.lang-ja}
@@ -1377,7 +1377,7 @@ Marr 以来（第2週）使ってきた **構造 + 過程** の分け方：
 
 ::: {.notes}
 Tie back to Marr's levels (Week 2) explicitly — this is the course's recurring
-structure/process/behaviour frame. The "memoryless" point is the discussion
+structure/process/behavior frame. The "memoryless" point is the discussion
 hook: human recall avoids repeats, but a pure random walk doesn't — is that a
 problem? (That's a Slack reflection prompt.) ~2 min.
 :::
@@ -1518,7 +1518,7 @@ MVT最適値をほぼ正確に追う（**46 ms** 差）。
 
 ::: {.notes}
 OPTIONAL. Real data. The 46 ms gap is the headline. The age result resolves
-H1 ("general slowing") vs H2 ("optimal with fewer resources") in favour of H2.
+H1 ("general slowing") vs H2 ("optimal with fewer resources") in favor of H2.
 ~2 min.
 :::
 
@@ -1549,7 +1549,7 @@ fluency lists, **infer the most likely network** (U-INVITE; Zemla & Austerweil 2
 ::::
 
 ::: {.notes}
-OPTIONAL. The inverse problem (network from behaviour). Frame the network as a
+OPTIONAL. The inverse problem (network from behavior). Frame the network as a
 measurement instrument — that's what makes the clinical comparison possible
 (next slide). U-INVITE = the estimation method; SNAFU = the toolkit. ~2 min.
 :::

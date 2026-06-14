@@ -143,7 +143,7 @@ What about **700 g**? What about **350 g**?
 :::
 
 ::: {.notes}
-Don't analyse yet. Let two or three students answer out loud — most will say
+Don't analyze yet. Let two or three students answer out loud — most will say
 480 yes, 700 no, 350 maybe. That instinct IS generalization. Hold the model
 back. ~2 min.
 :::
@@ -203,7 +203,7 @@ $$g(d) = e^{-d}$$
 - [$d$]{.accent} — distance in psychological space from the referent
 
 The same curve holds across **species, senses, and stimulus types** — pitch,
-colour, line length, faces. Shepard called it *universal* for that reason.
+color, line length, faces. Shepard called it *universal* for that reason.
 
 [But the law is **descriptive**: it says generalization decays exponentially,
 not *why*. Today's Bayesian framework will **derive** that exponential —
@@ -564,7 +564,7 @@ gradient. Greyed bars are the other y values, shown for context. ~1 min.
 to $y = x + 1$?
 
 [**Who drops.**]{.accent} [The two smallest intervals no longer reach
-$y$]{.yellow} — they grey out and vote "no". [**5 of 7 still vote
+$y$]{.yellow} — they gray out and vote "no". [**5 of 7 still vote
 "yes".**]{.yellow}
 
 [**The bar.**]{.accent} Fewer hypotheses contribute → a **shorter** bar than
@@ -593,7 +593,7 @@ first is why the gradient decays steeply near $x$.
 
 ::: {.notes}
 Step 2. y = x+1: the two tightest intervals (biggest likelihood, but smallest
-support) no longer contain y, so they grey out. 5 of 7 still vote. The
+support) no longer contain y, so they gray out. 5 of 7 still vote. The
 highlighted bar is visibly shorter than the y = x bar. Point out: the
 hypotheses that drop are the *most likely* ones — that's why the bar falls
 fast. ~1.5 min.
@@ -1081,14 +1081,14 @@ Same machinery, one dimension up: a concept is an axis-aligned
 The 2-D rectangle game — the framework with H = axis-aligned rectangles.
 The figure shows the nested candidate rectangles (brightest = smallest =
 highest posterior), with r (data range), d (extension past it), and n
-(dot count) labelled. Lock in r and d here — the next two slides use them.
+(dot count) labeled. Lock in r and d here — the next two slides use them.
 ~2 min.
 :::
 
 ## [The rectangle experiment]{.lang-en}[長方形実験]{.lang-ja} {.midbig}
 
 ::: {.lang-en}
-[Tenenbaum (1999) ran this as a behavioural experiment.]{.accent}
+[Tenenbaum (1999) ran this as a behavioral experiment.]{.accent}
 
 - On each trial, subjects saw [**$n$ dots**]{.yellow} drawn from "an arbitrary
   rectangle of healthy insulin / cholesterol levels"
@@ -1111,7 +1111,7 @@ highest posterior), with r (data range), d (extension past it), and n
 
 ::: {.notes}
 Experiment details. The key design: vary n and r, measure d. The question
-is whether human d tracks the Bayesian prediction. d is the behavioural
+is whether human d tracks the Bayesian prediction. d is the behavioral
 readout of "how much do you generalize beyond what you saw." ~1.5 min.
 :::
 
@@ -1123,7 +1123,7 @@ readout of "how much do you generalize beyond what you saw." ~1.5 min.
 :::
 ::: {.column width="38%"}
 ::: {.lang-en}
-[**Solid = human, dashed = model.**]{.accent} One colour per $n$.
+[**Solid = human, dashed = model.**]{.accent} One color per $n$.
 
 [**The human pattern.**]{.yellow} Fewer examples → generalize further ($n=2$
 on top); $d$ rises with $r$ but **saturates**.
@@ -1179,7 +1179,7 @@ fix: a prior that makes large rectangles less likely.
 today. For a size $s \ge 0$:
 $$p(s) = \lambda\, e^{-\lambda s}$$
 
-- Always decreasing — **small $s$ favoured**
+- Always decreasing — **small $s$ favored**
 - One parameter $\lambda > 0$; the mean is $1/\lambda$
 - Larger $\lambda$ → faster decay → stronger pull toward small rectangles
 :::
@@ -1654,9 +1654,9 @@ is NOT inert. A datum that falls outside a hypothesis gives it likelihood 0 —
 the hypothesis is ruled out, and the posterior moves. What weak sampling
 cannot do is *rank* the hypotheses that all still contain the data: every
 survivor keeps likelihood 1, so the posterior over the survivors is just the
-renormalised prior. In THIS example both hypotheses contain every example, so
+renormalized prior. In THIS example both hypotheses contain every example, so
 nothing is eliminated and the posterior sits at 0.5 / 0.5 (and the 0.5 is an
-artefact of two hypotheses + a flat prior — five survivors would give 0.2
+artifact of two hypotheses + a flat prior — five survivors would give 0.2
 each). The teaching point: weak sampling can eliminate but cannot prefer the
 smaller hypothesis, so it cannot produce the suspicious-coincidence effect —
 that needs strong sampling. ~2 min.

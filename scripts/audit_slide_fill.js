@@ -75,6 +75,24 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
   await page.evaluate((h, v) => window.Reveal.slide(h, v, 0), coords.h, coords.v);
   await new Promise((r) => setTimeout(r, 200));
 
+  // Reveal ALL fragments before measuring. Un-revealed fragments are
+  // visibility:hidden (NOT display:none) — laid out but excluded by the
+  // measureBox visibility filter — so poll-option / answer / build-up
+  // fragments are invisible to the measurement and the slide false-flags as
+  // sparse (BOTTOM-GAP / FLOATING). Adding `.visible` flips each descendant's
+  // computed visibility to visible so we measure the TRUE filled state.
+  // `.fade-out`-style fragments are skipped: their true final state is hidden.
+  await page.evaluate(() => {
+    document.querySelectorAll('section.present .fragment').forEach((f) => {
+      if (f.classList.contains('fade-out') ||
+          f.classList.contains('fade-in-then-out') ||
+          f.classList.contains('semi-fade-out')) return;
+      f.classList.add('visible');
+    });
+    window.Reveal && window.Reveal.layout && window.Reveal.layout();
+  });
+  await new Promise((r) => setTimeout(r, 150));
+
   return await page.evaluate(() => {
     // Multiple `section.present` exist for nested vertical slides — the
     // horizontal parent AND its active vertical child both carry .present.
@@ -393,7 +411,13 @@ function classify(m, threshold) {
     if (m.framed && m.titleTopPct !== null && m.titleTopPct < 6) return 'JAMMED-TITLE';
     return 'SKIP-FRAMED';
   }
-  if (m.contentTop < -2 || m.contentBottom > m.stageH + 2) return 'OVERFLOW';
+  // OVERFLOW = content genuinely spills past the frame (would be clipped on a
+  // real projector). A small tolerance (~1.5% of stage height) absorbs the
+  // sub-pixel "filled exactly to the edge" case produced by space-between
+  // fill layouts — those are GOOD (the slide is full), not overflowing. Only
+  // a real spill beyond that tolerance is a defect.
+  const ovTol = m.stageH * 0.015;
+  if (m.contentTop < -ovTol || m.contentBottom > m.stageH + ovTol) return 'OVERFLOW';
   // RUNON-CAPTION: a caption paragraph crams 2+ bold-led clauses onto one line,
   // AND the slide has vertical room to spare (bottom gap > 10%), so splitting
   // each clause onto its own line would fit. Checked BEFORE the fill flags: a
@@ -445,6 +469,24 @@ function classify(m, threshold) {
   await page.setViewport({ width: NOMINAL.w, height: NOMINAL.h, deviceScaleFactor: 1 });
   await page.goto(DECK, { waitUntil: 'networkidle0' });
   await page.waitForFunction(() => window.Reveal && window.Reveal.isReady && window.Reveal.isReady(), { timeout: 30000 });
+
+  // Match the audit viewport's ASPECT RATIO to the deck's actual logical size
+  // (from Reveal's config: e.g. 960×540 = 16:9). A hardcoded 1050×700 (3:2)
+  // makes content that fits the real 16:9 slide overflow the taller test
+  // viewport — a pure measurement artifact. Scale the deck's logical size up
+  // to a comfortable measurement resolution, preserving aspect.
+  const deckSize = await page.evaluate(() => {
+    const c = window.Reveal.getConfig ? window.Reveal.getConfig() : {};
+    return { w: c.width || 1050, h: c.height || 700 };
+  });
+  const aspect = deckSize.w / deckSize.h;
+  const measH = 700;                      // fixed measurement height
+  const measW = Math.round(measH * aspect);
+  NOMINAL.w = measW; NOMINAL.h = measH;
+  NOMINAL.label = `nominal ${deckSize.w}x${deckSize.h}`;
+  console.log(`Deck logical size ${deckSize.w}x${deckSize.h} (aspect ${aspect.toFixed(3)}) → measuring at ${measW}x${measH}`);
+  await page.setViewport({ width: NOMINAL.w, height: NOMINAL.h, deviceScaleFactor: 1 });
+  await page.evaluate(() => window.Reveal.layout && window.Reveal.layout());
 
   // Build flat list of (h, v) coordinates so we can navigate the 2D Reveal grid
   // (slide-level pairings create nested vertical sub-slides).
