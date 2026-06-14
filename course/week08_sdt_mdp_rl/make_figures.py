@@ -31,6 +31,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch, Circle, FancyBboxPatch, Rectangle
+import matplotlib.patheffects as pe
 
 # ---- theme (mirror sds-reveal/sds.scss) ----------------------------------
 BG     = "#111111"
@@ -214,46 +215,73 @@ def _arrow(ax, p0, p1, rad, color, lw=2.6, z=1):
     ax.add_patch(FancyArrowPatch(p0, p1, connectionstyle=f"arc3,rad={rad}",
                  arrowstyle="-|>", mutation_scale=20, lw=lw, color=color, zorder=z))
 
-def _selfloop(ax, center, color, label, r=1.18):
-    cx, cy = center
-    ax.add_patch(FancyArrowPatch((cx-0.48, cy+r*0.90), (cx+0.48, cy+r*0.90),
-                 connectionstyle="arc3,rad=-2.4", arrowstyle="-|>",
-                 mutation_scale=14, lw=2.3, color=color, zorder=2))
-    ax.text(cx, cy+r+1.18, label, color=color, fontsize=11, fontweight="bold", ha="center")
+def _loop(ax, center, color, label, ang_deg, r_node, rad=2.3, spread=22, lab_gap=0.86):
+    """A self-loop on a node rim, pointing outward at ang_deg; haloed probability label."""
+    a = np.deg2rad(ang_deg); d = np.deg2rad(spread)
+    p0 = (center[0] + r_node*np.cos(a - d), center[1] + r_node*np.sin(a - d))
+    p1 = (center[0] + r_node*np.cos(a + d), center[1] + r_node*np.sin(a + d))
+    ax.add_patch(FancyArrowPatch(p0, p1, connectionstyle=f"arc3,rad={rad}",
+                 arrowstyle="-|>", mutation_scale=10, lw=1.8, color=color, zorder=3))
+    lab = (center[0] + (r_node + lab_gap)*np.cos(a), center[1] + (r_node + lab_gap)*np.sin(a))
+    t = ax.text(lab[0], lab[1], label, color=color, fontsize=10, fontweight="bold",
+                ha="center", va="center", zorder=6)
+    t.set_path_effects([pe.withStroke(linewidth=2.8, foreground=BG)])
+
+
+def _dir_edge(ax, c0, c1, rad, color, label, r_node, lw=1.9):
+    """Curved directed edge between node centres, trimmed to the rims; haloed apex label.
+    Parallel same-direction edges fan apart via different |rad|; opposite directions
+    bow to opposite sides automatically (arc3 bends left of travel for +rad)."""
+    p0 = np.array(c0, float); p1 = np.array(c1, float)
+    u = p1 - p0; L = float(np.hypot(*u)); u = u / L
+    a = p0 + u*r_node; b = p1 - u*r_node
+    ax.add_patch(FancyArrowPatch(a, b, connectionstyle=f"arc3,rad={rad}",
+                 arrowstyle="-|>", mutation_scale=12, lw=lw, color=color, zorder=3))
+    n = np.array([-u[1], u[0]])                   # left normal; arc3 +rad bows toward it
+    apex = (a + b) / 2 + n * (rad * L * 0.55)
+    t = ax.text(apex[0], apex[1], label, color=color, fontsize=10, fontweight="bold",
+                ha="center", va="center", zorder=6)
+    t.set_path_effects([pe.withStroke(linewidth=2.8, foreground=BG)])
+
 
 def fig_chibany_mdp_diagram():
-    INV, IND = ACCENT, PURPLE                    # ACTION colors — kept DISTINCT from state colors
-    fig, ax = plt.subplots(figsize=(8.8, 5.4))
-    ax.set_xlim(0, 12); ax.set_ylim(0, 7.8); ax.axis("off")
-    # state circles keep the reward-chart STATE colors; actions are the arrow colors
-    P = {0: (2.4, 3.2), 1: (6.0, 1.6), 2: (9.6, 4.2)}     # Junk, Trying (trough), Healthy
+    INV, IND = ACCENT, PURPLE                     # ACTION colors — distinct from STATE colors
+    fig, ax = plt.subplots(figsize=(9.6, 6.2))
+    ax.set_xlim(0, 11); ax.set_ylim(0, 8.2); ax.axis("off")
+    P = {0: (2.3, 5.4), 1: (5.5, 2.1), 2: (8.7, 5.4)}     # Junk, Trying (trough), Healthy
     scol = {0: ORANGE, 1: RED, 2: GREEN}
-    r = 1.18
-    for i, c in P.items():
-        ax.add_patch(Circle(c, r, fc="#1c1c1c", ec=scol[i], lw=3, zorder=3))
-        ax.text(c[0], c[1]+0.16, CHI_S[i], ha="center", va="center", color=WHITE,
-                fontsize=13, fontweight="bold", zorder=4)
-        ax.text(c[0], c[1]-0.62, f"R = {int(CHI_R[i]):+d}", ha="center", va="center",
-                color=WHITE, fontsize=12.5, fontweight="bold", zorder=4)
-    # Invest (blue): Junk -> Trying -> Healthy, and stay Healthy
-    _arrow(ax, (P[0][0]+0.55, P[0][1]-0.80), (P[1][0]-1.05, P[1][1]+0.40), -0.16, INV, z=2)
-    _arrow(ax, (P[1][0]+1.05, P[1][1]+0.45), (P[2][0]-0.55, P[2][1]-0.80), -0.16, INV, z=2)
-    _selfloop(ax, P[2], INV, "0.9")
-    ax.text(3.7, 1.85, "0.6", color=INV, fontsize=12, fontweight="bold", ha="center")
-    ax.text(8.1, 2.45, "0.5", color=INV, fontsize=12, fontweight="bold", ha="center")
-    # Indulge (purple): Trying -> Junk, Healthy -> Trying, and stay Junk
-    _arrow(ax, (P[1][0]-1.05, P[1][1]+0.05), (P[0][0]+0.95, P[0][1]-0.55), 0.30, IND, z=1)
-    _arrow(ax, (P[2][0]-0.95, P[2][1]-0.10), (P[1][0]+1.05, P[1][1]+0.72), 0.30, IND, z=1)
-    _selfloop(ax, P[0], IND, "0.9")
-    ax.text(3.95, 3.35, "0.7", color=IND, fontsize=12, fontweight="bold", ha="center")
-    ax.text(7.45, 3.25, "0.5", color=IND, fontsize=12, fontweight="bold", ha="center")
-    # legend (action colors)
-    ax.add_patch(FancyArrowPatch((0.4, 7.5), (1.5, 7.5), arrowstyle="-|>", mutation_scale=18, lw=2.6, color=INV))
-    ax.text(1.7, 7.5, "Invest (cook / exercise)", color=INV, va="center", fontsize=12, fontweight="bold")
-    ax.add_patch(FancyArrowPatch((6.6, 7.5), (7.7, 7.5), arrowstyle="-|>", mutation_scale=18, lw=2.6, color=IND))
-    ax.text(7.9, 7.5, "Indulge (order out)", color=IND, va="center", fontsize=12, fontweight="bold")
-    ax.text(6.0, 0.05, "arrows = each action's most-likely next state — full probabilities in the matrices",
-            color=DIM, ha="center", fontsize=11, style="italic")
+    name = {0: "Junk", 1: "Trying", 2: "Healthy"}
+    rn = 1.0
+    MAG = {0: 0.15, 1: 0.36}                       # Indulge inner / Invest outer — fan parallels apart
+    COL = {0: IND, 1: INV}
+    LOOP_ANG = {(0, 0): 152, (1, 0): 198,          # Junk:    Indulge / Invest (out to the upper-left)
+                (0, 1): 243, (1, 1): 297,          # Trying:  Indulge / Invest (down, outside the trough)
+                (0, 2): 33,  (1, 2): 77}           # Healthy: Indulge / Invest (out to the upper-right)
+    # draw EVERY non-zero transition straight from the matrices (so each row sums to 1)
+    for a in (1, 0):                               # Invest under, Indulge over (cosmetic z-order)
+        Tm = CHI_T[a]
+        for i in range(3):
+            for j in range(3):
+                p = float(Tm[i, j])
+                if p < 1e-6:
+                    continue
+                if i == j:
+                    _loop(ax, P[i], COL[a], f"{p:.1f}", LOOP_ANG[(a, i)], rn)
+                else:
+                    _dir_edge(ax, P[i], P[j], MAG[a], COL[a], f"{p:.1f}", rn)
+    for i, c in P.items():                          # nodes on top of the edges
+        ax.add_patch(Circle(c, rn, fc="#141414", ec=scol[i], lw=3, zorder=4))
+        ax.text(c[0], c[1] + 0.22, name[i], ha="center", va="center", color=WHITE,
+                fontsize=11.5, fontweight="bold", zorder=5)
+        ax.text(c[0], c[1] - 0.36, f"R={int(CHI_R[i]):+d}", ha="center", va="center",
+                color=WHITE, fontsize=10.5, fontweight="bold", zorder=5)
+    # legend
+    ax.add_patch(FancyArrowPatch((0.5, 7.8), (1.5, 7.8), arrowstyle="-|>", mutation_scale=15, lw=2.4, color=INV))
+    ax.text(1.65, 7.8, "Invest (cook / exercise)", color=INV, va="center", fontsize=11.5, fontweight="bold")
+    ax.add_patch(FancyArrowPatch((6.2, 7.8), (7.2, 7.8), arrowstyle="-|>", mutation_scale=15, lw=2.4, color=IND))
+    ax.text(7.35, 7.8, "Indulge (order out)", color=IND, va="center", fontsize=11.5, fontweight="bold")
+    ax.text(5.5, 0.04, "every transition for both actions — each state's out-arrows sum to 1 per action",
+            color=DIM, ha="center", fontsize=10.5, style="italic")
     save(fig, "chibany-mdp-diagram.png")
 
 
