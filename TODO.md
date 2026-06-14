@@ -57,6 +57,16 @@
 - [ ] **Follow-on:** expand the T2 GenJAX textbook tutorial (Ch 0–4, 6 today; no MCMC/SMC) to cover MCMC + the Kemp sampler (per chapter-ship checklist: also notebook_guide, glossary, HML homepage card).
 - [ ] `course/quizzes/README.md` Week-7 row maps to the *Bayes Net* quiz (predates the SP26 re-sequence) while the polls mine *Monte Carlo Estimation* + *Markov chains and networks* — reconcile.
 
+### SP26 New — Week 8 (SDT + MDPs + RL)
+- [x] **Built (2026-06-14).** Three-act redesign — DECIDE (decision theory) → PLAN a *known* MDP (new **Chibany wellbeing** example: Junk +1 / Trying −2 / Healthy +5; verified chokepoint, value iteration applied *back* to it, γ-flip ≈0.64) → LEARN an *unknown* MDP (GardenPath + Q-learning) → SIMULATE (simulation-based RL + reward-hacking/RLHF + dopamine/dual-systems → tees up the Daw 2005 reading). Replaces SP25's disliked pre-GardenPath "final-project/party" MDP; keeps GardenPath. `week8-shared-outline.md` + `week8-slides.qmd` (52 slides, EN/JA) + `week8-styles.html` + `make_figures.py` (14 figs). Verified example numbers in the outline.
+- [x] **Interactive Q-learning widget** `widgets/qlearning-gridworld.html` (vanilla JS + Canvas): **single-step the 6 algorithm stages with a live current-step indicator** (prof ask), reward-scheme toggle **rm / af / potential / human**, live Q-heatmap + policy arrows + cycle-detection verdict, "Train ▸▸" fast-forward. **Human mode** (prof ask): you are the teacher (👍/➖/👎 per move). Verified: rm → path; **af → +20/lap positive cycle** (the SP25 action-feedback table) ; potential → recovered. Fallback PNG saved.
+- [x] **Visual QA:** Playwright clip+fill audit (the repo's puppeteer audit path is stale on this box) — **0 clips, ~89% fill** on all content slides; 4 riskiest slides spot-checked visually.
+- [x] **Clarity review** (3 student personas) → fixes recorded in `course/week08_sdt_mdp_rl/PLAN.md`: defined ε-greedy/δ, added the Chibany→GardenPath bridge, **corrected the "telescopes to zero" potential-shaping claim** (→ policy-invariance), glossed E/Σ/argmax, etc. Re-audited clean.
+- [ ] Final rehearsal; verify Week-8 presenter in `readings_map.yml` (instructor-led default; Schultz 1997 is the natural hand-off).
+- [ ] Publish to the site (render into `docs/` via CI; confirm `week8-styles.html` committed + the widget iframe serves on Pages).
+- [ ] Native-speaker proof of Week 8 JA translations.
+- [ ] **Post-lecture:** refresh `course/assignments/rl/` to the plan-then-learn framing + add a GenJAX stencil (MDP env as a generative function for simulation-based rollouts). Author a textbook MDP/RL chapter.
+
 ### SP26 New — Syllabus & Admin
 - [x] Draft SP26 syllabus source (`course/syllabus/SP26_syllabus.md`) and publish to the site
 - [x] Update grading to reflect 6 students / 12 sessions: reflections 15%→12.5% (8-of-13 → 6-of-12); new paper-presentation line at 7.5%; participation folded in
