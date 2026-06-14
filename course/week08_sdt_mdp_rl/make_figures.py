@@ -214,43 +214,46 @@ def _arrow(ax, p0, p1, rad, color, lw=2.6, z=1):
     ax.add_patch(FancyArrowPatch(p0, p1, connectionstyle=f"arc3,rad={rad}",
                  arrowstyle="-|>", mutation_scale=20, lw=lw, color=color, zorder=z))
 
+def _selfloop(ax, center, color, label, r=1.18):
+    cx, cy = center
+    ax.add_patch(FancyArrowPatch((cx-0.48, cy+r*0.90), (cx+0.48, cy+r*0.90),
+                 connectionstyle="arc3,rad=-2.4", arrowstyle="-|>",
+                 mutation_scale=14, lw=2.3, color=color, zorder=2))
+    ax.text(cx, cy+r+1.18, label, color=color, fontsize=11, fontweight="bold", ha="center")
+
 def fig_chibany_mdp_diagram():
-    fig, ax = plt.subplots(figsize=(8.6, 4.8))
-    ax.set_xlim(0, 12); ax.set_ylim(0, 6.6); ax.axis("off")
-    # state circles: Junk (left mid), Trying (center LOW = trough), Healthy (right HIGH)
-    P = {0: (2.0, 3.4), 1: (6.0, 1.7), 2: (10.0, 4.2)}
-    rcol = {0: ORANGE, 1: RED, 2: GREEN}
+    INV, IND = ACCENT, PURPLE                    # ACTION colors — kept DISTINCT from state colors
+    fig, ax = plt.subplots(figsize=(8.8, 5.4))
+    ax.set_xlim(0, 12); ax.set_ylim(0, 7.8); ax.axis("off")
+    # state circles keep the reward-chart STATE colors; actions are the arrow colors
+    P = {0: (2.4, 3.2), 1: (6.0, 1.6), 2: (9.6, 4.2)}     # Junk, Trying (trough), Healthy
+    scol = {0: ORANGE, 1: RED, 2: GREEN}
     r = 1.18
     for i, c in P.items():
-        ax.add_patch(Circle(c, r, fc="#1c1c1c", ec=rcol[i], lw=3, zorder=3))
-        ax.text(c[0], c[1]+0.18, CHI_S[i], ha="center", va="center", color=WHITE,
+        ax.add_patch(Circle(c, r, fc="#1c1c1c", ec=scol[i], lw=3, zorder=3))
+        ax.text(c[0], c[1]+0.16, CHI_S[i], ha="center", va="center", color=WHITE,
                 fontsize=13, fontweight="bold", zorder=4)
         ax.text(c[0], c[1]-0.62, f"R = {int(CHI_R[i]):+d}", ha="center", va="center",
-                color=rcol[i], fontsize=13, fontweight="bold", zorder=4)
-    # INVEST (green): climbs Junk->Trying->Healthy
-    _arrow(ax, (P[0][0]+0.7, P[0][1]-0.55), (P[1][0]-1.0, P[1][1]+0.55), -0.18, GREEN, z=2)
-    _arrow(ax, (P[1][0]+1.0, P[1][1]+0.55), (P[2][0]-0.7, P[2][1]-0.55), -0.18, GREEN, z=2)
-    ax.add_patch(FancyArrowPatch((P[2][0]+0.7, P[2][1]+0.6), (P[2][0]+0.0, P[2][1]+1.15),
-                 connectionstyle="arc3,rad=1.6", arrowstyle="-|>", mutation_scale=18,
-                 lw=2.6, color=GREEN, zorder=2))
-    ax.text(4.0, 1.75, "0.6", color=GREEN, fontsize=12, fontweight="bold", ha="center")
-    ax.text(8.1, 2.9, "0.5", color=GREEN, fontsize=12, fontweight="bold", ha="center")
-    # INDULGE (orange): stays/sinks
-    ax.add_patch(FancyArrowPatch((P[0][0]-0.6, P[0][1]+0.7), (P[0][0]+0.2, P[0][1]+1.2),
-                 connectionstyle="arc3,rad=1.6", arrowstyle="-|>", mutation_scale=18,
-                 lw=2.6, color=ORANGE, zorder=2))
-    _arrow(ax, (P[1][0]-1.0, P[1][1]+0.1), (P[0][0]+1.0, P[0][1]-0.6), 0.28, ORANGE, z=1)
-    _arrow(ax, (P[2][0]-0.9, P[2][1]-0.2), (P[1][0]+1.0, P[1][1]+0.7), 0.30, ORANGE, z=1)
-    ax.text(4.0, 3.55, "0.7", color=ORANGE, fontsize=12, fontweight="bold", ha="center")
-    # legend
-    ax.add_patch(FancyArrowPatch((0.4, 6.2), (1.5, 6.2), arrowstyle="-|>",
-                 mutation_scale=18, lw=2.6, color=GREEN))
-    ax.text(1.7, 6.2, "Invest (cook / exercise)", color=GREEN, va="center", fontsize=12, fontweight="bold")
-    ax.add_patch(FancyArrowPatch((6.6, 6.2), (7.7, 6.2), arrowstyle="-|>",
-                 mutation_scale=18, lw=2.6, color=ORANGE))
-    ax.text(7.9, 6.2, "Indulge (order out)", color=ORANGE, va="center", fontsize=12, fontweight="bold")
-    ax.text(6.0, 0.15, "the only way up passes through the −2 trough", color=DIM,
-            ha="center", fontsize=12, style="italic")
+                color=WHITE, fontsize=12.5, fontweight="bold", zorder=4)
+    # Invest (blue): Junk -> Trying -> Healthy, and stay Healthy
+    _arrow(ax, (P[0][0]+0.55, P[0][1]-0.80), (P[1][0]-1.05, P[1][1]+0.40), -0.16, INV, z=2)
+    _arrow(ax, (P[1][0]+1.05, P[1][1]+0.45), (P[2][0]-0.55, P[2][1]-0.80), -0.16, INV, z=2)
+    _selfloop(ax, P[2], INV, "0.9")
+    ax.text(3.7, 1.85, "0.6", color=INV, fontsize=12, fontweight="bold", ha="center")
+    ax.text(8.1, 2.45, "0.5", color=INV, fontsize=12, fontweight="bold", ha="center")
+    # Indulge (purple): Trying -> Junk, Healthy -> Trying, and stay Junk
+    _arrow(ax, (P[1][0]-1.05, P[1][1]+0.05), (P[0][0]+0.95, P[0][1]-0.55), 0.30, IND, z=1)
+    _arrow(ax, (P[2][0]-0.95, P[2][1]-0.10), (P[1][0]+1.05, P[1][1]+0.72), 0.30, IND, z=1)
+    _selfloop(ax, P[0], IND, "0.9")
+    ax.text(3.95, 3.35, "0.7", color=IND, fontsize=12, fontweight="bold", ha="center")
+    ax.text(8.55, 3.55, "0.5", color=IND, fontsize=12, fontweight="bold", ha="center")
+    # legend (action colors)
+    ax.add_patch(FancyArrowPatch((0.4, 7.5), (1.5, 7.5), arrowstyle="-|>", mutation_scale=18, lw=2.6, color=INV))
+    ax.text(1.7, 7.5, "Invest (cook / exercise)", color=INV, va="center", fontsize=12, fontweight="bold")
+    ax.add_patch(FancyArrowPatch((6.6, 7.5), (7.7, 7.5), arrowstyle="-|>", mutation_scale=18, lw=2.6, color=IND))
+    ax.text(7.9, 7.5, "Indulge (order out)", color=IND, va="center", fontsize=12, fontweight="bold")
+    ax.text(6.0, 0.05, "arrows = each action's most-likely next state — full probabilities in the matrices",
+            color=DIM, ha="center", fontsize=11, style="italic")
     save(fig, "chibany-mdp-diagram.png")
 
 
