@@ -246,7 +246,7 @@ def fig_chibany_mdp_diagram():
     _arrow(ax, (P[2][0]-0.95, P[2][1]-0.10), (P[1][0]+1.05, P[1][1]+0.72), 0.30, IND, z=1)
     _selfloop(ax, P[0], IND, "0.9")
     ax.text(3.95, 3.35, "0.7", color=IND, fontsize=12, fontweight="bold", ha="center")
-    ax.text(8.55, 3.55, "0.5", color=IND, fontsize=12, fontweight="bold", ha="center")
+    ax.text(7.45, 3.25, "0.5", color=IND, fontsize=12, fontweight="bold", ha="center")
     # legend (action colors)
     ax.add_patch(FancyArrowPatch((0.4, 7.5), (1.5, 7.5), arrowstyle="-|>", mutation_scale=18, lw=2.6, color=INV))
     ax.text(1.7, 7.5, "Invest (cook / exercise)", color=INV, va="center", fontsize=12, fontweight="bold")
@@ -274,8 +274,8 @@ def _matrix(ax, M, title, tcol):
 
 def fig_chibany_transition_matrices():
     fig, (a0, a1) = plt.subplots(1, 2, figsize=(9.0, 3.9))
-    _matrix(a0, CHI_T[0], "Indulge  $T(\\cdot\\,|\\,s,\\,\\mathrm{Indulge})$", ORANGE)
-    _matrix(a1, CHI_T[1], "Invest  $T(\\cdot\\,|\\,s,\\,\\mathrm{Invest})$", GREEN)
+    _matrix(a0, CHI_T[0], "Indulge  $T(\\cdot\\,|\\,s,\\,\\mathrm{Indulge})$", PURPLE)
+    _matrix(a1, CHI_T[1], "Invest  $T(\\cdot\\,|\\,s,\\,\\mathrm{Invest})$", ACCENT)
     fig.tight_layout()
     save(fig, "chibany-transition-matrices.png")
 
@@ -356,12 +356,12 @@ def fig_gamma_sweep_policy():
     # threshold
     thr = gammas[np.argmax(invest == 1)]
     fig, ax = plt.subplots(figsize=(7.6, 4.0))
-    ax.axvspan(0, thr, color=ORANGE, alpha=0.16)
-    ax.axvspan(thr, 0.99, color=GREEN, alpha=0.16)
+    ax.axvspan(0, thr, color=PURPLE, alpha=0.16)
+    ax.axvspan(thr, 0.99, color=ACCENT, alpha=0.16)
     ax.axvline(thr, color=WHITE, lw=2.4, ls="--")
-    ax.text(thr/2, 0.5, "stay in\nthe rut\n(Indulge)", color=ORANGE, ha="center", va="center",
+    ax.text(thr/2, 0.5, "stay in\nthe rut\n(Indulge)", color=PURPLE, ha="center", va="center",
             fontsize=13, fontweight="bold")
-    ax.text((thr+0.99)/2, 0.5, "invest &\nget healthy\n(Invest)", color=GREEN, ha="center", va="center",
+    ax.text((thr+0.99)/2, 0.5, "invest &\nget healthy\n(Invest)", color=ACCENT, ha="center", va="center",
             fontsize=13, fontweight="bold")
     ax.text(thr, 1.04, f"flip at γ ≈ {thr:.2f}", color=WHITE, ha="center", fontsize=12, fontweight="bold")
     ax.set_xlabel("discount factor  γ  (how far Chibany looks ahead)")

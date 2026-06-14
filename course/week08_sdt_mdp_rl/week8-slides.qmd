@@ -485,6 +485,8 @@ $V_0 = 0$ から全状態を掃き、繰り返す。$v^*$ に**収束**する。
 
 ## [Value iteration by hand]{.lang-en}[手で価値反復]{.lang-ja} {.smaller}
 
+$$V_{k+1}(s) = \max_{a}\Big[\, R(s) + \gamma \sum_{s'} T(s'\mid s,a)\, V_k(s') \,\Big], \qquad \gamma = 0.9$$
+
 ::: {.lang-en}
 Start $V_0=0$. **Sweep 1:** the future is still 0, so $V_1(s)=R(s)$. **Sweep 2:** back up with $V_1=[1,-2,5]$ — for **Junk**, compare both actions:
 
@@ -652,6 +654,16 @@ Chibany was easy: we *knew* his two transition matrices, so we could **compute**
 チバニーは簡単だった：2つの遷移行列を*知っていた*ので、答えを**計算**できた。今度は**世界を知らない**新しいエージェント — $T$ も $R$ もない。できるのは**行動し、結果を見て、調整する**だけ — 試行・フィードバック・更新。
 
 **Q学習**は世界のモデルなしで、経験から行動価値 $Q(s,a)$ を直接学ぶ。$Q$ が学べれば方策は簡単：各状態で $\arg\max_a Q(s,a)$ を取る。
+:::
+
+::: {.notes}
+PRECISION (for the instructor — keep it off-slide; the framing here is "no model," not "fewer assumptions"):
+Q-learning does NOT assume *less about the world* than value iteration. Both assume the *same* world: a stationary MDP — Markov, with time-invariant $T$ and $R$. The difference is epistemic, not structural:
+- Value iteration needs the model GIVEN: you must *know* $T$ and $R$, then you *compute* $v^*$ (planning / dynamic programming — no interaction needed).
+- Q-learning needs only to SAMPLE experience $(s,a,r,s')$: it never sees $T$ or $R$, it bootstraps $Q^*$ from samples.
+Stationarity is required by BOTH (it's baked into "MDP") — so it's not something only Q-learning assumes. The honest one-liner: *same world, less knowledge required.*
+Subtlety worth knowing (do NOT put on the slide): for its convergence GUARANTEE, Q-learning actually needs MORE — but those are conditions on the *learning process*, not the world: every $(s,a)$ visited infinitely often (exploration), a Robbins–Monro step size ($\sum_t\alpha_t=\infty,\ \sum_t\alpha_t^2<\infty$), and bounded rewards (Watkins &amp; Dayan, 1992). Value iteration just needs $\gamma<1$ (the contraction) and converges deterministically. So Q-learning trades *knowing the model* for *more data + exploration + a decaying learning rate*.
+The payoff of "no model": robustness to model MISSPECIFICATION — you never have to commit to a $T,R$ you might get wrong. That's exactly why model-based RL does *worse* on our GardenPath with miscalibrated human feedback (later slide) — it propagates the wrong model further and faster.
 :::
 
 ## [The Q-learning update]{.lang-en}[Q学習の更新則]{.lang-ja} {.smaller}
