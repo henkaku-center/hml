@@ -570,6 +570,56 @@ $\gamma$ を動かす：**≈0.64** 未満（*この*遷移確率の場合）で
 :::
 ::::
 
+## [The Chibany MDP in GenJAX]{.lang-en}[GenJAXでのチバニーMDP]{.lang-ja} {.smaller}
+
+::: {.lang-en}
+The transition is a **generative model** — the *action* picks which distribution governs the next state:
+:::
+::: {.lang-ja}
+遷移は**生成モデル** — *行動*が次状態を支配する分布を選ぶ：
+:::
+
+```python
+import jax.numpy as jnp
+from genjax import gen, categorical
+
+# states J,T,H;  actions Indulge=0, Invest=1
+T = jnp.array([[[.9,.1,0.],[.7,.3,0.],[.2,.5,.3]],   # Indulge  T[0,s,s']
+               [[.4,.6,0.],[.1,.4,.5],[0.,.1,.9]]])  # Invest   T[1,s,s']
+R = jnp.array([1.,-2.,5.]);  gamma = 0.9
+
+@gen                            # action a selects the next-state distribution
+def transition(s, a):
+    return categorical(jnp.log(T[a, s])) @ "s_next"
+
+transition.simulate(key, (0, 1)).get_retval()   # sample s' from (Junk, Invest)
+```
+
+## [Solve it: compute *or* simulate]{.lang-en}[解く：計算 *または* シミュレート]{.lang-ja} {.smaller}
+
+::: {.lang-en}
+We know $T$ and $R$, so **value iteration computes** the answer:
+:::
+::: {.lang-ja}
+$T$ と $R$ を知っているので、**価値反復が計算**する：
+:::
+
+```python
+def bellman(V):
+    Q = R[None,:] + gamma * (T @ V)        # Q[a,s] = R(s) + γ Σ T(s'|s,a) V(s')
+    return jnp.max(Q, 0), jnp.argmax(Q, 0)
+
+V, policy = value_iteration()              # → V = [25.6, 28.4, 39.8]
+                                           #   policy = Invest everywhere
+```
+
+::: {.lang-en}
+[Or **simulate** that same model and average the returns → $\hat V(\text{Junk}) = 25.7 \approx 25.6$. *Compute or simulate — both agree.* Runnable: `genjax_chibany_mdp.py`.]{.dim}
+:::
+::: {.lang-ja}
+[あるいは同じ生成モデルを**シミュレート**しリターンを平均 → $\hat V(\text{ジャンク}) = 25.7 \approx 25.6$。*計算でもシミュレートでも一致*。実行可能：`genjax_chibany_mdp.py`。]{.dim}
+:::
+
 ## [If you know the model, you can just simulate]{.lang-en}[モデルを知っていれば、シミュレートするだけ]{.lang-ja} {.bigger}
 
 ::: {.lang-en}
