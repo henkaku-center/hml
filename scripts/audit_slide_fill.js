@@ -24,7 +24,12 @@
 const path = require('path');
 const fs = require('fs');
 
-const PUPPETEER_PATH = '/home/jausterw/.nvm/versions/node/v22.20.0/lib/node_modules/decktape/node_modules/puppeteer';
+// puppeteer-core (library only — no bundled Chromium) installed user-locally so it
+// survives nvm/global churn; it drives the system google-chrome via executablePath
+// below. Reinstall with: PUPPETEER_SKIP_DOWNLOAD=1 npm install \
+//   --prefix ~/.local/lib/node-tools puppeteer-core@22   (pin v22: CommonJS + node-18 OK).
+const PUPPETEER_PATH = process.env.PUPPETEER_PATH
+  || '/home/jausterw/.local/lib/node-tools/node_modules/puppeteer-core';
 const puppeteer = require(PUPPETEER_PATH);
 
 const REPO = '/home/jausterw/work/hummachlearn/spring2026';
@@ -463,7 +468,8 @@ function classify(m, threshold) {
 
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    executablePath: process.env.CHROME_BIN || '/usr/bin/google-chrome',
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
   });
   const page = await browser.newPage();
   await page.setViewport({ width: NOMINAL.w, height: NOMINAL.h, deviceScaleFactor: 1 });
