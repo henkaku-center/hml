@@ -382,18 +382,18 @@ $$\pi(a \mid s) = P(a_t \mid s_t).$$
 ::: {.lang-en}
 Before the math, the symbols we'll use from here on:
 
-- $s \in S$ state · $a \in A$ action · $\pi(a\mid s)$ policy
-- $T(s'\mid s,a)$ transition · $R(s,a)$ reward · $\gamma$ discount
-- $V(s)$ value of a state · $Q(s,a)$ value of an action
-- and the math shorthand: $\mathbb{E}[\cdot]$ = average · $\textstyle\sum$ = add up · $\arg\max_a$ = the *action* that maximizes · prime $'$ = "next"
+- $s \in S$ state;&nbsp; $a \in A$ action;&nbsp; $\pi(a\mid s)$ policy
+- $T(s'\mid s,a)$ transition;&nbsp; $R(s,a)$ reward;&nbsp; $\gamma$ discount
+- $V(s)$ value of a state;&nbsp; $Q(s,a)$ value of an action
+- math shorthand: $\mathbb{E}$ = average;&nbsp; $\textstyle\sum$ = add up;&nbsp; $\arg\max_a$ = the *action* that maximizes;&nbsp; prime $'$ = "next"
 :::
 ::: {.lang-ja}
 数式の前に、ここから使う記号：
 
-- $s \in S$ 状態 · $a \in A$ 行動 · $\pi(a\mid s)$ 方策
-- $T(s'\mid s,a)$ 遷移 · $R(s,a)$ 報酬 · $\gamma$ 割引
-- $V(s)$ 状態の価値 · $Q(s,a)$ 行動の価値
-- 数式の略記：$\mathbb{E}[\cdot]$ = 平均 · $\textstyle\sum$ = 合計 · $\arg\max_a$ = 最大にする*行動* · プライム $'$ = 「次」
+- $s \in S$ 状態;&nbsp; $a \in A$ 行動;&nbsp; $\pi(a\mid s)$ 方策
+- $T(s'\mid s,a)$ 遷移;&nbsp; $R(s,a)$ 報酬;&nbsp; $\gamma$ 割引
+- $V(s)$ 状態の価値;&nbsp; $Q(s,a)$ 行動の価値
+- 数式の略記：$\mathbb{E}$ = 平均;&nbsp; $\textstyle\sum$ = 合計;&nbsp; $\arg\max_a$ = 最大にする*行動*;&nbsp; プライム $'$ = 「次」
 :::
 
 ## [Poll — should Chibany invest?]{.lang-en}[ポール — チバニーは投資すべき?]{.lang-ja} {.poll-slide .smaller}
