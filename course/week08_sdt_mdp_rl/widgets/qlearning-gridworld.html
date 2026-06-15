@@ -101,6 +101,7 @@
       </div>
       <div id="verdict"></div>
       <div id="cycleWarn"></div>
+      <button id="revealBtn" style="display:none;margin:2px 0 4px;">🔍 reveal: does your teaching reach the goal?</button>
       <div id="counters">
         <div>episode <b id="cEp" class="aHi">1</b></div>
         <div>steps this ep <b id="cStep" class="yHi">0</b></div>
@@ -189,6 +190,7 @@ let s = START.slice();                  // current state
 let phase = 0;                          // 0..5 algorithm stage
 let cur = {};                           // pending computed values for the readout
 let episode=1, stepN=0, goals=0, lastCycled=false;
+let revealVerdict=false;                        // human-teacher mode: hide the outcome until revealed
 let running=false, raf=null, acc=0;
 let awaitingFeedback=false, shownEq=null;       // human-teacher mode
 const ACTNAME = {U:"UP", D:"DOWN", L:"LEFT", R:"RIGHT"};
@@ -450,10 +452,19 @@ function updatePanel(){
   } else fp.style.display="none";
   // counters
   $("cEp").textContent=episode; $("cStep").textContent=stepN; $("cGoal").textContent=goals;
-  // headline verdict = what the LEARNED (greedy) policy actually does
-  const v=$("verdict"), warn=$("cycleWarn");
-  if(!anyQ()){ v.textContent="untrained — press Step ▸ or Train ▸▸"; v.style.color=COL.dim; warn.textContent=""; }
-  else {
+  // headline verdict = what the LEARNED (greedy) policy actually does.
+  // In human-teacher mode it stays HIDDEN behind a toggle so the outcome can be
+  // *discovered*: teach the cat first, then reveal whether your lessons reached the goal.
+  const v=$("verdict"), warn=$("cycleWarn"), rb=$("revealBtn");
+  rb.style.display = humanMode() ? "inline-block" : "none";
+  rb.textContent = revealVerdict ? "🙈 hide the outcome" : "🔍 reveal: does your teaching reach the goal?";
+  if(humanMode() && !revealVerdict){
+    v.textContent = "🙈 outcome hidden — teach the cat, then reveal whether your lessons reach the goal";
+    v.style.color=COL.dim; warn.textContent="";
+  } else if(!anyQ()){
+    v.textContent = humanMode() ? "no lessons yet — give the cat feedback below" : "untrained — press Step ▸ or Train ▸▸";
+    v.style.color=COL.dim; warn.textContent="";
+  } else {
     const tr=greedyTrace();
     if(tr.reached){ v.textContent="✓ the learned policy REACHES THE GOAL"; v.style.color=COL.green; warn.textContent=""; }
     else if(tr.cyc){
@@ -476,7 +487,7 @@ function setModeUI(){           // disable auto-controls while the human teaches
 }
 function resetAll(){
   freshQ(); s=START.slice(); phase=0; cur={}; shownEq=null; awaitingFeedback=false;
-  episode=1; stepN=0; goals=0; lastCycled=false;
+  episode=1; stepN=0; goals=0; lastCycled=false; revealVerdict=false;
   stop(); setModeUI();
   if(humanMode()) proposeNextHumanMove(); else render();
 }
@@ -494,6 +505,7 @@ $("reset").onclick=resetAll;
 $("fbGood").onclick=()=>giveFeedback(10);
 $("fbNeut").onclick=()=>giveFeedback(0);
 $("fbBad").onclick=()=>giveFeedback(-10);
+$("revealBtn").onclick=()=>{ revealVerdict=!revealVerdict; render(); };
 $("scheme").onchange=e=>{ params.scheme=e.target.value; resetAll(); };
 $("alpha").oninput=e=>{ params.alpha=+e.target.value; $("vAlpha").textContent=params.alpha.toFixed(2); render(); };
 $("gamma").oninput=e=>{ params.gamma=+e.target.value; $("vGamma").textContent=params.gamma.toFixed(2); render(); };
