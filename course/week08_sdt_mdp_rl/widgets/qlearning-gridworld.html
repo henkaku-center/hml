@@ -149,16 +149,21 @@ const START=[1,1], GOAL=[3,3];
 const GARDEN = new Set(["1,2","1,3","2,2","2,3"]);
 const ACTS = ["U","D","L","R"];                 // indices 0..3
 const DR = {U:1,D:-1,L:0,R:0}, DC = {U:0,D:0,L:-1,R:1};
-const POS=10, NEG=-10, NO=0, GFB=20;
+const POS=10, NEG=-10, NO=0, GFB=20, WEAK=4;     // WEAK = faint praise for staying on the path
 const MAXSTEP = 30;                              // episode step cap → "cycling"
 // reward tables (verified) keyed "r,c" then action
 const RM = {
  "1,1":{U:NO,R:NEG}, "2,1":{U:NO,R:NEG,D:NO}, "3,1":{R:NO,D:NO},
  "1,2":{R:NEG,U:NEG,L:NO}, "2,2":{R:NEG,U:NO,L:NO,D:NEG}, "3,2":{R:GFB,L:NO,D:NEG},
  "1,3":{U:NEG,L:NEG}, "2,3":{U:GFB,D:NEG,L:NEG}};
+// action-feedback ("how people teach"): +POS for forward progress along the path,
+// but only +WEAK (faint praise, NOT punishment) for BACKTRACKING along it — a human
+// positive-feedback bias. Forward > backward, yet both positive, so the path becomes a
+// farmable +reward cycle: the cat paces the good path collecting praise and never
+// finishes. (Backtrack entries (2,1)D, (3,1)D, (3,2)L were NEG → now WEAK.)
 const AF = {
- "1,1":{U:POS,R:NEG}, "2,1":{U:POS,R:NEG,D:NEG}, "3,1":{R:POS,D:NEG},
- "1,2":{R:NEG,U:NEG,L:POS}, "2,2":{R:NEG,U:POS,L:NEG,D:NEG}, "3,2":{R:GFB,L:NEG,D:NEG},
+ "1,1":{U:POS,R:NEG}, "2,1":{U:POS,R:NEG,D:WEAK}, "3,1":{R:POS,D:WEAK},
+ "1,2":{R:NEG,U:NEG,L:POS}, "2,2":{R:NEG,U:POS,L:NEG,D:NEG}, "3,2":{R:GFB,L:WEAK,D:NEG},
  "1,3":{U:POS,L:NEG}, "2,3":{U:POS,D:NEG,L:NEG}};
 
 const key = s => s[0]+","+s[1];

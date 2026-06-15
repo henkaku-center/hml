@@ -97,13 +97,17 @@ def chi_value_iteration(gamma, n_iter=400, tol=1e-12, record=False):
 GOAL = (3, 3)
 GARDEN = {(1, 2), (1, 3), (2, 2), (2, 3)}
 UP, DOWN, LEFT, RIGHT = 'U', 'D', 'L', 'R'
-POS, NEG, NO, GFB = 10, -10, 0, 20
+POS, NEG, NO, GFB, WEAK = 10, -10, 0, 20, 4     # WEAK = faint praise for staying on the path
 RM = {(1,1):{UP:NO,RIGHT:NEG},(2,1):{UP:NO,RIGHT:NEG,DOWN:NO},(3,1):{RIGHT:NO,DOWN:NO},
       (1,2):{RIGHT:NEG,UP:NEG,LEFT:NO},(2,2):{RIGHT:NEG,UP:NO,LEFT:NO,DOWN:NEG},
       (3,2):{RIGHT:GFB,LEFT:NO,DOWN:NEG},(1,3):{UP:NEG,LEFT:NEG},(2,3):{UP:GFB,DOWN:NEG,LEFT:NEG}}
-AF = {(1,1):{UP:POS,RIGHT:NEG},(2,1):{UP:POS,RIGHT:NEG,DOWN:NEG},(3,1):{RIGHT:POS,DOWN:NEG},
+# action-feedback ("how people teach"): +POS forward on the path, but only +WEAK (faint
+# praise, NOT punishment) for BACKTRACKING along it — a human positive-feedback bias. The
+# path becomes a farmable +reward cycle (the cat paces it, never finishing). Backtrack
+# entries (2,1)DOWN, (3,1)DOWN, (3,2)LEFT were NEG → now WEAK. MUST match the widget's AF.
+AF = {(1,1):{UP:POS,RIGHT:NEG},(2,1):{UP:POS,RIGHT:NEG,DOWN:WEAK},(3,1):{RIGHT:POS,DOWN:WEAK},
       (1,2):{RIGHT:NEG,UP:NEG,LEFT:POS},(2,2):{RIGHT:NEG,UP:POS,LEFT:NEG,DOWN:NEG},
-      (3,2):{RIGHT:GFB,LEFT:NEG,DOWN:NEG},(1,3):{UP:POS,LEFT:NEG},(2,3):{UP:POS,DOWN:NEG,LEFT:NEG}}
+      (3,2):{RIGHT:GFB,LEFT:WEAK,DOWN:NEG},(1,3):{UP:POS,LEFT:NEG},(2,3):{UP:POS,DOWN:NEG,LEFT:NEG}}
 DELTA = {UP:(1,0), DOWN:(-1,0), LEFT:(0,-1), RIGHT:(0,1)}
 
 def gp_step(s, a):
