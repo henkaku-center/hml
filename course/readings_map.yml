@@ -197,7 +197,13 @@ weeks:
       - citation: "Daw, N. D., Niv, Y., & Dayan, P. (2005). Uncertainty-based competition between prefrontal and dorsolateral striatal systems for behavioral control. Nature Neuroscience, 8(12), 1704–1711."
         pdf: Dawetal2005.pdf
         why: "Canonical dual-systems RL paper — model-based vs. model-free."
-    optional: []
+    optional:
+      - citation: "Ho, M. K., Littman, M. L., Cushman, F., & Austerweil, J. L. (2015). Teaching with rewards and punishments: Reinforcement or communication? Proc. CogSci."
+        pdf: Hoetal2015CogSciProc.pdf
+        why: "How people actually teach an agent with reward/punishment — feedback as communication, not just reinforcement. Anchored SP25's Week-8 unit; pulled back here as an alternative reflection reading and the direct predecessor to the lecture's reward-shaping / positive-cycle demo. (Also a Week 9 presentation candidate.)"
+      - citation: "Zhong, Z., Prystawski, B., Wu, S. A., Fascendini, B., Saeedpour, S., & Austerweil, J. L. (2026). Interpretational alignment: How agents learn from physical guidance depends on how they interpret it. Proc. CogSci."
+        pdf: Zhongetal2026CogSci.pdf
+        why: "Brand-new (CogSci 2026, in-house): human teachers train a Q-learning agent by physical 'state intervention'; learning success hinges on how the agent interprets the nudge (suggestion vs. correction vs. noise). Extends the Ho et al. teaching line directly onto this week's Q-learning / reward-shaping material."
     presentation_candidates:
       - citation: "Schultz, W., Dayan, P., & Montague, P. R. (1997). A neural substrate of prediction and reward. Science, 275(5306), 1593–1599."
         pdf: Schultz1997.pdf
