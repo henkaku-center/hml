@@ -215,32 +215,45 @@ def _arrow(ax, p0, p1, rad, color, lw=2.6, z=1):
     ax.add_patch(FancyArrowPatch(p0, p1, connectionstyle=f"arc3,rad={rad}",
                  arrowstyle="-|>", mutation_scale=20, lw=lw, color=color, zorder=z))
 
-def _loop(ax, center, color, label, ang_deg, r_node, rad=2.3, spread=22, lab_gap=0.86):
-    """A self-loop on a node rim, pointing outward at ang_deg; haloed probability label."""
+def _wt(p):
+    """Probability -> (line width, arrow alpha, arrowhead scale, label size, label alpha).
+    Main transitions render thick & bright; rare ones thin & faint, so the dominant
+    flow reads at a glance while the small probabilities stay present for completeness."""
+    lw = 0.7 + 3.6 * p          # 0.1 -> 1.06   0.5 -> 2.5    0.9 -> 3.94
+    alpha = min(1.0, 0.28 + 0.80 * p)   # 0.1 -> 0.36   0.9 -> 1.0
+    head = 8 + 7 * p            # 0.1 -> 8.7    0.9 -> 14.3
+    fs = 8.5 + 4.5 * p          # 0.1 -> 8.95   0.9 -> 12.6
+    return lw, alpha, head, fs, max(0.7, alpha)
+
+
+def _loop(ax, center, color, p, ang_deg, r_node, rad=2.3, spread=22, lab_gap=0.86):
+    """A self-loop on a node rim, pointing outward at ang_deg; weight ~ probability."""
+    lw, al, head, fs, lal = _wt(p)
     a = np.deg2rad(ang_deg); d = np.deg2rad(spread)
     p0 = (center[0] + r_node*np.cos(a - d), center[1] + r_node*np.sin(a - d))
     p1 = (center[0] + r_node*np.cos(a + d), center[1] + r_node*np.sin(a + d))
     ax.add_patch(FancyArrowPatch(p0, p1, connectionstyle=f"arc3,rad={rad}",
-                 arrowstyle="-|>", mutation_scale=10, lw=1.8, color=color, zorder=3))
+                 arrowstyle="-|>", mutation_scale=head, lw=lw, color=color, alpha=al, zorder=3))
     lab = (center[0] + (r_node + lab_gap)*np.cos(a), center[1] + (r_node + lab_gap)*np.sin(a))
-    t = ax.text(lab[0], lab[1], label, color=color, fontsize=10, fontweight="bold",
-                ha="center", va="center", zorder=6)
+    t = ax.text(lab[0], lab[1], f"{p:.1f}", color=color, fontsize=fs, fontweight="bold",
+                ha="center", va="center", zorder=6, alpha=lal)
     t.set_path_effects([pe.withStroke(linewidth=2.8, foreground=BG)])
 
 
-def _dir_edge(ax, c0, c1, rad, color, label, r_node, lw=1.9):
-    """Curved directed edge between node centres, trimmed to the rims; haloed apex label.
+def _dir_edge(ax, c0, c1, rad, color, p, r_node):
+    """Curved directed edge between node centres, trimmed to the rims; weight ~ probability.
     Parallel same-direction edges fan apart via different |rad|; opposite directions
     bow to opposite sides automatically (arc3 bends left of travel for +rad)."""
+    lw, al, head, fs, lal = _wt(p)
     p0 = np.array(c0, float); p1 = np.array(c1, float)
     u = p1 - p0; L = float(np.hypot(*u)); u = u / L
     a = p0 + u*r_node; b = p1 - u*r_node
     ax.add_patch(FancyArrowPatch(a, b, connectionstyle=f"arc3,rad={rad}",
-                 arrowstyle="-|>", mutation_scale=12, lw=lw, color=color, zorder=3))
+                 arrowstyle="-|>", mutation_scale=head, lw=lw, color=color, alpha=al, zorder=3))
     n = np.array([-u[1], u[0]])                   # left normal; arc3 +rad bows toward it
     apex = (a + b) / 2 + n * (rad * L * 0.55)
-    t = ax.text(apex[0], apex[1], label, color=color, fontsize=10, fontweight="bold",
-                ha="center", va="center", zorder=6)
+    t = ax.text(apex[0], apex[1], f"{p:.1f}", color=color, fontsize=fs, fontweight="bold",
+                ha="center", va="center", zorder=6, alpha=lal)
     t.set_path_effects([pe.withStroke(linewidth=2.8, foreground=BG)])
 
 
@@ -266,9 +279,9 @@ def fig_chibany_mdp_diagram():
                 if p < 1e-6:
                     continue
                 if i == j:
-                    _loop(ax, P[i], COL[a], f"{p:.1f}", LOOP_ANG[(a, i)], rn)
+                    _loop(ax, P[i], COL[a], p, LOOP_ANG[(a, i)], rn)
                 else:
-                    _dir_edge(ax, P[i], P[j], MAG[a], COL[a], f"{p:.1f}", rn)
+                    _dir_edge(ax, P[i], P[j], MAG[a], COL[a], p, rn)
     for i, c in P.items():                          # nodes on top of the edges
         ax.add_patch(Circle(c, rn, fc="#141414", ec=scol[i], lw=3, zorder=4))
         ax.text(c[0], c[1] + 0.22, name[i], ha="center", va="center", color=WHITE,
