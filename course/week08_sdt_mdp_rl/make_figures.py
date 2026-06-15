@@ -590,16 +590,18 @@ def fig_ho_modelbased():
     rm = 0.15 + 0.78 * (1 - np.exp(-4.5 * t))          # outcome reward: learns the task
     af_mf = 0.15 + 0.17 * (1 - np.exp(-3.0 * t))       # human feedback, model-free: poor
     af_mb = 0.15 - 0.11 * (1 - np.exp(-3.2 * t))       # human feedback, model-based: WORSE
-    ax.plot(t, rm, color=GREEN, lw=3, label="outcome reward — learns ✓")
+    ax.plot(t, rm, color=GREEN, lw=3, label="outcome reward ✓")
     ax.plot(t, af_mf, color=ORANGE, lw=2.8, label="human feedback · model-free")
     ax.plot(t, af_mb, color=RED, lw=3, label="human feedback · model-based")
     ax.annotate("model-based does EVEN WORSE —\nit propagates the miscalibrated\nhuman signal further",
-                xy=(0.74, 0.15 - 0.11 * (1 - np.exp(-3.2 * 0.74))), xytext=(0.30, 0.46),
-                color=RED, fontsize=11, fontweight="bold",
+                xy=(0.74, 0.15 - 0.11 * (1 - np.exp(-3.2 * 0.74))), xytext=(0.235, 0.50),
+                color=RED, fontsize=11, fontweight="bold", va="top", ha="left",
                 arrowprops=dict(arrowstyle="->", color=RED))
     ax.set_xlabel("training →"); ax.set_ylabel("task performance")
     ax.set_xticks([]); ax.set_yticks([]); ax.set_ylim(0, 1.0)
-    ax.legend(fontsize=10.5, frameon=False, labelcolor="linecolor", loc="center right")
+    # legend ABOVE the plot (horizontal) so it never collides with the curves or the annotation
+    ax.legend(fontsize=9.5, frameon=False, labelcolor="linecolor", loc="lower center",
+              bbox_to_anchor=(0.5, 1.0), ncol=3, columnspacing=1.1, handlelength=1.5)
     for sp in ("top", "right"): ax.spines[sp].set_visible(False)
     save(fig, "ho-modelbased-worse.png")
 
