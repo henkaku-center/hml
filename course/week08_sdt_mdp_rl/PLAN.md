@@ -52,9 +52,20 @@ Spawned in parallel: a non-math design student, a CS-background student, and an 
 - **Widget — arrow legend.** Added a legend distinguishing the three arrow types (gray = greedy policy per cell; thick colored route = path from start, green reaches 🏠 / red loops; yellow = the move being taken).
 - **Admin slide.** Now an **active-deadlines list** (Generalization due Jun 19; proposal Jun 28; MC Jul 10) with the **RL assignment releasing next week** (not Jun 19).
 
+### Shipped & published (2026-06-15) — professor signed off on the content
+Deck + widget rendered and **published live**: `build-site.yml` CI succeeded for the pushed commit (`1031a4b`), so the styled deck + widget iframe serve on GitHub Pages. This session's refinements (these **supersede the stale numbers above** where they conflict):
+- **af reward scheme made robust (corrects the "+20/lap, 1/40" note above).** The SP25 action-feedback table's positive cycle ran *through the garden* and only dominated after heavy training — at the ~2000-step demo it was a **coin-flip** (greedy reached the goal ~30/60), which read as "af works." Replaced with **on-path backtracking = +4 (`WEAK`), forward = +10** (a human positive-feedback bias): the cat now paces the *path* collecting praise — a **+14/lap** cycle that fails **0/40 at every training length**. Widget AND the static `feedback-rm-vs-af.png` updated to match (loop on the path, not the garden); `make_figures.py` and the widget keep identical af tables.
+- **Widget defaults to human-teacher mode** (professor ask); in human mode the loops/reaches **verdict is hidden behind a reveal toggle** (discover-then-reveal). Auto modes show it immediately.
+- **Chibany MDP diagram redrawn** as one complete graph — **all 14 transitions**, both actions, **probability-weighted** (thick/bright = dominant, thin/faint = rare), self-loops, each state's out-arrows sum to 1. Action colors blue=Invest / purple=Indulge, distinct from state colors.
+- **Figure fixes:** `simulation-based-rl` (caption + arrow occlusion), `ho-modelbased-worse` (legend moved above the plot). Now **16 generated figures** (+ widget fallback). Deck grew to **57 slide headers** (value-iteration by-hand walkthrough + the neuroscience split).
+- **Neuroscience split:** the "An opening" slide → the RLHF-opening slide + a new **"RL in the brain"** slide (dopamine-TD figure now legible).
+- **Break photo** swapped to `week8CatPhoto.heic` → converted to JPG (browsers can't render HEIC) at `images/break-cat-week8.jpg`.
+- **Fill-audit script repaired** — `scripts/audit_slide_fill.js` now uses user-local `puppeteer-core@22` + system Chrome (was a stale hardcoded puppeteer path). Final deck: **0 genuine clips**.
+- **Runnable GenJAX backbone** `genjax_chibany_mdp.py` (value iteration + MC simulation; verified genjax 0.10.3 / jax 0.5.3). **Textbook companion chapter** is the next deliverable — handoff at `TEXTBOOK_HANDOFF.md` (new session).
+
 ## TODOs
 - [ ] Final rehearsal pass; verify Week-8 presenter in `readings_map.yml` (instructor-led by default; Schultz 1997 is the natural hand-off if one is added) and wire the Block-8 contingency.
-- [ ] Publish: render into `docs/` (via `docs/_build.py` / CI) and confirm `week8-styles.html` is committed + the styled deck + widget iframe serve on GitHub Pages; confirm `sds_wordmark.png` resolves there.
+- [x] **Published (2026-06-15, CI-verified live).** `build-site.yml` succeeded for the pushed commit; styled deck + widget iframe serve on GitHub Pages; `week8-styles.html` committed.
 - [ ] Native-speaker proof of the JA translations.
 - [ ] **Post-lecture:** refresh `course/assignments/rl/` to the plan-then-learn framing + add a GenJAX stencil (MDP env as a generative function for simulation-based rollouts; confirm framing). Author a textbook MDP/RL chapter.
 - [ ] `course/quizzes/README.md` Week-8 mapping still says "Monte Carlo Estimation" — note the conceptual mismatch (polls are authored).
