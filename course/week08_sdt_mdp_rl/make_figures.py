@@ -539,8 +539,8 @@ def fig_potential_shaping():
 # 11. Simulation-based RL (Dyna loop)
 # ==========================================================================
 def fig_simulation_based_rl():
-    fig, ax = plt.subplots(figsize=(8.6, 4.2))
-    ax.set_xlim(0, 12); ax.set_ylim(0, 6); ax.axis("off")
+    fig, ax = plt.subplots(figsize=(8.6, 4.5))
+    ax.set_xlim(0, 12); ax.set_ylim(-1.1, 6); ax.axis("off")   # extra room below for the caption
     boxes = {
         "world": (1.6, 4.4, "real\nexperience", ACCENT),
         "model": (6.0, 4.4, "learn a MODEL\n$\\hat T, \\hat R$", YELLOW),
@@ -553,9 +553,9 @@ def fig_simulation_based_rl():
         ax.text(x, y, t, ha="center", va="center", color=col, fontsize=13, fontweight="bold")
     _arrow(ax, (3.0, 4.4), (4.6, 4.4), 0, DIM)
     _arrow(ax, (7.4, 4.4), (8.8, 4.4), 0, DIM)
-    _arrow(ax, (10.2, 3.6), (7.2, 2.0), -0.2, DIM)
-    _arrow(ax, (4.6, 1.3), (3.0, 3.6), -0.2, DIM)
-    ax.text(6.0, 0.2, "Dyna / AlphaZero / MuZero / Dreamer — plan by simulating a learned model",
+    _arrow(ax, (10.1, 3.6), (7.62, 2.30), -0.2, DIM)   # SIMULATE → plan: stop OUTSIDE the box corner
+    _arrow(ax, (4.55, 1.55), (3.18, 3.42), -0.2, DIM)  # plan → real experience: stop OUTSIDE the box corner
+    ax.text(6.0, -0.55, "Dyna / AlphaZero / MuZero / Dreamer — plan by simulating a learned model",
             ha="center", color=DIM, fontsize=11, style="italic")
     save(fig, "simulation-based-rl.png")
 

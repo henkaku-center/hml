@@ -961,7 +961,9 @@ Ho et al. (2019) はまさにこれを行う — 標準的なモデルフリー*
 [**自己批判として：** これは報酬最大化よりスケールしにくく、我々の「人間の意図」モデルも誤りうる。最良の糸口：**人間が検証する**RLHF — 学習した報酬が人々の*意図*に合うか確認し、教師の理論を持つフィードバックモデルを選ぶ。]{.dim}
 :::
 
-![](images/dopamine-td.png){fig-align="center" width="80%"}
+## [RL in the brain]{.lang-en}[脳の中の強化学習]{.lang-ja} {.smaller}
+
+![](images/dopamine-td.png){fig-align="center" width="78%"}
 
 ::: {.lang-en}
 The TD error isn't just an algorithm. Midbrain **dopamine** neurons fire like a **reward prediction error** — exactly the TD error $\delta_t$ from Q-learning (Schultz, Dayan &amp; Montague, 1997). And **model-based vs. model-free** maps onto **goal-directed vs. habitual** behavior — two control systems in the brain. That's **today's reading** (Daw, Niv &amp; Dayan, 2005).
