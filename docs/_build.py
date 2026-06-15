@@ -156,6 +156,27 @@ GRADING = [
     ("Paper presentation", "7.5%"),
 ]
 
+# Per-week curated *section* deep-links into the textbook. When a week (keyed by
+# its directory number) appears here, these labelled section anchors REPLACE the
+# auto-derived chapter-top tags in the schedule's Textbook column — used where one
+# session spans several chapters and the lecture maps onto specific sections (the
+# anchors are the built Hugo heading slugs under TEXTBOOK_BASE). Non-textbook tags
+# (e.g. the GenJAX → assignments link) are preserved. Paths are relative to
+# TEXTBOOK_BASE; verify the #anchors against the built chapter HTML when editing.
+WEEK_TEXTBOOK_LINKS = {
+    # Week 8 (Jun 19) — DECIDE → PLAN (known MDP) → LEARN (unknown MDP) → SIMULATE,
+    # across intro2 chapters 20/21/22.
+    8: [
+        ("Decision theory", "intro2/20_statistical_decision_theory/"),
+        ("Loss → estimator", "intro2/20_statistical_decision_theory/#what-loss-are-you-minimizing"),
+        ("MDPs & Bellman", "intro2/21_markov_decision_processes/"),
+        ("Value iteration & γ", "intro2/21_markov_decision_processes/#value-iteration"),
+        ("Q-learning", "intro2/22_q_learning/"),
+        ("Reward shaping", "intro2/22_q_learning/#reward-shaping-and-positive-cycles"),
+        ("Simulation-based RL & MCTS", "intro2/22_q_learning/#planning-by-search-mcts"),
+    ],
+}
+
 # Week dates (SP26 calendar: Apr 17 through Jul 17, no class May 1 or May 8)
 # Keys are *directory* week numbers (weekNN_ dirs); values are display dates.
 # Course directories were renumbered to 12 contiguous sessions (week01..week12),
@@ -432,6 +453,13 @@ def build_schedule():
         plan = (d / "PLAN.md").read_text(encoding="utf-8")
         topic = TOPIC_OVERRIDES.get(dir_num)
         tags = extract_tags_from_plan(plan)
+        section_links = WEEK_TEXTBOOK_LINKS.get(dir_num)
+        if section_links:
+            # Replace auto-derived chapter-top tags with curated section deep-links,
+            # keeping any non-textbook tags (e.g. the GenJAX → assignments link).
+            kept = [t for t in tags if TEXTBOOK_BASE not in (t.get("url") or "")]
+            curated = [{"label": lbl, "url": f"{TEXTBOOK_BASE}/{path}"} for lbl, path in section_links]
+            tags = curated + kept
         slide_url = sync_slide_pdf(dir_num, d)
         slide_html_url = sync_slide_html(dir_num, d)
         rows.append({
