@@ -24,4 +24,5 @@ None this week.
 Carried from SP25.
 
 ## TODOs
-(none beyond general course improvements)
+- [ ] **After this week's POMDP material lands:** author the deferred textbook chapter on **modern RL / world models** (MuZero, Dreamer, deep RL at scale, RLHF) — tentative `textbook/content/intro2/23_modern_rl_world_models.md`. It was split out of the Week-8 chapters because latent world models are a partial-observability story that POMDPs set up; Week-8's Chapter 22 already forward-points to it. (See root `TODO.md`.)
+- (none else beyond general course improvements)

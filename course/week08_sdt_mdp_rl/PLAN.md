@@ -12,7 +12,13 @@
 - **Quiz:** Monte Carlo Estimation (computational Markov-chain items — not a fit for conceptual polls, so SP26 polls are authored)
 
 ## Textbook Chapters
-None yet (no MDP/RL chapter exists). **TODO:** author a textbook MDP/RL chapter (separate session).
+
+<!-- Card links: order-robust NAME form `T3: <chapter-name>` (stable-name = slug minus NN_, _→spaces). -->
+- T3: statistical decision theory — `intro2/20_statistical_decision_theory.md` (loss/risk, Bayes vs minimax, loss→estimator, one-and-done decisions)
+- T3: markov decision processes — `intro2/21_markov_decision_processes.md` (MDPs, the Bellman equation, value iteration, the γ-flip, planning by simulation)
+- T3: q learning — `intro2/22_q_learning.md` (model-free Q-learning, reward shaping & positive cycles, Dyna + MCTS, simulation-based RL)
+
+Each chapter interweaves runnable GenJAX and interactive widgets (`decision-loss-explorer`, `mdp-value-iteration`, `mdp-rollout-simulator`, the ported `qlearning-gridworld`, `mcts-stepper-chibany`, `mcts-tictactoe`). A fourth chapter — **modern RL / world models** (MuZero, Dreamer, deep RL, RLHF) — is deferred to after the Week 9 POMDP material (see root `TODO.md`).
 
 ## GenJAX Integration
 None in the lecture. The **RL assignment** GenJAX port is a post-lecture workstream (below).

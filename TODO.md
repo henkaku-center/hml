@@ -66,7 +66,10 @@
 - [ ] Final rehearsal; verify Week-8 presenter in `readings_map.yml` (instructor-led default; Schultz 1997 is the natural hand-off).
 - [x] **Published (2026-06-15, CI-verified).** `build-site.yml` succeeded for the pushed commit; styled deck + widget iframe serve on GitHub Pages.
 - [ ] Native-speaker proof of Week 8 JA translations.
-- [ ] **Post-lecture:** refresh `course/assignments/rl/` to the plan-then-learn framing + add a GenJAX stencil (MDP env as a generative function for simulation-based rollouts). Author a textbook MDP/RL chapter.
+- [ ] **Post-lecture:** refresh `course/assignments/rl/` to the plan-then-learn framing + add a GenJAX stencil (MDP env as a generative function for simulation-based rollouts).
+- [x] **Textbook MDP/RL chapters authored (2026-06-15).** Three interwoven-GenJAX chapters in `textbook/content/intro2/`: `20_statistical_decision_theory.md` (+ one-and-done), `21_markov_decision_processes.md`, `22_q_learning.md` (+ MCTS capstone). Six interactive widgets (decision-loss, value-iteration, rollout-sim, ported GardenPath Q-learning, MCTS stepper, MCTS tic-tac-toe); all code blocks pass `validate_code_blocks.py`; glossary + notebook_guide + homepage card wired; student-critique loops run per chapter.
+- [ ] **Deferred textbook chapter — modern RL / world models** (tentative `intro2/23_modern_rl_world_models.md`): MuZero (learned latent dynamics), Dreamer / world models, deep RL at scale (DQN → AlphaGo → PPO), and RLHF in depth — author **after Week 9's POMDP material**, which grounds latent world models (partial observability). Ch 22 already forward-points to it. *(Add the matching note to `course/week09_inverse_rl/PLAN.md`.)*
+- [ ] Author companion `.ipynb` notebooks with full prose (current `notebooks/2{0,1,2}_*.ipynb` are code-only extractions from the chapters).
 
 ### SP26 New — Syllabus & Admin
 - [x] Draft SP26 syllabus source (`course/syllabus/SP26_syllabus.md`) and publish to the site
