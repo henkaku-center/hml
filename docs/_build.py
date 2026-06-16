@@ -50,6 +50,12 @@ ASSIGNMENT_STENCILS = {
         "generalization_nosoln.Rmd",
         "generalization.pdf",
     ],
+    "mc": [
+        "mc_approx.pdf",
+        "mc_approx.ipynb",
+        "mc_approx_python.ipynb",
+        "mcmc_approx.Rmd",
+    ],
 }
 
 TEXTBOOK_BASE = "https://josephausterweil.github.io/probintro"
