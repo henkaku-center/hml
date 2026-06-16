@@ -336,13 +336,11 @@ def extract_tags_from_plan(plan_text: str) -> list:
     """Pull short tags for the schedule: textbook shorthand + GenJAX markers.
     Returns list of {label, url} dicts (url may be empty)."""
     labels = list(_labels_from_section(parse_plan_section(plan_text, "Textbook Chapters")))
+    # The GenJAX-Integration section may name specific textbook chapters (kept as
+    # links); the bare "GenJAX" placeholder card is no longer shown on the schedule.
     gj = parse_plan_section(plan_text, "GenJAX Integration")
     if gj and gj.strip().lower() not in ("none this week.", "none this week", "none."):
-        gj_labels = _labels_from_section(gj)
-        if gj_labels:
-            labels.extend(gj_labels)
-        else:
-            labels.append("GenJAX")
+        labels.extend(_labels_from_section(gj))
     seen = set()
     out = []
     for label in labels:
