@@ -174,6 +174,7 @@ WEEK_TEXTBOOK_LINKS = {
         ("Q-learning", "intro2/22_q_learning/"),
         ("Reward shaping", "intro2/22_q_learning/#reward-shaping-and-positive-cycles"),
         ("Simulation-based RL & MCTS", "intro2/22_q_learning/#planning-by-search-mcts"),
+        ("Two-step task (MB vs MF)", "intro2/22_q_learning/#telling-model-free-from-model-based-the-two-step-task"),
     ],
 }
 
