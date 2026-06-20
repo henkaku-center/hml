@@ -10,8 +10,7 @@
 
 \usepackage{nopageno,url,natbib}
 \usepackage{graphicx, amsmath, amssymb, hyperref,caption,subcaption}
-\usepackage[hang,flushmargin]{footmisc} 
-\usepackage{marvosym}
+\usepackage[hang,flushmargin]{footmisc}
 \usepackage{xcolor}
 \hypersetup{
     colorlinks,
@@ -22,99 +21,152 @@
 
 \begin{document}
 \begin{centering}
-{\large \bf Assignment 3: Reinforcement learning \\ BMI/COMPSCI/PSYCH 841: Computational Cognitive Science \ Prof. Austerweil \\ Due 04/08 at 5pm\\}
+{\large \bf Assignment 4: Reinforcement Learning \\ Human and Machine Learning \\ Chiba Institute of Technology, School of Design \& Science \\ Prof. Joseph Austerweil \\ Due Fri Jul 10, 2026 at 8:00pm\\}
 \end{centering}
-In this problem set, you will implement a reinforcement learning algorithm ($Q$-learning) and explore how it learns depending on different patterns of feedback. We will be exploring the ``GardenPath'' domain \citep*{ho15}. Remember from the paper and class that the goal of the domain is to teach an agent to get to the top-right square (the ``goal'') using only the left-most and top-most squares (the ``path'') while avoiding going in the bottom right $2\times2$ square (the ``garden''). Figure \ref{fig:gardenpath} depicts the GardenPath domain and you can play as the teacher at \url{http://research.clps.brown.edu/mkho/gardenpath/task.html}. Although a person gets the image shown in Figure \ref{fig:gardenpath}, a reinforcement learning algorithm only knows that there is a $3 \times 3$ world that it can move from location to location in and receive feedback from the world. 
+
+In this problem set you will implement the reinforcement-learning algorithm
+{\em $Q$-learning}, and then use it to see one of the central lessons of RL: an
+agent optimizes the {\em reward you write}, which is not always the {\em goal you
+meant}. We work in the ``GardenPath'' domain \citep*{ho15}. The goal of the domain
+is to teach an agent to reach the top-right square (the ``goal'') by moving along
+the left-most and top-most squares (the ``path'') while avoiding the bottom-right
+$2\times2$ block (the ``garden''). Figure~\ref{fig:gardenpath} shows the domain.
+A person sees the picture, but the learning algorithm only knows that there is a
+$3\times3$ world it can move around in, receiving feedback as it goes.
+
 \begin{figure}[h]
-\centerline{\includegraphics[width=3in]{figs/gardenpath}}
-\caption{The GardenPath domain. Agents learn to get to the goal by moving along the path and avoiding going into the garden.}
+\centerline{\includegraphics[width=2.6in]{figs/gardenpath}}
+\caption{The GardenPath domain. Agents learn to reach the goal by moving along the path and avoiding the garden.}
 \label{fig:gardenpath}
 \end{figure}
-To help you implement the $Q$-learning on this task and visualize its solution, you are being provided with some Matlab or Python code that you should download from Canvas named {\tt rl\_files\_matlab.zip} or {\tt rl\_files\_python.zip}. The zip file provides you with helper functions and stencil code for implementing $Q$-learning. 
 
-{\bf Matlab}:  The Matlab zip contains the following files: {\tt af\_feedback.m} (returns feedback given state and action to take in that state for the {\em action feedback} type of feedback), {\tt fillImpossAs.m} (fills $Q$-value matrix with {\tt INV\_FB} for impossible actions, {\tt plotQVals.m} (plots the best actions in each state of a $Q$-value matrix where arrow length is proportional to its $Q$-value), {\tt possActions.m} (returns the possible actions from the passed in state), {\tt rm\_feedback.m} (returns feedback given state and action to take in that state for the {\em reward maximizing} type of feedback), {\tt runQLearn\_stencil.m} (the stencil that you should fill out to implement $Q$-learning), and {\tt transState.m} (return the next state given the current state and the action to take in that state). 
-
-{\bf Python}: Everything you need was put into one file is in the {\tt rlpyth.py}. Because getting paths work properly for including other files in python can be tricky to guarantee across environments, all of the helper functions are in the file too. 
-
-{\bf Other}: You can use something else and answer the three problems (the questions either for {\bf Matlab} or {\bf Python}). I will not be able to provide stencil code or helper functions for visualizations. If you help me add them to the assignment, I will provide them for students who take the course in the future! 
-
-Remember that the goal of reinforcement learning is to learn a {\em policy} $\pi: S \rightarrow A$ (that is a function telling the agent which action $a$ out of the set of possible actions $A$ to take in each state $s$ out of the set of possible states $S$) that results in the agent maximizing its reward. It does so by exploring states, taking actions, getting feedback, and adjusting its policy accordingly. 
-
-You will implement one particular reinforcement learning algorithm $Q$-learning, which is guaranteed to find the optimal policy for simple worlds.\footnote{Technically, $Q$-learning is guaranteed to find the optimal policy in Markov decision processes, which have the added assumption that the transition probabilities and expected immediate feedback only depend on the current state, the action taken, and for the latter, also the next state that the agent ended up in.} $Q$-learning solves for a matrix $Q$ which stores the expected future reward of taking an action in a state. This happens according to the following algorithm:
+\noindent The goal of reinforcement learning is to learn a {\em policy}
+$\pi: S \rightarrow A$ telling the agent which action $a \in A$ to take in each
+state $s \in S$ so as to maximize its reward. $Q$-learning does this by learning a
+matrix $Q$ that stores the expected future reward of taking an action in a state.
+It is guaranteed to find the optimal policy for a Markov decision process. The
+algorithm is:
 \begin{enumerate}
-\item[1.] Initialize the elements of a $S \times A$ dimensional $Q$-matrix to some value (usually zero).
-\item[2.] For training episode $e=1,2, \dotsc$, we start a new training episode at the initial state and set $t=1$.
+\item[1.] Initialize a $|S| \times |A|$ matrix $Q$ to some value (usually zero).
+\item[2.] For each training episode, start at the initial state and set $t=1$.
 \begin{enumerate}
-\item[2a.] Select an action from the set of possible actions. We will be using an $\epsilon$-greedy rule, which means we pick a best possible action in our current state according to the current values of the $Q$ matrix with probability $1-\epsilon$ (there may be more than one, and then we choose randomly between them), and with probability $\epsilon$ we pick a random possible action.
-\item[2b.] We take that action, move to a new state, and receive feedback $f_{t+1}$.
-\item [2c.] Let $\alpha$ be a learning rate (usually 0.1) and $\gamma$ be a discount factor (how much we penalize expected future rewards). We update our $Q$ matrix according to the following rule:
+\item[2a.] Select an action with an $\epsilon$-greedy rule: with probability
+$1-\epsilon$ pick a best action in the current state according to $Q$ (break ties
+at random), and with probability $\epsilon$ pick a random valid action.
+\item[2b.] Take that action, move to a new state $s_{t+1}$, and receive feedback $f_{t+1}$.
+\item[2c.] With learning rate $\alpha$ and discount factor $\gamma$, update $Q$:
 \begin{equation}
-Q_{t+1} = Q_{t}(s_t,a_t) + \alpha \left(f_{t+1} + \gamma \max_a Q_t (s_{t+1}, a) - Q_t(s_t,a_t) \right)
+Q(s_t,a_t) \;\leftarrow\; Q(s_t,a_t) + \alpha \Big(\underbrace{f_{t+1} + \gamma \max_a Q(s_{t+1}, a) - Q(s_t,a_t)}_{\text{prediction error}} \Big)
+\label{eq:qlearn}
 \end{equation}
 \end{enumerate}
 \end{enumerate}
-Intuitively, this equation says ``update my $q$-value based on the difference between my current $q$-value (last term) and the sum of the feedback I received (first term in parentheses) and the feedback I expect to get if I take the best actions going forward (second term in parentheses). 
+Intuitively, the update moves $Q(s_t,a_t)$ toward the reward just received plus the
+best reward expected from there on.
 
-And now your task... (Note at this point, the tasks are split into whether you are using Matlab or Python. Matlab is first -- skip the page and you'll hit Python. You only have to do one of them... If you are using something else, just answer the questions and write your own Q-learning code).
+\paragraph{Two ways to give feedback.} The point of the assignment is to compare
+two feedback schemes on this domain \citep*{ho15}.
+\begin{itemize}
+\item {\bf Reward-maximizing (RM)} --- {\em outcome-based} feedback: moving into
+the garden is punished ($-10$), reaching the goal pays $+20$, and ordinary moves
+along the path are neutral ($0$). This is the reward you would write if you cared
+only about the outcome.
+\item {\bf Action-feedback (AF)} --- the way {\em people} tend to teach: forward
+progress along the path is praised ($+10$), and --- being encouraging --- {\em
+backtracking} along the path earns faint praise ($+4$) rather than punishment.
+Both directions are positive.
+\end{itemize}
+You can also experiment with both schemes, step by step, in the interactive
+$Q$-learning widget embedded in textbook Chapter~22 (linked below).
 
-\newpage
-{\bf Matlab} 
+\vspace{1em}
+\noindent {\bf Stencils.} Three starter stencils are provided in this directory;
+pick one and submit your completed version. Each ships with a shared helper,
+\texttt{rl\_gridworld.py} (the world, the reward schemes, the figure renderer, and
+an in-notebook interactive explorer); keep it next to your notebook.
+\begin{itemize}
+    \item \texttt{rl\_genjax.ipynb} --- GenJAX (canonical, runs in Google Colab). The environment is written as a \texttt{@gen} generative model and $Q$-learning learns by {\em sampling} it.
+    \item \texttt{rl\_python.ipynb} --- numpy + matplotlib (Python without GenJAX).
+    \item \texttt{rl\_nosoln.Rmd} --- base R + ggplot2 (self-contained; static figures).
+\end{itemize}
+A Matlab stencil is available on request --- email Prof. Austerweil.
+
+\vspace{0.5em}
+\noindent {\bf Prep reading.} Textbook Tutorial~3:
+\href{https://josephausterweil.github.io/probintro/intro2/21_markov_decision_processes/}{Ch~21 (Markov Decision Processes)}
+and
+\href{https://josephausterweil.github.io/probintro/intro2/22_q_learning/}{Ch~22 (Q-Learning)},
+including the live Q-learning widget. This assignment uses the same GardenPath
+world and the same figures.
+
+\section{Implement $Q$-learning}
+In your stencil, fill in the one-line {\em prediction error} from
+Equation~\eqref{eq:qlearn} (the term under the brace). All the setup --- the world,
+$\epsilon$-greedy selection, the training loop, and the figures --- is provided.
+
+Then train under {\bf reward-maximizing (RM)} feedback and visualize the learned
+policy with the provided renderer (it draws, for each cell, the four action-values
+as green/red wedges, the greedy policy as arrows, and the route the greedy policy
+takes from the start). {\em Deliverable:} include the RM figure and a sentence ---
+does the learned policy reach the goal, and does it make sense?
+
+\section{Diagnose a reward-hacking failure}
+Now train under {\bf action-feedback (AF)} feedback and visualize the learned
+policy. {\em Deliverable:} the AF figure, the {\bf net reward per lap} of the loop
+(the renderer / \texttt{greedy\_rollout} reports it), and a few sentences:
 \begin{enumerate}
-\item (Implement $Q$-learning). Inside {\tt runQLearn\_stencil.m}, you will see that line 75 says ``fill me in...''. This is where you will implement $Q$-learning. All of the setup is taken care of for you. {\tt qVals} is a $3 \times 3 \times 4$ matrix (the first and second dimensions are the row and column of the grid, respectively). The action you are taking on the current iteration is stored in the variable {\tt actToTake}. Your current state is {\tt cur\_state} and the state you ended up in is {\tt next\_state}. {\tt cur\_f} is the current feedback you got from taking that action. For this part, please turn in the lines of code you used to implement $Q$-learning in this function. 
-
-\item (Reward-Maximizing Feedback). On lines 15 to 18 of {\tt runQLearn\_stencil.m}, you will see a command to set {\tt fb\_fun} to either {\tt \MVAt af\_feedback} or {\tt \MVAt rm\_feedback}. Make sure it is set to {\tt \MVAt rm\_feedback}. Figure \ref{fig:rmfb} shows the pattern of feedback given by this function. Run $Q$-learning and then visualize the learned policy by running the command {\tt plotQVals(qVals);} (make sure you close the figure or start a new one if you run it multiple times as they will overwrite each other otherwise). It plots an arrow in every state corresponding to the action with the largest $Q$-value (if there are ties, it will plot both of them). The size of the arrow is proportional to its $Q$-value. Note that it jitters the arrows a bit to avoid them overlapping with each other. Save this plot and include it in your report. Did it do what you expected? Does the learned policy make sense? In a few sentences, explain why or why not. 
-\begin{figure}[h]
-\centering
-\begin{subfigure}{.49\textwidth}
-\centering
-\includegraphics[width=.4\linewidth]{figs/rmfb}
-\caption{Reward-Maximizing Feedback}
-\label{fig:rmfb}
-\end{subfigure}
-\begin{subfigure}{.49\textwidth}
-\centering
-\includegraphics[width=.4\linewidth]{figs/affb}
-\caption{Action-Feedback Feedback}
-\label{fig:affb}
-\end{subfigure}
-\caption{Solid blue arrows indicate actions given positive feedback, dashed red arrows indicate actions given negative feedback, and no arrow indicates a feedback value of zero.}
-\end{figure}
-\item (Action-Feedback... Feedback). On lines 15 to 18 of {\tt runQLearn\_stencil.m}, you will see a commands to set {\tt fb\_fun} to either {\tt \MVAt af\_feedback} or {\tt \MVAt rm\_feedback}. Make sure it is set to {\tt \MVAt af\_feedback}. Figure \ref{fig:affb} shows the pattern of feedback given by this function. Run $Q$-learning and then visualize the learned policy by running the command {\tt plotQVals(qVals);}. Save this plot and include it in your report. Did it do what you expected? Does the learned policy make sense? In a few sentences, explain why or why not.
-%\begin{figure}[h]
-%to fill in.
-%\caption{Action-Feedback Feedback}
-%\label{fig:affb}
-%\end{figure}
+\item[(a)] Does the learned greedy policy reach the goal? If not, what does it do?
+\item[(b)] Why does a reward-maximizing agent prefer to farm that positive cycle
+forever rather than collect the one-time $+20$ at the goal?
+\item[(c)] What does this show about the relationship between the reward you write
+and the goal you intend? (This phenomenon is called {\em reward hacking} or {\em
+specification gaming}.)
 \end{enumerate}
 
-\newpage
-{\bf Python}:  
+\section{Design and verify a fix}
+AF tried to give helpful per-step feedback but accidentally created a reward cycle.
+The principled way to add dense feedback is {\em potential-based shaping}
+\citep*{ng99}: choose a {\bf potential} $\Phi(s)$ (a rough ``how good is this
+state'') and add a potential {\em difference} to the true (RM) reward,
+\begin{equation}
+r'(s,a) \;=\; r_{\text{RM}}(s,a) \;+\; \gamma\,\Phi(s') - \Phi(s).
+\label{eq:shaping}
+\end{equation}
+Because it is a {\em difference} of potentials, a step toward the goal earns a bonus
+and a step away pays an equal penalty --- so there is no farmable cycle.
 
 \begin{enumerate}
-	\item (Implement $Q$-learning). Inside {\tt rlpyth.py}, you will see that line 278 says {\tt pred\_error = \# fill me in}. Fill in this line (you can use more than one line if you want). {\tt self.qvalues} is the q-value matrix where the first dimension is the states (represented as 2-d tuples with each element of the tuple being a number) and the second dimension is the action. 
-	
-	\item (Reward-Maximizing Feedback). On line 1483/1484, you will see one of the parameters in the {\tt params} dictionary is {\tt reward\_dict}. Make sure it is set to {\tt rm\_fb}. (you can switch between them by commenting one out and leaving the other uncommented) Figure \ref{fig:rmfb} shows the pattern of feedback given by this function. Run $Q$-learning and then visualize the learned policy by running this file (make sure you close the figure or start a new one if you run it multiple times as they might overwrite each other otherwise). It will produce a number of plots. One of them will plot the $Q$-value of each action for each state, with blue being positive and red being negative. The size of the arrow is proportional to its $Q$-value. Save the plots and include it in your report. Did it do what you expected? Does the learned policy make sense? In a few sentences, explain why or why not. 
-	\begin{figure}[h]
-		\centering
-		\begin{subfigure}{.49\textwidth}
-			\centering
-			\includegraphics[width=.4\linewidth]{figs/rmfb}
-			\caption{Reward-Maximizing Feedback}
-			\label{fig:rmfb}
-		\end{subfigure}
-		\begin{subfigure}{.49\textwidth}
-			\centering
-			\includegraphics[width=.4\linewidth]{figs/affb}
-			\caption{Action-Feedback Feedback}
-			\label{fig:affb}
-		\end{subfigure}
-		\caption{Solid blue arrows indicate actions given positive feedback, dashed red arrows indicate actions given negative feedback, and no arrow indicates a feedback value of zero.}
-	\end{figure}
-	\item (Action-Feedback... Feedback).  On line 1483/1484, you will see one of the parameters in the {\tt params} dictionary is {\tt reward\_dict}. Make sure it is set to {\tt af\_fb}. Figure \ref{fig:affb} shows the pattern of feedback given by this function. Run $Q$-learning and then visualize the learned policy by running this file (make sure you close the figure or start a new one if you run it multiple times as they might overwrite each other otherwise). It will produce a number of plots. One of them will plot the $Q$-value of each action for each state, with blue being positive and red being negative. The size of the arrow is proportional to its $Q$-value. Save the plots and include it in your report. Did it do what you expected? Does the learned policy make sense? In a few sentences, explain why or why not. 
+\item[(a)] {\em Design.} Choose your own potential $\Phi(s)$ (a good default is the
+negative distance to the goal, so states nearer home have higher potential --- but
+try your own and justify it). Build the shaped reward~\eqref{eq:shaping}, train, and
+visualize. {\em Deliverable:} the figure --- does it now reach the goal?
+\item[(b)] {\em Verify it is safe (invariance).} Shaping should fix learning {\em
+without} changing which policy is optimal. Using the provided value-iteration
+helper, compute the exact optimal policy for RM and for shaped-RM and confirm they
+are identical.
+\item[(c)] {\em Explain.} In a few sentences, explain why $\gamma\Phi(s')-\Phi(s)$
+cannot change the optimal policy (hint: sum it along a trajectory --- what
+telescopes?), and contrast this with AF: both add dense feedback, but only one
+changed the optimum. Why?
 \end{enumerate}
+
+\section*{Bonus (+5)}
+$Q$-learning is {\em model-free} --- it never sees the transition rules, it learns
+only from samples. If we {\em know} the model (Chapter~21), we can compute the
+optimal policy exactly with {\em value iteration}. Using the provided helper,
+confirm your model-free learner found the same route to the goal that the
+model-based planner computes exactly. (In the GenJAX stencil, the value-iteration
+step reads the same \texttt{@gen} transition model you sampled to learn.)
+
+\vspace{0.5em}
+\noindent {\bf Submission.} Submit by DM or email to the instructor {\em one} of
+the following:
+\begin{itemize}
+    \item your completed notebook (or knitted \texttt{.Rmd}) --- it must run end-to-end and contain your figures, inline text answers, and descriptions; {\em or}
+    \item a single PDF report containing your code, figures, text answers, and descriptions.
+\end{itemize}
 
 \bibliographystyle{myapalike}
 \bibliography{rl}
 
-   
 \end{document}

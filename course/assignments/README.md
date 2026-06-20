@@ -11,7 +11,7 @@ You have **3 free late days** that can be used across the programming assignment
 | [Clusters](#clusters) | Week 3 (May 15) | **Fri Jun 5, 8:00 PM** | 7.5% | Mixture models & categorization |
 | [Generalization](#generalization) | Week 4 (May 22) | **Fri Jun 19, 8:00 PM** | 7.5% | Bayesian generalization |
 | [Monte Carlo](#monte-carlo) | Week 7 (Jun 12) | **Fri Jul 10, 8:00 PM** | 10.5% | Monte Carlo, importance sampling, MCMC |
-| Reinforcement Learning | Week 8 (Jun 19) | *TBA when released* | 4.5% | MDPs & reinforcement learning |
+| [Reinforcement Learning](#reinforcement-learning) | Week 8 (Jun 19) | **Fri Jul 10, 8:00 PM** | 4.5% | Q-learning, reward hacking, reward shaping |
 
 Total assignments: **30%** of the course grade. The final-project proposal (pass/fail, tracked in the syllabus) is due **Sun Jun 28, 8:00 PM** — one week after the Generalization assignment. See the [project guidelines](project.html) for full details.
 
@@ -100,4 +100,27 @@ Explore three Monte Carlo methods. **Problem 1:** compare naive Monte Carlo with
 
 ### Reinforcement Learning (4.5%) {#reinforcement-learning}
 
-*Details will be posted when the assignment is released.*
+**Due: Fri Jul 10, 2026 at 8:00 PM.**
+
+Implement **Q-learning** on the *GardenPath* gridworld, then use it to see how the *reward you write* can diverge from the *goal you intend*. **Problem 1:** fill in the one-line temporal-difference update and confirm it solves the task under reward-maximizing (outcome) feedback. **Problem 2:** diagnose a *reward-hacking* failure — under human-style action feedback the learned policy loops forever in a **+14/lap** positive cycle and never reaches the goal. **Problem 3:** design your own potential function $\Phi(s)$ and add **potential-based shaping** to give dense feedback the principled way; verify it reaches the goal **and** provably does not change the optimal policy (invariance). **Bonus:** confirm your model-free learner found the same route a model-based value-iteration planner computes exactly.
+
+**Start here — the assignment:**
+
+- **[Assignment PDF — rl.pdf](assignments/rl/rl.pdf)** — the problem statements. Read this first.
+
+**Then pick one stencil to work in.** All three cover the same problems with the same scaffolding (a shared `rl_gridworld.py` provides the world, the reward schemes, the figure renderer, and an in-notebook interactive explorer — keep it next to your notebook; the Colab stencils fetch it automatically).
+
+| Stencil | Open in Colab | Download | Notes |
+|---|---|---|---|
+| **GenJAX (canonical)** | [Open in Colab](https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/rl/rl_genjax.ipynb) | [rl_genjax.ipynb](assignments/rl/rl_genjax.ipynb) | The environment is a GenJAX `@gen` generative model; Q-learning learns by *sampling* it. Bonus value iteration reads the same model. |
+| **Python (no GenJAX)** | [Open in Colab](https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/rl/rl_python.ipynb) | [rl_python.ipynb](assignments/rl/rl_python.ipynb) | numpy + matplotlib. Same problems, no JAX. |
+| **R** | — (knit locally in RStudio) | [rl_nosoln.Rmd](assignments/rl/rl_nosoln.Rmd) | base R + ggplot2, self-contained. Colab does not run `.Rmd` files. |
+| **Matlab** | — | available on request | Email Prof. Austerweil. |
+
+**Other details:**
+
+- **Prep reading:** Textbook Tutorial 3 — [Ch 21 (Markov Decision Processes)](https://josephausterweil.github.io/probintro/intro2/21_markov_decision_processes/) and [Ch 22 (Q-Learning)](https://josephausterweil.github.io/probintro/intro2/22_q_learning/), including the live Q-learning widget (the same GardenPath world).
+- **Lecture:** Week 8 covers decision theory, MDPs + value iteration, Q-learning, reward shaping, and simulation-based RL.
+- **Submit** (by DM or email to the instructor) **one** of the following:
+    - your completed notebook (or knitted `.Rmd`) — it must run end-to-end and contain your figures, inline text answers, and descriptions; **or**
+    - a single PDF report containing your code, figures, text answers, and descriptions.

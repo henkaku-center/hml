@@ -4,7 +4,7 @@
 - [ ] More student discussion/activities in early weeks (Weeks 1-4) *(partially addressed by SP26 lecture+check-ins format; revisit after running Weeks 1–2)*
 - [ ] Fix MC importance sampling figure legend (Week 8 slides)
 - [ ] Fix Bayes Net quiz wording (Week 7 quiz)
-- [ ] Modernize RL assignment: update Python/R code, add Julia variant *(fold into GenJAX port scoping)*
+- [x] Modernize RL assignment (2026-06-20): rebuilt as Assignment 4 — GenJAX + Python + R stencils, shared `rl_gridworld.py` env+viz, diagnose-and-fix-reward-hacking core. *(Julia variant not pursued; superseded by the GenJAX port.)*
 
 ### SP26 New — Week 1
 - [ ] Build SP26 Week 1 slide deck from `course/week01_intro_basic_bayes/PLAN.md` (SP25 `.pptx` files stay as reference) *(superseded by Week-2-onward triplet pattern; Week 1 stays on LECTURE_NOTES.md as-is)*
@@ -116,7 +116,7 @@
 - [x] Generalization assignment — three stencils (GenJAX/Python/R) + PDF: `course/assignments/generalization/`, done 2026-05-27
 - [ ] **Separate planning session:** scope GenJAX ports for MC / RL (depth, textbook chapter mapping, solution-notebook sources, sequencing by due-week)
 - [ ] Port MC assignment to GenJAX *(blocked on scoping session above)*
-- [ ] Port RL assignment to GenJAX *(blocked on scoping session above)*
+- [x] Port RL assignment to GenJAX (2026-06-20): `course/assignments/rl/` — `rl_genjax.ipynb` (env as a `@gen` model) + `rl_python.ipynb` + `rl_nosoln.Rmd`, shared `rl_gridworld.py`, solutions in `solutions/rl/`, rl.tex rebuilt (Assignment 4). Maps to textbook intro2/21–22.
 - [ ] **Write Tutorial 3 Bayesian-Generalization chapter** — see `textbook/CHIBANY_T3_GENERALIZATION_PLAN.md`. Week 4 has no textbook reading; generalization.pdf + course/assignments/README.md currently link to a forthcoming URL.
 - [ ] **Write Tutorial 3 Hierarchical-Bayes chapter** — see `textbook/CHIBANY_T3_GENERALIZATION_PLAN.md`. Also Week 4. Decision on numbering (insert vs. append, relative to `CHIBANY_T3_CH7-10_PLAN.md`) deferred until the writing agent picks up either plan.
 - [ ] Write Tutorial 3 Bayes-nets / causal / info-theory chapters — see `textbook/CHIBANY_T3_CH7-10_PLAN.md` (Week 5). *(Ch 8–11 are now BUILT per that plan; the file header records it.)*
