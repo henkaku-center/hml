@@ -7,6 +7,16 @@ docs/.staticrypt.json
 old_class_backup.tar.gz
 archive/
 
+# ── Student work — NEVER commit/push (privacy/FERPA) ────────────────────────
+# Graded submissions live OUTSIDE this repo at ../grading/ (which git cannot
+# track). These are a BACKSTOP in case a student-work folder is ever created
+# INSIDE the tree by mistake — they are deliberately broad.
+grading/
+student_submissions/
+student-submissions/
+submissions/
+graded/
+
 # Build / cache
 .quarto/
 _cache/
