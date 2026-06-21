@@ -119,7 +119,8 @@ Implement **Q-learning** on the *GardenPath* gridworld, then use it to see how t
 
 **Other details:**
 
-- **Prep reading:** Textbook Tutorial 3 — [Ch 21 (Markov Decision Processes)](https://josephausterweil.github.io/probintro/intro2/21_markov_decision_processes/) and [Ch 22 (Q-Learning)](https://josephausterweil.github.io/probintro/intro2/22_q_learning/), including the live Q-learning widget (the same GardenPath world).
+- **Prep reading:** Textbook Tutorial 3 — [Ch 21 (Markov Decision Processes)](https://josephausterweil.github.io/probintro/intro2/21_markov_decision_processes/) and [Ch 22 (Q-Learning)](https://josephausterweil.github.io/probintro/intro2/22_q_learning/). These walk through everything the assignment asks you to implement, on the same GardenPath world.
+- **Play with it first:** the [interactive Q-learning widget](https://josephausterweil.github.io/probintro/widgets/qlearning-gridworld.html) — step the algorithm one stage at a time, drag the $\alpha$/$\gamma$/$\epsilon$ sliders, and switch feedback schemes to watch the reward-hacking loop appear and shaping fix it.
 - **Lecture:** Week 8 covers decision theory, MDPs + value iteration, Q-learning, reward shaping, and simulation-based RL.
 - **Submit** (by DM or email to the instructor) **one** of the following:
     - your completed notebook (or knitted `.Rmd`) — it must run end-to-end and contain your figures, inline text answers, and descriptions; **or**

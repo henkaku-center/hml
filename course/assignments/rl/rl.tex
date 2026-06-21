@@ -19,6 +19,11 @@
     urlcolor={blue!80!black}
 }
 
+% Prep-reading / interactive links (defined once, reused throughout)
+\newcommand{\chmdp}{\href{https://josephausterweil.github.io/probintro/intro2/21_markov_decision_processes/}{Ch~21 (Markov Decision Processes)}}
+\newcommand{\chql}{\href{https://josephausterweil.github.io/probintro/intro2/22_q_learning/}{Ch~22 (Q-Learning)}}
+\newcommand{\qlwidget}{\href{https://josephausterweil.github.io/probintro/widgets/qlearning-gridworld.html}{interactive $Q$-learning widget}}
+
 \begin{document}
 \begin{centering}
 {\large \bf Assignment 4: Reinforcement Learning \\ Human and Machine Learning \\ Chiba Institute of Technology, School of Design \& Science \\ Prof. Joseph Austerweil \\ Due Fri Jul 10, 2026 at 8:00pm\\}
@@ -76,8 +81,8 @@ progress along the path is praised ($+10$), and --- being encouraging --- {\em
 backtracking} along the path earns faint praise ($+4$) rather than punishment.
 Both directions are positive.
 \end{itemize}
-You can also experiment with both schemes, step by step, in the interactive
-$Q$-learning widget embedded in textbook Chapter~22 (linked below).
+You can also experiment with both schemes, step by step, in the \qlwidget{} from
+textbook \chql{} (it uses this exact GardenPath world).
 
 \vspace{1em}
 \noindent {\bf Stencils.} Three starter stencils are provided in this directory;
@@ -92,16 +97,16 @@ an in-notebook interactive explorer); keep it next to your notebook.
 A Matlab stencil is available on request --- email Prof. Austerweil.
 
 \vspace{0.5em}
-\noindent {\bf Prep reading.} Textbook Tutorial~3:
-\href{https://josephausterweil.github.io/probintro/intro2/21_markov_decision_processes/}{Ch~21 (Markov Decision Processes)}
-and
-\href{https://josephausterweil.github.io/probintro/intro2/22_q_learning/}{Ch~22 (Q-Learning)},
-including the live Q-learning widget. This assignment uses the same GardenPath
-world and the same figures.
+\noindent {\bf Prep reading.} Textbook Tutorial~3 --- \chmdp{} and \chql{} --- which
+walk through everything this assignment asks you to implement. Both chapters embed
+the \qlwidget{} (open it fullscreen to play with $\alpha$, $\gamma$, $\epsilon$ and
+the feedback schemes). This assignment uses the same GardenPath world and the same
+figures, so the chapters are the fastest way in.
 
 \section{Implement $Q$-learning}
 In your stencil, fill in the one-line {\em prediction error} from
-Equation~\eqref{eq:qlearn} (the term under the brace). All the setup --- the world,
+Equation~\eqref{eq:qlearn} (the term under the brace; \chql{} steps through it one
+stage at a time if you want to see each piece). All the setup --- the world,
 $\epsilon$-greedy selection, the training loop, and the figures --- is provided.
 
 Then train under {\bf reward-maximizing (RM)} feedback and visualize the learned
@@ -122,6 +127,8 @@ forever rather than collect the one-time $+20$ at the goal?
 and the goal you intend? (This phenomenon is called {\em reward hacking} or {\em
 specification gaming}.)
 \end{enumerate}
+\chql{}'s ``Reward Shaping and Positive Cycles'' section discusses this failure if
+you want to compare your findings.
 
 \section{Design and verify a fix}
 AF tried to give helpful per-step feedback but accidentally created a reward cycle.
@@ -152,7 +159,7 @@ changed the optimum. Why?
 
 \section*{Bonus (+5)}
 $Q$-learning is {\em model-free} --- it never sees the transition rules, it learns
-only from samples. If we {\em know} the model (Chapter~21), we can compute the
+only from samples. If we {\em know} the model (\chmdp{}), we can compute the
 optimal policy exactly with {\em value iteration}. Using the provided helper,
 confirm your model-free learner found the same route to the goal that the
 model-based planner computes exactly. (In the GenJAX stencil, the value-iteration
