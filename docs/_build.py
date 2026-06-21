@@ -56,6 +56,13 @@ ASSIGNMENT_STENCILS = {
         "mc_approx_python.ipynb",
         "mcmc_approx.Rmd",
     ],
+    "rl": [
+        "rl.pdf",
+        "rl_genjax.ipynb",
+        "rl_python.ipynb",
+        "rl_nosoln.Rmd",
+        "rl_gridworld.py",   # shared env + viz module the stencils import
+    ],
 }
 
 TEXTBOOK_BASE = "https://josephausterweil.github.io/probintro"

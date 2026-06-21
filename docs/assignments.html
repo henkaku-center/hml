@@ -67,11 +67,11 @@
 <td>Monte Carlo, importance sampling, MCMC</td>
 </tr>
 <tr>
-<td>Reinforcement Learning</td>
+<td><a href="#reinforcement-learning">Reinforcement Learning</a></td>
 <td>Week 8 (Jun 19)</td>
-<td><em>TBA when released</em></td>
+<td><strong>Fri Jul 10, 8:00 PM</strong></td>
 <td>4.5%</td>
-<td>MDPs &amp; reinforcement learning</td>
+<td>Q-learning, reward hacking, reward shaping</td>
 </tr>
 </tbody>
 </table>
@@ -240,7 +240,59 @@
 </li>
 </ul>
 <h3 id="reinforcement-learning">Reinforcement Learning (4.5%)</h3>
-<p><em>Details will be posted when the assignment is released.</em></p>
+<p><strong>Due: Fri Jul 10, 2026 at 8:00 PM.</strong></p>
+<p>Implement <strong>Q-learning</strong> on the <em>GardenPath</em> gridworld, then use it to see how the <em>reward you write</em> can diverge from the <em>goal you intend</em>. <strong>Problem 1:</strong> fill in the one-line temporal-difference update and confirm it solves the task under reward-maximizing (outcome) feedback. <strong>Problem 2:</strong> diagnose a <em>reward-hacking</em> failure — under human-style action feedback the learned policy loops forever in a <strong>+14/lap</strong> positive cycle and never reaches the goal. <strong>Problem 3:</strong> design your own potential function $\Phi(s)$ and add <strong>potential-based shaping</strong> to give dense feedback the principled way; verify it reaches the goal <strong>and</strong> provably does not change the optimal policy (invariance). <strong>Bonus:</strong> confirm your model-free learner found the same route a model-based value-iteration planner computes exactly.</p>
+<p><strong>Start here — the assignment:</strong></p>
+<ul>
+<li><strong><a href="assignments/rl/rl.pdf">Assignment PDF — rl.pdf</a></strong> — the problem statements. Read this first.</li>
+</ul>
+<p><strong>Then pick one stencil to work in.</strong> All three cover the same problems with the same scaffolding (a shared <code>rl_gridworld.py</code> provides the world, the reward schemes, the figure renderer, and an in-notebook interactive explorer — keep it next to your notebook; the Colab stencils fetch it automatically).</p>
+<table class="data-table">
+<thead>
+<tr>
+<th>Stencil</th>
+<th>Open in Colab</th>
+<th>Download</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GenJAX (canonical)</strong></td>
+<td><a href="https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/rl/rl_genjax.ipynb">Open in Colab</a></td>
+<td><a href="assignments/rl/rl_genjax.ipynb">rl_genjax.ipynb</a></td>
+<td>The environment is a GenJAX <code>@gen</code> generative model; Q-learning learns by <em>sampling</em> it. Bonus value iteration reads the same model.</td>
+</tr>
+<tr>
+<td><strong>Python (no GenJAX)</strong></td>
+<td><a href="https://colab.research.google.com/github/henkaku-center/hml/blob/main/course/assignments/rl/rl_python.ipynb">Open in Colab</a></td>
+<td><a href="assignments/rl/rl_python.ipynb">rl_python.ipynb</a></td>
+<td>numpy + matplotlib. Same problems, no JAX.</td>
+</tr>
+<tr>
+<td><strong>R</strong></td>
+<td>— (knit locally in RStudio)</td>
+<td><a href="assignments/rl/rl_nosoln.Rmd">rl_nosoln.Rmd</a></td>
+<td>base R + ggplot2, self-contained. Colab does not run <code>.Rmd</code> files.</td>
+</tr>
+<tr>
+<td><strong>Matlab</strong></td>
+<td>—</td>
+<td>available on request</td>
+<td>Email Prof. Austerweil.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Other details:</strong></p>
+<ul>
+<li><strong>Prep reading:</strong> Textbook Tutorial 3 — <a href="https://josephausterweil.github.io/probintro/intro2/21_markov_decision_processes/">Ch 21 (Markov Decision Processes)</a> and <a href="https://josephausterweil.github.io/probintro/intro2/22_q_learning/">Ch 22 (Q-Learning)</a>, including the live Q-learning widget (the same GardenPath world).</li>
+<li><strong>Lecture:</strong> Week 8 covers decision theory, MDPs + value iteration, Q-learning, reward shaping, and simulation-based RL.</li>
+<li><strong>Submit</strong> (by DM or email to the instructor) <strong>one</strong> of the following:<ul>
+<li>your completed notebook (or knitted <code>.Rmd</code>) — it must run end-to-end and contain your figures, inline text answers, and descriptions; <strong>or</strong></li>
+<li>a single PDF report containing your code, figures, text answers, and descriptions.</li>
+</ul>
+</li>
+</ul>
     </div>
   </div>
 </section>

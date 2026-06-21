@@ -1,0 +1,349 @@
+---
+title: "Human and Machine Learning — Assignment 4: Reinforcement Learning"
+subtitle: "R (no-GenJAX) stencil"
+author: "Joseph Austerweil"
+date: "Spring 2026 (due Fri Jul 10, 2026 at 8:00pm)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(0)
+```
+
+This is the **R stencil** for Assignment 4. You implement **Q-learning** on the
+*GardenPath* gridworld, then study how the reward you write can diverge from the
+goal you intend — and how to fix it. The GenJAX (canonical) and Python stencils
+are `rl_genjax.ipynb` and `rl_python.ipynb` in this directory.
+
+**Corresponding textbook chapters:**
+[Tutorial 3 Ch 21 — Markov Decision Processes](https://josephausterweil.github.io/probintro/intro2/21_markov_decision_processes/)
+and [Ch 22 — Q-Learning](https://josephausterweil.github.io/probintro/intro2/22_q_learning/).
+
+> **Interactive explorer.** The Python/GenJAX stencils include an in-notebook
+> explorer (sliders + Step/Run/Train). R has no direct equivalent, so this
+> stencil makes **static** figures with `ggplot2`. To step through the algorithm
+> interactively, use the live widget embedded in
+> [Chapter 22](https://josephausterweil.github.io/probintro/intro2/22_q_learning/) —
+> it is the same GardenPath world.
+
+```{r libraries, message=FALSE, warning=FALSE}
+library(ggplot2)
+```
+
+# The GardenPath world
+
+A 3×3 grid. The cat starts bottom-left `(1,1)`; the goal is top-right `(3,3)`
+(terminal). The bottom-right 2×2 block is the **garden** (avoid it). Actions are
+`U/D/L/R`. The learner only knows it can move between cells and receives feedback.
+The code below is provided — read it, you do not edit it.
+
+```{r world}
+ACTIONS <- c("U", "D", "L", "R")
+AIDX    <- c(U = 1, D = 2, L = 3, R = 4)
+DR <- c(U = 1, D = -1, L = 0, R = 0)
+DC <- c(U = 0, D = 0, L = -1, R = 1)
+START  <- c(1, 1)
+GOAL   <- c(3, 3)
+GARDEN <- c("1,2", "1,3", "2,2", "2,3")
+MAXSTEP <- 30
+
+key          <- function(s) paste(s[1], s[2], sep = ",")
+is_goal      <- function(s) s[1] == GOAL[1] && s[2] == GOAL[2]
+is_garden    <- function(s) key(s) %in% GARDEN
+manhattan    <- function(s) abs(GOAL[1] - s[1]) + abs(GOAL[2] - s[2])
+states       <- function() expand.grid(r = 1:3, c = 1:3)
+
+valid_actions <- function(s) {
+  a <- character(0)
+  if (s[1] < 3) a <- c(a, "U")
+  if (s[1] > 1) a <- c(a, "D")
+  if (s[2] > 1) a <- c(a, "L")
+  if (s[2] < 3) a <- c(a, "R")
+  a
+}
+take_step <- function(s, a) c(s[1] + DR[[a]], s[2] + DC[[a]])
+```
+
+```{r rewards}
+# Reward tables, keyed "row,col" then action (the goal (3,3) is terminal).
+RM <- list(
+  "1,1" = c(U = 0,   R = -10),
+  "2,1" = c(U = 0,   R = -10, D = 0),
+  "3,1" = c(R = 0,   D = 0),
+  "1,2" = c(R = -10, U = -10, L = 0),
+  "2,2" = c(R = -10, U = 0,   L = 0,  D = -10),
+  "3,2" = c(R = 20,  L = 0,   D = -10),
+  "1,3" = c(U = -10, L = -10),
+  "2,3" = c(U = 20,  D = -10, L = -10))
+AF <- list(
+  "1,1" = c(U = 10,  R = -10),
+  "2,1" = c(U = 10,  R = -10, D = 4),
+  "3,1" = c(R = 10,  D = 4),
+  "1,2" = c(R = -10, U = -10, L = 10),
+  "2,2" = c(R = -10, U = 10,  L = -10, D = -10),
+  "3,2" = c(R = 20,  L = 4,   D = -10),
+  "1,3" = c(U = 10,  L = -10),
+  "2,3" = c(U = 10,  D = -10, L = -10))
+
+reward_rm <- function(s, a) RM[[key(s)]][[a]]            # outcome-based feedback
+reward_af <- function(s, a) AF[[key(s)]][[a]]            # human-style feedback
+phi_distance <- function(s) -manhattan(s)               # default potential
+
+# potential-based shaping of a base reward: r'(s,a)=base+gamma*phi(s')-phi(s)
+reward_shaped <- function(base_fn, phi, gamma) {
+  function(s, a) base_fn(s, a) + gamma * phi(take_step(s, a)) - phi(s)
+}
+```
+
+```{r qtable}
+fresh_Q <- function() {                  # NA at invalid actions; 0 at valid ones
+  Q <- array(NA_real_, dim = c(3, 3, 4))
+  for (i in 1:9) {
+    s <- c(states()$r[i], states()$c[i])
+    for (a in valid_actions(s)) Q[s[1], s[2], AIDX[[a]]] <- 0
+  }
+  Q
+}
+q_get <- function(Q, s, a) Q[s[1], s[2], AIDX[[a]]]
+q_max <- function(Q, s) if (is_goal(s)) 0 else max(Q[s[1], s[2], ], na.rm = TRUE)
+greedy_action <- function(Q, s) {
+  va <- valid_actions(s)
+  vals <- vapply(va, function(a) q_get(Q, s, a), numeric(1))
+  va[which.max(vals)]                    # ties -> first (deterministic)
+}
+eps_greedy <- function(Q, s, eps) {
+  va <- valid_actions(s)
+  if (runif(1) < eps) sample(va, 1) else greedy_action(Q, s)
+}
+```
+
+```{r train-rollout}
+train <- function(Q, reward_fn, pred_error, n_steps = 4000,
+                  alpha = 0.9, gamma = 0.95, eps = 0.1) {
+  s <- START; t <- 0
+  for (i in 1:n_steps) {
+    a  <- eps_greedy(Q, s, eps)
+    s2 <- take_step(s, a)
+    r  <- reward_fn(s, a)
+    pe <- pred_error(Q, s, a, r, s2, gamma)          # <- your rule (below)
+    Q[s[1], s[2], AIDX[[a]]] <- q_get(Q, s, a) + alpha * pe
+    t <- t + 1
+    if (is_goal(s2) || t >= MAXSTEP) { s <- START; t <- 0 } else s <- s2
+  }
+  Q
+}
+
+# follow the greedy policy from the start: does it reach the goal or loop?
+greedy_rollout <- function(Q, reward_fn = NULL, max_len = 40) {
+  p <- START; path <- list(p); seen <- c(); seen[key(p)] <- 0
+  cyc <- FALSE; net <- NA
+  for (i in 1:max_len) {
+    if (is_goal(p)) break
+    a  <- greedy_action(Q, p)
+    np <- take_step(p, a); path[[length(path) + 1]] <- np
+    if (!is.na(seen[key(np)])) {
+      cyc <- TRUE
+      if (!is.null(reward_fn)) {
+        j <- seen[key(np)]; net <- 0
+        for (t in (j + 1):(length(path) - 1))
+          net <- net + reward_fn(path[[t]], greedy_action(Q, path[[t]]))
+      }
+      break
+    }
+    seen[key(np)] <- length(path) - 1; p <- np
+  }
+  list(path = path, reached = is_goal(path[[length(path)]]), cycles = cyc, net_lap = net)
+}
+
+verdict <- function(Q, reward_fn = NULL) {
+  tr <- greedy_rollout(Q, reward_fn)
+  if (tr$reached) return("the learned policy REACHES THE GOAL")
+  if (tr$cycles && !is.na(tr$net_lap) && tr$net_lap > 0)
+    return(sprintf("the learned policy LOOPS - a +%.0f/lap reward cycle", tr$net_lap))
+  if (tr$cycles) return("the learned policy LOOPS - never reaches the goal")
+  "the learned policy has not settled"
+}
+
+# exact optimal Q by value iteration on the known deterministic model (for the
+# invariance check and the bonus)
+q_value_iteration <- function(reward_fn, gamma = 0.95, sweeps = 200) {
+  Q <- fresh_Q()
+  for (sw in 1:sweeps) {
+    newQ <- fresh_Q()
+    for (i in 1:9) {
+      s <- c(states()$r[i], states()$c[i]); if (is_goal(s)) next
+      for (a in valid_actions(s)) {
+        s2 <- take_step(s, a)
+        fut <- if (is_goal(s2)) 0 else max(Q[s2[1], s2[2], ], na.rm = TRUE)
+        newQ[s[1], s[2], AIDX[[a]]] <- reward_fn(s, a) + gamma * fut
+      }
+    }
+    Q <- newQ
+  }
+  Q
+}
+greedy_policy <- function(Q) {
+  out <- list()
+  for (i in 1:9) {
+    s <- c(states()$r[i], states()$c[i]); if (is_goal(s)) next
+    out[[key(s)]] <- greedy_action(Q, s)
+  }
+  out
+}
+```
+
+```{r renderer}
+# Static figure mirroring the Chapter-22 widget: green/red Q-wedges, greedy
+# arrows, and the greedy route from the start (green reaches goal, red loops).
+plot_gridworld <- function(Q, reward_fn = NULL, title = NULL) {
+  wed <- do.call(rbind, lapply(1:9, function(i) {
+    s <- c(states()$r[i], states()$c[i]); r <- s[1]; cc <- s[2]
+    if (is_goal(s)) return(NULL)
+    do.call(rbind, lapply(valid_actions(s), function(a) {
+      v <- q_get(Q, s, a)
+      tri <- switch(a,
+        U = data.frame(x = c(cc, cc - .5, cc + .5), y = c(r, r + .5, r + .5)),
+        D = data.frame(x = c(cc, cc - .5, cc + .5), y = c(r, r - .5, r - .5)),
+        L = data.frame(x = c(cc, cc - .5, cc - .5), y = c(r, r - .5, r + .5)),
+        R = data.frame(x = c(cc, cc + .5, cc + .5), y = c(r, r - .5, r + .5)))
+      tri$grp <- paste(i, a); tri$v <- v
+      tri$fill <- if (v > .001) "#66BB6A" else if (v < -.001) "#EF5350" else "#444444"
+      tri$alpha <- 0.18 + 0.62 * min(1, abs(v) / 18); tri
+    }))
+  }))
+  tiles <- do.call(rbind, lapply(1:9, function(i) {
+    s <- c(states()$r[i], states()$c[i])
+    fc <- if (is_goal(s)) "#2a2410" else if (is_garden(s)) "#241015" else "#10241a"
+    data.frame(x = s[2], y = s[1], fill = fc)
+  }))
+  trained <- any(abs(Q[!is.na(Q)]) > 1e-9)
+  g <- ggplot() +
+    geom_tile(data = tiles, aes(x, y, fill = fill), width = 1, height = 1,
+              color = "#2f3a36") +
+    geom_polygon(data = wed, aes(x, y, group = grp, fill = fill, alpha = alpha),
+                 color = NA) +
+    scale_fill_identity() + scale_alpha_identity()
+  if (trained) {
+    arr <- do.call(rbind, lapply(1:9, function(i) {
+      s <- c(states()$r[i], states()$c[i]); if (is_goal(s)) return(NULL)
+      a <- greedy_action(Q, s)
+      data.frame(x = s[2], y = s[1], xe = s[2] + DC[[a]] * .34, ye = s[1] + DR[[a]] * .34)
+    }))
+    tr <- greedy_rollout(Q, reward_fn)
+    rt <- do.call(rbind, lapply(tr$path, function(p) data.frame(x = p[2], y = p[1])))
+    g <- g +
+      geom_path(data = rt, aes(x, y), linewidth = 2,
+                color = if (tr$reached) "#66BB6A" else "#EF5350", alpha = .6) +
+      geom_segment(data = arr, aes(x = x, y = y, xend = xe, yend = ye),
+                   color = "white",
+                   arrow = grid::arrow(length = grid::unit(.12, "cm")))
+    if (is.null(title)) title <- verdict(Q, reward_fn)
+  }
+  g + annotate("point", x = GOAL[2], y = GOAL[1], shape = 8, color = "#FFEB3B", size = 5) +
+    annotate("point", x = START[2], y = START[1], color = "#64B5F6", size = 3) +
+    coord_fixed(xlim = c(.5, 3.5), ylim = c(.5, 3.5)) +
+    labs(title = title) +
+    theme_void() +
+    theme(plot.background = element_rect(fill = "#111111", color = NA),
+          plot.title = element_text(color = "white", size = 11, hjust = .5))
+}
+```
+
+# Problem 1 — Implement Q-learning, then watch it learn
+
+Q-learning keeps a table $Q(s,a)$ of expected future reward. After taking $a$ in
+$s$, getting reward $r$, and landing in $s'$, it nudges $Q(s,a)$ toward a target:
+
+$$Q(s,a) \leftarrow Q(s,a) + \alpha\big(\underbrace{r + \gamma\max_{a'}Q(s',a') - Q(s,a)}_{\text{prediction error}}\big)$$
+
+**Your task:** fill in the one-line prediction error. `q_max(Q, s_next)` returns
+$\max_{a'}Q(s',a')$ (and 0 at the goal); `q_get(Q, s, a)` returns $Q(s,a)$.
+
+```{r pred-error}
+pred_error <- function(Q, s, a, r, s_next, gamma) {
+  # FILL ME IN (one line): r + gamma * max_a' Q(s_next, a') - Q(s, a)
+  NA
+}
+```
+
+Train under **reward-maximizing (RM)** feedback and look at the learned policy.
+
+```{r p1-train}
+Q_rm <- train(fresh_Q(), reward_rm, pred_error,
+              n_steps = 4000, alpha = 0.9, gamma = 0.95, eps = 0.1)
+plot_gridworld(Q_rm, reward_rm)
+cat(verdict(Q_rm, reward_rm), "\n")
+```
+
+**Deliverable.** Include the RM figure and a sentence: does the policy reach the
+goal, and does it make sense?
+
+# Problem 2 — Diagnose a reward-hacking failure
+
+The *action-feedback (AF)* scheme praises forward progress (+10) and gives faint
+praise (+4), not punishment, for backtracking. Train under AF and see what the
+agent learns.
+
+```{r p2-train}
+Q_af <- train(fresh_Q(), reward_af, pred_error, n_steps = 4000)
+plot_gridworld(Q_af, reward_af)
+roll <- greedy_rollout(Q_af, reward_af)
+cat("reaches goal?", roll$reached, " | net reward per lap:", roll$net_lap, "\n")
+```
+
+**Answer (a few sentences):** (1) Does the policy reach the goal, or what does it
+do instead? (2) Report the **net reward per lap** and explain why a
+reward-maximizing agent prefers the loop to the goal. (3) What does this show
+about the *reward you write* versus the *goal you intend*?
+
+# Problem 3 — Design and verify a fix
+
+AF tried to give dense feedback but created a cycle. The principled way is
+**potential-based shaping**: choose a potential $\Phi(s)$ and add a *difference*
+to the true reward, $r'(s,a) = r_{\text{RM}}(s,a) + \gamma\Phi(s') - \Phi(s)$. A
+step toward the goal earns a bonus; a step away pays an equal penalty, so there
+is no farmable cycle.
+
+**Your task:** design $\Phi(s)$ (a good default is the negative distance to the
+goal — but try your own and justify it).
+
+```{r p3-phi}
+phi <- function(s) {
+  # FILL ME IN, e.g.  -manhattan(s)
+  NA
+}
+shaped <- reward_shaped(reward_rm, phi, gamma = 0.95)
+Q_sh <- train(fresh_Q(), shaped, pred_error, n_steps = 4000)
+plot_gridworld(Q_sh, shaped)
+cat(verdict(Q_sh, shaped), "\n")
+```
+
+Verify the fix is **safe** — shaping a reward that already works (RM) should not
+change which policy is optimal:
+
+```{r p3-invariance}
+pol_rm <- greedy_policy(q_value_iteration(reward_rm, 0.95))
+pol_sh <- greedy_policy(q_value_iteration(reward_shaped(reward_rm, phi, 0.95), 0.95))
+cat("same optimum?", identical(pol_rm, pol_sh), "\n")
+```
+
+**Answer (a few sentences):** (1) Does your shaped reward reach the goal?
+(2) Did shaping change the optimal policy? Explain **why** $\gamma\Phi(s')-\Phi(s)$
+cannot change the optimum (hint: sum it along a trajectory — what telescopes?).
+(3) Contrast with AF: both add dense feedback, but only one changes the optimum.
+
+# Bonus (+5) — model-based vs model-free
+
+Q-learning is *model-free* (it learns from samples). If we know the model we can
+compute the optimum exactly with **value iteration**. Confirm they agree.
+
+```{r bonus}
+star <- q_value_iteration(reward_rm, 0.95)
+route <- function(Q) sapply(greedy_rollout(Q, reward_rm)$path, key)
+cat("value-iteration route:", route(star), "\n")
+cat("Q-learning route     :", route(Q_rm), "\n")
+```
+
+**Submit** your knitted `.Rmd` (or a PDF) with your figures, code, and written
+answers.
