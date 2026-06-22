@@ -12,7 +12,7 @@
 | 6    | (none)                                             |                        |
 | 7    | Bayes Net                                          | Wording needs fix      |
 | 8    | Markov chains and networks                         |                        |
-| 9    | Monte Carlo Estimation                             |                        |
+| 9    | Monte Carlo Estimation                             | SP25 carryover — IRL lecture is Week 9 in SP26; the "Social Cognition and IRL" quiz (row 11) topically belongs here. Reconcile. |
 | 10   | (none)                                             |                        |
 | 11   | Social Cognition and IRL                           |                        |
 | 12   | Intro to Bayes Nonparametrics                      |                        |
