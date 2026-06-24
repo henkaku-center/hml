@@ -15,9 +15,9 @@
 
 ## Textbook Chapters
 Planned (T3 series — next free weights after Ch 20–22; **authoring pending**). **Adapt the FINAL deck via `TEXTBOOK_HANDOFF.md`** — the deck was reordered "Recover → Teach → Align" after this PLAN's original block order, and the chapters follow the deck, not the old order:
-- T3: inverse rl / recovering the objective — `intro2/23_inverse_rl_goal_inference.md` — goal inference (Bayes-rule anatomy, softmax, ill-posedness) **+ IRL methods** (MaxEnt → GAIL → AIRL); attribution Baker & Tenenbaum; Widgets A + D
-- T3: pomdps, belief & teaching — `intro2/24_pomdps_belief_inference.md` — belief b(s), Tiger / α-vectors / decision-walk, then teaching / legibility / CIRL; Widgets B + C
-- T3: modern rl / world models / alignment — `intro2/25_modern_rl_world_models.md` — RLHF/DPO as IRL (explain→model→code→example), LLM-ToM (skeptical), world models; clears the deferred Week-8 TODO; numpy-first/optional-JAX
+- T3: inverse rl goal inference — `intro2/23_inverse_rl_goal_inference.md` (goal inference: Bayes-rule anatomy, softmax, ill-posedness; IRL methods MaxEnt→GAIL→AIRL; ToM = IRL, Baker & Tenenbaum; Widgets A+D)
+- T3: pomdps belief inference — `intro2/24_pomdps_belief_inference.md` (belief b(s), Tiger / α-vectors / decision-walk; teaching / legibility / CIRL; Widgets B+C)
+- T3: modern rl world models — `intro2/25_modern_rl_world_models.md` (RLHF/DPO as preference-based IRL, ToMnet, world models, the skeptical LLM-ToM debate)
 
 ## GenJAX Integration
 **Done — 4 verified backbones** (genjax 0.10.3 + jax 0.5.3), one per major beat, each feeding the deck's runnable code-slides + figures:
