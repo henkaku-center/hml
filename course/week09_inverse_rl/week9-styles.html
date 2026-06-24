@@ -1,0 +1,191 @@
+<style>
+/* Make section-break titles legible over photo backgrounds (e.g. the cat
+   break slide), without touching the shared theme. */
+.reveal .slides section.section-break h1,
+.reveal .slides section.section-break h2 {
+  text-shadow: 0 2px 10px rgba(0,0,0,0.9), 0 0 4px rgba(0,0,0,0.9);
+}
+/* The interactive-widget slide is a full-bleed background iframe whose own panel
+   carries the title; hide the redundant slide heading that otherwise floats over
+   the grid. */
+.reveal .slides section[data-background-iframe] > h1,
+.reveal .slides section[data-background-iframe] > h2 { display: none !important; }
+/* Dark scrim behind the Break title only — a soft radial vignette so the
+   photo stays visible but the word "Break" reads cleanly. */
+.reveal .slides section[data-background-image*="CallieJimWeek9"]::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center,
+              rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 70%);
+  pointer-events: none;
+}
+/* ===================================================================
+   FILL-THE-SLIDE LAYOUT (from the 6-agent layout study, 2026-06-08)
+   Root cause: center:false pins every content <section> to the top, so
+   content top-aligns and dead space pools at the bottom. Fix: make content
+   sections full-height flex columns with space-between — title pinned top,
+   body distributed down, comfortable bottom margin. Section-breaks, title,
+   and .center slides already self-center via the theme and are excluded.
+   No overflow:hidden anywhere, so a too-tall slide still surfaces OVERFLOW
+   rather than being clipped. Print-pdf gated off (reveal uses static layout
+   there). Deck-scoped pending mirror into the shared sds.scss.
+   Loaded via include-in-header so it lands in <head> and creates NO slide
+   (an inline ```{=html} block would render as its own blank section).
+   =================================================================== */
+.reveal:not(.print-pdf) .slides > section:not(.stack):not(.center):not(.section-break):not(.title-slide):not(.quarto-title-block),
+.reveal:not(.print-pdf) .slides > section.stack > section:not(.center):not(.section-break):not(.title-slide) {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  /* center the title+body as one balanced group: space-between pinned a single
+     content block to the bottom, leaving a dead void under the title. Two-column
+     and figure slides still fill via the .columns flex:1 rule below. */
+  justify-content: center !important;
+  gap: 2.4vh;
+  padding: 3% 0 4% 0 !important;
+  box-sizing: border-box !important;
+}
+/* A full-width image as a DIRECT flex child of a content section collapses to
+   height:0. Quarto stamps such images with `.r-stretch`, whose RevealJS JS sets
+   an inline height computed from available space — but with our flex column +
+   lazy `data-src` loading, that computation runs before the image has
+   dimensions and lands on ~0, so the figure never paints (in the browser AND
+   in decktape/PDF; a direct slide-jump happened to dodge it, which is why it
+   looked fine in spot checks). Fix: neutralize r-stretch on content slides and
+   let the image size from its own aspect ratio, capped so it can't overflow.
+   Images inside .columns are unaffected. */
+.reveal .slides section img.r-stretch,
+.reveal .slides section img.quarto-figure {
+  height: auto !important;
+  max-height: 340px !important;   /* px, not vh — vh mis-resolves in Reveal's 540px scaled slides */
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  object-fit: contain;
+}
+/* Figure-centric slides: size the figure by HEIGHT (not width) so a tall
+   figure actually grows, capped so it leaves room for the caption. width:auto
+   keeps the aspect ratio; max-height drives the size. */
+.reveal .slides section.big-figure img.quarto-figure,
+.reveal .slides section.big-figure img.r-stretch {
+  height: auto !important;
+  width: auto !important;
+  max-width: 100% !important;
+  max-height: 400px !important;   /* px, not vh — vh mis-resolves in Reveal's scaled slides */
+}
+.reveal .slides section.big-figure > .lang-en,
+.reveal .slides section.big-figure > .lang-ja { margin-top: 0.2em; }
+/* Keep the wrapping block from being flex-collapsed, and don't let r-stretch's
+   inline height win. */
+.reveal:not(.print-pdf) .slides > section > img.r-stretch,
+.reveal:not(.print-pdf) .slides > section > img.quarto-figure,
+.reveal:not(.print-pdf) .slides > section.stack > section > img.r-stretch,
+.reveal:not(.print-pdf) .slides > section.stack > section > img.quarto-figure {
+  flex: 0 1 auto !important;
+  align-self: center !important;
+  min-height: 0;
+}
+
+/* Agenda: spread the timed rows evenly down the full body height. */
+.reveal .agenda-roomy ul {
+  max-width: 86%;
+  flex: 1 1 auto; min-height: 0;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.reveal .agenda-roomy li { font-size: 0.82em; line-height: 1.1; padding: 0; }
+
+/* This deck's agendas now carry 9 timed rows (the back third was split into
+   recovering-rewards / teaching / alignment). The shared .agenda.dense (0.82em)
+   overflows at 9 rows, so tighten it deck-locally. Higher specificity than the
+   theme rule so it wins regardless of stylesheet order. */
+.reveal .slides section.agenda.dense li { font-size: 0.70em; line-height: 1.12; padding: 0.015em 0; }
+
+/* Poll options: a big, well-spaced, boxed stack — projector-legible from the
+   back row, and the box fills the lower band whether or not the reveal has
+   fired (the fragment stays in layout, just opacity:0 until shown). Sized to
+   fit the revealed state at BOTH the 960×540 render and the audit's taller
+   viewport, so no OVERFLOW either way. */
+.reveal .poll-slide .fragment { width: 100%; }
+.reveal .poll-slide .fragment ul { list-style: none; padding: 0; margin: 0 auto; max-width: 76%; }
+.reveal .poll-slide .fragment li {
+  font-size: 1.02em; line-height: 1.15; font-weight: 600;
+  padding: 0.28em 0.7em; margin: 0.26em auto;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 0.4em; background: rgba(255,255,255,0.035);
+  overflow-wrap: break-word;
+}
+/* Poll prompt: center the question/options group rather than push to the
+   extremes, so a 3-option poll looks composed (not stretched edge-to-edge). */
+.reveal .slides > section.poll-slide,
+.reveal .slides > section.stack > section.poll-slide { justify-content: center !important; gap: 1.4vh; }
+/* Question text — the lang divs directly under the section (NOT the options
+   inside the .fragment) — sized up for back-row legibility. */
+.reveal .poll-slide > .lang-en,
+.reveal .poll-slide > .lang-ja { font-size: 1.3em; line-height: 1.3; }
+
+/* Monte Carlo estimator slide: drop the figure+text column block down so the
+   figure's title isn't crowding the μ̂ caption above it. */
+.reveal .mc-estimator > .columns { margin-top: 0.55em; }
+/* Poll reveal: hero answer; center the answer+justification block. */
+.reveal .poll-reveal .yellow { font-size: 1.22em; }
+.reveal .slides > section.poll-reveal,
+.reveal .slides > section.stack > section.poll-reveal { justify-content: center !important; gap: 1.6vh; }
+
+/* Two-column slides: let the .columns row own the body height and vertically
+   center each column, so a short text column centers against a tall code
+   block / figure instead of top-pinning (kills COLUMN-THIN). */
+.reveal .slides section .columns {
+  flex: 1 1 auto; min-height: 0;
+  display: flex !important; align-items: center !important;
+}
+.reveal .slides section .columns > .column { align-self: center; }
+
+/* Hospital poll answer: text top-aligned (shifted up) to leave room for the
+   simulation figure that fades in below, instead of vertically centering. */
+.reveal .slides > section.poll-answer-hosp,
+.reveal .slides > section.stack > section.poll-answer-hosp {
+  justify-content: flex-start !important; gap: 0.8vh;
+}
+.reveal .poll-answer-hosp .r-stack { margin-top: 0.6em; }
+/* Bottom-right source citation (e.g. a referenced book/site). Absolute so it
+   doesn't disturb the fill-the-slide flex flow. */
+.reveal .cite { position: absolute; bottom: 0.45em; right: 0.7em; left: auto; top: auto;
+  font-size: 0.40em; line-height: 1.3; color: #888; max-width: 64%; text-align: right; margin: 0; }
+.reveal .cite a { color: #aab; text-decoration: underline; }
+</style>
+
+<script>
+/* Force ALL slide images to load eagerly and drop the `r-stretch` class.
+   Quarto renders full-width figures with `data-src` (lazy-load) + `.r-stretch`
+   (RevealJS computes an inline height). With our fill-the-slide flex layout the
+   r-stretch height computes to ~0 before the lazy image has dimensions, so the
+   figure never paints — in the browser AND in decktape/PDF. Converting
+   data-src→src (eager) and stripping r-stretch makes every figure size from its
+   own aspect ratio (capped by the CSS max-height) and render reliably. Runs as
+   soon as the DOM is parsed, before Reveal's lazy/stretch logic. */
+(function () {
+  function fixImgs() {
+    document.querySelectorAll('.reveal .slides img').forEach(function (img) {
+      if (img.hasAttribute('data-src')) {
+        img.setAttribute('src', img.getAttribute('data-src'));
+        img.removeAttribute('data-src');
+      }
+      img.classList.remove('r-stretch');
+      img.style.height = 'auto';
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixImgs);
+  } else {
+    fixImgs();
+  }
+  // Re-assert after Reveal initializes (it may re-add r-stretch sizing).
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.Reveal && window.Reveal.on) {
+      window.Reveal.on('ready', fixImgs);
+      window.Reveal.on('slidechanged', fixImgs);
+    } else {
+      setTimeout(fixImgs, 600);
+    }
+  });
+})();
+</script>
