@@ -14,10 +14,10 @@
 - **Quiz:** "Social Cognition and Inverse Reinforcement Learning" (`archive/.../gb593d4394…`) — Q2 (which is NOT IRL) + Q1 (ToM functionalism) mined as live polls.
 
 ## Textbook Chapters
-Planned (T3 series — next free weights after Ch 20–22; **authoring pending**):
-- T3: inverse rl goal inference — `intro2/23_inverse_rl_goal_inference.md` (Widgets A + D)
-- T3: pomdps belief inference — `intro2/24_pomdps_belief_inference.md` (Widgets B + C)
-- T3: modern rl world models — `intro2/25_modern_rl_world_models.md` (clears the deferred Week-8 TODO; numpy-first/optional-JAX)
+Planned (T3 series — next free weights after Ch 20–22; **authoring pending**). **Adapt the FINAL deck via `TEXTBOOK_HANDOFF.md`** — the deck was reordered "Recover → Teach → Align" after this PLAN's original block order, and the chapters follow the deck, not the old order:
+- T3: inverse rl / recovering the objective — `intro2/23_inverse_rl_goal_inference.md` — goal inference (Bayes-rule anatomy, softmax, ill-posedness) **+ IRL methods** (MaxEnt → GAIL → AIRL); attribution Baker & Tenenbaum; Widgets A + D
+- T3: pomdps, belief & teaching — `intro2/24_pomdps_belief_inference.md` — belief b(s), Tiger / α-vectors / decision-walk, then teaching / legibility / CIRL; Widgets B + C
+- T3: modern rl / world models / alignment — `intro2/25_modern_rl_world_models.md` — RLHF/DPO as IRL (explain→model→code→example), LLM-ToM (skeptical), world models; clears the deferred Week-8 TODO; numpy-first/optional-JAX
 
 ## GenJAX Integration
 **Done — 4 verified backbones** (genjax 0.10.3 + jax 0.5.3), one per major beat, each feeding the deck's runnable code-slides + figures:
@@ -48,7 +48,7 @@ week9-audit/slide-fill.json   fill-audit output
 ```
 
 ## TODOs
-- [ ] **Author the 3 textbook chapters** (Ch 23/24/25) per `textbook/CLAUDE.md` conventions (date frontmatter, `validate_code_blocks.py`, `*.ja.md` siblings, interwoven GenJAX cells, Colab links). Embed the 4 widgets via iframe. This also clears the root-`TODO.md` deferred **modern RL / world models** chapter (Ch 25).
+- [ ] **Author the 3 textbook chapters** (Ch 23/24/25) — **start from `TEXTBOOK_HANDOFF.md`** (the final reordered spine, verified numbers, and chapter map) — per `textbook/CLAUDE.md` conventions (date frontmatter, `validate_code_blocks.py`, `*.ja.md` siblings, interwoven GenJAX cells, Colab links). Embed the 4 widgets via iframe. This also clears the root-`TODO.md` deferred **modern RL / world models** chapter (Ch 25).
 - [ ] On chapter publish: cross-refs (notebook_guide.md ×3, glossary.md terms + chapter `*Glossary:*` lines, PLAN `T3:` lines) → regenerate `docs/index.html` via `python3 docs/_build.py`.
 - [ ] Quiz mapping: `course/quizzes/README.md` lists Week 9 → "Monte Carlo Estimation" and the IRL quiz under Week 11 (an SP25-schedule carryover). Reconcile so the IRL quiz maps to this week.
 - [ ] Native-speaker proof of the JA slide translations.

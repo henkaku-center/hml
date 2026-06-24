@@ -354,6 +354,39 @@ Content-trim patterns that reliably work:
   reveals asymmetries instantly; an EN-trim without the matching JA-trim
   leaves the JA side bloated.
 
+## The OTHER visual-QA loop: matplotlib figure PNGs
+
+The fill audit checks the *slide HTML*. It does NOT look inside the figure PNGs,
+and the most common figure defect — **text spilling outside a box, or an
+arrow/connector label colliding with a box** — is invisible to it. Figures get
+their own quick loop:
+
+1. **Composite onto the slide background before reading.** The PNGs are
+   transparent with light-colored text. On a white image viewer, white-on-white
+   overflow and box collisions vanish. Always composite onto `#111111` first:
+   ```python
+   from PIL import Image
+   im = Image.open("images/foo.png").convert("RGBA")
+   bg = Image.new("RGBA", im.size, (17,17,17,255)); bg.alpha_composite(im)
+   bg.convert("RGB").save("/tmp/foo.png")   # now Read /tmp/foo.png
+   ```
+   For an audit pass, stack every box-heavy figure into one contact sheet and
+   Read that — collisions jump out.
+2. **Box-text fit is a hard rule.** Size each `box()` to its *longest* line (or
+   drop the font); a box whose text runs past the rounded border is a defect,
+   same as a clipped slide. Check the `width`/`fs` of every `box()` call against
+   its string.
+3. **Connector/arrow labels go in their own band.** Never place a label at the
+   same `y` as a box — it overlaps the box edge. Put it clearly above the row or
+   in the gap between rows (Week 9 `tom-as-irl` was the canonical fix).
+4. **A wide/short figure under a text block renders microscopic.** That's not a
+   figure bug, it's a *layout* bug — the fill-flex starved it of height. Move
+   the figure to its own slide or a real two-column; don't shrink-fix it.
+
+Aspect matters: a 3:1 figure at `width="90%"` is a fine big banner; the same
+figure stacked under four bullets is a 5%-tall sliver. Decide the slide layout
+*around* the figure's aspect ratio.
+
 ## Hard truths to internalize
 
 - **Some slides genuinely have only 5-6 lines of real content.** No font-size
