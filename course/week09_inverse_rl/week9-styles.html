@@ -130,6 +130,20 @@
 .reveal .slides > section.poll-reveal,
 .reveal .slides > section.stack > section.poll-reveal { justify-content: center !important; gap: 1.6vh; }
 
+/* Foreground interactive-widget slides. The first delivery embedded the widgets
+   as data-background-iframe (title hidden, fell back to a static PNG in practice,
+   never foregrounded/driven). These are now ordinary titled slides whose body is
+   a sized, visible iframe the instructor drives live. height in px (vh mis-resolves
+   in Reveal's 540px scaled slides). */
+.reveal .slides section.widget-slide { gap: 1.0vh; }
+.reveal .slides section.widget-slide iframe.widget-frame {
+  flex: 1 1 auto; min-height: 0;
+  width: 100%; height: 432px; max-height: 458px;
+  border: 0; border-radius: 0.35em; background: #111;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.5); align-self: center;
+}
+.reveal .slides section.widget-slide .widget-cap { font-size: 0.42em; color: #888; margin: 0.15em 0 0 0; }
+
 /* Two-column slides: let the .columns row own the body height and vertically
    center each column, so a short text column centers against a tall code
    block / figure instead of top-pinning (kills COLUMN-THIN). */

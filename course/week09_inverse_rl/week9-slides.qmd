@@ -16,6 +16,8 @@ resources:
   - widgets/pomdp-belief.html
   - widgets/showing-vs-doing.html
   - widgets/reward-recovery.html
+  - widgets/mdp-value-iteration.html
+  - widgets/particle-filter.html
 ---
 
 # [Run the camera backwards]{.lang-en}[カメラを逆回しする]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
@@ -100,11 +102,55 @@ The likelihood `P(actions | goal)` is just a **policy** — how a goal-seeker wo
 The single equation the whole deck hangs on — write it big and say it once slowly. The key move to land: the likelihood P(actions | goal) is JUST a policy — exactly what we computed last week (value iteration → Q-values). The one new ingredient this week is making the agent noisily rational: wrap Q in a softmax with temperature β, so mistakes are possible and the inference has something to chew on. Promise them the punchline now: today we re-run this exact inversion on goal, then belief, then reward — same equation, richer hidden variable each time. Don't derive anything yet; that's the next block.
 :::
 
+## [The agent model — a POMDP]{.lang-en}[エージェントのモデル — POMDP]{.lang-ja}
+
+![](images/agent-model-pomdp.png){fig-align="center" width="66%"}
+
+::: {.lang-en}
+Every agent today fits **one picture**: a goal/**reward** $R$ drives a **policy** $\pi$ that picks an **action** $a$; the world has a hidden **state** $s$ the agent sees only through a noisy **observation** $o$, so it tracks a **belief** $b(s)$. That is a **POMDP** — a *partially observable* MDP. Week 8 ran it **forward** (every piece known → behavior); all week we **invert** it — watch behavior, infer one hidden piece.
+:::
+::: {.lang-ja}
+今日のエージェントは全て**一枚の図**に収まる：目標＝**報酬** $R$ が**方策** $\pi$ を動かし**行動** $a$ を選ぶ。世界には隠れた**状態** $s$ があり、エージェントはノイズのある**観測** $o$ を通してしか見えないので、**信念** $b(s)$ を保持する。これが **POMDP**（*部分観測*MDP）だ。先週は**順方向**（全要素既知→行動）、今週はこれを**反転**する — 行動を見て隠れた一要素を推論する。
+:::
+
+::: {.notes}
+The master frame — the single most important slide of this redesign. Trace the loop on the figure: reward R → policy π → action a (the only OBSERVED piece, green); the world state s is hidden (red); the agent sees it only through observation o and tracks belief b(s). Define the acronym at first use: POMDP = Partially Observable Markov Decision Process — an MDP where the agent doesn't see the true state. The line to land: Week 8 ran this FORWARD (all pieces known → behavior); all of Week 9 is the INVERSE — observe behavior, infer ONE hidden piece. Tell them this diagram returns every block with the piece we're inferring lit up — so they expect it. No Bayes math yet (next slides); this is the map.
+:::
+
+## [A map of the unknowns]{.lang-en}[未知の地図]{.lang-ja}
+
+::: {.lang-en}
+The rest of the day is **this one model with a different piece hidden** each time:
+
+- **reward $R$** hidden, world seen → **goal inference / IRL** (next)
+- **belief $b$** hidden, possibly *false* → **theory of mind**, POMDPs
+- **reward $R$ at scale** → MaxEnt IRL, RLHF
+- the **observer's belief** is what *you* steer → **teaching / showing**
+- two agents, **one shared hidden $R$** → **alignment**
+
+Same inversion, a richer unknown each time — we *point at the lit box*, we don't re-derive it.
+:::
+::: {.lang-ja}
+今日の残りは**同じモデルで、毎回隠す要素を変える**だけ：
+
+- **報酬 $R$** が隠れ、世界は見える → **目標推論 / 逆強化学習**（次）
+- **信念 $b$** が隠れ、時に*誤り* → **心の理論**、POMDP
+- **大規模な報酬 $R$** → 最大エントロピーIRL、RLHF
+- **観察者の信念**を*あなたが*操る → **教示 / 見せる**
+- 二者が**一つの隠れた $R$ を共有** → **アラインメント**
+
+同じ反転、毎回より豊かな未知 — 光る箱を*指す*だけで、導出し直さない。
+:::
+
+::: {.notes}
+The itinerary — "one model, five unknowns." This is the slide that fixes the "no unifying framework / it kept repeating" complaint: each block is the SAME diagram with a different box lit. Say it out loud — we establish the Bayes inversion ONCE (next block), then every later block only changes which latent is hidden; we point at the lit box instead of re-deriving Bayes. Keep it quick; it's a signpost.
+:::
+
 ## [Agenda — 2 hours]{.lang-en}[本日の予定 — 2時間]{.lang-ja} {.agenda .dense}
 
 - [Run the camera backwards]{.lang-en .highlight}[カメラを逆回しする]{.lang-ja .highlight}  [0:00]{.time}
 - [Goal inference as inverse planning]{.lang-en}[逆プランニングとしての目標推論]{.lang-ja}  [0:07]{.time}
-- [Theory of Mind = inverse RL]{.lang-en}[心の理論 = 逆強化学習]{.lang-ja}  [0:37]{.time}
+- [What is theory of mind?]{.lang-en}[心の理論とは？]{.lang-ja}  [0:37]{.time}
 - [POMDPs — inferring beliefs]{.lang-en}[POMDP — 信念を推論する]{.lang-ja}  [0:45]{.time}
 - [Break]{.lang-en}[休憩]{.lang-ja}  [1:07]{.time}
 - [Inverse RL — recovering rewards]{.lang-en}[逆強化学習 — 報酬の復元]{.lang-ja}  [1:12]{.time}
@@ -126,7 +172,7 @@ Section break into Block 2, the longest concept block (~20 min, clock 0:07). Thi
 
 - [Run the camera backwards]{.lang-en .done}[カメラを逆回しする]{.lang-ja .done}  [0:00]{.time}
 - [Goal inference as inverse planning]{.lang-en .highlight}[逆プランニングとしての目標推論]{.lang-ja .highlight}  [0:07]{.time}
-- [Theory of Mind = inverse RL]{.lang-en}[心の理論 = 逆強化学習]{.lang-ja}  [0:37]{.time}
+- [What is theory of mind?]{.lang-en}[心の理論とは？]{.lang-ja}  [0:37]{.time}
 - [POMDPs — inferring beliefs]{.lang-en}[POMDP — 信念を推論する]{.lang-ja}  [0:45]{.time}
 - [Break]{.lang-en}[休憩]{.lang-ja}  [1:07]{.time}
 - [Inverse RL — recovering rewards]{.lang-en}[逆強化学習 — 報酬の復元]{.lang-ja}  [1:12]{.time}
@@ -136,6 +182,16 @@ Section break into Block 2, the longest concept block (~20 min, clock 0:07). Thi
 
 ::: {.notes}
 Recap slide — brief. We've done the welcome/pivot (~7 min in); now entering goal inference as inverse planning. One sentence and move on.
+:::
+
+## [Recall: the forward model]{.lang-en}[復習：順方向モデル]{.lang-ja} {.widget-slide}
+
+<iframe class="widget-frame" src="widgets/mdp-value-iteration.html"></iframe>
+
+[Week 8's forward solve: value iteration turns a reward into a value, then a policy. *This* is the machine we now run backward.]{.lang-en .widget-cap}[先週の順方向：価値反復が報酬を価値に、そして方策に変える。*これ*を今から逆に回す。]{.lang-ja .widget-cap}
+
+::: {.notes}
+Callback widget (cut if behind) — a 30-second re-grounding before we invert. This is the Week-8 forward model: value iteration maps a reward → values → a greedy/softmax policy. Say "today we watch the actions and run THIS backward to recover the reward." It makes the inversion concrete and reuses a widget the students already saw. Fallback: skip it. Then notation.
 :::
 
 ## [Notation lock-in]{.lang-en}[記法の確認]{.lang-ja}
@@ -215,7 +271,11 @@ post = normalize([exp(observer.assess(cm(g, acts), (states,))[0]) for g in GOALS
 The GenJAX code slide — the recipe in ~7 runnable lines. Point at the three things: LOGITS = β·Q (the policy is a softmax over Q-values from last week's solver); the @gen model draws the hidden goal g, then samples each action from the softmax policy of g; and post enumerates the candidate goals and normalizes the assessed scores into the posterior. The backbone is genjax_goal_inference.py in this directory — verified to run (genjax 0.10.3) — so you CAN open it and execute it live if the room is engaged. Land the tagline on the slide: the hidden variable we recover IS "which MDP are we in?" — that's the unifying frame for the whole week.
 :::
 
-## [Watch it infer — live]{.lang-en}[推論を実演 — ライブ]{.lang-ja} {background-iframe="widgets/goal-inference.html" background-interactive="true"}
+## [Watch it infer — live]{.lang-en}[推論を実演 — ライブ]{.lang-ja} {.widget-slide}
+
+<iframe class="widget-frame" src="widgets/goal-inference.html"></iframe>
+
+[Drive the agent (arrow keys / 🎮) — the posterior over goals updates each step; drag β to feel the rationality assumption bite.]{.lang-en .widget-cap}[エージェントを操作（矢印キー / 🎮）— 各ステップで目標の事後分布が更新。β を動かすと合理性の仮定が効く。]{.lang-ja .widget-cap}
 
 ::: {.notes}
 WIDGET A — live goal inference (Baker's "freeze the animation" paradigm made interactive). Demo script: start with the agent stepping under its softmax policy and watch the posterior bars over goals update each step — point out it's AMBIGUOUS early (mid vs right tie around 0.50) and SHARPENS as the agent commits; the verified freeze-frame sequence on "right" is 0.37 → 0.47 → 0.50 → 0.54. Then drag the β (rationality) slider: near-random β flattens the posterior to ~0.33 each, high β sharpens to ~0.72 on the true goal — "the inference is only as good as the rationality assumption." NEW: there's a "🎮 you drive" mode — switch to it and steer the agent with the arrow keys / WASD; the posterior updates live as the audience watches you betray your goal by where you head. If the widget fails to load, the static fallback is goal-inference-posterior.png. Keep it to ~2 min.
@@ -325,7 +385,7 @@ $\pi(a\mid s)\propto \exp(\beta\,Q(s,a))$ — 高$Q$の行動を好むが完璧�
 This slide carries Block 3 (noisy rationality) — under time pressure it folds into the build-the-inversion slide, but it deserves its own beat if there's room (~0:27 mark). The core idea: the softmax exponent β is the rationality knob — the SAME path is decisive evidence at high β and useless at β→0. The big payoff phrase, say it out loud: "Assume rationality, blame the goal." When an agent blunders or detours, the model doesn't conclude it's irrational — it rationalizes the detour by inferring a WEIRDER goal, or (foreshadow Block 5) an unseen obstacle. This is the exact mechanism BToM will reuse for false beliefs, so plant it here. If a student objects "but maybe the agent just had wrong info," that's the perfect lead-in to POMDPs — acknowledge and say "hold that, it's the next beat."
 :::
 
-# [Theory of Mind = inverse RL]{.lang-en}[心の理論 = 逆強化学習]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+# [What is theory of mind?]{.lang-en}[心の理論とは？]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
 
 ::: {.notes}
 Section break into Block 4 (~8 min, clock 0:37). Short transition: "we've shown the machinery — now the claim about minds." This block names the thesis: Theory of Mind IS inverse RL.
@@ -335,7 +395,7 @@ Section break into Block 4 (~8 min, clock 0:37). Short transition: "we've shown 
 
 - [Run the camera backwards]{.lang-en .done}[カメラを逆回しする]{.lang-ja .done}  [0:00]{.time}
 - [Goal inference as inverse planning]{.lang-en .done}[逆プランニングとしての目標推論]{.lang-ja .done}  [0:07]{.time}
-- [Theory of Mind = inverse RL]{.lang-en .highlight}[心の理論 = 逆強化学習]{.lang-ja .highlight}  [0:37]{.time}
+- [What is theory of mind?]{.lang-en .highlight}[心の理論とは？]{.lang-ja .highlight}  [0:37]{.time}
 - [POMDPs — inferring beliefs]{.lang-en}[POMDP — 信念を推論する]{.lang-ja}  [0:45]{.time}
 - [Break]{.lang-en}[休憩]{.lang-ja}  [1:07]{.time}
 - [Inverse RL — recovering rewards]{.lang-en}[逆強化学習 — 報酬の復元]{.lang-ja}  [1:12]{.time}
@@ -347,46 +407,246 @@ Section break into Block 4 (~8 min, clock 0:37). Short transition: "we've shown 
 Recap — brief. Goal inference and noisy rationality are done (~37 min in); next is the ToM = IRL framing. One sentence, keep moving.
 :::
 
-## [Reading minds *is* inverse planning]{.lang-en}[心を読むこと*は*逆プランニング]{.lang-ja}
+## [Theory of mind: the false-belief test]{.lang-en}[心の理論：誤信念テスト]{.lang-ja}
 
-:::: {.columns}
-::: {.column width="52%"}
-![](images/tom-as-irl.png){fig-align="center" width="100%"}
-:::
-::: {.column width="48%"}
 ::: {.lang-en}
-The framework is **Baker & Tenenbaum's** (2007, 2009) — *action understanding as inverse planning*. Forward = simulate the planner; inverse = invert it to recover goals/beliefs.
+**Theory of mind** = attributing mental states — beliefs, desires, goals — to others (Premack & Woodruff 1978).
 
-Jara-Ettinger's 2019 **review** names it cleanly: **Theory of Mind = IRL**.
+The classic probe is the **false-belief task** — *Sally-Anne* (Baron-Cohen, Leslie & Frith 1985):
+
+Sally hides her marble in a **basket** and leaves. Anne moves it to a **box**. Sally returns. **Where will Sally look?**
+
+[Passing means representing a belief that **differs from reality** (she looks in the basket). Most children pass around **age 4**.]{.accent}
 :::
 ::: {.lang-ja}
-枠組みは**Baker & Tenenbaum**（2007, 2009）— *逆プランニングとしての行動理解*。順方向＝プランナーを模擬、逆方向＝それを反転して目標・信念を復元。
+**心の理論** = 他者に心的状態 — 信念・欲求・目標 — を帰属させること（Premack & Woodruff 1978）。
 
-Jara-Ettinger 2019の**レビュー**が端的に命名：**心の理論 = 逆強化学習**。
+古典的な検査が**誤信念課題** — *サリーとアン*（Baron-Cohen, Leslie & Frith 1985）：
+
+サリーがビー玉を**かご**に隠して出て行く。アンが**箱**に移す。サリーが戻る。**サリーはどこを探す？**
+
+[正解は、**現実と異なる**信念を表現すること（かごを探す）。多くの子は**4歳頃**に通過する。]{.accent}
 :::
+
+::: {.notes}
+Open the block by DEFINING theory of mind — the first delivery never did, which is the root of complaints 4 and 7. ToM = attributing mental states to others (Premack & Woodruff 1978, "Does the chimpanzee have a theory of mind?"). The canonical test is the false-belief task — Sally-Anne (Baron-Cohen, Leslie & Frith 1985). POSE it and have the room answer "where will Sally look?" out loud before any theory. The correct answer is the basket (the OLD location) — it requires holding Sally's belief separate from reality. Adults find it trivial; that triviality is the point. Next: a real child being tested. We need this precise definition again for the LLM debate.
+:::
+
+## [Watch: the Sally-Anne task]{.lang-en}[映像：サリーとアン課題]{.lang-ja}
+
+<iframe src="https://cdnapisec.kaltura.com/html5/html5lib/v2.81.1/mwEmbedFrame.php/p/1660902/uiconf_id/27975451/entry_id/1_gnvcfkj9?wid=_1660902&iframeembed=true&playerId=kaltura_player&entry_id=1_gnvcfkj9" width="720" height="405" allowfullscreen webkitallowfullscreen mozallowfullscreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" style="display:block; margin:0.2em auto 0;"></iframe>
+
+[Watch when the child's answer flips from "the box" (where it *really* is) to "the basket" (where Sally *thinks* it is).]{.lang-en .dim}[子どもの答えが「箱」（実際の場所）から「かご」（サリーが*いると思う*場所）へ切り替わる年齢に注目。]{.lang-ja .dim}
+
+::: {.notes}
+~2 min. Kaltura clip (UW-Madison media; short link https://go.wisc.edu/zz79z8). Plays inline in the HTML deck; in the PPTX export it won't embed — open the short link in a browser for the PPTX backup. Play ~1-2 min, then discuss: young children answer "box" (reality) because they can't yet hold Sally's false belief separate from their own knowledge.
+:::
+
+## [Reading a mind *is* inverse planning]{.lang-en}[心を読むこと*は*逆プランニング]{.lang-ja}
+
+:::: {.columns}
+::: {.column width="44%"}
+::: {.lang-en}
+How does mature theory of mind work? **Baker, Saxe & Tenenbaum (2009)** — *action understanding as inverse planning*:
+
+- forward: beliefs + goals → action  ([planning]{.accent})
+- ToM: action → beliefs + goals  ([inverse planning]{.yellow})
+
+[Theory of mind is **your own decision theory, run backwards** on someone else — the same inversion as the last block, now over *minds*. Reviewed as "ToM = inverse RL" (Jara-Ettinger 2019).]{.yellow}
+:::
+::: {.lang-ja}
+成熟した心の理論はどう働く？ **Baker, Saxe & Tenenbaum (2009)** — *逆プランニングとしての行動理解*：
+
+- 順方向：信念 + 目標 → 行動  （[プランニング]{.accent}）
+- 心の理論：行動 → 信念 + 目標  （[逆プランニング]{.yellow}）
+
+[心の理論とは、**自分の意思決定理論を**他者に**逆向きに**走らせること — 前のブロックと同じ反転、対象が*心*になっただけ。「ToM = 逆強化学習」と総説（Jara-Ettinger 2019）。]{.yellow}
+:::
+:::
+::: {.column width="56%"}
+![](images/inverse_planning.png){fig-align="center" width="100%"}
 :::
 ::::
 
 ::: {.notes}
-The framing slide. Be careful with attribution (it's in the research notes): the FRAMEWORK is Baker & Tenenbaum's — Baker, Tenenbaum & Saxe 2007 and Baker, Saxe & Tenenbaum 2009, "action understanding as inverse planning," which they themselves call inverse planning / inverse RL. Jara-Ettinger's 2019 review is what cleanly NAMES it "Theory of Mind = IRL" and is the modern synthesis — cite it as the review, NOT the originator. Say the one-liner: mental-state inference from behavior IS inverse RL — forward = simulate the planner, inverse = invert it to recover goals/beliefs. This is the conceptual peak of the front half: "this is what minds do." Then pivot to the limitation that opens Block 5.
+The computational answer, AFTER ToM is defined behaviorally. The framework is Baker & Tenenbaum's (Baker, Saxe & Tenenbaum 2009, "action understanding as inverse planning") — forward = simulate the planner, inverse = invert it to recover beliefs + goals. The unifying line: theory of mind is your own decision theory run BACKWARDS on someone else — literally the same inversion we did for goals last block, now the latent is a whole mind. Jara-Ettinger 2019 is the recent REVIEW that names it "ToM = inverse RL" — cite as the review, not the originator. This is the seam between the cog-sci ToM material and the machine IRL after the break.
 :::
 
-## [But agents don't see everything]{.lang-en}[しかしエージェントは全てを見ていない]{.lang-ja}
+## [The machine is old; the evidence is new]{.lang-en}[仕組みは古い、新しいのは証拠]{.lang-ja}
 
 ::: {.lang-en}
-So far we inferred **goals**, assuming the agent sees the whole world (an MDP). But people act on **partial — and sometimes *false* — beliefs**.
+"Infer preferences from choices, assuming utility maximization" is just **revealed preference** — economics run backwards. The *theory* isn't new. What is striking is the **empirical** reach:
 
-To read *those* minds we must invert a model where the **belief itself is hidden**. That model is a **POMDP**.
+- **Toddlers** infer others' costs and rewards from a single choice (Jara-Ettinger et al. 2016; Liu et al. 2017).
+- Inverse-planning models **quantitatively predict** adults' moment-to-moment belief and desire attributions (Baker et al. 2017).
 :::
-
 ::: {.lang-ja}
-ここまでは、エージェントが世界全体を見ている（MDP）と仮定して**目標**を推論した。だが人は**部分的で — 時に*誤った* — 信念**にもとづいて行動する。
+「効用最大化を仮定して選択から選好を推論する」は**顕示選好** — 経済学を逆に回しただけ。*理論*は新しくない。新しいのは**実証**の射程：
 
-*その*心を読むには、**信念そのものが隠れている**モデルを反転しなければならない。それが**POMDP**だ。
+- **幼児**でさえ、一度の選択から他者のコストと報酬を推論する（Jara-Ettinger et al. 2016；Liu et al. 2017）。
+- 逆プランニングモデルは成人の刻々の信念・欲求の帰属を**定量的に予測**する（Baker et al. 2017）。
 :::
 
 ::: {.notes}
-The hinge of the whole lecture. So far we inferred GOALS, assuming the agent sees the whole world (an MDP). But people act on partial — and sometimes FALSE — beliefs. To read THOSE minds we must invert a model where the belief itself is hidden: a POMDP. This is the 2009→2017 move in Baker's own work (MDP → POMDP). Say it as a cliffhanger: "to read a mind that's wrong about the world, we need a new piece of machinery." Then break into the POMDP block.
+~1.5 min. Honest framing (per the source deck): the naive-utility-calculus THEORY is essentially revealed preference / utility maximization run as inference — say so plainly, it builds credibility. The real contribution is EMPIRICAL: infants/toddlers already do it (Liu, Ullman, Tenenbaum & Spelke 2017, Science — infants infer a goal's value from the cost an agent pays), and quantitative fits to adult judgments (Baker et al. 2017, Nat Hum Behav). Under time pressure this folds into the previous slide.
+:::
+
+## [A harder test: the faux pas]{.lang-en}[より難しいテスト：失言（フォーパ）]{.lang-ja}
+
+::: {.lang-en}
+A **faux pas**: someone says something they *don't realize* they shouldn't — and it lands badly. Recognizing one needs **two mental states at once**:
+
+- the speaker holds a **false belief** (they don't know the hurtful fact), **and**
+- the listener **knows** what the speaker doesn't, so the remark stings.
+
+[A faux pas is a *nested* false belief — harder than Sally-Anne, passed later (~age 9–11). Hold this exact structure; the LLM debate turns on it.]{.accent}
+:::
+::: {.lang-ja}
+**失言（フォーパ）**：本人が*まずいと気づかず*に言ってしまい、相手を傷つける発言。見抜くには**二つの心的状態を同時に**必要とする：
+
+- 話し手は**誤信念**を持つ（傷つける事実を知らない）、**かつ**
+- 聞き手は話し手が知らないことを**知っている**から刺さる。
+
+[失言は*入れ子*の誤信念 — サリーとアンより難しく、通過は遅い（約9〜11歳）。この構造をLLMの議論で使う。]{.accent}
+:::
+
+::: {.notes}
+NEW slide — the first delivery hand-waved "faux pas" without defining it, which is exactly why the LLM debate fell flat. Define it cleanly: recognizing a faux pas = recognizing a speaker said something inappropriate WITHOUT realizing it. It requires representing TWO minds at once — the speaker's false belief (they don't know) AND the listener's knowledge (they do) — a nested / second-order false belief, harder than Sally-Anne, passed later (~9-11; Baron-Cohen et al. 1999 faux-pas test). Plant the structure now: in the LLM block we ask whether GPT-4 represents THIS structure or pattern-matches it.
+:::
+
+## [Theory of mind & autism — and a reframe]{.lang-en}[心の理論と自閉症 — そして再考]{.lang-ja} {.smaller}
+
+::: {.lang-en}
+Sally-Anne was built to study **autism** (Baron-Cohen et al. 1985, "Does the autistic child have a theory of mind?"): autistic children passed control questions but **failed the false-belief question** more often — launching the **"mindblindness"** hypothesis.
+
+**Milton (2012), the double-empathy problem** reframes it: the mismatch is **bidirectional** — neurotypical people are **no better** at reading autistic minds than the reverse; autistic-to-autistic communication is **as effective** as neurotypical-to-neurotypical.
+
+[Not a broken module — **two differently-tuned inverse planners** reading each other.]{.yellow}
+:::
+::: {.lang-ja}
+サリーとアンは**自閉症**研究のために作られた（Baron-Cohen et al. 1985）：自閉症児は統制質問には答えたが**誤信念質問により多く不正解** — **「マインドブラインドネス」**仮説を生んだ。
+
+**Milton (2012)の二重共感問題**が再考を迫る：ミスマッチは**双方向** — 定型発達者が自閉症の心を読むのも、その逆と**同程度に難しい**。自閉症者同士の意思疎通は定型発達者同士と**同じくらい効果的**。
+
+[壊れたモジュールではなく、互いを読み合う**異なる調整の逆プランナー二つ**。]{.yellow}
+:::
+
+::: {.notes}
+~3 min. Present the historical mindblindness result faithfully first — careful language: "more often," NOT "all autistic people lack ToM." Then the double-empathy reframe (Milton 2012): the gap is bidirectional and symmetric — neurotypicals are no better at reading autistic minds. Tie to the spine: two differently-tuned inverse planners, each with a mis-calibrated prior over the other. Sets up the methods twist next.
+:::
+
+## [What you measure decides what you conclude]{.lang-en}[何を測るかが結論を決める]{.lang-ja} {.smaller}
+
+:::: {.columns}
+::: {.column width="52%"}
+::: {.lang-en}
+A clean prediction: deep strategic reasoning ("I think that you think…") needs theory of mind, so autistic players should reason *less* deeply. Two studies:
+
+- **Pantelis & Kennedy (2017):** *outcomes* are **statistically indistinguishable** — ASD mean ≈ 30.2, controls ≈ 31.8. Moderate evidence *for* the null.
+- **Król & Król (2019):** same outcomes — but a process tracer shows autistic players were **less strategic in process**.
+
+[Look only at the **outcome** → "no difference." Trace the **process** → a difference appears. The lesson that decides the LLM debate.]{.yellow}
+:::
+::: {.lang-ja}
+きれいな予測：深い戦略的推論（「私はあなたが考えると考える」）は心の理論を要するから、自閉症のプレイヤーはより浅く推論するはず。二つの研究：
+
+- **Pantelis & Kennedy (2017)：** *結果*は**統計的に区別できない** — ASD平均≈30.2、対照≈31.8。帰無を中程度に支持。
+- **Król & Król (2019)：** 結果は同じ — だが過程追跡では自閉症のプレイヤーは**過程で戦略性が低い**。
+
+[**結果**だけ見れば「差なし」。**過程**を追えば差が出る。LLMの議論を決める教訓。]{.yellow}
+:::
+:::
+::: {.column width="48%"}
+![](images/asd_outcome_vs_process_stacked.png){fig-align="center" width="100%"}
+:::
+::::
+
+::: {.notes}
+~3 min — load-bearing for the back half. The prediction (autistic players reason less deeply) is licensed by the classic mindblindness finding; Pantelis & Kennedy (2017, Cognition) found the OUTCOME null (ASD ~30.2 vs controls ~31.8; Bayes factor moderate-for-null), but Król & Król (2019) replicated the outcome AND traced the PROCESS, finding autistic players less strategic in process. Figure: top = outcomes overlap, bottom = process diverges. The portable lesson — say it slowly and tag it: "what you measure decides what you conclude" / "behavioral match is not mechanism." This is EXACTLY the move we make against LLM-ToM claims after the break — flag the callback now.
+:::
+
+## [Blame bends the inference: the side-effect effect]{.lang-en}[非難が推論を曲げる：副作用効果]{.lang-ja} {.smaller}
+
+:::: {.columns}
+::: {.column width="56%"}
+::: {.lang-en}
+A chairman is told a program will raise profits and **harm the environment** as a side effect. He says: *"I don't care about the environment — I just want profit."* It runs; the environment is harmed. **Did he harm it *intentionally*?**
+
+**Knobe (2003):** **82%** say *intentionally*. Flip one word to **help** — same indifferent chairman — and only **23%** say he helped intentionally.
+
+[Same mental state both times. Yet "intentional" tracks **bad vs. good**, not his actual intent — moral valence **bends** the mind-reading.]{.yellow}
+:::
+::: {.lang-ja}
+ある会長が、事業は利益を上げ副作用として**環境を害する**と告げられる。彼は言う：*「環境はどうでもいい — 利益が欲しいだけだ」*。実行され、環境は害される。**彼は*意図的に*害したか？**
+
+**Knobe (2003)：** **82%**が*意図的*と言う。一語を**助ける**に変えると — 同じ無関心な会長 — **23%**しか意図的と言わない。
+
+[心的状態は両方で同じ。なのに「意図的」は彼の意図ではなく**善悪**を追う — 道徳的な価が心読みを**曲げる**。]{.yellow}
+:::
+:::
+::: {.column width="44%"}
+![](images/knobe_bars.png){fig-align="center" width="100%"}
+:::
+::::
+
+::: {.notes}
+~3 min. Run it as a live show of hands FIRST (whole room, harm version only — with ~6 students a between-subjects split is too thin): "Did he harm the environment intentionally?" Almost everyone says yes. THEN reveal Knobe (2003): 82% harm vs 23% help — same indifferent chairman, one word flipped. The point: intent attribution is morally loaded (the side-effect / Knobe effect) — moral valence of the OUTCOME bends the intent inference, which "pure" inverse planning wouldn't predict. Mind-reading isn't a clean Bayesian instrument; affect leaks in. Verified 82/23 (Knobe 2003).
+:::
+
+## [Blame is structured — and needs an agent]{.lang-en}[非難は構造化され — 主体を要する]{.lang-ja} {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+::: {.lang-en}
+Much blame is **structured** (Malle et al. 2014): negative event → causal agent? → intentional? → if so, blame scales with **reasons**; if not, with **could they have prevented it**. The inverse-planning machinery, with a moral layer.
+
+**Mind perception** (Gray, Gray & Wegner 2007) has two axes: **agency** (the capacity to *do*) and **experience** (the capacity to *feel*).
+
+[Blame needs an agent with **agency**. *That's* why we argue over blaming a **company**, an **animal**, or an **AI** — the alignment question, two blocks early.]{.yellow}
+:::
+::: {.lang-ja}
+非難の多くは**構造化**されている（Malle et al. 2014）：否定的な出来事 → 原因となる主体？ → 意図的？ → そうなら非難は**理由**に応じ、そうでなければ**防げたか**に応じる。逆プランニング＋道徳の層。
+
+**心の知覚**（Gray, Gray & Wegner 2007）は二軸：**行為主体性**（*行う*能力）と**経験**（*感じる*能力）。
+
+[非難には**行為主体性**を持つ主体が要る。*だから*、**企業**・**動物**・**AI**を非難できるかを我々は論じる — アラインメントの問い、二ブロック早く。]{.yellow}
+:::
+:::
+::: {.column width="50%"}
+![](images/blame_path_model.png){fig-align="center" width="100%"}
+:::
+::::
+
+::: {.notes}
+~3 min. Two ideas, tied to the spine and the alignment tail. (1) Blame-late / Malle path model: blame is often structured reasoning — cause → intent → reasons (intentional) or obligation+capacity (unintentional). Walk the tree; it's the inverse-planning machinery with a moral overlay (and Knobe shows affect also leaks in — both run). (2) Mind perception (Gray, Gray & Wegner 2007, Science): agency (capacity to act) vs experience (capacity to feel); blame needs an agent with agency. The live payoff: this is WHY blaming a company / animal / AI is contested — the exact agency question alignment raises. Under time pressure, keep only the mind-perception half.
+:::
+
+## [False belief needs a hidden belief]{.lang-en}[誤信念には隠れた信念が要る]{.lang-ja}
+
+:::: {.columns}
+::: {.column width="52%"}
+::: {.lang-en}
+Sally's mistake is the key. In an **MDP** the agent sees the true state $s$ — so it can **never** be wrong. A **false belief** means the belief $b$ disagrees with the world: $b \neq s$.
+
+To represent that, belief must be its **own hidden variable**, separate from the world. That model is a **POMDP** — and **Sally-Anne is a POMDP**.
+
+[Next: infer the belief $b$, not just the goal.]{.accent}
+:::
+::: {.lang-ja}
+サリーの誤りが鍵だ。**MDP**ではエージェントは真の状態 $s$ を見る — だから**決して**間違えない。**誤信念**とは、信念 $b$ が世界と食い違うこと：$b \neq s$。
+
+それを表すには、信念は世界とは別の**独自の隠れ変数**でなければならない。そのモデルが **POMDP** — そして**サリーとアンはPOMDPだ**。
+
+[次：目標だけでなく信念 $b$ を推論する。]{.accent}
+:::
+:::
+::: {.column width="48%"}
+![](images/agent-model-belief.png){fig-align="center" width="100%"}
+:::
+::::
+
+::: {.notes}
+The hinge into POMDPs — and the rigorous payoff of defining ToM first. Sally's false belief is impossible in an MDP, because there the agent sees the true state s and can't be wrong. A false belief requires b ≠ s, which means belief must be its OWN hidden latent, separate from the world — that is exactly a POMDP. Say the line: "Sally-Anne IS a POMDP." Point at the master diagram with belief lit (and the world state the agent no longer sees directly). This is the bridge the first delivery missed: it jumped to POMDPs as a new topic instead of deriving the need for them from false belief. Then break into the belief-inference block.
 :::
 
 # [POMDPs — inferring beliefs]{.lang-en}[POMDP — 信念を推論する]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
@@ -399,7 +659,7 @@ Section break into Block 5 — THE HEART of the lecture (~22 min, clock 0:45). T
 
 - [Run the camera backwards]{.lang-en .done}[カメラを逆回しする]{.lang-ja .done}  [0:00]{.time}
 - [Goal inference as inverse planning]{.lang-en .done}[逆プランニングとしての目標推論]{.lang-ja .done}  [0:07]{.time}
-- [Theory of Mind = inverse RL]{.lang-en .done}[心の理論 = 逆強化学習]{.lang-ja .done}  [0:37]{.time}
+- [What is theory of mind?]{.lang-en .done}[心の理論とは？]{.lang-ja .done}  [0:37]{.time}
 - [POMDPs — inferring beliefs]{.lang-en .highlight}[POMDP — 信念を推論する]{.lang-ja .highlight}  [0:45]{.time}
 - [Break]{.lang-en}[休憩]{.lang-ja}  [1:07]{.time}
 - [Inverse RL — recovering rewards]{.lang-en}[逆強化学習 — 報酬の復元]{.lang-ja}  [1:12]{.time}
@@ -503,10 +763,24 @@ def update(belief, obs):
 GenJAX code slide — the belief update IS Bayesian conditioning, nothing more. Point at OBS (the 0.85/0.15 observation matrix), the @gen listen model (draw the hidden state from the current belief, then the growl from OBS), and update() which enumerates the 2 states, scores each with assess, and normalizes — that's exactly b'(s) ∝ P(o|s)·b(s). The comment shows the verified output 0.5 → 0.85 → 0.9698 → 0.9945. Backbone is genjax_tiger_pomdp.py in this directory, verified to run — you can execute it live to reproduce the belief sequence. The teaching point: "the belief update is just conditioning — the same thing we've done all term, now over a genuinely unobserved world state."
 :::
 
-## [Track the belief — live]{.lang-en}[信念を追う — ライブ]{.lang-ja} {background-iframe="widgets/pomdp-belief.html" background-interactive="true"}
+## [Track the belief — live]{.lang-en}[信念を追う — ライブ]{.lang-ja} {.widget-slide}
+
+<iframe class="widget-frame" src="widgets/pomdp-belief.html"></iframe>
+
+[Listen → the belief slides 0.5 → 0.85 → 0.97; hear-left then hear-right cancels back to 0.5; the α-vectors show when opening beats listening.]{.lang-en .widget-cap}[「聞く」→ 信念が 0.5 → 0.85 → 0.97 と動く。左→右で 0.5 に戻る。αベクトルが「開ける」が「聞く」を上回る点を示す。]{.lang-ja .widget-cap}
 
 ::: {.notes}
 WIDGET B — the Tiger belief tracker. Demo script: start at 0.5/0.5; press Listen → hear-left a couple of times and watch the bars animate 0.5 → 0.85 → 0.97. The key beat: after ONE growl the belief is only 0.85 — point out that's not yet at the open threshold, so one growl isn't enough; a second agreeing growl pushes it past ~0.90 (where opening beats listening). Show the cancellation too: hear-left then hear-right snaps back to 0.5 — a satisfying "evidence cancels" moment. If the widget overlays the α-vector PWLC value lines with the shaded optimal-action region, point out the belief crossing from the "listen" region into the "open" region. This sets up Poll 2 directly — don't reveal the poll answer yet. Fallback PNG: tiger-belief-update.png. ~2 min.
+:::
+
+## [Belief tracking, in general]{.lang-en}[一般の信念追跡]{.lang-ja} {.widget-slide}
+
+<iframe class="widget-frame" src="widgets/particle-filter.html"></iframe>
+
+[The Tiger's two-number belief is the simplest case; in general a belief is a *cloud* over states, updated by the same Bayes rule — here, a particle filter.]{.lang-en .widget-cap}[トラの二数の信念は最も単純な場合；一般に信念は状態上の*雲*で、同じベイズ則で更新される — ここではパーティクルフィルタ。]{.lang-ja .widget-cap}
+
+::: {.notes}
+Callback widget (cut if behind) — generalize the belief beyond two numbers. The Tiger belief is a single number (P(tiger-left)); in a bigger world the belief is a distribution over many states, updated by the SAME Bayes rule (observe → reweight → renormalize). The particle filter shows that as a cloud of particles tracking a moving hidden state. One line: "same machinery, more states." Fallback: skip it.
 :::
 
 ## [Value is a function of belief]{.lang-en}[価値は信念の関数]{.lang-ja} {.smaller}
@@ -641,7 +915,7 @@ Section break into the machine side of inverse RL (~14 min, clock 1:12). Transit
 
 - [Run the camera backwards]{.lang-en .done}[カメラを逆回しする]{.lang-ja .done}  [0:00]{.time}
 - [Goal inference as inverse planning]{.lang-en .done}[逆プランニングとしての目標推論]{.lang-ja .done}  [0:07]{.time}
-- [Theory of Mind = inverse RL]{.lang-en .done}[心の理論 = 逆強化学習]{.lang-ja .done}  [0:37]{.time}
+- [What is theory of mind?]{.lang-en .done}[心の理論とは？]{.lang-ja .done}  [0:37]{.time}
 - [POMDPs — inferring beliefs]{.lang-en .done}[POMDP — 信念を推論する]{.lang-ja .done}  [0:45]{.time}
 - [Break]{.lang-en .done}[休憩]{.lang-ja .done}  [1:07]{.time}
 - [Inverse RL — recovering rewards]{.lang-en .highlight}[逆強化学習 — 報酬の復元]{.lang-ja .highlight}  [1:12]{.time}
@@ -678,21 +952,25 @@ Frame it first: every "IRL method" learns the REWARD from behavior, and the core
 ## [...from imitation to transferable rewards to alignment]{.lang-en}[…模倣 → 転移可能な報酬 → アラインメント]{.lang-ja} {.smaller}
 
 ::: {.lang-en}
-- **GAIL** (Ho & Ermon 2016) — imitation as a **GAN**: a discriminator tells expert from learner, and the policy learns to fool it (matching the expert's behavior). **Milestone:** imitation that **scales** to deep, high-dim control — but it *skips* recovering a reward, so there's no transferable objective.
-- **AIRL** (Fu et al. 2018) — adversarial like GAIL, but the discriminator is **structured so a reward falls out**, disentangled from the dynamics. **Milestone:** combines GAIL's scale with a **transferable** reward you can re-optimize under *new* dynamics.
+- **GAIL** (Ho & Ermon 2016) — *adversarial imitation*: a **critic** learns to tell the expert's behavior from the imitator's, and the imitator improves until the critic **can't tell them apart**. **Milestone:** imitation that **scales** to deep, high-dim control — but it *skips* recovering a reward, so no transferable objective. *([≈ a GAN, if you've met those.]{.dim})*
+- **AIRL** (Fu et al. 2018) — the same critic-vs-imitator game, but the critic is **structured so a reward falls out**, disentangled from the dynamics. **Milestone:** GAIL's scale **plus** a **transferable** reward you can re-optimize under *new* dynamics.
 - **RLHF / DPO** ('22–'23) — learn the reward from human **preferences** (pairwise comparisons), not demonstrations; then optimize the policy (DPO folds the reward *into* the policy). **Milestone:** this is how **LLMs are aligned** — preference-based IRL at frontier scale.
 :::
 ::: {.lang-ja}
-- **GAIL**（Ho & Ermon 2016）— **GAN**としての模倣：識別器が専門家と学習者を見分け、方策はそれを騙すよう学ぶ（専門家の行動に一致）。**画期点：** 深く高次元の制御へ**スケール**する模倣 — ただし報酬は復元せず、転移可能な目的関数はない。
-- **AIRL**（Fu et al. 2018）— GAILと同じ敵対的だが、識別器を**報酬が取り出せるよう構造化**し、ダイナミクスから分離。**画期点：** GAILのスケールと、*新しい*ダイナミクスで再最適化できる**転移可能**な報酬を両立。
+- **GAIL**（Ho & Ermon 2016）— *敵対的模倣*：**批評器**が専門家の行動と模倣者の行動を見分けようとし、模倣者は批評器が**見分けられなくなる**まで改善する。**画期点：** 深く高次元の制御へ**スケール**する模倣 — ただし報酬は復元せず、転移可能な目的関数はない。*([≈ GAN、知っていれば]{.dim})*
+- **AIRL**（Fu et al. 2018）— 同じ批評器対模倣者のゲームだが、批評器を**報酬が取り出せるよう構造化**し、ダイナミクスから分離。**画期点：** GAILのスケールに**加え**、*新しい*ダイナミクスで再最適化できる**転移可能**な報酬。
 - **RLHF / DPO**（'22–'23）— デモではなく人間の**選好**（対比較）から報酬を学び、方策を最適化（DPOは報酬を方策に*畳み込む*）。**画期点：** **LLMのアラインメント**そのもの — 大規模な選好ベースのIRL。
 :::
 
 ::: {.notes}
-The honesty note to repeat (callback to Block 2's ill-posedness): a recovered reward is ONE explanation among many — MaxEnt's entropy prior and AIRL's disentanglement are regularizers that pick A reward, not THE reward. GAIL (Ho & Ermon 2016): imitation as a GAN — a discriminator separates expert vs learner state-action pairs, the policy is trained to match the expert's occupancy; it scales to high-dim control but never returns a usable/transferable reward. AIRL (Fu, Luo & Levine 2018): keeps the adversarial setup but structures the discriminator so a reward function falls out, plus a disentanglement trick (state-only reward + shaping) so the reward transfers across changed dynamics. RLHF/DPO: preference-based IRL — fit a reward model to pairwise human preferences (Bradley-Terry), freeze it, optimize with PPO; DPO collapses the two stages via an implicit reward. This is the practical payoff of the whole IRL program and the bridge to the alignment thread (Weeks 11-13). Then run Widget D (reward recovery).
+The honesty note to repeat (callback to Block 2's ill-posedness): a recovered reward is ONE explanation among many — MaxEnt's entropy prior and AIRL's disentanglement are regularizers that pick A reward, not THE reward. GAIL (Ho & Ermon 2016): adversarial imitation — a CRITIC tries to tell expert behavior from the imitator's, and the imitator improves until the critic can't; it scales to high-dim control but never returns a usable/transferable reward. (Under the hood this is a GAN, but per the course "no untaught concepts" rule we DON'T lean on that term in class — describe the critic-vs-imitator game in plain inference terms; the "≈ a GAN" aside on the slide is optional, for students who already know them.) AIRL (Fu, Luo & Levine 2018): keeps the same critic-vs-imitator setup but structures the critic so a reward function falls out, plus a disentanglement trick (state-only reward + shaping) so the reward transfers across changed dynamics. RLHF/DPO: preference-based IRL — fit a reward model to pairwise human preferences (Bradley-Terry), freeze it, optimize with PPO; DPO collapses the two stages via an implicit reward. This is the practical payoff of the whole IRL program and the bridge to the alignment thread (Weeks 11-13). Then run Widget D (reward recovery).
 :::
 
-## [Recover a reward — live]{.lang-en}[報酬を復元 — ライブ]{.lang-ja} {background-iframe="widgets/reward-recovery.html" background-interactive="true"}
+## [Recover a reward — live]{.lang-en}[報酬を復元 — ライブ]{.lang-ja} {.widget-slide}
+
+<iframe class="widget-frame" src="widgets/reward-recovery.html"></iframe>
+
+[Paint the true reward on the right grid (+1 / 0 / −1), add demonstrations, watch the middle panel recover it — and light up neutral cells on the way (ill-posed).]{.lang-en .widget-cap}[右のグリッドに真の報酬を描き（+1 / 0 / −1）、デモを加え、中央が復元する様子を見る — 途中の中立セルも光る（不良設定）。]{.lang-ja .widget-cap}
 
 ::: {.notes}
 WIDGET D — reward recovery, now fully CONFIGURABLE. Demo script: the true-reward panel (right) starts with a single +1 goal. CLICK any cell on that RIGHT grid to cycle its reward +1 → 0 → −1 — set up a goal plus a −1 "hazard" or two on the way to it. Then add demonstrations: the agent value-iterates on whatever reward you painted, so it SEEKS the +1 and ROUTES AROUND the −1 (watch the paths bend). The recovered panel (middle) shows the MaxEnt-style estimate — reward ∝ where the agent is drawn (green) vs. where it avoids (red), measured against a random walker so the start doesn't dominate. Two beats to land: (1) it recovers the structure — green at the +1 goal, red at the −1 hazard; (2) IRL is ILL-POSED — a cell merely ON THE WAY to the goal also lights up green, and it can't cleanly tell a neutral cell from one the agent just avoided. Method note (a student asked): this is MaxEnt-IRL feature-matching (match the demonstrator's state visitation); the repo's GenJAX backbones do the principled Bayesian-inversion version — genjax_goal_inference.py inverts the MDP for a posterior over goals, genjax_reward_from_prefs.py recovers a reward from preferences — the widget is vanilla JS so it runs live in the browser. Fallback PNG: reward-recovery-heatmap.png. ~2-3 min.
@@ -708,7 +986,7 @@ Section break into teaching, new to this lecture (~12 min, clock 1:26). Transiti
 
 - [Run the camera backwards]{.lang-en .done}[カメラを逆回しする]{.lang-ja .done}  [0:00]{.time}
 - [Goal inference as inverse planning]{.lang-en .done}[逆プランニングとしての目標推論]{.lang-ja .done}  [0:07]{.time}
-- [Theory of Mind = inverse RL]{.lang-en .done}[心の理論 = 逆強化学習]{.lang-ja .done}  [0:37]{.time}
+- [What is theory of mind?]{.lang-en .done}[心の理論とは？]{.lang-ja .done}  [0:37]{.time}
 - [POMDPs — inferring beliefs]{.lang-en .done}[POMDP — 信念を推論する]{.lang-ja .done}  [0:45]{.time}
 - [Break]{.lang-en .done}[休憩]{.lang-ja .done}  [1:07]{.time}
 - [Inverse RL — recovering rewards]{.lang-en .done}[逆強化学習 — 報酬の復元]{.lang-ja .done}  [1:12]{.time}
@@ -758,10 +1036,44 @@ Both paths here are optimal-length, but the legible one commits **on the first m
 ::::
 
 ::: {.notes}
-This is the instructor's own work — Ho, Littman, MacGlashan, Cushman & Austerweil 2016, "Showing versus doing." The empirical result: people DOING a task and people SHOWING it move differently — demonstrators deliberately deviate from the efficient path to make the goal UNAMBIGUOUS. Point at the figure: both paths here are optimal-LENGTH, but the legible (showing) one commits on the first move so the observer's posterior jumps immediately. The Bayesian model: the teacher picks the demonstration that maximizes the observer's posterior on the correct reward. You can mention you're the author if it helps engagement. Then run the widget.
+This is the instructor's own work — Ho, Littman, MacGlashan, Cushman & Austerweil 2016, "Showing versus doing." The empirical result: people DOING a task and people SHOWING it move differently — demonstrators deliberately deviate from the efficient path to make the goal UNAMBIGUOUS. Point at the figure: both paths here are optimal-LENGTH, but the legible (showing) one commits on the first move so the observer's posterior jumps immediately. The Bayesian model: the teacher picks the demonstration that maximizes the observer's posterior on the correct reward. You can mention you're the author if it helps engagement. Then the recursive-inference model, then run the widget.
 :::
 
-## [Toggle legible vs. efficient — live]{.lang-en}[読み取りやすさを切り替え — ライブ]{.lang-ja} {background-iframe="widgets/showing-vs-doing.html" background-interactive="true"}
+## [Showing as recursive inference]{.lang-en}[再帰的推論としての「見せる」]{.lang-ja}
+
+:::: {.columns}
+::: {.column width="52%"}
+![](images/recursive-pomdp-teaching.png){fig-align="center" width="100%"}
+:::
+::: {.column width="48%"}
+::: {.lang-en}
+Why does the legible path work? **Ho et al. (2021)** make it precise. Two levels:
+
+- **the observer** inverts your actions into a belief about your goal (inverse planning);
+- **you**, knowing this, pick actions to *move that belief* toward the truth.
+
+Your target — the observer's belief — is **hidden to you**, so planning the demonstration is **itself a POMDP** whose hidden state is *the observer's belief*. Teaching = inverse planning, **one level up**.
+:::
+::: {.lang-ja}
+なぜ読み取りやすい経路が効くのか？ **Ho et al. (2021)** が厳密にした。二層：
+
+- **観察者**はあなたの行動を反転し、目標についての信念を作る（逆プランニング）；
+- **あなた**はそれを知り、*その信念を*真実へ*動かす*ように行動を選ぶ。
+
+あなたの狙う相手 — 観察者の信念 — は**あなたに隠れている**から、デモの計画**自体がPOMDP**であり、その隠れ状態は*観察者の信念*だ。教示＝一段上の逆プランニング。
+:::
+:::
+::::
+
+::: {.notes}
+The Ho et al. 2021 formalization — the piece the first delivery missed (it had the 2016 behavioral result + CIRL→POMDP, but never named showing as recursive inference with POMDP planning). Ho, Cushman, Littman & Austerweil 2021 (JEP:General, "Communication in Action: Planning and Interpreting Communicative Demonstrations") model showing as belief-DIRECTED planning: a level-0 observer inverts your actions to a posterior over your goal; you (level 1) plan actions to maximize that posterior on the TRUE goal. Crucially the observer's belief is a hidden state you can't see, so choosing the demonstration is ITSELF a POMDP whose hidden state is the observer's belief — tie back to the master diagram (the lit box is now the OBSERVER's belief). "Inverse planning one level up." The legible path's 0.61-vs-0.50 number (next, in the widget) is this model's prediction. Instructor's own work — say so.
+:::
+
+## [Toggle legible vs. efficient — live]{.lang-en}[読み取りやすさを切り替え — ライブ]{.lang-ja} {.widget-slide}
+
+<iframe class="widget-frame" src="widgets/showing-vs-doing.html"></iframe>
+
+[Toggle efficient (doing) ↔ legible (showing): the observer's P(goal) stays ~0.50 under doing but jumps to 0.61 on the first move under showing — both paths optimal-length.]{.lang-en .widget-cap}[効率的（する）↔ 読み取りやすい（見せる）を切替：観察者の P(目標) は「する」では約0.50、「見せる」では最初の一手で0.61に跳ねる — 両経路とも最適長。]{.lang-ja .widget-cap}
 
 ::: {.notes}
 WIDGET C — showing-vs-doing legibility toggle. Demo script: with two candidate goals and a shared start, first run the EFFICIENT (doing) path and watch the observer's P(goal) bar stay near 50/50 until late — the path is ambiguous early. Then toggle to LEGIBLE (showing) and re-run: the observer's posterior commits EARLIER, jumping toward the true goal on the first move. The verified number to call out: legible 0.613 vs efficient 0.500 at step 1 — and both paths are optimal-length. That number is also the Poll 4 reveal, so plant it. Backbone: genjax_legible_teaching.py (verified). Fallback PNGs: legible-vs-efficient.png / showing-vs-doing-grid.png. ~2 min.
@@ -861,7 +1173,7 @@ Section break into the contemporary capstone (~14 min, clock 1:38). Transition: 
 
 - [Run the camera backwards]{.lang-en .done}[カメラを逆回しする]{.lang-ja .done}  [0:00]{.time}
 - [Goal inference as inverse planning]{.lang-en .done}[逆プランニングとしての目標推論]{.lang-ja .done}  [0:07]{.time}
-- [Theory of Mind = inverse RL]{.lang-en .done}[心の理論 = 逆強化学習]{.lang-ja .done}  [0:37]{.time}
+- [What is theory of mind?]{.lang-en .done}[心の理論とは？]{.lang-ja .done}  [0:37]{.time}
 - [POMDPs — inferring beliefs]{.lang-en .done}[POMDP — 信念を推論する]{.lang-ja .done}  [0:45]{.time}
 - [Break]{.lang-en .done}[休憩]{.lang-ja .done}  [1:07]{.time}
 - [Inverse RL — recovering rewards]{.lang-en .done}[逆強化学習 — 報酬の復元]{.lang-ja .done}  [1:12]{.time}
@@ -898,12 +1210,12 @@ Machine Theory of Mind — ToMnet (Rabinowitz et al. 2018, DeepMind). A meta-lea
 ::: {.lang-en}
 - **RLHF** (RL from Human Feedback): don't hand-write a reward — show people **pairs** of outputs, record **which they prefer**, fit a **reward model** to the preferences, then RL the policy against it.
 - **DPO** (Direct Preference Optimization): skip the separate reward model — optimize the policy **directly** on the preferences (the reward is *implicit* in the policy).
-- The choice model is **Bradley–Terry**: $P(A \succ B) = \sigma(r_A - r_B)$. Fitting $r$ from human **choices** is exactly **preference-based inverse RL**.
+- The choice model is **Bradley–Terry**: the chance you prefer A is a **logistic** function of the reward gap, $P(A \succ B) = \sigma(r_A - r_B)$ — $\sigma$ is the S-curve squashing any real number into $(0,1)$. Fitting $r$ from human **choices** is exactly **preference-based inverse RL**.
 :::
 ::: {.lang-ja}
 - **RLHF**（人間のフィードバックによる強化学習）：報酬を手書きせず — 出力の**ペア**を人に見せ、**どちらを好むか**を記録し、選好に**報酬モデル**を当てはめ、それに対して方策をRLする。
 - **DPO**（直接選好最適化）：別個の報酬モデルを省き、選好から**直接**方策を最適化（報酬は方策に*暗黙的*）。
-- 選択モデルは**ブラッドリー–テリー**：$P(A \succ B) = \sigma(r_A - r_B)$。人間の**選択**から $r$ を当てはめるのが、まさに**選好ベースの逆強化学習**。
+- 選択モデルは**ブラッドリー–テリー**：Aを好む確率は報酬差の**ロジスティック**関数、$P(A \succ B) = \sigma(r_A - r_B)$ — $\sigma$ は任意の実数を $(0,1)$ に潰すS字曲線。人間の**選択**から $r$ を当てはめるのが、まさに**選好ベースの逆強化学習**。
 :::
 
 ::: {.notes}
@@ -940,7 +1252,28 @@ Backbone genjax_reward_from_prefs.py (verified to run). Walk the code: latent re
 ![](images/llm-tom-debate.png){fig-align="center" width="86%"}
 
 ::: {.notes}
-The contested capstone — present it as a LIVE debate (claim → rebuttal), not a settled answer. Walk the figure's two poles. Pro-capability: Kosinski 2024 (GPT-4 solved ~75% of false-belief tasks — 6-year-old level — and "may have spontaneously emerged"; note the hedge, don't strawman it as "GPT has ToM"); Strachan 2024 (at/above human on false belief, irony, hinting across 1,907 humans); Street 2024 (adult-level higher-order recursive ToM). Skeptical: Ullman 2023, Pang 2025. Set it up here; the next slide lands the skeptical verdict. ~6 min for the whole LLM segment.
+The contested capstone — present it as a LIVE debate (claim → rebuttal), not a settled answer. Walk the figure's two poles. Pro-capability: Kosinski 2024 (GPT-4 solved ~75% of false-belief tasks — 6-year-old level — and "may have spontaneously emerged"; note the hedge, don't strawman it as "GPT has ToM"); Strachan 2024 (at/above human on false belief, irony, hinting across 1,907 humans); Street 2024 (adult-level higher-order recursive ToM). Skeptical: Ullman 2023, Pang 2025. Set it up here; the concrete examples come next, then the skeptical verdict. ~6 min for the whole LLM segment.
+:::
+
+## [What the tests actually look like]{.lang-en}[テストの実際]{.lang-ja} {.smaller}
+
+::: {.lang-en}
+**Standard Sally-Anne** — *Anne hides a toy in a box, leaves, the toy is moved.* A strong model reports Anne's **false** belief correctly. ✓ *(Kosinski 2024: GPT-4 ~75%.)*
+
+**Ullman's perturbation (2023)** — make the box **transparent** so Anne *can see in*. A mind that tracks beliefs says "Anne now knows." Models often **still report the old false belief** — a belief-*preserving* tweak flips success to failure. ✗
+
+**Faux pas** — needs the nested structure from before: the speaker's false belief **+** the listener's knowledge. Models pass some batteries, but the wins may be **response bias**, not the inference (Strachan 2024).
+:::
+::: {.lang-ja}
+**標準のサリーとアン** — *アンが箱に玩具を隠し、出て行き、玩具が移される。* 強いモデルはアンの**誤信念**を正しく報告する。✓ *(Kosinski 2024：GPT-4 約75%。)*
+
+**Ullmanの摂動（2023）** — 箱を**透明**にしてアンが*中を見える*ようにする。信念を追う心なら「アンは今や知っている」と言う。モデルはしばしば**依然として古い誤信念を報告** — 信念を*保つ*変更で成功が失敗に。✗
+
+**失言** — 先の入れ子構造を要する：話し手の誤信念**＋**聞き手の知識。モデルは一部の課題を通過するが、勝利は推論ではなく**応答バイアス**かもしれない（Strachan 2024）。
+:::
+
+::: {.notes}
+NEW slide — the first delivery cited Ullman/Kosinski/Strachan but showed NO concrete vignette, so "does it have ToM?" stayed abstract. Make it concrete with the actual tests, leaning on the definitions we built before the break: (1) standard Sally-Anne — GPT-4 passes ~75% (Kosinski 2024); (2) Ullman 2023's minimal perturbation — make the container TRANSPARENT so the agent can see in; the belief is preserved-as-knowledge, yet models often still report the OLD false belief, flipping success to failure; (3) the faux-pas test needs the nested structure we defined (speaker's false belief + listener's knowledge), and Strachan 2024's apparent passes may be response bias / over-conservatism, not inference. This IS the "behavioral pass ≠ mechanism" point from the autism methods lesson, now live for LLMs — call back to that slide explicitly. Then the honest verdict.
 :::
 
 ## [The honest answer: contested]{.lang-en}[正直な答え：論争中]{.lang-ja}
@@ -1013,17 +1346,17 @@ Reveal: B / C — behavioral pass ≠ mechanism. The one-line justification: "fi
 Section break into the close (~5 min, clock 1:52). Transition: "one inversion, applied five times — let's name what we did."
 :::
 
-## [One inversion, six times]{.lang-en}[一つの反転を六度]{.lang-ja} {.agenda .agenda-roomy}
+## [One model, every piece inferred]{.lang-en}[一つのモデル、各要素を推論]{.lang-ja} {.agenda .agenda-roomy}
 
-- [**Goal** inference — invert the MDP]{.lang-en .done}[**目標**推論 — MDPを反転]{.lang-ja .done}
-- [Theory of Mind = inverse RL]{.lang-en .done}[心の理論 = 逆強化学習]{.lang-ja .done}
-- [**Belief** inference — invert a POMDP (Tiger, food-truck)]{.lang-en .done}[**信念**推論 — POMDPを反転（トラ、フードトラック）]{.lang-ja .done}
-- [**Reward** — recover the whole function (MaxEnt → GAIL/AIRL)]{.lang-en .done}[**報酬** — 関数全体を復元（MaxEnt → GAIL/AIRL）]{.lang-ja .done}
-- [**Teaching** — make your goal legible (CIRL)]{.lang-en .done}[**教示** — 目標を読み取りやすく（CIRL）]{.lang-ja .done}
-- [**Alignment** — RLHF as IRL; LLM ToM is contested]{.lang-en .done}[**アラインメント** — IRLとしてのRLHF；LLMの心の理論は論争中]{.lang-ja .done}
+- [**Reward $R$** — goal inference, invert the MDP]{.lang-en .done}[**報酬 $R$** — 目標推論、MDPを反転]{.lang-ja .done}
+- [**Theory of mind** — defined (false belief), then = inverse planning]{.lang-en .done}[**心の理論** — 定義（誤信念）し、＝逆プランニング]{.lang-ja .done}
+- [**Belief $b$** — invert a POMDP (Sally-Anne, Tiger, food-truck)]{.lang-en .done}[**信念 $b$** — POMDPを反転（サリーとアン、トラ、フードトラック）]{.lang-ja .done}
+- [**Reward at scale** — MaxEnt → adversarial imitation → RLHF]{.lang-en .done}[**大規模な報酬** — MaxEnt → 敵対的模倣 → RLHF]{.lang-ja .done}
+- [**Teaching** — steer the observer's belief (Ho 2021; CIRL)]{.lang-en .done}[**教示** — 観察者の信念を操る（Ho 2021；CIRL）]{.lang-ja .done}
+- [**Alignment** — RLHF as IRL; LLM theory of mind is contested]{.lang-en .done}[**アラインメント** — IRLとしてのRLHF；LLMの心の理論は論争中]{.lang-ja .done}
 
 ::: {.notes}
-The closing recap — the same inversion applied to richer and richer hidden variables: goal (invert the MDP) → ToM = IRL (the framing) → belief (invert a POMDP: Tiger, food-truck) → reward (recover the whole reward function: MaxEnt → GAIL/AIRL) → teaching (make your goal legible, CIRL) → alignment (RLHF as preference-based IRL; LLM-ToM contested). Drive the unifying frame home one last time: every beat was a POMDP over "which MDP are we in?" — the latent we condition on observations to infer. Keep it tight; this is the takeaway slide.
+The closing recap — point back at the master diagram (Block 1) one last time: ONE agent model, and today we inferred a different hidden piece each block. Reward R (invert the MDP) → theory of mind (DEFINED via false belief, then = inverse planning) → belief b (invert a POMDP: Sally-Anne, Tiger, food-truck) → reward at scale (MaxEnt → adversarial imitation → RLHF) → teaching (steer the OBSERVER's belief — Ho 2021's recursive POMDP; CIRL) → alignment (RLHF as preference-based IRL; LLM-ToM contested, because a behavioral pass is not the mechanism). Drive the frame home: every beat was the same inversion on a POMDP, just a different latent lit up. Keep it tight; this is the takeaway.
 :::
 
 ## [Next week]{.lang-en}[来週]{.lang-ja}

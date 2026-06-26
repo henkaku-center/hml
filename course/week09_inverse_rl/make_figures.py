@@ -680,7 +680,7 @@ def fig_irl_timeline():
     fig, ax = plt.subplots(figsize=(11, 3.0))
     ax.set_xlim(0, 11); ax.set_ylim(0, 3); ax.axis("off")
     items = [("MaxEnt IRL\nZiebart '08", "soft-optimal\ndemonstrator", ACCENT),
-             ("GAIL\nHo & Ermon '16", "GAN imitation,\nskip the reward", TEAL),
+             ("GAIL\nHo & Ermon '16", "adversarial\nimitation", TEAL),
              ("AIRL\nFu et al. '18", "transferable\nreward", GREEN),
              ("RLHF / DPO\n'22–'23", "reward from\npreferences", YELLOW)]
     xs = [1.4, 4.0, 6.6, 9.4]
