@@ -361,7 +361,7 @@ MDPの*中で*行動して方策を求めるのは順問題（先週）。B・C�
 Reveal: A — that's FORWARD RL (acting in an MDP to find a policy = Week 8's problem). One-line justification: B, C, D all recover something hidden FROM behavior — that's the inverse problem. Source: SP25 IRL quiz Q2. Reinforce the forward/inverse distinction one more time, since the rest of the day depends on it, then move into the softmax / noisy-rationality detail.
 :::
 
-## [Noisy rationality]{.lang-en}[ノイズのある合理性]{.lang-ja}
+## [Noisy rationality]{.lang-en}[ノイズのある合理性]{.lang-ja} {.smaller}
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -442,7 +442,7 @@ Open the block by DEFINING theory of mind — the first delivery never did, whic
 ~2 min. Kaltura clip (UW-Madison media; short link https://go.wisc.edu/zz79z8). Plays inline in the HTML deck; in the PPTX export it won't embed — open the short link in a browser for the PPTX backup. Play ~1-2 min, then discuss: young children answer "box" (reality) because they can't yet hold Sally's false belief separate from their own knowledge.
 :::
 
-## [Reading a mind *is* inverse planning]{.lang-en}[心を読むこと*は*逆プランニング]{.lang-ja}
+## [Reading a mind *is* inverse planning]{.lang-en}[心を読むこと*は*逆プランニング]{.lang-ja} {.smaller}
 
 :::: {.columns}
 ::: {.column width="44%"}
@@ -452,7 +452,7 @@ How does mature theory of mind work? **Baker, Saxe & Tenenbaum (2009)** — *act
 - forward: beliefs + goals → action  ([planning]{.accent})
 - ToM: action → beliefs + goals  ([inverse planning]{.yellow})
 
-[Theory of mind is **your own decision theory, run backwards** on someone else — the same inversion as the last block, now over *minds*. Reviewed as "ToM = inverse RL" (Jara-Ettinger 2019).]{.yellow}
+[Theory of mind is **your own decision theory, run backwards** on someone else — reviewed as "ToM = inverse RL" (Jara-Ettinger 2019).]{.yellow}
 :::
 ::: {.lang-ja}
 成熟した心の理論はどう働く？ **Baker, Saxe & Tenenbaum (2009)** — *逆プランニングとしての行動理解*：
@@ -460,7 +460,7 @@ How does mature theory of mind work? **Baker, Saxe & Tenenbaum (2009)** — *act
 - 順方向：信念 + 目標 → 行動  （[プランニング]{.accent}）
 - 心の理論：行動 → 信念 + 目標  （[逆プランニング]{.yellow}）
 
-[心の理論とは、**自分の意思決定理論を**他者に**逆向きに**走らせること — 前のブロックと同じ反転、対象が*心*になっただけ。「ToM = 逆強化学習」と総説（Jara-Ettinger 2019）。]{.yellow}
+[心の理論とは、**自分の意思決定理論を**他者に**逆向きに**走らせること — 「ToM = 逆強化学習」と総説（Jara-Ettinger 2019）。]{.yellow}
 :::
 :::
 ::: {.column width="56%"}
@@ -514,7 +514,7 @@ A **faux pas**: someone says something they *don't realize* they shouldn't — a
 NEW slide — the first delivery hand-waved "faux pas" without defining it, which is exactly why the LLM debate fell flat. Define it cleanly: recognizing a faux pas = recognizing a speaker said something inappropriate WITHOUT realizing it. It requires representing TWO minds at once — the speaker's false belief (they don't know) AND the listener's knowledge (they do) — a nested / second-order false belief, harder than Sally-Anne, passed later (~9-11; Baron-Cohen et al. 1999 faux-pas test). Plant the structure now: in the LLM block we ask whether GPT-4 represents THIS structure or pattern-matches it.
 :::
 
-## [Theory of mind & autism — and a reframe]{.lang-en}[心の理論と自閉症 — そして再考]{.lang-ja} {.smaller}
+## [Theory of mind & autism — and a reframe]{.lang-en}[心の理論と自閉症 — そして再考]{.lang-ja}
 
 ::: {.lang-en}
 Sally-Anne was built to study **autism** (Baron-Cohen et al. 1985, "Does the autistic child have a theory of mind?"): autistic children passed control questions but **failed the false-belief question** more often — launching the **"mindblindness"** hypothesis.
@@ -1039,7 +1039,7 @@ Both paths here are optimal-length, but the legible one commits **on the first m
 This is the instructor's own work — Ho, Littman, MacGlashan, Cushman & Austerweil 2016, "Showing versus doing." The empirical result: people DOING a task and people SHOWING it move differently — demonstrators deliberately deviate from the efficient path to make the goal UNAMBIGUOUS. Point at the figure: both paths here are optimal-LENGTH, but the legible (showing) one commits on the first move so the observer's posterior jumps immediately. The Bayesian model: the teacher picks the demonstration that maximizes the observer's posterior on the correct reward. You can mention you're the author if it helps engagement. Then the recursive-inference model, then run the widget.
 :::
 
-## [Showing as recursive inference]{.lang-en}[再帰的推論としての「見せる」]{.lang-ja}
+## [Showing as recursive inference]{.lang-en}[再帰的推論としての「見せる」]{.lang-ja} {.smaller}
 
 :::: {.columns}
 ::: {.column width="52%"}
@@ -1052,7 +1052,7 @@ Why does the legible path work? **Ho et al. (2021)** make it precise. Two levels
 - **the observer** inverts your actions into a belief about your goal (inverse planning);
 - **you**, knowing this, pick actions to *move that belief* toward the truth.
 
-Your target — the observer's belief — is **hidden to you**, so planning the demonstration is **itself a POMDP** whose hidden state is *the observer's belief*. Teaching = inverse planning, **one level up**.
+Your target — the observer's belief — is **hidden to you**, so the demonstration is **itself a POMDP**. Teaching = inverse planning, **one level up**.
 :::
 ::: {.lang-ja}
 なぜ読み取りやすい経路が効くのか？ **Ho et al. (2021)** が厳密にした。二層：
@@ -1060,7 +1060,7 @@ Your target — the observer's belief — is **hidden to you**, so planning the 
 - **観察者**はあなたの行動を反転し、目標についての信念を作る（逆プランニング）；
 - **あなた**はそれを知り、*その信念を*真実へ*動かす*ように行動を選ぶ。
 
-あなたの狙う相手 — 観察者の信念 — は**あなたに隠れている**から、デモの計画**自体がPOMDP**であり、その隠れ状態は*観察者の信念*だ。教示＝一段上の逆プランニング。
+あなたの狙う相手 — 観察者の信念 — は**あなたに隠れている**から、デモ**自体がPOMDP**だ。教示＝一段上の逆プランニング。
 :::
 :::
 ::::
@@ -1255,21 +1255,25 @@ Backbone genjax_reward_from_prefs.py (verified to run). Walk the code: latent re
 The contested capstone — present it as a LIVE debate (claim → rebuttal), not a settled answer. Walk the figure's two poles. Pro-capability: Kosinski 2024 (GPT-4 solved ~75% of false-belief tasks — 6-year-old level — and "may have spontaneously emerged"; note the hedge, don't strawman it as "GPT has ToM"); Strachan 2024 (at/above human on false belief, irony, hinting across 1,907 humans); Street 2024 (adult-level higher-order recursive ToM). Skeptical: Ullman 2023, Pang 2025. Set it up here; the concrete examples come next, then the skeptical verdict. ~6 min for the whole LLM segment.
 :::
 
-## [What the tests actually look like]{.lang-en}[テストの実際]{.lang-ja} {.smaller}
+## [What the tests actually look like]{.lang-en}[テストの実際]{.lang-ja}
 
 ::: {.lang-en}
 **Standard Sally-Anne** — *Anne hides a toy in a box, leaves, the toy is moved.* A strong model reports Anne's **false** belief correctly. ✓ *(Kosinski 2024: GPT-4 ~75%.)*
 
-**Ullman's perturbation (2023)** — make the box **transparent** so Anne *can see in*. A mind that tracks beliefs says "Anne now knows." Models often **still report the old false belief** — a belief-*preserving* tweak flips success to failure. ✗
+**Ullman's perturbation (2023)** — make the box **transparent** so Anne can see in. A belief-tracker says "Anne now knows," yet models often **still report the old false belief**. ✗
 
 **Faux pas** — needs the nested structure from before: the speaker's false belief **+** the listener's knowledge. Models pass some batteries, but the wins may be **response bias**, not the inference (Strachan 2024).
+
+[The autism lesson, live for machines: **behavioral pass ≠ mechanism**.]{.yellow}
 :::
 ::: {.lang-ja}
 **標準のサリーとアン** — *アンが箱に玩具を隠し、出て行き、玩具が移される。* 強いモデルはアンの**誤信念**を正しく報告する。✓ *(Kosinski 2024：GPT-4 約75%。)*
 
-**Ullmanの摂動（2023）** — 箱を**透明**にしてアンが*中を見える*ようにする。信念を追う心なら「アンは今や知っている」と言う。モデルはしばしば**依然として古い誤信念を報告** — 信念を*保つ*変更で成功が失敗に。✗
+**Ullmanの摂動（2023）** — 箱を**透明**にしてアンが中を見えるようにする。信念を追う心は「アンは今や知っている」と言うのに、モデルはしばしば**依然として古い誤信念を報告**。✗
 
 **失言** — 先の入れ子構造を要する：話し手の誤信念**＋**聞き手の知識。モデルは一部の課題を通過するが、勝利は推論ではなく**応答バイアス**かもしれない（Strachan 2024）。
+
+[まさに自閉症の教訓、機械版：**行動上の通過は機構ではない**。]{.yellow}
 :::
 
 ::: {.notes}
