@@ -229,6 +229,9 @@ weeks:
       - citation: "Ho, M. K., Littman, M. L., MacGlashan, J., Cushman, F., & Austerweil, J. L. (2016). Showing versus doing: Teaching by demonstration. NeurIPS."
         pdf: Hoetal2016NIPS.pdf
         why: "Teaching-by-demonstration as inverse planning — Prof. Austerweil's own work."
+      - citation: "Ho, M. K., Cushman, F., Littman, M. L., & Austerweil, J. L. (2021). Communication in action: Planning and interpreting communicative demonstrations. Journal of Experimental Psychology: General, 150(11), 2246–2272."
+        pdf: Hoetal2021JEPGeneral.pdf
+        why: "The full recursive-inference formalization of 'showing': communicative demonstration as belief-directed planning — the demonstrator solves a POMDP whose hidden state is the OBSERVER's belief. Prof. Austerweil's own work; the formal successor to the 2016 showing-vs-doing paper and the anchor for the lecture's legibility = recursive-POMDP block."
       - citation: "Ho, M. K., Littman, M. L., Cushman, F., & Austerweil, J. L. (2015). Teaching with rewards and punishments: Reinforcement or communication? Proc. CogSci."
         pdf: Hoetal2015CogSciProc.pdf
         why: "Follow-up: reward as signal vs. as reinforcer."

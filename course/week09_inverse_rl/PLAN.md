@@ -32,7 +32,15 @@ Planned (T3 series — next free weights after Ch 20–22; **authoring pending**
 - **LLM Theory of Mind (taught as a live debate, skeptical lean per instructor):** Kosinski 2024 / Strachan 2024 / Street 2024 (capability) vs. Ullman 2023 / Pang 2025 (perturbation failures, contamination). *Behavioral pass ≠ mechanism.* Seeds Weeks 11–13.
 
 ## Status
-**SP26 lecture rebuilt & verified (not yet published).** Deck `week9-slides.qmd` (49 slides, bilingual EN/JA — 103 lang-ja blocks), 15 generated figures, 4 interactive widgets (browser-tested), 4 GenJAX backbones. Fill audit: **0 clips** (hard gate passed); under-fill flags are the centered-design + widget-iframe false positives. Student-persona clarity review run (non-math + CS personas) → micro-clarity fixes applied. **Remaining:** author textbook Ch 23–25; then publish (CI render + docs/index.html regen).
+**SP26 lecture DELIVERED (Jun 26), then REBUILT post-delivery** to fix seven professor-flagged defects (see `/home/jausterw/.claude/plans/i-just-finished-giving-giggly-swing.md`). The rebuild:
+- **Master POMDP frame up front** — the agent model (a POMDP) is drawn in Block 1 (`agent-model-{pomdp,R,belief}.png`) + a "map of unknowns" slide; each block lights the active hidden piece instead of re-deriving Bayes (fixes the "no unifying framework" + "I kept repeating myself" complaints).
+- **New "What is theory of mind?" block** — ToM defined (Premack & Woodruff; Sally-Anne false belief + video; faux-pas) + richer social cognition ported from APS-I Week 6 (Knobe side-effect, blame early/late, mind perception, autism/double-empathy methods lesson); the false-belief⇒POMDP bridge (b≠s ⇒ Sally-Anne *is* a POMDP).
+- **Legibility = recursive POMDP (Ho et al. 2021)** — `recursive-pomdp-teaching.png`; the demonstrator plans over the OBSERVER's belief (a POMDP). Ho 2021 added to `readings_map.yml` + `resources/readings/`.
+- **GAN-free modern IRL** (critic-vs-imitator, "≈ a GAN" aside) + Bradley-Terry/σ defined — no untaught concepts.
+- **Concrete LLM-ToM** — worked Sally-Anne, Ullman transparent-box perturbation, faux-pas structure; "behavioral pass ≠ mechanism" paid off from the autism methods lesson.
+- **All 4 widgets foregrounded** (titled `.widget-slide` + driven `<iframe>`) + 2 earlier-week callback widgets (`mdp-value-iteration`, `particle-filter`).
+
+Deck now **77 slides**, bilingual (216 lang-ja blocks), 19 generated + 5 ported figures, 6 foreground widgets. **Fill audit + content-slide clip check (leaf-slide, `Reveal.getCurrentSlide`): NO content-slide clips.** **In progress:** mirror the fixes into textbook Ch 23–25 + glossary. **Remaining:** native-speaker JA proof; publish (CI render + docs/index.html regen).
 
 ## SP26 artifacts (this directory)
 ```
