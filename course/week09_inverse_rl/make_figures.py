@@ -152,6 +152,93 @@ def draw_grid(ax, goals_named, start, path_actions=None, path_color=YELLOW, titl
 
 
 # ==========================================================================
+# 0. THE MASTER FRAME — the agent model (a POMDP) and its unknowns.
+#    One diagram, reused every block with a different piece highlighted.
+# ==========================================================================
+def _agent_model(ax, highlight=()):
+    """Draw the POMDP agent-loop. `highlight` = names to light up in YELLOW.
+    pieces: R (reward/goal), b (belief), s (world state), o (observation),
+            pi (policy), a (action)."""
+    ax.set_xlim(0, 12); ax.set_ylim(0, 7.4); ax.axis("off")
+
+    def pc(name):                      # edge/text colour, brightened if highlighted
+        on = name in highlight
+        base = dict(R=GREEN, b=YELLOW, s=RED, o=ACCENT, pi=WHITE, a=GREEN)[name]
+        return (YELLOW if on else base, on)
+
+    def piece(name, xy, w, h, text, fs=12):
+        col, on = pc(name)
+        if on:                          # glow behind the highlighted piece
+            ax.add_patch(FancyBboxPatch((xy[0] - w/2 - .12, xy[1] - h/2 - .12), w + .24, h + .24,
+                        boxstyle="round,pad=0.02,rounding_size=0.08", fc=YELLOW, ec="none",
+                        alpha=.16, zorder=1))
+        box(ax, xy, w, h, text, ec=col, tc=col, fs=fs, lw=(3 if on else 2), z=3)
+
+    # loop layout: reward (top) drives policy; belief from observations; action observed
+    piece("R",  (6.0, 6.4), 3.4, 0.95, "reward / goal  R", fs=12)
+    piece("b",  (2.4, 3.9), 3.0, 1.05, "belief  b(s)\n= P(s | history)", fs=11)
+    piece("pi", (6.0, 3.9), 2.3, 0.95, "policy  π", fs=12)
+    piece("a",  (9.7, 3.9), 3.0, 0.95, "action  a", fs=12)
+    piece("o",  (2.4, 1.2), 3.0, 0.95, "observation  o", fs=12)
+    piece("s",  (9.7, 1.2), 3.0, 0.95, "world state  s", fs=12)
+    # arrows of the loop
+    arrow(ax, (6.0, 5.9), (6.0, 4.4), color=DIM)                 # R -> pi
+    arrow(ax, (3.9, 3.9), (4.8, 3.9), color=DIM)                 # b -> pi
+    arrow(ax, (7.2, 3.9), (8.2, 3.9), color=DIM)                 # pi -> a
+    arrow(ax, (9.7, 3.4), (9.7, 1.7), color=DIM)                 # a -> s'  (transition T)
+    ax.text(10.0, 2.55, "T", color=DIM, fontsize=11, ha="left")
+    arrow(ax, (8.2, 1.2), (3.9, 1.2), color=DIM)                 # s -> o   (observation O)
+    ax.text(6.05, 1.45, "O", color=DIM, fontsize=11, ha="center")
+    arrow(ax, (2.4, 1.7), (2.4, 3.35), color=DIM)                # o -> b   (Bayes update)
+    ax.text(1.95, 2.55, "Bayes", color=DIM, fontsize=9, ha="right", rotation=90)
+    ax.text(9.7, 4.62, "observed", color=GREEN, fontsize=9.5, ha="center", style="italic")
+    ax.text(9.7, 0.46, "hidden", color=RED, fontsize=9.5, ha="center", style="italic")
+
+
+def fig_agent_model():
+    variants = [
+        ("agent-model-pomdp.png", (),
+         "Week 8 ran this FORWARD (all pieces known → behavior).  "
+         "Week 9: watch the behavior, infer a hidden piece."),
+        ("agent-model-R.png", ("R",),
+         "Infer the reward / goal R from behavior  →  goal inference & inverse RL"),
+        ("agent-model-belief.png", ("b", "s"),
+         "Infer the agent's belief b (it may be FALSE: b ≠ s)  →  Theory of Mind, POMDPs"),
+    ]
+    for name, hl, cap in variants:
+        fig, ax = plt.subplots(figsize=(8.8, 5.4))
+        _agent_model(ax, highlight=hl)
+        ax.text(6.0, 0.18, cap, ha="center", color=(YELLOW if hl else DIM), fontsize=11)
+        save(fig, name)
+
+
+def fig_recursive_teaching():
+    """Ho et al. 2021: showing = belief-directed planning. The observer inverts
+    your actions (level 0); you plan actions to drive the observer's belief
+    (level 1) — a POMDP whose hidden state is the OBSERVER'S belief."""
+    fig, ax = plt.subplots(figsize=(9.6, 5.0))
+    ax.set_xlim(0, 12); ax.set_ylim(0, 6.4); ax.axis("off")
+    # level 0 — the observer doing inverse planning on you
+    ax.text(6.0, 6.05, "level 0 — the observer reads you (inverse planning)",
+            color=ACCENT, fontsize=11.5, ha="center")
+    box(ax, (2.6, 4.9), 3.2, 0.9, "your action  a", ec=GREEN, tc=GREEN, fs=12)
+    box(ax, (9.0, 4.9), 4.0, 0.9, "observer's belief\nabout your goal", ec=ACCENT, tc=ACCENT, fs=11)
+    arrow(ax, (4.3, 4.9), (6.9, 4.9), color=ACCENT)
+    ax.text(5.6, 5.18, "infers", color=ACCENT, fontsize=9.5, ha="center")
+    # level 1 — you, planning over that belief
+    ax.text(6.0, 3.25, "level 1 — you plan actions to shape that belief",
+            color=YELLOW, fontsize=11.5, ha="center")
+    box(ax, (9.0, 1.9), 4.0, 0.95, "observer's belief\n(hidden state to you)", ec=YELLOW, tc=YELLOW, fs=11)
+    box(ax, (2.6, 1.9), 3.2, 0.95, "your action  a", ec=GREEN, tc=GREEN, fs=12)
+    arrow(ax, (6.9, 1.9), (4.3, 1.9), color=YELLOW)
+    ax.text(5.6, 2.18, "choose a to maximize it", color=YELLOW, fontsize=9, ha="center")
+    ax.text(6.0, 0.5, "you are uncertain about the observer's belief and act to move it "
+            "→ a POMDP whose hidden state is the observer's belief  (Ho et al. 2021)",
+            ha="center", color=DIM, fontsize=10.5)
+    save(fig, "recursive-pomdp-teaching.png")
+
+
+# ==========================================================================
 # 1. forward vs inverse RL
 # ==========================================================================
 def fig_inverse_vs_forward():
@@ -658,6 +745,8 @@ def fig_llm_tom_debate():
 
 
 if __name__ == "__main__":
+    fig_agent_model()
+    fig_recursive_teaching()
     fig_inverse_vs_forward()
     fig_bayes_inversion()
     fig_goal_inference_posterior()

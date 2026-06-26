@@ -19,14 +19,21 @@
 
 $$P(\text{goal}\mid\text{actions}) \;\propto\; \underbrace{P(\text{actions}\mid\text{goal})}_{\text{Week-8 softmax policy, run in reverse}}\;\cdot\;P(\text{goal}).$$
 
-**Five-beat arc** (each beat *re-runs the inversion on a richer hidden variable*):
-1. **Goal inference** (Baker): invert an MDP → recover the **goal/reward**. The agent sees everything.
-2. **Theory of Mind = IRL** (Baker & Tenenbaum's inverse-planning framework; *named* "ToM = IRL" in Jara-Ettinger's 2019 review): the framing — this is what minds do.
-3. **Belief inference** (BToM → POMDPs): the agent has *partial/false* beliefs → invert a **POMDP** → recover **belief + desire**. (Food-truck; Tiger.)
-4. **Teaching = inversion flipped** (Ho, Dragan, CIRL): if you know you'll be read, *act legibly* → communication.
-5. **IRL at scale & alignment** (MaxEnt/GAIL/AIRL, RLHF/DPO, LLM-ToM): the same inverse problem at frontier scale — the contested capstone.
+**REVISED SPINE (post-delivery rebuild — see `/home/jausterw/.claude/plans/i-just-finished-giving-giggly-swing.md`).** The first delivery was a topic-tour that re-derived Bayes every block, never defined theory of mind, introduced GANs without teaching them, and stated the unifying POMDP frame only at the very end. The rebuild fixes all of that by making **one master framework — the agent model (a POMDP) — the organizing frame from Block 1**, then working each hidden piece in turn.
 
-**The unifying probabilistic frame (weave it through every beat).** Inferring an agent's goal/reward is *itself* a problem of acting under uncertainty about **which MDP we're in**. The observer doesn't know the agent's reward — that latent reward is a hidden state — so the observer is effectively solving a **POMDP whose hidden state is the agent's goal/reward (= which MDP the agent inhabits)**. The same structure appears three times: Block 2's goal inference (uncertainty over *reward*), Block 5's belief inference (uncertainty over *world state* and the agent's *belief*), and Block 6's teaching — **CIRL provably reduces to a POMDP** (Hadfield-Menell et al. 2016) whose hidden state is the human's reward. Name this in Block 2 so the POMDP isn't merely "the Block-5 topic" but the lens for the whole week: **everything here is a POMDP over which-MDP-we're-in** — and the GenJAX code makes that hidden variable explicit (the thing we condition on observations to infer).
+**The master frame (Block 1, drawn as ONE diagram reused every block):** an agent acting under uncertainty = a POMDP with pieces world state $s$, transition $T$, observation model $O\!\to\!o$, reward/goal $R$, belief $b$, policy $\pi$. Week 8 ran it **forward** (all known → behavior); Week 9 is the **inverse** — observe behavior, infer one hidden piece. A **"map of unknowns"** slide assigns each block to a piece. The **same master diagram recurs at every block with the active piece highlighted** (`agent-model-{pomdp,R,belief}.png`) — so we *point at the lit box* instead of re-deriving Bayes (kills the repetition) and the framework stays visible throughout.
+
+**Eight blocks = one model, worked piece by piece:**
+1. **The agent model & its unknowns** (NEW frame) — master POMDP diagram + map-of-unknowns; Bayes inversion stated *once*; callback widget `mdp-value-iteration`/`qlearning` (the Week-8 forward model we invert).
+2. **Infer $R$: goal inference / IRL** (world observed) — Baker; softmax-policy-as-likelihood; ill-posed; naive utility calculus; noisy-rationality folded in. Widget `goal-inference` (foreground).
+3. **What is theory of mind?** (NEW, social-cognition heart) — ToM def (Premack & Woodruff 1978); Sally-Anne false belief (Baron-Cohen, Leslie & Frith 1985) + video; faux-pas; "decision theory run backwards" = inverse planning (Baker 2009); **richer import (APS-I Wk6):** Knobe side-effect, blame early/late (Malle), mind perception (agency×experience), autism & double-empathy methods lesson. Bridge: a false belief means $b\neq s$ ⇒ belief must be a separate latent ⇒ **POMDP**.
+4. **Infer $b$: belief inference / POMDPs** — food-truck BToM; Tiger; belief MDP; α-vectors. Widget `pomdp-belief` (foreground) + callback `particle-filter`.
+5. **Infer $R$ at scale: IRL → alignment** (leaner) — MaxEnt (= Block-2 softmax at scale); **GAN-free** GAIL/AIRL (critic-vs-imitator, "≈ a GAN" aside); Bradley-Terry one-liner; RLHF/DPO. Widget `reward-recovery` (foreground).
+6. **Control the observer's belief: teaching** — flip; showing-vs-doing (Ho 2016) + widget `showing-vs-doing` (foreground); **recursive POMDP (Ho et al. 2021)** — the observer's belief is the hidden state you plan over (`recursive-pomdp-teaching.png`); Dragan; CIRL→POMDP as a *consequence* of the frame.
+7. **Alignment & LLM theory of mind** (concrete) — ToMnet; RLHF=IRL; **concrete** worked Sally-Anne vignette + Ullman transparent-box perturbation + faux-pas structure. The autism outcome-null/process-difference lesson pays off here as "behavioral pass ≠ mechanism."
+8. **Close** — master diagram one last time, every piece inferred; Week 10 bridge.
+
+**Timing ≈ 2h05–2h15** (richer ToM adds ~15–20 min; de-repetition + leaner modern tail reclaim some). Cut order if over: trim modern-IRL detail (textbook carries it) → compress Knobe/blame/mind-perception to one slide → autism to one methods slide → Dragan to a name-drop. Protect Blocks 1 frame, 2 inversion, 4 Tiger, 7 LLM bottom-line.
 
 **What is KEPT from SP25** (the two decks `Week09_IRLSocialCog.pptx` + `Week09_IRLPOMDPSocial.pptx`):
 - The **core conceptual spine**: inverse RL as goal inference; social cognition / Theory of Mind as the application; the move to **POMDPs** for belief inference. (This sequencing is good and stays.)
@@ -110,6 +117,8 @@ Baker, Jara-Ettinger, Saxe & Tenenbaum 2017. ~5×10 gridworld; a **building occl
 ---
 
 ## Session Plan
+
+> ⚠️ **The table + per-block detail below describe the ORIGINAL (delivered) lecture.** The post-delivery rebuild follows the **REVISED SPINE** at the top of this file (8 blocks, master-POMDP frame, new "What is theory of mind?" block, Ho-2021 recursive POMDP, GAN-free IRL, foreground widgets). Where the two differ, the revised spine wins. New assets added for the rebuild: figures `agent-model-{pomdp,R,belief}.png` + `recursive-pomdp-teaching.png` (in `make_figures.py`); ported APS-I figures `inverse_planning.png`, `knobe_bars.png`, `blame_path_model.png`, `asd_outcome_vs_process_stacked.png`, `pantelis_kennedy_asd_control.png`; callback widgets `mdp-value-iteration.html`, `qlearning-gridworld.html`, `particle-filter.html`; new reading **Ho et al. 2021** (*Communication in Action*, JEP:General).
 
 | Time | Block | Min | What happens |
 |------|-------|-----|--------------|
