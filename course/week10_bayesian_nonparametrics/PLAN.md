@@ -40,9 +40,15 @@ verification gate.
 
 ## SP26 Artifacts
 - `week10-shared-outline.md` — timing-free outline; Block 1 authored with verbatim speaker notes.
-- `widgets/bias-variance-explorer.html` — Widget 4 (Task 6). Two panels; right panel has a model selector:
-  *closed-form min-norm* (ridge-λ slider + ‖weights‖₂ panel) and *neural net + GD* (hidden-units H ×
-  GD-iterations T). QA screenshots in `widgets/preview/` (ridgeless/ridge, NN early-stop/trained).
+- **All 4 widgets built & QA-verified** (self-contained HTML/Canvas, SDS theme; previews in `widgets/preview/`):
+  - `widgets/dpmm-kde-gmm.html` — Widget 1 (centerpiece). DPMM (collapsed CRP Gibbs) vs KDE vs fixed-K GMM on
+    click-to-add bento weights; α drives DPMM cluster count; K=2 GMM misses the 275 g outlier.
+  - `widgets/stick-breaking-polya.html` — Widget 2. Stick-breaking + Pólya-urn, two views of DP(α).
+  - `widgets/crp-seating.html` — Widget 3. CRP seating animation; rich-get-richer; α slider.
+  - `widgets/bias-variance-explorer.html` — Widget 4. Two panels; right has a model selector: *closed-form
+    min-norm* (ridge-λ slider + ‖weights‖₂ panel) and *neural net + GD* (hidden-units H × GD-iterations T).
+- `make_figures.py` — Block-1 teaching figures (`images/bv_three_fits.png`, `bv_ucurve.png`,
+  `double_descent.png`), dark SDS theme, verified.
 - `slides/sp25_reference/` — legacy `Week10_BNP.pptx` (+ extra slides, PDF, transcript), reference only.
 
 ## TODOs
