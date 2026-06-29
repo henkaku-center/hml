@@ -52,7 +52,9 @@ See the [presentation guidelines](presentation-guidelines.html) for tips on givi
 
 ## Final paper (due Fri Jul 24, 2026, 8:00 PM)
 
-Your paper should be **about six pages, single-spaced**. There are no strict formatting rules, but here is a structure that works well:
+Your paper should be **about six pages, single-spaced**. I recommend you use the **6-page CogSci Proceedings template** (the standard Cognitive Science Society proceedings format), available here: <https://github.com/neilbramley/cogscisoc>. It's anonymized by default for peer review — if you use it, please **de-anonymize the final version** (add your name and affiliation) before you submit it to me.
+
+Whatever format you use, here is a structure that works well:
 
 1. Motivate your research question and succinctly state it, then outline the structure of the paper.
 2. Provide the background — context for your question and any previous work on it.
