@@ -32,11 +32,11 @@
 - **Block 7:** GP→NN (NNGP/NTK), neural processes, nonparametric memory (RAG / kNN-LM).
 
 ## Status
-**SP26 rebuild in progress.** Quarto/RevealJS port underway (last week still on legacy PPTX). Plan approved;
-see `week10-shared-outline.md` (SOURCE OF TRUTH — Block 1 fully authored incl. speaker notes). Bias-variance
-critical review done (keep/fix/cut recorded in the outline). Widget 4 (bias-variance / double-descent
-explorer) BUILT and QA-verified. Remaining: Widgets 1–3, GenJAX backbones, the qmd (Blocks 1–8), LDA toy,
-verification gate.
+**SP26 rebuild — deck BUILT & verified.** Full Quarto/RevealJS port done: `week10-slides.qmd` (51 slides,
+8 blocks, bilingual EN↔JA), all **4 widgets** embedded live, **8 figures**, Block-1 speaker notes in place.
+Verified: builds clean; fill audit 0 clips / 0 overflow (12 slides at 70–74%, centered/acceptable); JA toggle
+works; widgets run in-deck. Source of truth: `week10-shared-outline.md`. **Remaining:** GenJAX backbones
+(optional code slide / Phase-2 dual-home), nudge the 70–74% slides, sync root `TODO.md`, Phase-2 textbook.
 
 ## SP26 Artifacts
 - `week10-shared-outline.md` — timing-free outline; Block 1 authored with verbatim speaker notes.
