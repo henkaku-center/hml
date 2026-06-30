@@ -20,9 +20,17 @@
   (widgets, GenJAX backbones, figures) are built dual-homed so the revision is a port, not a re-derivation.
 
 ## GenJAX Integration
-- `genjax_dpmm.py` (reuse Ch6 backbone) — DPMM code slide + figure (Block 5).
-- `genjax_biasvariance.py` — polynomial hypothesis-space demo + double-descent (Block 1 / Phase-2 ch).
-- `genjax_gp.py` — GP regression (Block 7 / Phase-2 ch).
+**All three backbones BUILT & validated (jax 0.5.3 / genjax 0.10.3, run clean):**
+- `genjax_dpmm.py` ✅ — `@gen` stick-breaking DPMM + slice-Gibbs inference on bento weights; discovers
+  3 clusters incl. the lone 275 g outlier. Figure `images/genjax_dpmm.png`. Drives the new
+  **"The DPMM, as a GenJAX program"** code slide (Block 5, after "How is a DPMM actually fit?").
+- `genjax_biasvariance.py` ✅ — `@gen` Bayesian polynomial regression (ridge prior) → bias-variance
+  U-curve (sweet spot deg 3) + high-dim (D=180) double descent (spike exactly at p=n=20, second
+  descent). Figures `images/genjax_biasvariance.png`, `images/genjax_double_descent.png`. Dual-homed
+  for the Phase-2 Bias-Variance chapter (Block 1 already ships matplotlib twins).
+- `genjax_gp.py` ✅ — `@gen` GP prior (Cholesky trick over iid normals) + closed-form posterior; RBF
+  kernel; interpolates data up to noise. Figure `images/genjax_gp.png`. Dual-homed for the Phase-2
+  Continuous-BNP chapter (Block 7 already ships a matplotlib twin).
 - (Deferred, non-blocking: the standalone GenJAX DPMM *assignment/exercise* — see TODOs.)
 
 ## Contemporary ML Notes
@@ -32,11 +40,13 @@
 - **Block 7:** GP→NN (NNGP/NTK), neural processes, nonparametric memory (RAG / kNN-LM).
 
 ## Status
-**SP26 rebuild — deck BUILT & verified.** Full Quarto/RevealJS port done: `week10-slides.qmd` (51 slides,
-8 blocks, bilingual EN↔JA), all **4 widgets** embedded live, **8 figures**, Block-1 speaker notes in place.
-Verified: builds clean; fill audit 0 clips / 0 overflow (12 slides at 70–74%, centered/acceptable); JA toggle
-works; widgets run in-deck. Source of truth: `week10-shared-outline.md`. **Remaining:** GenJAX backbones
-(optional code slide / Phase-2 dual-home), nudge the 70–74% slides, sync root `TODO.md`, Phase-2 textbook.
+**SP26 rebuild — deck BUILT & verified; GenJAX backbones DONE.** Full Quarto/RevealJS port: `week10-slides.qmd`
+(56 slides, 8 blocks, bilingual EN↔JA), all **4 widgets** embedded live, **13 figures**, Block-1 speaker
+notes in place. Verified: builds clean; fill audit 0 clips / 0 overflow; JA toggle works; widgets run in-deck.
+**All 3 GenJAX backbones built & validated** (`genjax_dpmm/biasvariance/gp.py`) + a **DPMM-as-GenJAX-program**
+code slide (Block 5). Closing **GP↔bias-variance synthesis** added (Block 8: "It all comes home" figure +
+"One question, three answers"), with the GP→NN block (Neal/NNGP/NTK) detailed in notes. Source of truth:
+`week10-shared-outline.md`. **Remaining:** Phase-2 textbook (3 chapters; backbones now built & dual-homed).
 
 ## SP26 Artifacts
 - `week10-shared-outline.md` — timing-free outline; Block 1 authored with verbatim speaker notes.
@@ -47,8 +57,11 @@ works; widgets run in-deck. Source of truth: `week10-shared-outline.md`. **Remai
   - `widgets/crp-seating.html` — Widget 3. CRP seating animation; rich-get-richer; α slider.
   - `widgets/bias-variance-explorer.html` — Widget 4. Two panels; right has a model selector: *closed-form
     min-norm* (ridge-λ slider + ‖weights‖₂ panel) and *neural net + GD* (hidden-units H × GD-iterations T).
-- `make_figures.py` — Block-1 teaching figures (`images/bv_three_fits.png`, `bv_ucurve.png`,
-  `double_descent.png`), dark SDS theme, verified.
+- `make_figures.py` — teaching figures (`images/bv_three_fits.png`, `bv_ucurve.png`, `double_descent.png`,
+  `dp_g0_to_g.png`, `bring_it_home.png`), dark SDS theme, verified.
+- **`genjax_dpmm.py` / `genjax_biasvariance.py` / `genjax_gp.py`** — validated GenJAX backbones (run clean
+  under jax 0.5.3 / genjax 0.10.3), each writing its figure(s) to `images/genjax_*.png`. Dual-homed for the
+  Phase-2 textbook chapters; `genjax_dpmm.py` also drives the in-deck "DPMM, as a GenJAX program" code slide.
 - `slides/sp25_reference/` — legacy `Week10_BNP.pptx` (+ extra slides, PDF, transcript), reference only.
 
 ## TODOs
