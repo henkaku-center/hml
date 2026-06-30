@@ -13,11 +13,13 @@
   clustering / Gaussian-Bayes quizzes for pause-and-predict items during Task 8; see `course/quizzes/README.md`)
 
 ## Textbook Chapters
-- **Prerequisite (assign):** intro2 Ch5 (mixture models / GMM+EM on bento weights), Ch6 (DPMM).
-- **Phase 2 (separate session) — revise toward the lecture into 3 GenJAX-modernized chapters:**
-  *Bias-Variance Dilemma* (new), *Discrete Bayesian Nonparametrics* (revise+expand Ch6),
-  *Continuous Bayesian Nonparametrics* (new — GPs/NNGP/NTK/neural processes/RAG). Phase-1 artifacts
-  (widgets, GenJAX backbones, figures) are built dual-homed so the revision is a port, not a re-derivation.
+- **Prerequisite:** intro2 `05_mixture_models.md` (GMM; EM claim corrected → Bayesian posterior inference).
+- **Phase 2 — DONE (2026-06-30): the Week-10 trilogy**, each clarity-reviewed to convergence (≥8.5/10),
+  code-validated (0 failures), glossary + back-links done; homepage deep-links wired in
+  `docs/_build.py` `WEEK_TEXTBOOK_LINKS[10]` (the `05a_`/`06a_` slugs aren't auto-discoverable by `^\d{2}_`):
+  - `intro2/05a_bias_variance.md` (new) — *The Bias-Variance Dilemma*: honest ridge, σ²=λ bridge, high-dim double descent. Reuses `genjax_biasvariance.py` + Widget 4.
+  - `intro2/06_dpmm.md` (revised in place → *Discrete Bayesian Nonparametrics*): three lenses, EPPF, building-block (HDP/LDA/IBP). Reuses `genjax_dpmm.py` + Widgets 1–3.
+  - `intro2/06a_continuous_bnp.md` (new) — *Continuous Bayesian Nonparametrics: Gaussian Processes*: GPs, NNGP/NTK, neural processes/RAG, the synthesis. Reuses `genjax_gp.py`.
 
 ## GenJAX Integration
 **All three backbones BUILT & validated (jax 0.5.3 / genjax 0.10.3, run clean):**

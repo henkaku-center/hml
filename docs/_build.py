@@ -189,6 +189,20 @@ WEEK_TEXTBOOK_LINKS = {
         ("Simulation-based RL & MCTS", "intro2/22_q_learning/#planning-by-search-mcts"),
         ("Two-step task (MB vs MF)", "intro2/22_q_learning/#telling-model-free-from-model-based-the-two-step-task"),
     ],
+    # Week 10 (Jul 3) — Bias-Variance + Bayesian Nonparametrics. "How complex?" →
+    # three answers (ridge / grow capacity / prior over functions). The two new
+    # chapters use 05a_/06a_ slugs (not auto-discoverable by ^\d{2}_), so they are
+    # wired here explicitly. intro2 05a (bias-variance) / 06 (discrete BNP) / 06a (GPs).
+    10: [
+        ("Bias-variance dilemma", "intro2/05a_bias_variance/"),
+        ("Ridge = a Gaussian prior", "intro2/05a_bias_variance/#ridge-regression-is-a-gaussian-prior"),
+        ("Double descent", "intro2/05a_bias_variance/#double-descent"),
+        ("Discrete BNP: DP / CRP / DPMM", "intro2/06_dpmm/"),
+        ("One object, three lenses", "intro2/06_dpmm/#one-object-three-lenses"),
+        ("Gaussian processes", "intro2/06a_continuous_bnp/"),
+        ("GP → NNGP / NTK", "intro2/06a_continuous_bnp/#from-gaussian-processes-to-neural-networks"),
+        ("It all comes home", "intro2/06a_continuous_bnp/#it-all-comes-home"),
+    ],
 }
 
 # Week dates (SP26 calendar: Apr 17 through Jul 17, no class May 1 or May 8)
