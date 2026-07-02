@@ -25,11 +25,11 @@ This means Week 3 does NOT need to re-teach continuous probability or Gaussians.
 - **Quiz:** Intro to Prob Theory Quiz 2
 
 ## Textbook Chapters
-- T3 Ch 4: `intro2/04_bayesian_learning.md` — REQUIRED before class. Picks up directly from Week 2's Block 7.
-- T1 Ch 6: `intro/06_glossary.md` — review
+- Bk: bayesian learning (`learning/bayesian-learning.md`) — REQUIRED before class. Picks up directly from Week 2's Block 7.
+- Bk: glossary (`foundations/glossary.md`) — review
 
 ## GenJAX Integration
-- T2 Ch 2–3: `genjax/02_first_model.md`, `genjax/03_traces.md` (students' own time)
+- Bk: first model, traces (`genjax/`) (students' own time)
 - Consider a short live demo: `beta_binomial_update()` generative model. Optional.
 
 ## Contemporary ML Notes

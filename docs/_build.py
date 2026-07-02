@@ -67,62 +67,67 @@ ASSIGNMENT_STENCILS = {
 
 TEXTBOOK_BASE = "https://josephausterweil.github.io/probintro"
 TEXTBOOK_CONTENT = REPO_ROOT / "textbook" / "content"
-# Tutorial shorthand → textbook URL fragment
+# The textbook's restructure migration map (old numbered URLs -> new Part
+# paths); the source of truth for resolving legacy NUMERIC tags.
+TEXTBOOK_URL_MAP = REPO_ROOT / "textbook" / "scripts" / "url_map.csv"
+# Legacy tutorial shorthand (T1/T2/T3) → pre-restructure section dir. Kept only
+# to interpret legacy numeric tags; new PLAN tags use the `Bk: <slug>` form.
 TUTORIAL_PATH = {1: "intro", 2: "genjax", 3: "intro2"}
 ASSIGNMENTS_URL = "assignments.html"
 
 
 def build_chapter_map() -> dict:
-    """Scan textbook/content/{tutorial}/ for numbered chapters and return
-    {tutorial_number: {chapter_number: slug}}.
-
-    A chapter is either a single file ``NN_slug.md`` or a Hugo page *bundle*
-    directory ``NN_slug/`` containing ``_index.md`` (e.g. ``07_generalization/``).
-    Both render at the URL ``.../{tutorial}/NN_slug/``, so they map the same way.
-    """
-    FILE_RE = re.compile(r"^(\d{2})_(.+)\.md$")
-    DIR_RE = re.compile(r"^(\d{2})_(.+)$")
-    out = {}
-    for tnum, sub in TUTORIAL_PATH.items():
-        tut_dir = TEXTBOOK_CONTENT / sub
-        chapters = {}
-        if tut_dir.is_dir():
-            for f in tut_dir.iterdir():
-                m = FILE_RE.match(f.name)
-                if m:
-                    chapters[int(m.group(1))] = f.stem  # e.g. '01_goals'
-                elif f.is_dir() and (f / "_index.md").is_file():
-                    md = DIR_RE.match(f.name)
-                    if md:
-                        chapters[int(md.group(1))] = f.name  # e.g. '07_generalization'
-        out[tnum] = chapters
+    """Return {tutorial_number: {chapter_number: 'part/slug' path}} derived from
+    the textbook's migration url_map.csv. This keeps legacy NUMERIC tags
+    (``T1 Ch 4-5``) resolving after the restructure removed number prefixes
+    from chapter slugs: the old numbers survive only in the migration map."""
+    OLD_RE = re.compile(r"^/(intro|genjax|intro2)/(\d{2})[a-z]?_[^/]+/$")
+    tut_of = {v: k for k, v in TUTORIAL_PATH.items()}
+    out = {tnum: {} for tnum in TUTORIAL_PATH}
+    if TEXTBOOK_URL_MAP.is_file():
+        import csv
+        with TEXTBOOK_URL_MAP.open() as f:
+            for row in csv.DictReader(f):
+                m = OLD_RE.match(row["old_path"])
+                if not m:
+                    continue
+                tnum, chnum = tut_of[m.group(1)], int(m.group(2))
+                # setdefault: '05a_...' rows must not shadow '05_...'
+                out[tnum].setdefault(chnum, row["new_path"].strip("/"))
     return out
 
 
 def build_chapter_name_map() -> dict:
-    """Return {tutorial_number: {stable_name: full_slug}} for NAME-based links.
+    """Return one global {stable_name: 'part/slug'} map for NAME-based links.
 
-    The *stable name* is the chapter slug with its ``NN_`` ordering prefix
-    stripped — e.g. ``07_generalization`` → ``generalization``. This is what
-    makes landing-page links robust to chapter REORDERING: a PLAN can tag a
-    chapter by name (``T3: generalization``) instead of number (``T3 Ch 7``),
-    so renumbering the chapter (07_ → 09_) only changes the directory name and
-    the builder re-derives the URL automatically — the PLAN tag and the rendered
-    card never change. The numeric ``build_chapter_map`` form still works too.
+    Chapters are scanned from every textbook Part (a top-level content section
+    whose _index.md sets ``book_part = true``); the *stable name* is the
+    chapter slug with separators normalized (``bayes-nets`` → ``bayes_nets``).
+    This is what makes landing-page links robust to reordering AND to the Part
+    restructure: a PLAN tags a chapter as ``Bk: generalization`` (legacy
+    ``T3: generalization`` still accepted) and the builder re-derives the URL.
     """
-    NUM_RE = re.compile(r"^\d{2}_")
     out = {}
-    for tnum, chapters in (CHAPTER_MAP or build_chapter_map()).items():
-        names = {}
-        for full_slug in chapters.values():
-            name = NUM_RE.sub("", full_slug)  # '07_generalization' -> 'generalization'
-            names[name] = full_slug
-        out[tnum] = names
+    if not TEXTBOOK_CONTENT.is_dir():
+        return out
+    for part_dir in sorted(TEXTBOOK_CONTENT.iterdir()):
+        idx = part_dir / "_index.md"
+        if not (part_dir.is_dir() and idx.is_file()):
+            continue
+        if not re.search(r"^book_part\s*=\s*true", idx.read_text(encoding="utf-8"),
+                         re.MULTILINE):
+            continue
+        for f in sorted(part_dir.iterdir()):
+            if f.is_file() and f.suffix == ".md" and not f.name.endswith(".ja.md") \
+                    and f.name != "_index.md":
+                out[_norm_name(f.stem)] = f"{part_dir.name}/{f.stem}"
+            elif f.is_dir() and (f / "_index.md").is_file():
+                out[_norm_name(f.name)] = f"{part_dir.name}/{f.name}"
     return out
 
 
-CHAPTER_MAP = None       # {tut: {num: slug}}      — populated lazily in main()
-CHAPTER_NAME_MAP = None  # {tut: {name: slug}}     — populated lazily in main()
+CHAPTER_MAP = None       # {tut: {num: 'part/slug'}} — populated lazily in main()
+CHAPTER_NAME_MAP = None  # {stable_name: 'part/slug'} — populated lazily in main()
 
 # ---------- hand-curated bits that live with the generator, not in Markdown ----------
 
@@ -180,28 +185,27 @@ WEEK_TEXTBOOK_LINKS = {
     # Week 8 (Jun 19) — DECIDE → PLAN (known MDP) → LEARN (unknown MDP) → SIMULATE,
     # across intro2 chapters 20/21/22.
     8: [
-        ("Decision theory", "intro2/20_statistical_decision_theory/"),
-        ("Loss → estimator", "intro2/20_statistical_decision_theory/#what-loss-are-you-minimizing"),
-        ("MDPs & Bellman", "intro2/21_markov_decision_processes/"),
-        ("Value iteration & γ", "intro2/21_markov_decision_processes/#value-iteration"),
-        ("Q-learning", "intro2/22_q_learning/"),
-        ("Reward shaping", "intro2/22_q_learning/#reward-shaping-and-positive-cycles"),
-        ("Simulation-based RL & MCTS", "intro2/22_q_learning/#planning-by-search-mcts"),
-        ("Two-step task (MB vs MF)", "intro2/22_q_learning/#telling-model-free-from-model-based-the-two-step-task"),
+        ("Decision theory", "decisions/decision-theory/"),
+        ("Loss → estimator", "decisions/decision-theory/#what-loss-are-you-minimizing"),
+        ("MDPs & Bellman", "decisions/mdps/"),
+        ("Value iteration & γ", "decisions/mdps/#value-iteration"),
+        ("Q-learning", "decisions/q-learning/"),
+        ("Reward shaping", "decisions/q-learning/#reward-shaping-and-positive-cycles"),
+        ("Simulation-based RL & MCTS", "decisions/q-learning/#planning-by-search-mcts"),
+        ("Two-step task (MB vs MF)", "decisions/q-learning/#telling-model-free-from-model-based-the-two-step-task"),
     ],
     # Week 10 (Jul 3) — Bias-Variance + Bayesian Nonparametrics. "How complex?" →
-    # three answers (ridge / grow capacity / prior over functions). The two new
-    # chapters use 05a_/06a_ slugs (not auto-discoverable by ^\d{2}_), so they are
-    # wired here explicitly. intro2 05a (bias-variance) / 06 (discrete BNP) / 06a (GPs).
+    # three answers (ridge / grow capacity / prior over functions). Now Part VII
+    # of the restructured book: complexity/{bias-variance, dpmm, gaussian-processes}.
     10: [
-        ("Bias-variance dilemma", "intro2/05a_bias_variance/"),
-        ("Ridge = a Gaussian prior", "intro2/05a_bias_variance/#ridge-regression-is-a-gaussian-prior"),
-        ("Double descent", "intro2/05a_bias_variance/#double-descent"),
-        ("Discrete BNP: DP / CRP / DPMM", "intro2/06_dpmm/"),
-        ("One object, three lenses", "intro2/06_dpmm/#one-object-three-lenses"),
-        ("Gaussian processes", "intro2/06a_continuous_bnp/"),
-        ("GP → NNGP / NTK", "intro2/06a_continuous_bnp/#from-gaussian-processes-to-neural-networks"),
-        ("It all comes home", "intro2/06a_continuous_bnp/#it-all-comes-home"),
+        ("Bias-variance dilemma", "complexity/bias-variance/"),
+        ("Ridge = a Gaussian prior", "complexity/bias-variance/#ridge-regression-is-a-gaussian-prior"),
+        ("Double descent", "complexity/bias-variance/#double-descent"),
+        ("Discrete BNP: DP / CRP / DPMM", "complexity/dpmm/"),
+        ("One object, three lenses", "complexity/dpmm/#one-object-three-lenses"),
+        ("Gaussian processes", "complexity/gaussian-processes/"),
+        ("GP → NNGP / NTK", "complexity/gaussian-processes/#from-gaussian-processes-to-neural-networks"),
+        ("It all comes home", "complexity/gaussian-processes/#it-all-comes-home"),
     ],
 }
 
@@ -280,27 +284,23 @@ def _tag_url(label: str) -> str:
       'GenJAX'  → assignments.html
       unknown   → '' (renders as plain, unlinked tag)
     """
-    # NUMERIC form: 'T3 Ch 7' / 'T1 Ch 1-3'
+    # NUMERIC form (legacy): 'T3 Ch 7' / 'T1 Ch 1-3' — resolved via url_map.csv
     m = re.match(r"T(\d)\s*Ch\s*(\d+)(?:-(\d+))?$", label)
     if m:
         tnum = int(m.group(1))
         first_ch = int(m.group(2))
-        tut = TUTORIAL_PATH.get(tnum)
-        slug = (CHAPTER_MAP or {}).get(tnum, {}).get(first_ch)
-        if tut and slug:
-            return f"{TEXTBOOK_BASE}/{tut}/{slug}/"
-        if tut:  # chapter not found — fall back to tutorial index
-            return f"{TEXTBOOK_BASE}/{tut}/"
-    # NAME form: 'T3 Generalization' / 'T3 Hierarchical Bayes'
-    mn = re.match(r"T(\d)\s+(.+)$", label)
+        path = (CHAPTER_MAP or {}).get(tnum, {}).get(first_ch)
+        if path:
+            return f"{TEXTBOOK_BASE}/{path}/"
+        return f"{TEXTBOOK_BASE}/"  # chapter not found — fall back to book home
+    # NAME forms: canonical 'Bk <name>' or legacy 'T3 <name>' — both resolve
+    # against the one global chapter-name map (the T-number is ignored).
+    mn = re.match(r"(?:Bk|T\d)\s+(.+)$", label)
     if mn:
-        tnum = int(mn.group(1))
-        tut = TUTORIAL_PATH.get(tnum)
-        slug = _resolve_chapter_name(tnum, mn.group(2))
-        if tut and slug:
-            return f"{TEXTBOOK_BASE}/{tut}/{slug}/"
-        if tut:
-            return f"{TEXTBOOK_BASE}/{tut}/"
+        path = _resolve_chapter_name(mn.group(1))
+        if path:
+            return f"{TEXTBOOK_BASE}/{path}/"
+        return f"{TEXTBOOK_BASE}/"
     if label == "GenJAX":
         return ASSIGNMENTS_URL
     return ""
@@ -311,19 +311,30 @@ def _norm_name(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", s.lower()).strip("_")
 
 
-def _resolve_chapter_name(tnum: int, name: str):
-    """Find a chapter's full slug from a stable name, separator-insensitively.
-    'Generalization' / 'generalization' / 'Hierarchical Bayes' all resolve."""
+def _resolve_chapter_name(name: str):
+    """Find a chapter's 'part/slug' path from a stable name, separator- and
+    case-insensitively: 'Generalization' / 'Hierarchical Bayes' / 'q learning'
+    all resolve. Names are matched against the global chapter-name map."""
     target = _norm_name(name)
-    names = (CHAPTER_NAME_MAP or {}).get(tnum, {})
+    names = CHAPTER_NAME_MAP or {}
     if target in names:
         return names[target]
-    # also accept a name that is a prefix of the slug-name (e.g. 'bayes' won't,
-    # but 'hierarchical_bayes' matches '12_hierarchical_bayes'); exact-normalized
-    # match is the contract, this is just a tolerant fallback.
-    for nm, slug in names.items():
-        if _norm_name(nm) == target:
-            return slug
+    # Restructure renames: keep historical stable names (old slugs minus the
+    # NN_ prefix) resolving to the renamed chapters.
+    LEGACY_NAMES = {
+        "markov_chain_monte_carlo": "mcmc",
+        "markov_decision_processes": "mdps",
+        "statistical_decision_theory": "decision_theory",
+        "continuous_bnp": "gaussian_processes",
+        "inverse_rl_goal_inference": "inverse_rl",
+        "pomdps_belief_inference": "pomdps_belief",
+        "prob_count": "probability_as_counting",
+        "conditional": "conditional_probability",
+        "bayes": "bayes_rule",
+    }
+    alias = LEGACY_NAMES.get(target)
+    if alias and alias in names:
+        return names[alias]
     return None
 
 
@@ -338,12 +349,19 @@ def _labels_from_section(text: str) -> list:
     form is matched only when NOT immediately followed by ``:`` so ``T3: foo`` is
     never mis-read as a numeric tag."""
     # One alternation scanned left-to-right keeps tags in PLAN line order
-    # regardless of whether each is the name or numeric form.
+    # regardless of which form each tag uses. `Bk: <name>` is the canonical
+    # post-restructure form; `T<d>: <name>` and `T<d> Ch <n>` are legacy.
+    BK = r"Bk\s*:\s*(?P<bkname>[A-Za-z][\w ,&\-]*)"
     NAME = r"T(?P<nt>\d)\s*:\s*(?P<name>[A-Za-z][\w ,&\-]*)"
     NUM = r"T(?P<ct>\d)\s*Ch\s*(?P<ch>[\d\-]+)\b"
     labels = []
-    for m in re.finditer(rf"{NAME}|{NUM}", text):
-        if m.group("name") is not None:
+    for m in re.finditer(rf"{BK}|{NAME}|{NUM}", text):
+        if m.group("bkname") is not None:
+            for raw in m.group("bkname").split(","):
+                name = raw.strip()
+                if name:
+                    labels.append(f"Bk {name.replace('_', ' ').title()}")
+        elif m.group("name") is not None:
             for raw in m.group("name").split(","):
                 name = raw.strip()
                 if name:

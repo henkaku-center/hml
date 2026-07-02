@@ -19,9 +19,9 @@
 - **Quiz:** "Intro Probability Theory 1" — available as ungraded self-check, covers Block 4 material.
 
 ## Textbook Chapters
-- T1 Ch 4–5: `intro/04_conditional.md`, `intro/05_bayes.md` (required reading before class — reinforces Week 1)
-- T3 Ch 1: `intro2/01_mystery_bentos.md` — source of the Chibany bento scenario used throughout
-- T3 Ch 2–3: `intro2/02_continuous.md`, `intro2/03_gaussian.md` — useful companion reading for Blocks 6–7
+- Bk: conditional probability, bayes rule (`foundations/`) (required reading before class — reinforces Week 1)
+- Bk: mystery bentos (`learning/`) — source of the Chibany bento scenario used throughout
+- Bk: continuous, gaussian (`learning/`) — useful companion reading for Blocks 6–7
 
 ## GenJAX Integration
 - T2 Ch 0–1 (Getting started / Python basics) — required reading before class; GenJAX Colab setup is self-directed

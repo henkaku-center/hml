@@ -14,11 +14,11 @@
 - **Quiz:** Paper presentation preferences *(not carried forward — presentations replaced with written reflections for SP26)*
 
 ## Textbook Chapters
-- T1 Ch 1-3: `intro/01_goals.md`, `intro/02_hungry.md`, `intro/03_prob_count.md` *(homework after class)*
+- Bk: hungry, probability as counting (`foundations/`; with the `start/` reading guide) *(homework after class)*
 
 ## GenJAX Integration
 - End-of-class orientation (~10 min): motivation + one short generative-model example from `textbook/content/genjax/02_first_model.md`
-- Homework: T2 Ch 0-1 (`genjax/00_getting_started.md`, `genjax/01_python_basics.md`) so students can self-onboard before Week 2
+- Homework: Bk: getting started, python basics (`genjax/`) so students can self-onboard before Week 2
 
 ## Contemporary ML Notes
 None this week. Week 1 is foundations.

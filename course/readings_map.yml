@@ -58,7 +58,7 @@ weeks:
     theme: Intro + Basic Bayes
     required:
       - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 1 Ch 1–3 (Goals, Hungry Bayes, Probability by Counting)."
-        url: https://josephausterweil.github.io/probintro/intro/
+        url: https://josephausterweil.github.io/probintro/foundations/
         why: "Post-class reinforcement of Week 1's probability foundations."
       - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 2 Ch 0–1 (Getting Started, Python Basics)."
         url: https://josephausterweil.github.io/probintro/genjax/
@@ -73,10 +73,10 @@ weeks:
     theme: Levels of analysis + Bayes continued
     required:
       - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 1 Ch 4–5 (Conditional probability, Bayes)."
-        url: https://josephausterweil.github.io/probintro/intro/04_conditional/
+        url: https://josephausterweil.github.io/probintro/foundations/conditional-probability/
         why: "Consolidates Week 1 foundations with the Chibany/bento framing used in Week 2's worked example."
       - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 3 Ch 1 (Chibany's Mystery Bentos)."
-        url: https://josephausterweil.github.io/probintro/intro2/01_mystery_bentos/
+        url: https://josephausterweil.github.io/probintro/learning/mystery-bentos/
         why: "Introduces the bento scenario used in Week 2's Marr-levels walkthrough."
     optional:
       - citation: "Marr, D. (1982). Vision, Ch. 1: The Philosophy and the Approach. San Francisco: W. H. Freeman."
@@ -90,10 +90,10 @@ weeks:
     theme: Conjugate Bayes + topic models
     required:
       - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 3 Ch 4 (Bayesian Learning with Gaussians)."
-        url: https://josephausterweil.github.io/probintro/intro2/04_bayesian_learning/
+        url: https://josephausterweil.github.io/probintro/learning/bayesian-learning/
         why: "Picks up exactly where Week 2's Block 7 left off — conjugate Gaussian updates explained in full."
       - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 1 Ch 6 (Glossary review)."
-        url: https://josephausterweil.github.io/probintro/intro/06_glossary/
+        url: https://josephausterweil.github.io/probintro/foundations/glossary/
         why: "One-stop reference for the notation and terms Week 3 assumes."
     optional:
       - citation: "Griffiths, T. L., & Tenenbaum, J. B. (2001). Randomness and coincidences: Reconciling intuition and probability theory. Proc. CogSci."
@@ -112,7 +112,7 @@ weeks:
         why: "Tenenbaum's Bayesian-generalization framework worked through the axis-aligned-rectangles task. Friday's math is a direct walk-through of this paper."
     optional:
       - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 3 Ch 5 (Mixture models)."
-        url: https://josephausterweil.github.io/probintro/intro2/05_mixture_models/
+        url: https://josephausterweil.github.io/probintro/learning/mixture-models/
         why: "Reading for pre-class: hierarchical Bayes intuition before the lecture."
     presentation_candidates:
       - citation: "Tenenbaum, J. B., & Xu, F. (2000). Word learning as Bayesian inference. Proc. CogSci."
@@ -132,7 +132,7 @@ weeks:
     theme: Bayes nets + causal Bayes nets
     required:
       - citation: "Austerweil, J. A Narrative Introduction to Probability — Tutorial 3 Ch 5 (Mixture models), Ch 6 (DPMM)."
-        url: https://josephausterweil.github.io/probintro/intro2/05_mixture_models/
+        url: https://josephausterweil.github.io/probintro/learning/mixture-models/
         why: "Finishes the hierarchical-Bayes thread from Week 4 before we move to graphical models."
     optional: []
     presentation_candidates:

@@ -38,8 +38,8 @@ Investigate categorization and prediction in a 2-component Gaussian mixture mode
 
 **Other details:**
 
-- **Prep reading:** [Textbook — Mixture Models (T3 Ch 5)](https://josephausterweil.github.io/probintro/intro2/05_mixture_models/)
-- **GenJAX background:** [Tutorial 2, Chapters 0–4](https://josephausterweil.github.io/probintro/genjax/)
+- **Prep reading:** [Textbook — Mixture Models](https://josephausterweil.github.io/probintro/learning/mixture-models/)
+- **GenJAX background:** [The Tools: GenJAX (Part II)](https://josephausterweil.github.io/probintro/genjax/)
 - **Submit** (by DM or email to the instructor) **one** of the following:
     - your completed notebook (or knitted `.Rmd`) — it must run end-to-end and contain your figures, inline text answers, derivations, and descriptions; **or**
     - a single PDF report containing your code, figures, text answers, derivations, and descriptions.
@@ -92,7 +92,7 @@ Explore three Monte Carlo methods. **Problem 1:** compare naive Monte Carlo with
 
 **Other details:**
 
-- **Prep reading:** [Textbook — Tutorial 3 Ch 12 (Hierarchical Bayes / approximate inference)](https://josephausterweil.github.io/probintro/intro2/12_hierarchical_bayes/) (carried from the Week 4 hand-off).
+- **Prep reading:** [Textbook — Hierarchical Bayes](https://josephausterweil.github.io/probintro/structure/hierarchical-bayes/) (carried from the Week 4 hand-off).
 - **Lecture:** Week 7 covers Monte Carlo, importance sampling, particle filtering, and MCMC (Metropolis–Hastings + Gibbs), and walks through the Kemp-model sampler this assignment asks you to implement.
 - **Submit** (by DM or email to the instructor) **one** of the following:
     - your completed notebook (or knitted `.Rmd`) — it must run end-to-end and contain your figures, inline text answers, and descriptions; **or**
@@ -119,7 +119,7 @@ Implement **Q-learning** on the *GardenPath* gridworld, then use it to see how t
 
 **Other details:**
 
-- **Prep reading:** Textbook Tutorial 3 — [Ch 21 (Markov Decision Processes)](https://josephausterweil.github.io/probintro/intro2/21_markov_decision_processes/) and [Ch 22 (Q-Learning)](https://josephausterweil.github.io/probintro/intro2/22_q_learning/). These walk through everything the assignment asks you to implement, on the same GardenPath world.
+- **Prep reading:** Textbook — [Markov Decision Processes](https://josephausterweil.github.io/probintro/decisions/mdps/) and [Q-Learning](https://josephausterweil.github.io/probintro/decisions/q-learning/). These walk through everything the assignment asks you to implement, on the same GardenPath world.
 - **Play with it first:** the [interactive Q-learning widget](https://josephausterweil.github.io/probintro/widgets/qlearning-gridworld.html) — step the algorithm one stage at a time, drag the $\alpha$/$\gamma$/$\epsilon$ sliders, and switch feedback schemes to watch the reward-hacking loop appear and shaping fix it.
 - **Lecture:** Week 8 covers decision theory, MDPs + value iteration, Q-learning, reward shaping, and simulation-based RL.
 - **Submit** (by DM or email to the instructor) **one** of the following:
