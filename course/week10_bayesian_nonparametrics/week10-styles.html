@@ -1,0 +1,196 @@
+<style>
+/* Section-break titles legible over photo backgrounds. */
+.reveal .slides section.section-break h1,
+.reveal .slides section.section-break h2 {
+  text-shadow: 0 2px 10px rgba(0,0,0,0.9), 0 0 4px rgba(0,0,0,0.9);
+}
+/* ===================================================================
+   FILL-THE-SLIDE LAYOUT. center:false pins content sections to the top;
+   make them full-height flex columns so title+body center as one group.
+   Section-breaks, title, and .center slides self-center via the theme and
+   are excluded. No overflow:hidden, so a too-tall slide surfaces OVERFLOW
+   rather than clipping. Loaded via include-in-header (lands in <head>, no
+   stray blank slide).
+   =================================================================== */
+.reveal:not(.print-pdf) .slides > section:not(.stack):not(.center):not(.section-break):not(.title-slide):not(.quarto-title-block),
+.reveal:not(.print-pdf) .slides > section.stack > section:not(.center):not(.section-break):not(.title-slide) {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 2.4vh;
+  padding: 3% 0 4% 0 !important;
+  box-sizing: border-box !important;
+}
+/* Content-slide titles: the theme's 1.2em h2 (46px line-box) + 0.6em margin
+   eats ~65px of a 540px slide — more when a long title wraps to two lines.
+   Shrink the font, tighten the leading and bottom margin so a title takes only
+   the room it needs and the body gets the reclaimed space. Section-break (#)
+   titles and the title slide are excluded — they stay large by design. */
+.reveal .slides section:not(.section-break):not(.title-slide):not(.quarto-title-block) > h2 {
+  font-size: 0.9em !important;
+  line-height: 1.1 !important;
+  margin: 0 0 0.34em 0 !important;
+}
+
+/* Full-width images: neutralize r-stretch (which mis-computes to ~0 under the
+   flex column + lazy load) and size from aspect ratio, capped. */
+.reveal .slides section img.r-stretch,
+.reveal .slides section img.quarto-figure {
+  height: auto !important;
+  max-height: 340px !important;   /* px, not vh — vh mis-resolves in Reveal's 540px scaled slides */
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  object-fit: contain;
+}
+/* Reveal's stretch/lazy plugin can pin an inline width:0px on a figure (computed
+   under the collapsed flex column before the image decodes); it survives the
+   r-stretch strip and renders the figure 0×0 — a FLAKY collapse that depends on
+   load timing. Override the bogus zero with !important so the figure sizes from
+   its aspect + the caps above. Race-free (pure CSS), unlike a post-plugin JS reset. */
+.reveal .slides section img[style*="width: 0px"],
+.reveal .slides section img[style*="width:0px"] {
+  width: auto !important;
+}
+/* Figure-centric slides: size by HEIGHT so a tall figure grows, capped for caption room. */
+.reveal .slides section.big-figure img.quarto-figure,
+.reveal .slides section.big-figure img.r-stretch {
+  height: auto !important;
+  width: auto !important;
+  max-width: 100% !important;
+  max-height: 400px !important;
+}
+.reveal .slides section.big-figure > .lang-en,
+.reveal .slides section.big-figure > .lang-ja { margin-top: 0.2em; }
+/* the "bring it home" synthesis figure carries fine print — pin it to an explicit
+   large height with NO flex-shrink so the flex column can't crush it. Must out-
+   specify the base stretch rule (which forces flex:0 1 auto and lets it shrink). */
+.reveal:not(.print-pdf) .slides > section.stack > section.big-figure.bih > img.quarto-figure,
+.reveal:not(.print-pdf) .slides > section.stack > section.big-figure.bih > img.r-stretch,
+.reveal:not(.print-pdf) .slides > section.big-figure.bih > img.quarto-figure,
+.reveal:not(.print-pdf) .slides > section.big-figure.bih > img.r-stretch {
+  height: 360px !important; max-height: 360px !important; width: auto !important;
+  max-width: 96% !important; flex: 0 0 auto !important;
+}
+.reveal .slides section.big-figure.bih > .lang-en,
+.reveal .slides section.big-figure.bih > .lang-ja { font-size: 0.82em; }
+
+/* code slide (GenJAX snippet beside a figure): shrink the code so lines don't
+   clip and the slide doesn't overflow the flex column. */
+.reveal section.codeslide pre { margin: 0; box-shadow: none; }
+.reveal section.codeslide pre code { font-size: 0.52em !important; line-height: 1.35 !important; }
+.reveal section.codeslide .columns { align-items: center !important; }
+.reveal:not(.print-pdf) .slides > section > img.r-stretch,
+.reveal:not(.print-pdf) .slides > section > img.quarto-figure,
+.reveal:not(.print-pdf) .slides > section.stack > section > img.r-stretch,
+.reveal:not(.print-pdf) .slides > section.stack > section > img.quarto-figure {
+  flex: 0 1 auto !important;
+  align-self: center !important;
+  min-height: 0;
+}
+
+/* Agenda: spread the timed rows evenly down the full body height. */
+.reveal .agenda-roomy ul {
+  max-width: 86%;
+  flex: 1 1 auto; min-height: 0;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.reveal .agenda-roomy li { font-size: 0.82em; line-height: 1.1; padding: 0; }
+.reveal .slides section.agenda.dense li { font-size: 0.74em; line-height: 1.14; padding: 0.02em 0; }
+
+/* Poll options: a big, boxed, well-spaced stack (projector-legible). The box
+   fills the lower band whether or not the reveal has fired. */
+.reveal .poll-slide .fragment { width: 100%; }
+.reveal .poll-slide .fragment ul { list-style: none; padding: 0; margin: 0 auto; max-width: 76%; }
+.reveal .poll-slide .fragment li {
+  font-size: 1.02em; line-height: 1.15; font-weight: 600;
+  padding: 0.28em 0.7em; margin: 0.26em auto;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 0.4em; background: rgba(255,255,255,0.035);
+  overflow-wrap: break-word;
+}
+.reveal .slides > section.poll-slide,
+.reveal .slides > section.stack > section.poll-slide { justify-content: center !important; gap: 1.4vh; }
+.reveal .poll-slide > .lang-en,
+.reveal .poll-slide > .lang-ja { font-size: 1.3em; line-height: 1.3; }
+.reveal .poll-reveal .yellow { font-size: 1.22em; }
+.reveal .slides > section.poll-reveal,
+.reveal .slides > section.stack > section.poll-reveal { justify-content: center !important; gap: 1.6vh; }
+
+/* Foreground interactive-widget slides: an ordinary titled slide whose body is
+   a sized, visible iframe the instructor drives live (height in px — vh
+   mis-resolves in Reveal's 540px scaled slides). The 540px logical slide is
+   tight, so we reclaim every pixel for the iframe: compact title, trimmed
+   padding/gap, top-aligned so the flex-grow iframe fills DOWNWARD with no
+   centered dead band. High-specificity selector (mirrors the fill-flex chain)
+   to beat the !important padding/justify-content rules above. */
+.reveal:not(.print-pdf) .slides > section.widget-slide:not(.center):not(.section-break):not(.title-slide):not(.quarto-title-block):not(.stack),
+.reveal:not(.print-pdf) .slides > section.stack > section.widget-slide:not(.center):not(.section-break):not(.title-slide) {
+  padding: 1.1% 0 1.1% 0 !important;
+  gap: 0.3vh !important;
+  justify-content: flex-start !important;
+}
+.reveal .slides section.widget-slide h2 {
+  font-size: 0.92em !important; margin: 0.06em 0 0.14em 0 !important; line-height: 1.1;
+}
+.reveal .slides section.widget-slide iframe.widget-frame {
+  flex: 1 1 auto; min-height: 0;
+  width: 100%; height: 492px; max-height: 500px;
+  border: 0; border-radius: 0.35em; background: #111;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.5); align-self: center;
+}
+.reveal .slides section.widget-slide .widget-cap { font-size: 0.37em; color: #888; margin: 0.1em 0 0 0; line-height: 1.25; }
+
+/* Two-column slides: the .columns row owns the body height and vertically
+   centers each column (kills COLUMN-THIN). */
+.reveal .slides section .columns {
+  flex: 1 1 auto; min-height: 0;
+  display: flex !important; align-items: center !important;
+}
+.reveal .slides section .columns > .column { align-self: center; }
+
+/* 3-way comparison slide (.cmp-cols): TOP-align the columns and reserve a fixed
+   header band (.cmp-head) so the bullet lists start on the same line across all
+   three — otherwise the headers wrap to 1–3 lines and the bullets go ragged. */
+.reveal .slides section .columns.cmp-cols { align-items: flex-start !important; }
+.reveal .slides section .columns.cmp-cols > .column { align-self: flex-start; }
+.reveal .slides section .cmp-head { min-height: 2.9em; margin-bottom: 0.15em; }
+.reveal .slides section .cmp-head p { margin: 0; line-height: 1.18; }
+
+/* Bottom-right source citation — absolute so it doesn't disturb the flex flow. */
+.reveal .cite { position: absolute; bottom: 0.45em; right: 0.7em; left: auto; top: auto;
+  font-size: 0.40em; line-height: 1.3; color: #888; max-width: 64%; text-align: right; margin: 0; }
+.reveal .cite a { color: #aab; text-decoration: underline; }
+</style>
+
+<script>
+/* Force ALL slide images to load eagerly and drop `r-stretch`. Quarto renders
+   full-width figures with data-src (lazy) + .r-stretch (Reveal computes an inline
+   height); under our flex layout that height computes to ~0 before the lazy image
+   has dimensions, so the figure never paints. Converting data-src→src and stripping
+   r-stretch makes every figure size from its own aspect ratio (capped by CSS). */
+(function () {
+  function fixImgs() {
+    document.querySelectorAll('.reveal .slides img').forEach(function (img) {
+      if (img.hasAttribute('data-src')) {
+        img.setAttribute('src', img.getAttribute('data-src'));
+        img.removeAttribute('data-src');
+      }
+      img.classList.remove('r-stretch');
+      img.style.height = 'auto';
+      // Clear the bogus inline width:0px the stretch plugin can leave behind
+      // (see the matching CSS override); only the zero, never a real %/px width.
+      if (img.style.width && parseFloat(img.style.width) === 0) img.style.width = 'auto';
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixImgs);
+  } else { fixImgs(); }
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.Reveal && window.Reveal.on) {
+      window.Reveal.on('ready', fixImgs);
+      window.Reveal.on('slidechanged', fixImgs);
+    } else { setTimeout(fixImgs, 600); }
+  });
+})();
+</script>
