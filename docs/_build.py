@@ -474,12 +474,15 @@ def sync_slide_html(wk_num: int, wk_dir: Path) -> str:
         # (e.g., <iframe src="widgets/bayes_ball.html">). The iframe path is
         # resolved relative to docs/slides/weekNN.html, so the widgets dir must
         # land at docs/slides/widgets/ — otherwise GitHub Pages 404s the embed.
+        # MERGE into the shared dir (like images above) — do NOT rmtree, or each
+        # widget-bearing week (5, 7, 8, 9, 10, 11) clobbers the previous weeks'
+        # widgets and their embeds 404. Widget filenames are week-unique (the one
+        # shared name, bias-variance-explorer.html, is an identical file).
         widgets_src = qmd.parent / "widgets"
         if widgets_src.is_dir():
             dst_widgets = SLIDES_OUT_DIR / "widgets"
-            if dst_widgets.exists():
-                shutil.rmtree(dst_widgets)
-            shutil.copytree(widgets_src, dst_widgets)
+            dst_widgets.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(widgets_src, dst_widgets, dirs_exist_ok=True)
         return f"slides/week{wk_num:02d}.html"
 
     return ""
