@@ -1,11 +1,17 @@
-# Week 12 (Jul 17): Ethics + Adversarial
+# Week 12 (Jul 17): Ethics, Adversarial ML & the Semester Retrospective — LAST session
+
+## Scheduling constraint (Joe, 2026-07-05)
+Over-subscribed final session: 1 paper presentation (~20 min) + 3 final-project
+presentations (~36 min) + retrospective (~29 min) + admin leave only **~15 min for
+net-new lecture content**. "NNs continued" is DROPPED (taught in Week 11). Full time
+budget in `week12-shared-outline.md`. Deck = holder slides + retrospective + a lean,
+heavily-callback'd ethics block; the depth lives in the textbook's Part IX.
 
 ## Topics
-- Neural networks continued
-- Adversarial examples
-- Ethics in machine learning
-- **Semester retrospective — synthesis of all 10 papers**  (~25-30 min)
-- Student final project presentations
+- Ethics & adversarial ML (one tight ~15-min segment — embedding bias, fairness as
+  conditional probability + impossibility, adversarial examples, alignment as inference)
+- **Semester retrospective — synthesis of all 10 papers**  (~28-30 min)
+- Student paper presentation + three final-project presentations
 
 ## Semester retrospective — structure
 
@@ -63,30 +69,43 @@ Final thank-you.  End.
 - **Quiz:** Filler Quiz
 
 ## Textbook Chapters
-None this week.
+- Bk: adversarial examples — `ethics/adversarial-examples.md`
+- Bk: fairness formalisms — `ethics/fairness-formalisms.md` (fairness as conditional probability + the impossibility result — the Part IX flagship)
+- Bk: bias in data — `ethics/bias-in-data.md`
+- Bk: alignment safety — `ethics/alignment-safety.md` (the book's final chapter)
 
 ## GenJAX Integration
-- Contemporary ML updates (needs planning)
+- None on slides (time-starved session); the Part IX chapters carry runnable code
+  (FGSM via `jax.grad` w.r.t. input; the fairness impossibility demo; WEAT; a
+  Bradley–Terry reward fit + reward-hacking demo).
 
 ## Contemporary ML Notes
-- Update with recent AI safety and alignment developments
-- RLHF and alignment techniques
-- Foundation model risks and governance
-- Mechanistic interpretability
-- Multimodal models
+- Every ethics beat is a callback: bias → Week 11 embeddings; fairness → Part I
+  conditional probability; brittleness → the Part VIII learned boundary; alignment →
+  Week 9 RLHF + Week 8 reward hacking. Ethics falls OUT of the course, not bolted on.
+- The retrospective's bridge slide IS the "classical → contemporary" synthesis below.
 
 ## Status
-Needs update for contemporary AI safety/alignment content.
+**SP26 deck built and QA'd (2026-07-05).** 23 slides / lean ethics + retrospective +
+presentation holders / 1 poll / 4 figures. Zero clips (EN presentation state).
+Bilingual EN/JA (51/51). Time-budgeted to the presentation-heavy final session.
 
-## TODOs
-- [ ] Update with recent AI safety/alignment developments
-- [ ] Add RLHF content
-- [ ] Review and update adversarial examples with recent work
-- [ ] **Build the "map of the semester" poster diagram** — matplotlib or
-      TikZ figure placing every paper in a 2D (Marr-level × computation-type)
-      grid.  Generate from `course/readings_map.yml` so it updates when
-      presentation assignments finalize.
-- [ ] **Build the "classical cog-sci → modern ML" bridge slide** — 6-row
-      table listing each connection (hierarchical Bayes → in-context
-      learning, IRL → RLHF, etc.) with one citation per row for the
-      modern side.
+## SP26 artifacts
+```
+week12-shared-outline.md   source of truth (time budget + blocks)
+week12-slides.qmd          the deck
+week12-styles.html         per-deck overrides (shared design system in the theme)
+make_figures.py            4 figures
+images/                    semester_map, embedding_bias, fairness_impossibility, adversarial
+```
+
+## Done (were TODOs)
+- [x] "Map of the semester" 2D diagram — built (`images/semester_map.png`).
+- [x] "Classical cog-sci → modern ML" bridge — built as a bilingual table slide.
+- [x] Adversarial examples refreshed (FGSM framing; full runnable demo in the Part IX chapter).
+- [x] RLHF / AI-safety content — the alignment beat + the `ethics/alignment-safety` chapter.
+
+## Open TODOs
+- [ ] Confirm the Week 12 paper presenter (readings_map presenter: null) — the holder
+      slide accommodates either way; if none, that ~20 min folds into the retrospective.
+- [ ] Confirm final-project presenter count (3 assumed) — add/remove a holder if needed.
