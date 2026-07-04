@@ -350,7 +350,7 @@ Fully worked arithmetic on the slide — no abstraction. Then the retro-link tha
 <iframe class="widget-frame" src="widgets/vector-space.html"></iframe>
 
 ::: {.notes}
-Live widget. Click tonkatsu-A and tonkatsu-B: arrows nearly parallel, cosine ≈ 0.99, worked arithmetic shown. Then tonkatsu-A vs salad: angle opens, cosine drops. Toggle normalize to show scale vs direction (mega-katsu vs tonkatsu-A: different lengths, same direction — same KIND). This is the geometry all of today's models live in.
+Live widget (loads with tonkatsu-A/B preselected: arrows nearly parallel, cosine ≈ 0.99, worked arithmetic shown). Best contrast demo: tonkatsu-B vs salad (cosine ≈ 0.78 — dissimilar); middle case: tonkatsu-B vs hamburger-B (≈ 0.84). Toggle normalize for scale vs direction (mega-katsu vs tonkatsu-A: different lengths, same direction — same KIND). Teachable wart: all-positive features compress cosine upward — tonkatsu-A vs hamburger-A still reads 0.95; real systems center features first. This is the geometry all of today's models live in.
 :::
 
 ## [Words as vectors: king − man + woman ≈ queen]{.lang-en}[単語をベクトルに：king − man + woman ≈ queen]{.lang-ja} {.big-figure}
