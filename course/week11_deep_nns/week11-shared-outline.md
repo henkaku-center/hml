@@ -34,7 +34,8 @@ voice: carried as a "Lake scorecard" sidebar revisited in Blocks 2, 6, 7.
 
 | t | Block | Content |
 |---|---|---|
-| 0:00 | 0 | Housekeeping (RL + MC assignments due TONIGHT 8 PM; final-project timeline) + agenda |
+| — | P | **Student paper presentation (~15 min + discussion)** — student-driven; a holder section-break slide sits after the agenda. Confirmed present (Joe, 2026-07-05). Lecture-clock times below start AFTER it. Drop-if-long: RNN slide, emergence-mirage caveat. |
+| 0:00 | 0 | Housekeeping (paper presentation first; RL + MC assignments due TONIGHT 8 PM; final-project timeline) + agenda |
 | 0:05 | 1 | Where we left off: recap poll ×2 → infinite-width bridge → **name the frame** + Lake scorecard intro |
 | 0:17 | 2 | REPRESENT I: connectionism — emergence, PDP, the neuron, activations, distributed reps (cat/dog), localist-vs-distributed → **VECTORS INTERLUDE (zero-LA on-ramp): data→vector (bento card → [500, 8] → a point), dot product = similarity (fully worked arithmetic + cosine), vector-space widget, retro-link "the neuron's Σ IS a dot product"** → word embeddings payoff (now grounded) |
 | 0:43 | 3 | LEARN I: perceptron (w·x as the similarity score just taught) → decision line → error-driven learning → gradient descent (η ↔ Week 8's α) → delta rule |

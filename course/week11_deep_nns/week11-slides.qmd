@@ -20,19 +20,27 @@ resources:
 ## [Housekeeping]{.lang-en}[事務連絡]{.lang-ja}
 
 ::: {.lang-en}
+- **Today's paper presentation** kicks us off — then the lecture.
 - **Due TONIGHT, 8 PM:** the **Reinforcement Learning** assignment **and** the **Monte Carlo** assignment.
 - **Final-project presentations:** next week (Week 12, Jul 17) — bring a laptop.
 - Two new widgets today — I'll drive them live, and they're linked from the slides to replay.
 :::
 
 ::: {.lang-ja}
+- **本日は論文発表**から始めます — その後に講義。
 - **本日20:00締切：** **強化学習**課題**と**モンテカルロ課題。
 - **最終プロジェクト発表：** 来週（第12週・7月17日）— ノートPCを持参。
 - 本日は新しいウィジェットが2つ — ライブで操作します。スライドからリンクされています。
 :::
 
 ::: {.notes}
-Both RL and MC assignments are due tonight at 8. Final-project presentations are next week — remind them to bring laptops. Two live widgets today (XOR net, attention lookup). Keep this to 30 seconds and get into the recap.
+Paper presentation first (~15 min) — the presenting student drives their own slides; this deck resumes after. Both RL and MC assignments are due tonight at 8. Final-project presentations are next week — remind them to bring laptops. Two live widgets today. Keep housekeeping to 30 seconds.
+:::
+
+## [Paper presentation]{.lang-en}[論文発表]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
+
+::: {.notes}
+Holder slide — the presenting student takes over with their own slides (~15 min + a few min discussion). Advance past this into the recap when they finish. Timing note: this pushes the lecture ~15 min tighter than the agenda's 1:50 end; the drop-if-long candidates are the RNN slide (Block 5 — its only job is the attention cliffhanger) and the emergence "mirage" caveat (Block 6, skippable live, kept for the recording). Protect the vectors interlude, the matrices interlude, and the ICL debate.
 :::
 
 ## [Agenda]{.lang-en}[本日の予定]{.lang-ja} {.agenda .dense}
@@ -45,8 +53,15 @@ Both RL and MC assignments are due tonight at 8. Final-project presentations are
 - [**Understand** — scaling, emergence, **in-context learning**]{.lang-en}[**理解** — スケーリング・創発・**文脈内学習**]{.lang-ja}  [1:36]{.time}
 - [**Where this leaves us** — one question, four answers]{.lang-en}[**まとめ** — 一つの問い、四つの答え]{.lang-ja}  [1:50]{.time}
 
+::: {.lang-en}
+[Times are lecture-clock, after the paper presentation.]{.dim}
+:::
+::: {.lang-ja}
+[時刻は論文発表後の講義開始からの目安です。]{.dim}
+:::
+
 ::: {.notes}
-The spine for the day. ONE question runs through it — "where does the hypothesis space come from?" Week 10 gave three answers and stopped at "infinite-width nets are GPs with a FIXED kernel." Today is the fourth answer: LEARN the features. The three middle words — Represent, Learn, Understand — are the three questions we ask of that one machine; I'll point at the same master diagram each block. Don't linger.
+The spine for the day. ONE question runs through it — "where does the hypothesis space come from?" Week 10 gave three answers and stopped at "infinite-width nets are GPs with a FIXED kernel." Today is the fourth answer: LEARN the features. The three middle words — Represent, Learn, Understand — are the three questions we ask of that one machine; I'll point at the same master diagram each block. Don't linger. (Agenda times are lecture-relative; the paper presentation runs before all this.)
 :::
 
 # [Where we left off]{.lang-en}[前回の続き]{.lang-ja} {.section-break background-image="../../sds-reveal/sds_frame.png" background-size="cover"}
