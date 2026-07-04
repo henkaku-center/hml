@@ -1,17 +1,24 @@
 /*-- scss:defaults --*/
 
-// Theme color constants — mirror SDSDeck theme so per-slide accents match the
-// prior Python decks exactly.
-$sds-bg-dark:      #111111;
+// ==========================================================================
+// DESIGN TOKENS (2026-07 refresh — see SLIDE_VISUAL_QA.md "Design system").
+// Roles, not just colors: ink for content, dim for support, ONE accent for
+// identity/links/structure, yellow reserved for the slide's single punchline,
+// green/red/orange strictly semantic (correct/wrong/caution). The discipline
+// lives in the authoring rules; these constants carry the identity.
+// ==========================================================================
+$sds-bg-dark:      #111111;  // the stage
+$sds-bg-panel:     #191920;  // raised panels: code, cards, poll options
 $sds-bg-section:   #1A1A2E;
-$sds-text-white:   #FFFFFF;
-$sds-text-dim:     #999999;
-$sds-accent:       #64B5F6;  // blue
-$sds-red:          #EF5350;
-$sds-green:        #66BB6A;
-$sds-orange:       #FFA726;
-$sds-yellow:       #FFEB3B;  // body text accent
-$sds-sds-yellow:   #F5E47A;  // frame yellow
+$sds-text-white:   #F4F4F2;  // ink — warm-neutral white, quieter than pure #FFF
+$sds-text-dim:     #A6A6A2;  // support ink — captions, provenance, asides
+$sds-hairline:     rgba(255,255,255,0.12);  // borders/dividers everywhere
+$sds-accent:       #64B5F6;  // blue — links, structure, the title tick
+$sds-red:          #EF5350;  // semantic: wrong / danger only
+$sds-green:        #66BB6A;  // semantic: correct / success only
+$sds-orange:       #FFA726;  // semantic: caution / contested only
+$sds-yellow:       #FFEB3B;  // THE punchline color — at most one per slide
+$sds-sds-yellow:   #F5E47A;  // frame yellow (branding)
 $sds-black-80:     #1A1A1A;
 
 // RevealJS variable overrides
@@ -43,17 +50,57 @@ $presentation-heading-font: $font-family-sans-serif !default;
     margin-top: 0;
     text-transform: none;
   }
-  h1.title { font-size: 2.1em; }  // title slide
-  h2 { font-size: 1.2em !important; }   // content-slide title; !important because RevealJS dark theme
-                                        // injects a calc(1.6em/0.7) rule with higher specificity
-  h3 { font-size: 1.05em; }
+  h1.title { font-size: 2.1em; letter-spacing: -0.015em; }  // title slide
+  h2 { font-size: 1.06em !important;    // content-slide title; !important because RevealJS dark theme
+       font-weight: 650;                // injects a calc(1.6em/0.7) rule with higher specificity
+       letter-spacing: -0.01em; }
+  h3 { font-size: 1.0em; font-weight: 650; }
+
+  // Quiet title anchor: a short accent tick under every content-slide title.
+  // Structure, not decoration — it marks "new beat starts here" and gives the
+  // title a consistent visual weight without growing the font. Excluded on
+  // section breaks / title / agenda slides (they have their own treatments).
+  .slides section:not(.section-break):not(.title-slide):not(.quarto-title-block):not(.agenda) > h2::after {
+    content: "";
+    display: block;
+    width: 1.15em;
+    height: 4px;
+    margin-top: 0.18em;
+    border-radius: 2px;
+    background: $sds-accent;
+    opacity: 0.85;
+  }
+
+  // Eyebrow / kicker — small uppercase label above a title, for carrying the
+  // current block name ("REPRESENT I") on key slides. Authoring: put
+  // [Represent I]{.eyebrow} on the line before the title text inside a slide,
+  // or as the first element of the body.
+  .eyebrow {
+    display: block;
+    font-size: 0.5em;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: $sds-text-dim;
+    margin-bottom: 0.35em;
+  }
 
   // Body text — sized to fill the slide naturally at typical content density.
   // With `center: true` in _quarto.yml, content vertical-centers in the stage.
   // The sizing here is calibrated so slides with 5-8 lines of content fill
   // ~80-90% of the vertical space; very dense slides should opt into .smaller.
-  p, li, td { font-size: 0.82em; line-height: 1.45; }
+  p, li, td { font-size: 0.82em; line-height: 1.5; }
   p { margin: 0 0 0.6em 0; }
+  // Readable measure: a full-width paragraph on a 16:9 stage runs ~150
+  // characters — unreadable. Cap prose lines near the classic ~65-75ch.
+  // Scoped to top-level prose so two-column layouts, tables, code, and
+  // figures are untouched (their widths come from their containers).
+  .slides section > p,
+  .slides section > .lang-en > p,
+  .slides section > .lang-ja > p { max-width: 72ch; }
+  .slides section > ul, .slides section > ol,
+  .slides section > .lang-en > ul, .slides section > .lang-en > ol,
+  .slides section > .lang-ja > ul, .slides section > .lang-ja > ol { max-width: 76ch; }
   // Restore padding-left so list markers (bullets for ul, numbers for ol)
   // render inside the slide. The default browser padding-inline-start is
   // 40px; the tier-specific `ul, ol { margin: ... 0 }` rules below zero out
@@ -134,7 +181,8 @@ $presentation-heading-font: $font-family-sans-serif !default;
   .math { color: $sds-text-white; }
 
   // Tables — the main reason we moved off python-pptx.
-  // HTML tables give us real column alignment.
+  // Quiet grid: hairline row separators only (no full cage), a firm rule
+  // under the header. Reads like a designed table, not a spreadsheet export.
   table {
     border-collapse: collapse;
     margin: 0.9em auto;
@@ -142,25 +190,55 @@ $presentation-heading-font: $font-family-sans-serif !default;
     color: $sds-text-white;
 
     th, td {
-      padding: 0.35em 0.9em;
-      border: 1px solid rgba(255,255,255,0.18);
+      padding: 0.4em 1.0em;
+      border: none;
+      border-bottom: 1px solid $sds-hairline;
       text-align: left;
     }
     th {
-      background-color: rgba(100, 181, 246, 0.14);
-      font-weight: 700;
+      font-weight: 650;
+      color: $sds-text-white;
+      border-bottom: 2px solid rgba(100, 181, 246, 0.65);
+      background: none;
     }
+    tr:last-child td { border-bottom: none; }
     // Numeric-column helper (add class="num" on <td> or use colgroup in the .qmd)
     td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   }
 
-  // Code blocks — dark-theme friendly
+  // Code blocks — a raised panel, not a black hole.
   pre, code {
     font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
-    background-color: $sds-black-80;
+    background-color: $sds-bg-panel;
     color: #E8E8E8;
   }
-  pre { padding: 0.6em 0.8em; font-size: 0.72em; }
+  pre {
+    padding: 0.7em 0.95em;
+    font-size: 0.72em;
+    border: 1px solid $sds-hairline;
+    border-radius: 8px;
+  }
+
+  // Soft aside card — for provenance notes, "what to try" boxes, one-line
+  // caveats. Authoring: wrap in `::: {.note-card}` in the .qmd.
+  .note-card {
+    background: $sds-bg-panel;
+    border: 1px solid $sds-hairline;
+    border-left: 3px solid $sds-accent;
+    border-radius: 8px;
+    padding: 0.55em 0.9em;
+    font-size: 0.78em;
+    color: $sds-text-dim;
+    p, li { font-size: 1em; color: inherit; }
+    p:last-child { margin-bottom: 0; }
+  }
+  // Card flavors: full-ink cards for content panels (not just dim asides),
+  // and semantic edge colors. `.warn` = contested/caution (orange edge),
+  // `.good` = correct (green edge), `.bad` = wrong (red edge).
+  .note-card.ink  { color: $sds-text-white; }
+  .note-card.warn { border-left-color: $sds-orange; }
+  .note-card.good { border-left-color: $sds-green; }
+  .note-card.bad  { border-left-color: $sds-red; }
 
   // Block quotes
   blockquote {
@@ -466,3 +544,89 @@ body.show-ja .reveal .columns.v-spread .column > .lang-ja {
   font-size: 0.5em;
   opacity: 0.75;
 }
+
+// ==========================================================================
+// FILL-THE-SLIDE LAYOUT (promoted from the per-week style files, 2026-07 —
+// Weeks 7–11 carried copies; new weeks get it from the theme with NO per-deck
+// style block needed). center:false pins content sections to the top; make
+// them full-height flex columns so title+body center as one group. The 2026-07
+// refresh adds the HORIZONTAL GUTTER the per-week copies lacked: text no
+// longer runs edge-to-edge (see the measure caps above for line length).
+// Section-breaks, title, and .center slides self-center via the theme and are
+// excluded. No overflow:hidden, so a too-tall slide surfaces as OVERFLOW in
+// the audit rather than clipping silently.
+// ==========================================================================
+.reveal:not(.print-pdf) .slides > section:not(.stack):not(.center):not(.section-break):not(.title-slide):not(.quarto-title-block),
+.reveal:not(.print-pdf) .slides > section.stack > section:not(.center):not(.section-break):not(.title-slide) {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 2.0vh;
+  padding: 2.5% 4.5% 3.5% 4.5% !important;
+  box-sizing: border-box !important;
+}
+
+// ==========================================================================
+// Poll slides (promoted from the per-week style files, 2026-07).
+// Options are a big, well-spaced, boxed stack — projector-legible from the
+// back row; the box fills the lower band whether or not the reveal has fired
+// (the fragment stays in layout, opacity:0 until shown).
+// ==========================================================================
+.reveal .poll-slide .fragment { width: 100%; }
+.reveal .poll-slide .fragment ul { list-style: none; padding: 0; margin: 0 auto; max-width: 76%; }
+.reveal .poll-slide .fragment li {
+  font-size: 1.02em; line-height: 1.2; font-weight: 550;
+  padding: 0.3em 0.75em; margin: 0.28em auto;
+  border: 1px solid $sds-hairline;
+  border-radius: 10px;
+  background: $sds-bg-panel;
+  overflow-wrap: break-word;
+}
+.reveal .slides > section.poll-slide,
+.reveal .slides > section.stack > section.poll-slide { justify-content: center !important; gap: 1.4vh; }
+.reveal .poll-slide > .lang-en,
+.reveal .poll-slide > .lang-ja { font-size: 1.3em; line-height: 1.3; }
+.reveal .poll-reveal .yellow { font-size: 1.22em; }
+.reveal .slides > section.poll-reveal,
+.reveal .slides > section.stack > section.poll-reveal { justify-content: center !important; gap: 1.6vh; }
+
+// ==========================================================================
+// Foreground interactive-widget slides (promoted 2026-07). A titled slide
+// whose body is a sized, visible iframe the instructor drives live — never
+// data-background-iframe (which hides the title and can silently fall back
+// to a static image). height via flex; min-height in px because vh
+// mis-resolves inside Reveal's 540px scaled stage.
+// ==========================================================================
+.reveal .slides section.widget-slide { gap: 1.0vh; }
+.reveal .slides section.widget-slide iframe.widget-frame {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  min-height: 420px;
+  border: 1px solid $sds-hairline;
+  border-radius: 10px;
+  background: $sds-bg-dark;
+}
+
+// ==========================================================================
+// Big-figure slides (promoted 2026-07): the figure is the slide's argument —
+// give it the vertical room; captions stay compact beneath.
+// ==========================================================================
+// Heights in px, NOT vh — vh mis-resolves inside Reveal's 540px scaled stage
+// (lesson carried over from the Week 9/10 per-deck files).
+.reveal .slides section.big-figure img.quarto-figure,
+.reveal .slides section.big-figure img.r-stretch,
+.reveal .slides section.big-figure > p > img {
+  height: auto;
+  max-height: 400px;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.reveal .slides section.big-figure > .lang-en,
+.reveal .slides section.big-figure > .lang-ja { margin-top: 0.2em; font-size: 0.92em; }
+// `.bih` modifier: taller image, smaller caption (big-image-heavy).
+.reveal .slides section.big-figure.bih img { max-height: 440px; }
+.reveal .slides section.big-figure.bih > .lang-en,
+.reveal .slides section.big-figure.bih > .lang-ja { font-size: 0.82em; }

@@ -38,12 +38,12 @@ Both RL and MC assignments are due tonight at 8. Final-project presentations are
 ## [Agenda]{.lang-en}[本日の予定]{.lang-ja} {.agenda .dense}
 
 - [**Where we left off** — from fixed kernels to *learned features*]{.lang-en}[**前回の続き** — 固定カーネルから*学習された特徴*へ]{.lang-ja}  [0:05]{.time}
-- [**Represent I** — connectionism & distributed representations]{.lang-en}[**表現 I** — コネクショニズムと分散表現]{.lang-ja}  [0:17]{.time}
-- [**Learn I** — perceptron, gradient descent, the delta rule]{.lang-en}[**学習 I** — パーセプトロン・勾配降下・デルタ則]{.lang-ja}  [0:35]{.time}
-- [**Learn II** — XOR, depth, and backpropagation]{.lang-en}[**学習 II** — XOR・深さ・誤差逆伝播]{.lang-ja}  [0:53]{.time}
-- [**Represent II** — architecture as prior: CNN → RNN → **attention**]{.lang-en}[**表現 II** — 事前分布としてのアーキテクチャ：CNN → RNN → **アテンション**]{.lang-ja}  [1:13]{.time}
-- [**Understand** — scaling, emergence, **in-context learning**]{.lang-en}[**理解** — スケーリング・創発・**文脈内学習**]{.lang-ja}  [1:28]{.time}
-- [**Where this leaves us** — one question, four answers]{.lang-en}[**まとめ** — 一つの問い、四つの答え]{.lang-ja}  [1:43]{.time}
+- [**Represent I** — connectionism, distributed reps & **vectors, concretely**]{.lang-en}[**表現 I** — コネクショニズム・分散表現・**具体的なベクトル**]{.lang-ja}  [0:17]{.time}
+- [**Learn I** — perceptron, gradient descent, the delta rule]{.lang-en}[**学習 I** — パーセプトロン・勾配降下・デルタ則]{.lang-ja}  [0:43]{.time}
+- [**Learn II** — **matrices**, XOR, depth, and backpropagation]{.lang-en}[**学習 II** — **行列**・XOR・深さ・誤差逆伝播]{.lang-ja}  [1:01]{.time}
+- [**Represent II** — architecture as prior: CNN → RNN → **attention**]{.lang-en}[**表現 II** — 事前分布としてのアーキテクチャ：CNN → RNN → **アテンション**]{.lang-ja}  [1:23]{.time}
+- [**Understand** — scaling, emergence, **in-context learning**]{.lang-en}[**理解** — スケーリング・創発・**文脈内学習**]{.lang-ja}  [1:36]{.time}
+- [**Where this leaves us** — one question, four answers]{.lang-en}[**まとめ** — 一つの問い、四つの答え]{.lang-ja}  [1:50]{.time}
 
 ::: {.notes}
 The spine for the day. ONE question runs through it — "where does the hypothesis space come from?" Week 10 gave three answers and stopped at "infinite-width nets are GPs with a FIXED kernel." Today is the fourth answer: LEARN the features. The three middle words — Represent, Learn, Understand — are the three questions we ask of that one machine; I'll point at the same master diagram each block. Don't linger.
@@ -312,7 +312,45 @@ The distributed view is what makes **word embeddings** possible.
 [📋 Lake scorecard: distributed reps buy **similarity** and **interpolation** — but *not* **compositionality** by themselves.]{.lang-en .dim}[📋 Lake採点表：分散表現は**類似性**と**補間**をもたらすが、それ自体では**構成性**は得られない。]{.lang-ja .dim}
 
 ::: {.notes}
-Two-column contrast (structural parallelism → columns per the visual-density rule). The payoff — word embeddings — is the bridge to the next slide and to Mikolov 2013 (a presentation candidate this week). Lake scorecard #1: distributed reps give similarity and interpolation, but NOT compositionality on their own — mark that.
+Two-column contrast (structural parallelism → columns per the visual-density rule). The payoff — word embeddings — is the bridge two slides ahead, via the vectors interlude, and to Mikolov 2013 (a presentation candidate this week). Lake scorecard #1: distributed reps give similarity and interpolation, but NOT compositionality on their own — mark that. Next: the zero-linear-algebra on-ramp — we've been SAYING "points in a space"; now we make it concrete.
+:::
+
+## [Data become vectors]{.lang-en}[データがベクトルになる]{.lang-ja} {.big-figure}
+
+![](images/data_to_vector.png){fig-align="center" width="78%"}
+
+::: {.lang-en}
+Machines only eat numbers — so **measure**: this bento weighs 500 g, crunch 8/10. The list of measurements $[500, 8]$ is a **vector**; each measurement is a **component**; the number of components is the **dimension**. A 2-D vector *is* a point on a plane — plotting data and "representing" data are the same act.
+:::
+::: {.lang-ja}
+機械は数しか食べない — だから**測る**：この弁当は500g、サクサク度8/10。測定値のリスト $[500, 8]$ が**ベクトル**；各測定値が**成分**；成分の数が**次元**。2次元ベクトルは平面上の点*そのもの* — データを描くことと「表現する」ことは同じ行為。
+:::
+
+::: {.notes}
+The zero-LA on-ramp begins (students don't have linear algebra — every concept gets a worked number and a picture; textbook prerequisite chapter: deep/vectors-and-spaces). Define vector/component/dimension on the concrete bento. Say it plainly: the cat/dog "feature space" three slides ago WAS this — we just made it honest. No Greek, no generality yet.
+:::
+
+## [Similarity is direction: the dot product]{.lang-en}[類似性は方向：内積]{.lang-ja} {.big-figure}
+
+![](images/dot_product_worked.png){fig-align="center" width="74%"}
+
+::: {.lang-en}
+Multiply matching components, add them up: $\mathbf{u}\cdot\mathbf{v} = 3{\times}4 + 4{\times}3 = 24$ — the **dot product**. Divide by the arrows' lengths ($5 \times 5$, by Pythagoras) and you get $0.96$: **cosine similarity** — *pointing the same way* = similar. And look back: the neuron's $\sum_j w_{ij}a_j$ **is a dot product** — every unit scores *how similar its input is to its weights*.
+:::
+::: {.lang-ja}
+対応する成分を掛けて足す：$\mathbf{u}\cdot\mathbf{v} = 3{\times}4 + 4{\times}3 = 24$ — **内積**。矢印の長さ（ピタゴラスで $5 \times 5$）で割ると $0.96$：**コサイン類似度** — *同じ方向を向く* = 似ている。そして振り返ると：ニューロンの $\sum_j w_{ij}a_j$ は**内積そのもの** — どの素子も*入力が自分の重みにどれだけ似ているか*を採点している。
+:::
+
+::: {.notes}
+Fully worked arithmetic on the slide — no abstraction. Then the retro-link that makes the neuron slide click: the weighted sum IS a dot product, so a unit = a similarity detector for its weight pattern. This one sentence is the highest-leverage LA payoff in the deck. (Length/norm defined via Pythagoras in the figure caption band.)
+:::
+
+## [Drive it — bentos as vectors]{.lang-en}[操作してみる — ベクトルとしての弁当]{.lang-ja} {.widget-slide}
+
+<iframe class="widget-frame" src="widgets/vector-space.html"></iframe>
+
+::: {.notes}
+Live widget. Click tonkatsu-A and tonkatsu-B: arrows nearly parallel, cosine ≈ 0.99, worked arithmetic shown. Then tonkatsu-A vs salad: angle opens, cosine drops. Toggle normalize to show scale vs direction (mega-katsu vs tonkatsu-A: different lengths, same direction — same KIND). This is the geometry all of today's models live in.
 :::
 
 ## [Words as vectors: king − man + woman ≈ queen]{.lang-en}[単語をベクトルに：king − man + woman ≈ queen]{.lang-ja} {.big-figure}
@@ -341,14 +379,14 @@ Block 3, LEARN. Point at the "how do we find it?" region of the master map. Buil
 ![](images/sp25/decision_line.png){fig-align="center" width="56%"}
 
 ::: {.lang-en}
-Rosenblatt (1958). Output $y = \operatorname{sign}(\mathbf{w}^\top\mathbf{x})$: the weight vector $\mathbf{w}$ defines a **decision line**, and the sign says which side you're on. Learning = **moving the line**.
+Rosenblatt (1958). Output $y = \operatorname{sign}(\mathbf{w}\cdot\mathbf{x})$ — score the input's **similarity to the weight vector** (the dot product you just met), and $\operatorname{sign}$ reports which side of the **decision line** you're on. Learning = **moving the line**.
 :::
 ::: {.lang-ja}
-Rosenblatt (1958)。出力 $y = \operatorname{sign}(\mathbf{w}^\top\mathbf{x})$：重みベクトル $\mathbf{w}$ が**決定線**を定め、符号でどちら側かが決まる。学習とは**線を動かすこと**。
+Rosenblatt (1958)。出力 $y = \operatorname{sign}(\mathbf{w}\cdot\mathbf{x})$ — 入力と**重みベクトルとの類似度**（さっき学んだ内積）を採点し、$\operatorname{sign}$ が**決定線**のどちら側かを報告する。学習とは**線を動かすこと**。
 :::
 
 ::: {.notes}
-Perceptron as the atom-with-a-decision. Define sign()/decision boundary at first use. Inputs are points in feature space; w is the normal to the separating line. The learning question: how do we move the line to reduce errors? Answer = gradient descent, next.
+Perceptron as the atom-with-a-decision — now stated in the vectors-interlude vocabulary: w·x is a similarity score, the boundary is where the score crosses zero (w is the line's normal). Define sign() at first use. The learning question: how do we move the line to reduce errors? Answer = gradient descent, next.
 :::
 
 ## [Error-driven learning = gradient descent]{.lang-en}[誤差駆動学習 = 勾配降下]{.lang-ja} {.big-figure}
@@ -474,6 +512,35 @@ ANDとOR：一本の線でクラスが分かれる。XOR：**どの線もダメ*
 The AND/OR/XOR panel (SP25, timeless). Make sure they see WHY: XOR's positive cases are opposite corners. Natural fix: add a layer. But — next three slides — depth alone isn't enough; you need the nonlinearity.
 :::
 
+## [One more tool: the matrix]{.lang-en}[もう一つの道具：行列]{.lang-ja} {.bigger}
+
+::: {.lang-en}
+Adding a **layer** means transforming *every* input vector at once. The machine that does that is a **matrix** — and multiplying by one is just **a dot product per row**:
+
+$$\begin{bmatrix}2 & 0\\ 0 & 1\end{bmatrix}\begin{bmatrix}3\\ 4\end{bmatrix} = \begin{bmatrix}2{\times}3 + 0{\times}4\\ 0{\times}3 + 1{\times}4\end{bmatrix} = \begin{bmatrix}6\\ 4\end{bmatrix}$$
+
+[The first **column** is where $[1,0]$ lands; the second is where $[0,1]$ lands — the matrix moves the whole plane.]{.dim}
+:::
+::: {.lang-ja}
+**層**を足すとは、*すべての*入力ベクトルを一度に変換すること。それをやる機械が**行列** — 掛け算は**行ごとの内積**にすぎない：
+
+$$\begin{bmatrix}2 & 0\\ 0 & 1\end{bmatrix}\begin{bmatrix}3\\ 4\end{bmatrix} = \begin{bmatrix}2{\times}3 + 0{\times}4\\ 0{\times}3 + 1{\times}4\end{bmatrix} = \begin{bmatrix}6\\ 4\end{bmatrix}$$
+
+[第1**列**は $[1,0]$ の行き先、第2列は $[0,1]$ の行き先 — 行列は平面全体を動かす。]{.dim}
+:::
+
+::: {.notes}
+Zero-LA on-ramp, part 2. Define matrix-vector multiplication as "a dot product per row" — reusing the one operation they now own. Work the arithmetic aloud: the example stretches the weight axis ×2. The dim line is the deep intuition (columns = where the basis arrows land) — the widget makes it tangible next. Notation lock-in: from here, W means a matrix, Wx means "transform x."
+:::
+
+## [Drive it — a matrix moves every point]{.lang-en}[操作してみる — 行列は全ての点を動かす]{.lang-ja} {.widget-slide}
+
+<iframe class="widget-frame" src="widgets/matrix-transform.html"></iframe>
+
+::: {.notes}
+Live widget. Drag the four sliders: the grid, the unit square, and the bento points all move — one machine, every point. Hit the presets (rotate, stretch, shear). Watch the readout: e1 lands at the first column, e2 at the second. THEN press "apply ReLU" and let them see the plane FOLD onto the positive quadrant — say "hold that fold in mind; it's about to matter." That's the whole nonlinearity story, pre-loaded.
+:::
+
 ## [Does stacking layers help? (1/3)]{.lang-en}[層を重ねれば解決？（1/3）]{.lang-ja} {.bigger}
 
 ::: {.lang-en}
@@ -494,11 +561,11 @@ Build-up slide 1 of 3 (sibling slides, not fragments — this is a real derivati
 ## [Does stacking layers help? (2/3)]{.lang-en}[層を重ねれば解決？（2/3）]{.lang-ja} {.bigger}
 
 ::: {.lang-en}
-Multiply it out — matrix times matrix is just another matrix:
+Multiply it out — two machines run in a row are **one machine** (matrix × matrix is just another matrix):
 $$y = W_2(W_1\mathbf{x}) = \underbrace{(W_2 W_1)}_{\text{one matrix } W'}\,\mathbf{x} = W'\mathbf{x}.$$
 :::
 ::: {.lang-ja}
-展開すると — 行列×行列はやはり一つの行列：
+展開すると — 続けて動かす二つの機械は**一つの機械**（行列×行列はやはり一つの行列）：
 $$y = W_2(W_1\mathbf{x}) = \underbrace{(W_2 W_1)}_{\text{一つの行列 } W'}\,\mathbf{x} = W'\mathbf{x}.$$
 :::
 
@@ -655,10 +722,10 @@ RNN in one slide: recurrence = a prior that the data is sequential; the cost is 
 ![](images/attention_lookup.png){fig-align="center" width="62%"}
 
 ::: {.lang-en}
-Instead of one bottleneck, let **every token look at every other token**. Each token issues a **query**; it's matched against every token's **key**; the **softmax** of those matches weights a blend of the **values**. That softmax is the same one from Week 9 — sharpness $\beta$ and all.
+Instead of one bottleneck, let **every token look at every other token**. Each token issues a **query**; it's matched against every token's **key** — the match score is a **dot product**, the same similarity you met this morning. The **softmax** of those scores weights a blend of the **values** — the same softmax from Week 9, sharpness $\beta$ and all.
 :::
 ::: {.lang-ja}
-一つのボトルネックの代わりに、**全トークンが他の全トークンを見る**。各トークンが**クエリ**を出し、全トークンの**キー**と照合し、その一致度の**ソフトマックス**が**値**の混合を重み付ける。このソフトマックスは第9週と同じ — 鋭さ $\beta$ も含めて。
+一つのボトルネックの代わりに、**全トークンが他の全トークンを見る**。各トークンが**クエリ**を出し、全トークンの**キー**と照合する — 一致度は**内積**、今朝学んだのと同じ類似度。そのスコアの**ソフトマックス**が**値**の混合を重み付ける — 第9週と同じソフトマックス、鋭さ $\beta$ も含めて。
 :::
 
 ::: {.notes}
@@ -792,20 +859,32 @@ Conditioning on examples without updating parameters looks a lot like **inferenc
 Land the framing: ICL = conditioning, not gradient learning. That's the hook for the Bayesian interpretation. Next slide states the claim; the slide after gives the counter-evidence. Both on screen — this is a debate we're teaching, not a result we're endorsing.
 :::
 
-## [The Bayesian lens — and its critics]{.lang-en}[ベイズの視点 — とその批判者]{.lang-ja} {.big-figure}
+## [The Bayesian lens — and its critics]{.lang-en}[ベイズの視点 — とその批判者]{.lang-ja}
 
-![](images/icl_debate.png){fig-align="center" width="86%"}
-
+:::: {.columns}
+::: {.column width="50%"}
+::: {.note-card .ink}
 ::: {.lang-en}
-**The claim:** pretraining fits a **prior** over latent patterns; the prompt's examples are **observations**; the continuation is the **posterior predictive**. In-context learning $\approx$ implicit **Bayesian inference** — pretraining as *empirical Bayes* (estimating the prior itself from data; Xie et al. 2022; Ye et al. 2024). It's the payoff of everything from **Week 4's hierarchical Bayes** onward.
-
-**The pushback:** if the examples are exchangeable (order shouldn't matter), the running prediction should be a **martingale** — it shouldn't drift as more examples arrive. Real LLM predictions **violate** that (Falck et al. 2024). The lens is *suggestive*, not settled.
+**The claim — ICL $\approx$ implicit Bayes.** Pretraining fits a **prior** over latent patterns; the prompt's examples are **observations**; the continuation is the **posterior predictive**. Pretraining is *empirical Bayes* — estimating the prior itself from data. [(Xie et al. 2022; Ye et al. 2024)]{.dim}
 :::
 ::: {.lang-ja}
-**主張：** 事前学習は潜在パターン上の**事前分布**を当てはめ；プロンプトの例は**観測**；継続は**事後予測**。文脈内学習 $\approx$ 暗黙の**ベイズ推論** — 事前学習は*経験ベイズ*（事前分布そのものをデータから推定；Xie et al. 2022; Ye et al. 2024）。**第4週の階層ベイズ**以降すべての成果。
-
-**反論：** 例が交換可能（順序は無関係）なら、逐次予測は**マルチンゲール**であるはず — 例が増えても漂動しないはず。実際のLLMの予測はそれを**破る**（Falck et al. 2024）。この視点は*示唆的*だが確定ではない。
+**主張 — 文脈内学習 $\approx$ 暗黙のベイズ。** 事前学習は潜在パターン上の**事前分布**を当てはめ；プロンプトの例は**観測**；継続は**事後予測**。事前学習は*経験ベイズ* — 事前分布そのものをデータから推定。[(Xie et al. 2022; Ye et al. 2024)]{.dim}
 :::
+:::
+:::
+::: {.column width="50%"}
+::: {.note-card .ink .warn}
+::: {.lang-en}
+**The pushback — the math doesn't check out.** If prompt examples are exchangeable (order shouldn't matter), the running prediction must be a **martingale**: no systematic drift as examples arrive. Real LLM predictions **violate** that. [(Falck et al. 2024)]{.dim}
+:::
+::: {.lang-ja}
+**反論 — 数学が合わない。** 例が交換可能（順序は無関係）なら、逐次予測は**マルチンゲール**でなければならない：例が増えても系統的に漂動しない。実際のLLMの予測はそれを**破る**。[(Falck et al. 2024)]{.dim}
+:::
+:::
+:::
+::::
+
+[The lens is *suggestive*, not settled — and it's the payoff of everything from **Week 4's hierarchical Bayes** onward.]{.lang-en .yellow}[この視点は*示唆的*であり確定ではない — そして**第4週の階層ベイズ**以降すべての成果でもある。]{.lang-ja .yellow}
 
 ::: {.notes}
 THE modernization slide and the seed of textbook Phase D. Teach it as a live debate — Xie/Ye's ICL-as-Bayes formalization (pretraining ≈ empirical Bayes: optimizing marginal likelihood of sequences) AND Falck et al.'s martingale counter-evidence, both on screen. This is the honest epistemic status: a workshop-level formalization with active refutation, not a textbook fact. The callback to Week 4 hierarchical Bayes is the reason this course earns this slide — the reader has the prior/posterior-predictive machinery already. Do NOT overclaim.

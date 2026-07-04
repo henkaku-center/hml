@@ -11,6 +11,59 @@ The method below was developed iteratively while building the APS-I Week 3
 deck. It converged to "0 flagged slides" after the previous ad-hoc PNG-only
 approach had silently shipped ~40 floating slides.
 
+## Design system (2026-07 refresh — read BEFORE authoring, not just QA'ing)
+
+The shared theme (`sds-reveal/sds.scss`) now carries a real design system, and
+the audit exists to protect it. The goal: **clean like a designed deck, while
+using the whole slide** — Claude-design/pptx-skill discipline on the existing
+SDS identity (dark stage, yellow frame, Inter, blue accent).
+
+**Tokens (in `sds.scss` — never invent new hex values in a deck):**
+`$sds-bg-dark #111111` (stage) · `$sds-bg-panel #191920` (raised panels:
+code/cards/poll options) · ink `#F4F4F2` · dim `#A6A6A2` (captions,
+provenance, asides) · hairline `rgba(255,255,255,.12)` (ALL borders/dividers)
+· accent `#64B5F6` (links, structure, the title tick) · yellow `#FFEB3B`
+(punchline) · green/red/orange (semantic only: correct/wrong/caution).
+
+**The rules the tokens imply:**
+1. **Emphasis discipline.** At most ONE yellow punchline per slide. Bold for
+   in-sentence stress; `.dim` for support text. Green/red/orange appear only
+   with their semantic meaning (a correct poll answer, a wrong claim, a
+   contested caveat) — never as decoration. If a slide has three colors of
+   emphasis, it has none.
+2. **The gutter is sacred.** Content slides get a 4.5% horizontal gutter from
+   the theme's fill-flex — nothing may run edge-to-edge except a full-bleed
+   figure that explicitly earns it. Never restore `padding-left/right: 0`.
+3. **Measure.** Top-level prose is capped (~72ch). If a paragraph still reads
+   as a wall, the fix is AUTHORING (bullets, a two-column split, a card pair)
+   — not a smaller font.
+4. **Structure over decoration.** Every content title carries the accent tick
+   (automatic). Use `.eyebrow` for a block label above a title on key slides.
+   Cards (`.note-card`, flavors `.ink`/`.warn`/`.good`/`.bad`) are for
+   genuine asides and claim/counter-claim pairs — a two-panel card layout
+   beats a figure that restates the text (and beats a crushed thumbnail:
+   if a figure would render under ~200px tall next to its text, drop the
+   figure or give it its own slide).
+5. **Quiet chrome.** Tables: hairline row separators + accent-underlined
+   header, no full cage. Code: raised panel, hairline border, 8px radius.
+   Poll options: panel boxes (from the theme — no per-deck copies).
+   Numbers in columns get `tabular-nums` (`.num` cells, `.time` stamps).
+6. **Proximity is grouping.** Related lines sit tight; unrelated blocks are
+   separated by the flex gap. Don't pad lines apart with empty paragraphs —
+   if two blocks need more separation, they're probably two slides.
+7. **Fill without cram.** The fill-audit thresholds still apply (no CLIP, no
+   top-jam under ~70%): the design refresh changes HOW slides fill —
+   fewer, better-shaped elements at comfortable sizes — not whether.
+
+**What lives where:** fill-flex (with gutter), poll boxes, widget-slide base,
+big-figure base (px caps), cards, eyebrow, measure caps → the SHARED theme.
+Per-deck style files carry ONLY deck-specific overrides (Week 10/11's pinned
+`bih` figure heights, `codeslide`, `cmp-cols`) and the r-stretch-fix JS.
+New decks should need little or no per-deck CSS. Weeks 3–10 keep their old
+copies — their published HTML is frozen; on any re-render their `!important`
+copies still win locally, so their look changes only where they didn't
+override (acceptable drift, documented here).
+
 ## Why a PPTX-only audit is insufficient for RevealJS decks
 
 RevealJS and LibreOffice render `.qmd` content differently. The

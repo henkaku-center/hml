@@ -36,14 +36,23 @@ voice: carried as a "Lake scorecard" sidebar revisited in Blocks 2, 6, 7.
 |---|---|---|
 | 0:00 | 0 | Housekeeping (RL + MC assignments due TONIGHT 8 PM; final-project timeline) + agenda |
 | 0:05 | 1 | Where we left off: recap poll ×2 → infinite-width bridge → **name the frame** + Lake scorecard intro |
-| 0:17 | 2 | REPRESENT I: connectionism — emergence, PDP, the neuron, activations, distributed reps (cat/dog), localist-vs-distributed → word embeddings payoff |
-| 0:35 | 3 | LEARN I: perceptron → decision line → error-driven learning → gradient descent (η ↔ Week 8's α) → delta rule |
-| 0:48 | — | Short rest (5 min) |
-| 0:53 | 4 | LEARN II: XOR poll → Minsky/Papert separability → linear stacking collapses (build-up) → depth+nonlinearity worked XOR → backprop = blame apportionment → `jax.grad` (backprop IS autodiff) → Rumelhart |
-| 1:13 | 5 | REPRESENT II: architecture = inductive bias (= prior): CNN (convolution, weight sharing) fast → RNN (Elman, "local not global") faster → **attention as soft lookup → the transformer** |
-| 1:28 | 6 | UNDERSTAND: scaling laws → emergence (+ mirage caveat) → **in-context learning: the Bayesian lens as a LIVE DEBATE** (Xie/Ye vs Falck) → RLHF callback (how these get aligned → Week 12) |
-| 1:43 | 7 | Lake scorecard settled + "one question, four answers" closing picture + next week |
-| 1:48 | — | Student presentation(s) if assigned (presenter: null in readings_map as of Jul 4 — see contingencies) |
+| 0:17 | 2 | REPRESENT I: connectionism — emergence, PDP, the neuron, activations, distributed reps (cat/dog), localist-vs-distributed → **VECTORS INTERLUDE (zero-LA on-ramp): data→vector (bento card → [500, 8] → a point), dot product = similarity (fully worked arithmetic + cosine), vector-space widget, retro-link "the neuron's Σ IS a dot product"** → word embeddings payoff (now grounded) |
+| 0:43 | 3 | LEARN I: perceptron (w·x as the similarity score just taught) → decision line → error-driven learning → gradient descent (η ↔ Week 8's α) → delta rule |
+| 0:56 | — | Short rest (5 min) |
+| 1:01 | 4 | LEARN II: XOR poll → Minsky/Papert separability → **MATRICES, concretely: a matrix = a machine that moves every point (worked 2×2, columns = where basis arrows land) + matrix-transform widget (presets, then the ReLU fold teaser)** → linear stacking collapses (build-up; "two machines compose into one") → depth+nonlinearity worked XOR → backprop = blame apportionment → `jax.grad` → Rumelhart |
+| 1:23 | 5 | REPRESENT II: architecture = inductive bias (= prior): CNN fast → RNN faster → **attention as soft lookup (match = dot product) → the transformer** |
+| 1:36 | 6 | UNDERSTAND: scaling laws → emergence (+ mirage caveat) → **ICL: the Bayesian lens as a LIVE DEBATE** (Xie/Ye vs Falck) → RLHF callback (→ Week 12) |
+| 1:50 | 7 | Lake scorecard settled + "one question, four answers" closing picture + next week |
+| 1:55 | — | Student presentation(s) if assigned (presenter: null in readings_map as of Jul 4 — see contingencies) |
+
+**Linear-algebra ground rule (Joe, 2026-07-04):** students do NOT have a linear
+algebra background. Every vector/matrix concept gets (a) a concrete worked
+number example on the slide, (b) an interactive visualization, (c) an explicit
+definition at first use — data→vectors, vectors→similarity, vectors→spaces/
+embeddings, matrices→transformations of space, nonlinearity→folding. The
+textbook prerequisite chapter is `deep/vectors-and-spaces.md`. No slide may use
+$\mathbf{w}^\top\mathbf{x}$, $W\mathbf{x}$, or matrix products before the
+interlude slides define them concretely.
 
 **Contingencies:** (a) if a presenter is assigned, presentation lands after
 Block 4's break, and Block 5 CNN/RNN compresses to 2 slides ("two prior
@@ -132,6 +141,17 @@ on (causality, compositional generalization — cite Lake & Baroni 2023 nuance).
    mixed-value readout; "hard lookup" toggle for the limit case.
 3. `widgets/bias-variance-explorer.html` — REUSE (copy from week10 widgets/,
    Block 6 double-descent callback).
+4. `widgets/vector-space.html` — NEW (Block 2 vectors interlude; dual-use,
+   lives in textbook static/widgets/ too). Bento data → vectors → points;
+   click two items, worked dot-product arithmetic + cosine + angle readout;
+   normalize toggle.
+5. `widgets/matrix-transform.html` — NEW (Block 4 matrices; dual-use). 2×2
+   sliders warp a gridded plane + the bento points; presets; "e1 lands at the
+   first column" readout; ReLU-fold toggle (the nonlinearity teaser the XOR
+   space-warp pays off).
+
+Figures added for the interlude: `data_to_vector.png` (bento card → column
+vector → point) and `dot_product_worked.png` (u·v worked arithmetic + angle).
 
 ## Speaker-note requirements
 

@@ -293,6 +293,84 @@ def fig_transformer_block():
     fig.tight_layout(); fig.savefig("images/transformer_block.png",dpi=150); plt.close(fig)
     print("wrote images/transformer_block.png")
 
+# ---------------------------------------------------------------- Fig 11: data → vector → point
+def fig_data_to_vector():
+    """Three stages, left→right: bento card → column vector [500, 8] → point on a 2-D plot."""
+    fig=plt.figure(figsize=(11,4.4))
+    gs=fig.add_gridspec(1,3,width_ratios=[1.15,0.8,1.25],wspace=0.5,
+                        left=0.03,right=0.965,top=0.90,bottom=0.16)
+    # ---- stage 1: the bento card (a thing in the world) ----
+    a1=fig.add_subplot(gs[0]); a1.set_xlim(0,10); a1.set_ylim(0,10); a1.axis("off")
+    rbox(a1,0.8,1.9,8.4,6.4,"",fc=PANEL,ec=ORA,lw=1.8,rs=0.35)
+    a1.text(5.0,7.15,"tonkatsu bento",fontsize=15,color=ORA,weight="bold",
+            ha="center",va="center")
+    a1.text(2.0,5.55,"weight:  500 g",fontsize=14,color=WHITE,ha="left",va="center")
+    a1.text(2.0,4.35,"crunch:  8 / 10",fontsize=14,color=WHITE,ha="left",va="center")
+    a1.text(5.0,2.95,"(a thing in the world)",fontsize=11,color=DIM,ha="center",va="center")
+    # ---- stage 2: the column vector, big brackets drawn as lines ----
+    a2=fig.add_subplot(gs[1]); a2.set_xlim(0,10); a2.set_ylim(0,10); a2.axis("off")
+    bl,br,bt,bb,tip=2.6,7.4,7.9,2.5,0.7
+    a2.plot([bl+tip,bl,bl,bl+tip],[bt,bt,bb,bb],color=WHITE,lw=2.4)
+    a2.plot([br-tip,br,br,br-tip],[bt,bt,bb,bb],color=WHITE,lw=2.4)
+    a2.text(5.0,6.35,"500",fontsize=25,color=WHITE,ha="center",va="center")
+    a2.text(5.0,4.05,"8",fontsize=25,color=WHITE,ha="center",va="center")
+    a2.text(5.0,1.15,"the same bento,\nnow a column of numbers",fontsize=11,
+            color=DIM,ha="center",va="center")
+    # ---- stage 3: the point on a 2-D plot ----
+    a3=fig.add_subplot(gs[2])
+    a3.set_xlim(0,700); a3.set_ylim(0,10)
+    a3.set_xticks([0,250,500,700]); a3.set_yticks([0,5,8,10])
+    a3.set_xlabel("weight (g)",fontsize=12); a3.set_ylabel("crunch (0–10)",fontsize=12)
+    a3.plot([500,500],[0,8],color=DIM,lw=1.0,ls="--",zorder=2)
+    a3.plot([0,500],[8,8],color=DIM,lw=1.0,ls="--",zorder=2)
+    a3.scatter([500],[8],s=130,color=ACC,zorder=5,edgecolor="#0d141c",linewidth=1.0)
+    a3.text(478,7.0,"tonkatsu bento\n(500, 8)",fontsize=12,color=ACC,
+            ha="right",va="top")
+    # ---- arrows between stages (figure coordinates), labels in their own band above.
+    # Arrow 2 is placed off the axes' TRUE positions so it clears stage 3's rotated
+    # y-axis label ("crunch (0–10)" hangs ~0.07 fig-units left of the a3 spine).
+    p2,p3=a2.get_position(),a3.get_position()
+    for x0,x1,lab in [(0.335,0.385,"measure"),(p3.x0-0.125,p3.x0-0.075,"plot")]:
+        fig.add_artist(FancyArrowPatch((x0,0.52),(x1,0.52),transform=fig.transFigure,
+                       arrowstyle="-|>",mutation_scale=18,color=WHITE,lw=2.2))
+        fig.text((x0+x1)/2,0.60,lab,fontsize=12,color=DIM,ha="center",va="center")
+    fig.savefig("images/data_to_vector.png",dpi=150); plt.close(fig)
+    print("wrote images/data_to_vector.png")
+
+# ---------------------------------------------------------------- Fig 12: dot product, worked
+def fig_dot_product_worked():
+    """u=[3,4], v=[4,3] from the origin with the angle arc, beside the worked arithmetic."""
+    from matplotlib.patches import Arc
+    fig=plt.figure(figsize=(11,4.6))
+    gs=fig.add_gridspec(1,2,width_ratios=[0.92,1.15],wspace=0.30,
+                        left=0.06,right=0.965,top=0.93,bottom=0.13)
+    # ---- left: the two vectors on a small grid ----
+    ax=fig.add_subplot(gs[0]); ax.set_aspect("equal")
+    ax.set_xlim(-0.3,5.3); ax.set_ylim(-0.3,5.3)
+    ax.set_xticks(range(6)); ax.set_yticks(range(6))
+    ax.grid(True,color="#2a2a35",lw=0.7)
+    arrow(ax,0,0,3,4,color=ACC,lw=2.8,ms=17)
+    arrow(ax,0,0,4,3,color=RED,lw=2.8,ms=17)
+    ax.text(2.75,4.45,"u = [3, 4]",fontsize=14,color=ACC,ha="center",va="center",weight="bold")
+    ax.text(4.4,2.4,"v = [4, 3]",fontsize=14,color=RED,ha="center",va="center",weight="bold")
+    ax.add_patch(Arc((0,0),3.0,3.0,theta1=36.87,theta2=53.13,color=YEL,lw=2.0))
+    # single-char θ fits INSIDE the narrow 16° wedge; the worked value lives in the panel
+    ax.text(1.27,1.27,r"$\theta$",fontsize=13,color=YEL,ha="center",va="center")
+    # ---- right: the arithmetic, one step per band, nothing over the plot ----
+    a2=fig.add_subplot(gs[1]); a2.set_xlim(0,10); a2.set_ylim(0,10); a2.axis("off")
+    rbox(a2,0.25,0.6,9.5,8.9,"",fc=PANEL,ec=EDGE,lw=1.4,rs=0.25)
+    a2.text(1.1,8.35,r"$u \cdot v \;=\; 3{\times}4 \,+\, 4{\times}3$",
+            fontsize=18,color=WHITE,ha="left",va="center")
+    a2.text(2.25,6.85,r"$=\; 12 + 12 \;=\; 24$",fontsize=18,color=WHITE,ha="left",va="center")
+    a2.text(1.1,5.35,r"$|u| = \sqrt{3^2+4^2} = 5, \quad |v| = \sqrt{4^2+3^2} = 5$",
+            fontsize=14,color="#cccccc",ha="left",va="center")
+    a2.text(1.1,3.75,r"$\cos\theta \;=\; 24 \,/\, (5{\times}5) \;=\; 0.96$",
+            fontsize=18,color=YEL,ha="left",va="center")
+    a2.text(1.1,2.15,"→  nearly the same direction",fontsize=14.5,color=GRN,
+            ha="left",va="center")
+    fig.savefig("images/dot_product_worked.png",dpi=150); plt.close(fig)
+    print("wrote images/dot_product_worked.png")
+
 if __name__=="__main__":
     fig_four_answers_map()
     fig_four_answers_close()
@@ -304,4 +382,6 @@ if __name__=="__main__":
     fig_icl_debate()
     fig_attention_lookup()
     fig_transformer_block()
+    fig_data_to_vector()
+    fig_dot_product_worked()
     print("done.")
