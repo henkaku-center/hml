@@ -16,6 +16,7 @@
 - **Quiz:** the SP25 bank has NO neural-network quiz (verified) — recap polls drawn from "Intro to Bayes Nonparametrics"; mid-deck polls are new for SP26.
 
 ## Textbook Chapters
+- Bk: vectors and spaces — `deep/vectors-and-spaces.md` (the zero-LA on-ramp; REQUIRED before the rest)
 - Bk: from rules to weights — `deep/from-rules-to-weights.md`
 - Bk: neural net fundamentals — `deep/neural-net-fundamentals.md`
 - Bk: transformers attention — `deep/transformers-attention.md`
