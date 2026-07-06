@@ -182,10 +182,10 @@ Land it: accuracy hides error composition. This is exactly why you need the cond
 ![](images/adversarial.png){fig-align="center" width="82%"}
 
 ::: {.lang-en}
-A perturbation too small for you to notice flips the kiosk from tonkatsu to hamburger. The attack is the model's own training run in reverse — the **gradient of the loss with respect to the input** (the same `jax.grad`, pointed at $\mathbf{x}$). The learned decision boundary is close to almost every point in high dimensions; a tiny step in the right direction crosses it.
+A perturbation too small for you to notice flips the kiosk from tonkatsu to hamburger. The attack is the model's own training run in reverse — the **gradient of the loss with respect to the input** (last week's `jax.grad`, now pointed at $\mathbf{x}$ instead of the weights). The learned decision boundary is close to almost every point in high dimensions; a tiny step in the right direction crosses it.
 :::
 ::: {.lang-ja}
-気づけないほど小さな摂動が、キオスクをトンカツからハンバーグへ反転させる。攻撃はモデル自身の訓練を逆に走らせたもの — **入力に関する損失の勾配**（同じ `jax.grad` を $\mathbf{x}$ に向ける）。学習された決定境界は高次元でほぼ全ての点の近くにあり、正しい方向への微小な一歩がそれを越える。
+気づけないほど小さな摂動が、キオスクをトンカツからハンバーグへ反転させる。攻撃はモデル自身の訓練を逆に走らせたもの — **入力に関する損失の勾配**（先週の `jax.grad` を、重みではなく $\mathbf{x}$ に向ける）。学習された決定境界は高次元でほぼ全ての点の近くにあり、正しい方向への微小な一歩がそれを越える。
 :::
 
 ::: {.notes}
