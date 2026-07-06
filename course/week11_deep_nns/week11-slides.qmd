@@ -873,7 +873,26 @@ Conditioning on examples without updating parameters looks a lot like **inferenc
 :::
 
 ::: {.notes}
-Land the framing: ICL = conditioning, not gradient learning. That's the hook for the Bayesian interpretation. Next slide states the claim; the slide after gives the counter-evidence. Both on screen — this is a debate we're teaching, not a result we're endorsing.
+Land the framing: ICL = conditioning, not gradient learning. That's the hook for the Bayesian interpretation. Next slide answers the mechanical puzzle (how can frozen weights adapt at all?); THEN the Bayesian lens states the claim; then the counter-evidence. Both on screen — this is a debate we're teaching, not a result we're endorsing.
+:::
+
+## [Frozen weights, adaptive answer — how?]{.lang-en}[凍結した重み、適応する答え — どうやって？]{.lang-ja} {.smaller}
+
+::: {.lang-en}
+- **Fixed weights are a fixed *function*, not a fixed answer.** A sorting routine's code never changes, yet it sorts any list. Weights are the code; the prompt is the input.
+- **Pretraining wrote a *procedure*, not facts.** To predict the next token across an ocean of mixed text, the net must read the prefix, infer *what kind of text this is*, and predict to match — the loss-minimizing move.
+- **That "kind" is a latent concept** — a topic, a task, the plip/plap rule. *Read examples → infer the concept → continue* is inference, run in the forward pass.
+- **So the weights hold an *amortized* inference engine** — trained once to emit an inference's answer in one pass. It never stored "plip → blue," only *how to read examples and continue*.
+:::
+::: {.lang-ja}
+- **固定した重みは固定した*関数*であって、固定した答えではない。** ソートのコードは変わらないが、どんなリストもソートする。重みがコード、プロンプトが入力。
+- **事前学習は事実ではなく*手続き*を書き込んだ。** 混在した膨大なテキストで次トークンを当てるには、前文脈を読み、*これはどんなテキストか*を推論し、合わせて予測せねばならない — それが損失最小化の動き。
+- **その「種類」が潜在概念** — 話題・課題・plip/plapのルール。*例を読む → 概念を推論 → 継続* は、順伝播の中で走る推論。
+- **だから重みは*償却された*推論エンジンを保持する** — 推論の答えを一回の順伝播で出すよう一度だけ訓練済み。「plip → 青」を記憶したのではなく、*例を読んで継続する方法*を記憶した。
+:::
+
+::: {.notes}
+The mechanism answer to the professor's own question — "what's the mechanism despite fixed weights?" — placed BEFORE the Bayesian claim, because it's the prerequisite. The load-bearing move: fixed weights = fixed function, not fixed output (a function returns different outputs for different inputs; that's its job). Pretraining's loss pressure over a heterogeneous corpus forces the network to infer document-type from the prefix and predict accordingly — so gradient descent installs an amortized inference procedure into the weights. "Amortized" defined in situ (train once to emit an inference's answer in one forward pass), NOT claimed as a prior-week callback. Only after this does the next slide ask whether that inference is specifically Bayesian.
 :::
 
 ## [The Bayesian lens — and its critics]{.lang-en}[ベイズの視点 — とその批判者]{.lang-ja}
