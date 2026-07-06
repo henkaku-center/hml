@@ -280,14 +280,14 @@ weeks:
       - citation: "Pereira, F., Lou, B., Pritchett, B., Ritter, S., Gershman, S. J., Kanwisher, N., Botvinick, M., & Fedorenko, E. (2018). Toward a universal decoder of linguistic meaning from brain activation. Nature Communications, 9, 963."
         pdf: "Pereira et al 2018 NatureComms.pdf"
         why: "Decoding meaning from fMRI with embeddings — bridges NNs and cognition."
-      - citation: "Shulze-Buschoff, L., Akata, Z., Bethge, M., & Schrimpf, M. (2025). Visual cognition in multimodal large language models."
+      - citation: "Schulze Buschoff, L. M., Akata, E., Bethge, M., & Schulz, E. (2025). Visual cognition in multimodal large language models. Nature Machine Intelligence, 7, 96–106."
         pdf: ShuluzeBuschoffetal2025.pdf
         why: "Very recent (2025) probe of what visual cognition modern multimodal LLMs actually do."
       - citation: "Costello, T. H., Pennycook, G., & Rand, D. G. (2024). Durably reducing conspiracy beliefs through dialogues with AI. Science."
         pdf: costello2024ConspiracyBeliefsAI.pdf
         why: "2024 study on LLMs as persuasive agents — modern case for what deep models DO in the wild."
-    presenter: null
-    presented: null
+    presenter: Imai
+    presented: "Mikolov et al. (2013), Efficient estimation of word representations in vector space (word2vec)"
 
   - number: 12
     date: 2026-07-17
