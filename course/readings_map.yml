@@ -304,7 +304,7 @@ weeks:
       - citation: "Ensign, D., Friedler, S. A., Neville, S., Scheidegger, C., & Venkatasubramanian, S. (2018). Runaway feedback loops in predictive policing. PMLR."
         pdf: ensign18a.pdf
         why: "Predictive-policing feedback loops — concrete example of ML deployment harm."
-      - citation: "Miller, E. J., Foo, Y. Z., Mewton, P., & Dawel, A. (2023). AI hyperrealism: Why AI faces are perceived as more real than human ones. Psychological Science."
+      - citation: "Miller, E. J., Steward, B. A., Witkower, Z., Sutherland, C. A. M., Krumhuber, E. G., & Dawel, A. (2023). AI hyperrealism: Why AI faces are perceived as more real than human ones. Psychological Science, 34(12), 1390–1403."
         pdf: "miller-et-al-2023-ai-hyperrealism-why-ai-faces-are-perceived-as-more-real-than-human-ones.pdf"
         why: "2023 paper on uncanny-valley inversion — modern ethical concern around AI-generated faces."
     presenter: Tenzin
