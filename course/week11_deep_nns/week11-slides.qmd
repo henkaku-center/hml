@@ -964,7 +964,7 @@ Block 7, the close. Return to the master map one last time with all four answers
 The closing picture — the same master map, all four answers annotated. The satisfying loop: the neural-net answer, taken to its infinite-width limit, becomes the GP answer from last week (NNGP/NTK). One coherent story across two weeks, not two separate topics. This is establish-then-reference paying off.
 :::
 
-## [Lake's scorecard, settled]{.lang-en}[Lakeの採点表、締め]{.lang-ja}
+## [Lake's scorecard, settled]{.lang-en}[Lakeの採点表、締め]{.lang-ja} {.smaller}
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -1004,12 +1004,10 @@ The closing picture — the same master map, all four answers annotated. The sat
 ::::
 
 ::: {.lang-en}
-- Meta-learned nets reach human-like systematicity only **with effort** [(Lake & Baroni, 2023)]{.dim}
-- 2025 re-test of **multimodal** LLMs on Lake's own domains — physics, causality, psychology — still **short of people** [(Schulze Buschoff et al., 2025)]{.dim}
+Meta-learned systematicity comes only **with effort** [(Lake & Baroni, 2023)]{.dim}; a 2025 **multimodal** re-test on Lake's own domains stays **short of people** [(Schulze Buschoff et al., 2025)]{.dim}.
 :::
 ::: {.lang-ja}
-- メタ学習ネットでさえ人間並みの体系性には**努力を要する** [(Lake & Baroni, 2023)]{.dim}
-- 2025年の**マルチモーダル**LLM再検証 — Lake自身の領域（物理・因果・心理）— も**人間に及ばない** [(Schulze Buschoff et al., 2025)]{.dim}
+メタ学習の体系性でさえ**努力を要し**[(Lake & Baroni, 2023)]{.dim}、2025年の**マルチモーダル**再検証もLake自身の領域で**人間に及ばない**[(Schulze Buschoff et al., 2025)]{.dim}。
 :::
 
 [**Honest verdict:** the 1988 → 2017 → 2025 critique still bites *and* learned features are powerful. Both true.]{.lang-en .yellow}[**正直な評価：** 1988 → 2017 → 2025 の批判はなお有効で*あり*、学習された特徴も強力。両方とも真。]{.lang-ja .yellow}
@@ -1020,7 +1018,12 @@ Settle the scorecard honestly — the "fact-check attributions" rule. Lake & Bar
 
 ## [Next week]{.lang-en}[来週]{.lang-ja} {.center}
 
-[Week 12 · July 17]{.lang-en .eyebrow}[第12週 · 7月17日]{.lang-ja .eyebrow}
+::: {.lang-en}
+[Week 12 · July 17]{.eyebrow}
+:::
+::: {.lang-ja}
+[第12週 · 7月17日]{.eyebrow}
+:::
 
 ::: {.note-card .ink}
 ::: {.lang-en}
