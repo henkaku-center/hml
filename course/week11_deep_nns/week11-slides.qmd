@@ -966,34 +966,83 @@ The closing picture — the same master map, all four answers annotated. The sat
 
 ## [Lake's scorecard, settled]{.lang-en}[Lakeの採点表、締め]{.lang-ja}
 
+:::: {.columns}
+::: {.column width="50%"}
+::: {.note-card .good}
 ::: {.lang-en}
-Back to the reading — now with 2025 evidence. Deep nets deliver **learned representations**, **similarity**, and **scale** — genuinely. What Lake et al. (2017) say is still missing: **compositional generalization** and **causal, model-based** understanding. Even meta-learned nets reach human-like systematicity only with effort (Lake & Baroni, 2023), and a 2025 re-test of **multimodal** LLMs on Lake's own domains — intuitive physics, causality, intuitive psychology — still finds them short of people (Schulze Buschoff et al., 2025).
+**Deep nets deliver — genuinely**
 
-**The honest verdict:** the 1988 → 2017 → 2025 critique still bites *and* learned features are powerful. Both are true.
+- Learned representations
+- Similarity
+- Scale
 :::
 ::: {.lang-ja}
-課題論文に戻る — 2025年の証拠とともに。深層ネットは**学習された表現**・**類似性**・**スケール**を確かに提供する。Lake et al. (2017) がなお欠けていると言うもの：**構成的汎化**と**因果的・モデルベース**の理解。メタ学習ネットでさえ人間並みの体系性には努力を要し（Lake & Baroni, 2023）、2025年の**マルチモーダル**LLMの再検証 — Lake自身の領域（直観物理・因果・直観心理）で — も、なお人間に及ばないと示す（Schulze Buschoff et al., 2025）。
+**深層ネットが確かに提供**
 
-**正直な評価：** 1988 → 2017 → 2025 と続く批判はなお有効で*あり*、学習された特徴も強力。両方とも真。
+- 学習された表現
+- 類似性
+- スケール
 :::
+:::
+:::
+::: {.column width="50%"}
+::: {.note-card .warn}
+::: {.lang-en}
+**Still missing** [(Lake et al. 2017)]{.dim}
+
+- Compositional generalization
+- Causal, model-based understanding
+:::
+::: {.lang-ja}
+**なお欠けているもの** [(Lake et al. 2017)]{.dim}
+
+- 構成的汎化
+- 因果的・モデルベースの理解
+:::
+:::
+:::
+::::
+
+::: {.lang-en}
+- Meta-learned nets reach human-like systematicity only **with effort** [(Lake & Baroni, 2023)]{.dim}
+- 2025 re-test of **multimodal** LLMs on Lake's own domains — physics, causality, psychology — still **short of people** [(Schulze Buschoff et al., 2025)]{.dim}
+:::
+::: {.lang-ja}
+- メタ学習ネットでさえ人間並みの体系性には**努力を要する** [(Lake & Baroni, 2023)]{.dim}
+- 2025年の**マルチモーダル**LLM再検証 — Lake自身の領域（物理・因果・心理）— も**人間に及ばない** [(Schulze Buschoff et al., 2025)]{.dim}
+:::
+
+[**Honest verdict:** the 1988 → 2017 → 2025 critique still bites *and* learned features are powerful. Both true.]{.lang-en .yellow}[**正直な評価：** 1988 → 2017 → 2025 の批判はなお有効で*あり*、学習された特徴も強力。両方とも真。]{.lang-ja .yellow}
 
 ::: {.notes}
 Settle the scorecard honestly — the "fact-check attributions" rule. Lake & Baroni 2023 is the right nuance (meta-learning CAN reach compositional generalization, but it's not free). The 2025 update is Schulze Buschoff et al., *Visual cognition in multimodal large language models* (Nature Machine Intelligence, Jan 2025): they tested vision-based LLMs on Lake's exact core domains — intuitive physics, causal reasoning, intuitive psychology — and found they "still fall short of human capabilities," explicitly framed as a follow-up to Lake's proposed domains. This is also this week's presentation-candidate paper, so a student may be presenting it. Don't declare a winner. The course's stance: hold both the power and the critique, now across a 1988 (Fodor & Pylyshyn) → 2017 (Lake et al.) → 2025 (Schulze Buschoff et al.) arc. This is the intellectual honesty that distinguishes this lecture from a hype reel.
 :::
 
-## [Next week & to do]{.lang-en}[来週とやること]{.lang-ja} {.agenda .smaller}
+## [Next week]{.lang-en}[来週]{.lang-ja} {.center}
 
+[Week 12 · July 17]{.lang-en .eyebrow}[第12週 · 7月17日]{.lang-ja .eyebrow}
+
+::: {.note-card .ink}
 ::: {.lang-en}
-- **Read:** Lake et al. (2017), *Building machines that learn and think like people* — today's frame, next week's target.
-- **Next week (Jul 17):** ethics, fairness, adversarial examples, alignment — **and final-project presentations**.
-- **Play:** the two widgets (XOR net, attention lookup) — linked from the slides.
+**Ethics, fairness & alignment**
+
+- **Fairness** & bias in learned models
+- **Adversarial examples** — where nets break
+- **Alignment** — steering models toward human values
+- **Final-project presentations** — bring a laptop
 :::
 ::: {.lang-ja}
-- **読む：** Lake et al. (2017), *人間のように学び考える機械をつくる* — 今日の枠組み、来週の標的。
-- **来週（7月17日）：** 倫理・公平性・敵対的事例・アラインメント — **そして最終プロジェクト発表**。
-- **遊ぶ：** 2つのウィジェット（XORネット、アテンション辞書引き） — スライドからリンク。
+**倫理・公平性・アラインメント**
+
+- 学習モデルの**公平性**とバイアス
+- **敵対的事例** — ネットが壊れる場所
+- **アラインメント** — モデルを人間の価値へ導く
+- **最終プロジェクト発表** — ノートPCを持参
+:::
 :::
 
+[Meanwhile — play the two widgets: XOR net & attention lookup, linked from the slides.]{.lang-en .dim}[その間に — 2つのウィジェット（XORネット・アテンション辞書引き）で遊んでみて。スライドからリンク。]{.lang-ja .dim}
+
 ::: {.notes}
-Close. Point them at the reading (which we framed all lecture), preview Week 12 (ethics + presentations), and nudge them to actually open the two widgets. Done.
+Close. Preview Week 12 (ethics, fairness, adversarial examples, alignment + final-project presentations — laptops), and nudge them to open the two widgets. The Lake et al. (2017) reading is already framed and settled on the prior slide, so it's off this one. Done.
 :::
