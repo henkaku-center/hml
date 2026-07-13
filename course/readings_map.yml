@@ -287,7 +287,8 @@ weeks:
         pdf: costello2024ConspiracyBeliefsAI.pdf
         why: "2024 study on LLMs as persuasive agents — modern case for what deep models DO in the wild."
     presenter: Imai
-    presented: "Mikolov et al. (2013), Efficient estimation of word representations in vector space (word2vec)"
+    # Imai presented the NIPS companion paper, not the announced arXiv one (accepted as presented).
+    presented: "Mikolov, Sutskever, Chen, Corrado & Dean (2013), Distributed Representations of Words and Phrases and their Compositionality (NIPS) — the skip-gram extensions companion to word2vec"
 
   - number: 12
     date: 2026-07-17
