@@ -424,32 +424,114 @@ div.reveal div.slides section.title-slide.section-break h1.title {
 }
 
 // ==========================================================================
-// Image placement (mirrored from APS-I lecture-plans, June 2026)
+// FIGURE-FIRST SIZING (layout-scheme v2, 2026-07)
 // ==========================================================================
-// MINIMAL & SAFE. History: setting `display:flex` on the figure column
-// COLLAPSED Quarto's two-column layout (figure dropped full-width below the
-// text). Quarto's `.columns` is `display:initial` (NOT flex) here, so columns
-// sit side-by-side only because the `.column`s keep their default display +
-// inline width. Overriding a column's `display` drops it onto its own line.
-// Lesson: NEVER change `.columns`/`.column` display — center via margins only.
+// The old scheme let figures SHRINK: in the fill-the-slide flex column every
+// child has flex-shrink:1, so when text ran long the figure silently crushed
+// (Week 9 "tiny figure", Week 10 widget at ~90px, Week 12 slide 8 at 124px —
+// distorted, because a flexed height + an inline width breaks the aspect).
+// The audit's fill metric never saw it: text is the cheapest filler, so a
+// text-stuffed slide with a microscopic figure audited at ~100% fill.
 //
-// (1) SINGLE-COLUMN slides: center a standalone figure horizontally. Scope to
-//     figures NOT inside a .column so we never touch column images.
-.reveal .slides section > figure,
-.reveal .slides section > p > img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+// v2 inverts the priority. On a content slide, a standalone figure is the
+// slide's FLEXIBLE element: it GROWS into whatever height the text doesn't
+// use, and may not shrink below a readable floor. If floor + text exceed the
+// stage, the slide overflows LOUDLY (audit: OVERFLOW / TINY-FIGURE) instead
+// of the figure dying silently. The fix for that overflow is always trim the
+// text or change layout — NEVER shrink the figure.
+//
+// object-fit:contain everywhere means a figure can never distort, no matter
+// what box the flex algebra hands it.
+.reveal .slides section img { object-fit: contain; }
+
+// Reveal's stretch/lazy plugin can pin an inline `width: 0px` on a figure
+// (computed under the collapsed flex column before the image decodes). The
+// shared fig-size.js strips it; this CSS guard makes the fix race-free.
+.reveal .slides section img[style*="width: 0px"],
+.reveal .slides section img[style*="width:0px"] {
+  width: auto !important;
+}
+
+// (1) SINGLE-COLUMN standalone figures — the three DOM shapes Quarto emits
+//     (direct <img> once fig-size.js strips r-stretch; <p><img></p>; and the
+//     captioned div.quarto-figure). Each becomes the flex-grow element with a
+//     hard floor. Opt out with `.fig-inline` for genuinely small images
+//     (icons, logos) that should keep their natural size.
+.reveal:not(.print-pdf) .slides > section > img:not(.fig-inline),
+.reveal:not(.print-pdf) .slides > section.stack > section > img:not(.fig-inline) {
+  flex: 1 1 0;
+  min-height: 150px;      // readable floor — text can NOT crush a figure below this
+  width: auto;
+  max-width: 100%;
+  align-self: center;
+  margin: 0 auto;
+}
+.reveal:not(.print-pdf) .slides > section > p:has(> img:only-child):not(.fig-inline),
+.reveal:not(.print-pdf) .slides > section.stack > section > p:has(> img:only-child):not(.fig-inline) {
+  flex: 1 1 0;
+  min-height: 150px;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  > img { height: 100%; max-width: 100%; margin: auto; }
+}
+.reveal:not(.print-pdf) .slides > section > div.quarto-figure,
+.reveal:not(.print-pdf) .slides > section.stack > section > div.quarto-figure {
+  flex: 1 1 0;
+  min-height: 150px;
+  display: flex;
+  justify-content: center;
+  figure { display: flex; flex-direction: column; margin: 0 auto; min-height: 0; }
+  img { flex: 1 1 0; min-height: 0; max-width: 100%; }
+  figcaption { flex: 0 0 auto; }
+}
+.reveal .slides section .fig-inline img,
+.reveal .slides section img.fig-inline {
+  flex: 0 0 auto;
+  min-height: 0;
+}
+// Print/PDF export has no flex column to size against — cap by px instead.
+.reveal.print-pdf .slides section img {
+  max-height: 400px;
+  width: auto;
+  max-width: 100%;
 }
 
 // (2) TWO-COLUMN figure column: nudge the image toward the column's vertical
 //     middle via auto top/bottom margin, WITHOUT changing the column's display
-//     (keep it block so the row stays intact). Text column stays top-aligned.
+//     (overriding a .column's `display` drops it onto its own line — the old
+//     collapse bug). Column images size from the column width, aspect-safe.
 .reveal .slides section .column > p:has(img),
 .reveal .slides section .column > figure {
   margin-top: auto;
   margin-bottom: auto;
 }
+.reveal .slides section .column img {
+  max-width: 100%;
+  height: auto;
+}
+
+// (3) The `.columns` ROW owns the slide's leftover body height and vertically
+//     centers each column — the systemic COLUMN-SKEW/COLUMN-THIN fix, promoted
+//     from the Week 7–12 per-deck copies (proven there; the historical warning
+//     about flex collapsing columns applied to the .column children, not the
+//     row). `.column` display is never touched.
+.reveal:not(.print-pdf) .slides section .columns {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+}
+.reveal .slides section .columns > .column { align-self: center; min-width: 0; }
+
+// Comparison columns (2–3 parallel option/criteria panels): TOP-align and
+// reserve a fixed header band so the bullet lists start on the same line
+// across all columns even when headers wrap differently. Promoted from the
+// Week 10–12 per-deck copies.
+.reveal .slides section .columns.cmp-cols { align-items: flex-start !important; }
+.reveal .slides section .columns.cmp-cols > .column { align-self: flex-start; }
+.reveal .slides section .cmp-head { min-height: 2.9em; margin-bottom: 0.15em; }
+.reveal .slides section .cmp-head p { margin: 0; line-height: 1.18; }
 
 // ==========================================================================
 // Agenda slide — two-column timed list
@@ -574,7 +656,7 @@ body.show-ja .reveal .columns.v-spread .column > .lang-ja {
 // (the fragment stays in layout, opacity:0 until shown).
 // ==========================================================================
 .reveal .poll-slide .fragment { width: 100%; }
-.reveal .poll-slide .fragment ul { list-style: none; padding: 0; margin: 0 auto; max-width: 76%; }
+.reveal .poll-slide .fragment ul { list-style: none; padding: 0; margin: 0 auto; max-width: 86%; }
 .reveal .poll-slide .fragment li {
   font-size: 1.02em; line-height: 1.2; font-weight: 550;
   padding: 0.3em 0.75em; margin: 0.28em auto;
@@ -610,23 +692,46 @@ body.show-ja .reveal .columns.v-spread .column > .lang-ja {
 }
 
 // ==========================================================================
-// Big-figure slides (promoted 2026-07): the figure is the slide's argument —
-// give it the vertical room; captions stay compact beneath.
+// Big-figure slides (layout-scheme v2): the figure IS the slide's argument.
+// The figure-first rules above already make it the flex-grow element; here we
+// raise its floor and keep the caption compact. Heights in px, NOT vh — vh
+// mis-resolves inside Reveal's 540px scaled stage (Week 9/10 lesson).
+//
+// Authoring contract: a .big-figure slide carries AT MOST ~2 caption lines
+// (per language). More text than that → the floor forces an OVERFLOW /
+// TINY-FIGURE audit flag; the fix is a two-column split or a bullet trim,
+// never a smaller figure.
 // ==========================================================================
-// Heights in px, NOT vh — vh mis-resolves inside Reveal's 540px scaled stage
-// (lesson carried over from the Week 9/10 per-deck files).
-.reveal .slides section.big-figure img.quarto-figure,
-.reveal .slides section.big-figure img.r-stretch,
-.reveal .slides section.big-figure > p > img {
-  height: auto;
-  max-height: 400px;
-  width: auto;
-  max-width: 100%;
-  margin: 0 auto;
+.reveal:not(.print-pdf) .slides > section.big-figure > img:not(.fig-inline),
+.reveal:not(.print-pdf) .slides > section.stack > section.big-figure > img:not(.fig-inline),
+.reveal:not(.print-pdf) .slides > section.big-figure > p:has(> img:only-child),
+.reveal:not(.print-pdf) .slides > section.stack > section.big-figure > p:has(> img:only-child),
+.reveal:not(.print-pdf) .slides > section.big-figure > div.quarto-figure,
+.reveal:not(.print-pdf) .slides > section.stack > section.big-figure > div.quarto-figure {
+  min-height: 300px;      // the figure keeps at least ~55% of the stage
 }
 .reveal .slides section.big-figure > .lang-en,
-.reveal .slides section.big-figure > .lang-ja { margin-top: 0.2em; font-size: 0.92em; }
-// `.bih` modifier: taller image, smaller caption (big-image-heavy).
-.reveal .slides section.big-figure.bih img { max-height: 440px; }
+.reveal .slides section.big-figure > .lang-ja { margin-top: 0.2em; font-size: 0.92em; flex: 0 0 auto; }
+// `.bih` modifier: taller figure floor, smaller caption (big-image-heavy).
+.reveal:not(.print-pdf) .slides > section.big-figure.bih > img:not(.fig-inline),
+.reveal:not(.print-pdf) .slides > section.stack > section.big-figure.bih > img:not(.fig-inline),
+.reveal:not(.print-pdf) .slides > section.big-figure.bih > p:has(> img:only-child),
+.reveal:not(.print-pdf) .slides > section.stack > section.big-figure.bih > p:has(> img:only-child) {
+  min-height: 340px;
+}
 .reveal .slides section.big-figure.bih > .lang-en,
 .reveal .slides section.big-figure.bih > .lang-ja { font-size: 0.82em; }
+
+// ==========================================================================
+// Statement slides (layout-scheme v2): ONE takeaway, delivered big. For the
+// closing thought, a block's single punchline, or an instruction slide.
+// Authoring: `## Title {.statement}` — at most ~5 short lines of body.
+// Distinct from the .bigger/.biggest tiers: those inflate a normal layout;
+// .statement is a deliberate hero layout (centered block, generous measure).
+// ==========================================================================
+.reveal .slides section.statement {
+  justify-content: center !important;
+  p, li { font-size: 1.15em; line-height: 1.65; max-width: 46ch; }
+  p { margin: 0 0 1.0em 0; }
+  h2 { font-size: 1.4em !important; margin-bottom: 0.8em; }
+}

@@ -34,6 +34,7 @@ format:
     include-after-body:
       text: |
         <script src="../../sds-reveal/lang-toggle.js"></script>
+        <script src="../../sds-reveal/fig-size.js"></script>
   pptx:
     slide-level: 2
 

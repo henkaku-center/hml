@@ -13,7 +13,7 @@ format:
   pptx: default
 ---
 
-## [Housekeeping]{.lang-en}[事務連絡]{.lang-ja}
+## [Housekeeping]{.lang-en}[事務連絡]{.lang-ja} {.bigger}
 
 ::: {.lang-en}
 - **Final paper due next Friday, Jul 24, 8 PM** (~6 pages).
@@ -31,7 +31,7 @@ format:
 The last session, and it's packed: keep housekeeping to under a minute. Order of the day: ~15 min ethics lecture, then the paper presentation (~20 min), then the three final-project presentations (~12 min each), then the ~29 min retrospective. Final paper is due next Friday. Remind presenters to submit slides.
 :::
 
-## [Today]{.lang-en}[本日の予定]{.lang-ja} {.agenda .dense}
+## [Today]{.lang-en}[本日の予定]{.lang-ja} {.agenda .agenda-roomy}
 
 - [**Ethics & adversarial ML** — the machinery has a shadow]{.lang-en}[**倫理と敵対的ML** — 仕組みには影がある]{.lang-ja}  [0:05]{.time}
 - [**Paper presentation**]{.lang-en}[**論文発表**]{.lang-ja}  [0:20]{.time}
@@ -74,17 +74,17 @@ Name the three beats and their callbacks up front so the segment feels like a pa
 ![](images/embedding_bias.png){fig-align="center" width="76%"}
 
 ::: {.lang-en}
-The same word vectors you met in Week 11 — learned from ordinary text — place *occupation* words along a gender axis nobody designed (Caliskan et al., 2017; this week's reading). The bias is **inherited from the corpus**, sitting in the very geometry that does the useful work.
+Week 11's word vectors put *occupation* words on a gender axis nobody designed (Caliskan et al., 2017) — bias **inherited from the corpus**, in the geometry doing the useful work.
 :::
 ::: {.lang-ja}
-第11週で出会ったのと同じ単語ベクトル — ふつうの文章から学習 — が、誰も設計していない性別軸に沿って*職業*語を配置する（Caliskan et al., 2017；今週の課題論文）。バイアスは**コーパスから受け継がれ**、有用な働きをするまさにその幾何の中に潜む。
+第11週の単語ベクトルが、誰も設計していない性別軸に*職業*語を並べる（Caliskan et al., 2017） — バイアスは**コーパスから受け継がれ**、有用な働きをする幾何に潜む。
 :::
 
 ::: {.notes}
 Caliskan is the required reading — anchor here. The WEAT finding: word2vec/GloVe carry the same implicit-association biases as people. The callback that makes it land: this is the SAME geometry as the embedding widget from Week 11 — bias isn't a separable module, it's distributed in the vectors. Full treatment: the bias-in-data chapter (Part IX).
 :::
 
-## [Fairness is a conditional-probability statement]{.lang-en}[公平性は条件付き確率の主張]{.lang-ja} {.smaller}
+## [Fairness is a conditional-probability statement]{.lang-en}[公平性は条件付き確率の主張]{.lang-ja}
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -107,10 +107,16 @@ $\hat{Y}$ をモデルの判定、$Y$ を真実、$G$ を集団とする。
 :::
 ::: {.column width="50%"}
 ::: {.lang-en}
-Each is a precise equality of **conditional probabilities** — exactly the objects from [Part I](../../foundations/conditional-probability/). Fairness isn't vague; it's *this*, and you must choose *which*.
+- Each is a precise **conditional-probability equality** — exactly the objects from Part I.
+- Fairness isn't vague: it's *this*, and you must choose *which*.
+
+[Next: why no classifier can satisfy all three.]{.dim}
 :::
 ::: {.lang-ja}
-それぞれが**条件付き確率**の厳密な等式 — [Part I](../../foundations/conditional-probability/)そのものの対象。公平性は曖昧ではなく*これ*であり、*どれ*かを選ばねばならない。
+- それぞれが厳密な**条件付き確率の等式** — まさにPart Iの対象。
+- 公平性は曖昧ではない：*これ*であり、*どれ*かを選ばねばならない。
+
+[次：なぜ三つすべてを満たす分類器はないのか。]{.dim}
 :::
 :::
 ::::
@@ -119,18 +125,25 @@ Each is a precise equality of **conditional probabilities** — exactly the obje
 The intellectual core — and the thing a probability course can give ethics that a normal ethics unit can't. Each fairness notion is a conditional-probability equality (Part I). Define each in one clause. Don't derive; state them and let the next slide deliver the twist: you can't have all three.
 :::
 
-## [You can't have them all]{.lang-en}[全部は満たせない]{.lang-ja} {.big-figure}
+## [You can't have them all]{.lang-en}[全部は満たせない]{.lang-ja}
 
-![](images/fairness_impossibility.png){fig-align="center" width="62%"}
-
-[When base rates differ across groups, **no classifier satisfies all three** (Kleinberg et al. 2016; Chouldechova 2017).]{.lang-en .yellow}[集団間で基準率が異なるとき、**三つすべてを満たす分類器は存在しない**（Kleinberg et al. 2016; Chouldechova 2017）。]{.lang-ja .yellow}
+:::: {.columns .v-center}
+::: {.column width="46%"}
+![](images/fairness_impossibility.png){fig-align="center" width="100%"}
+:::
+::: {.column width="54%"}
+[When base rates differ, **no classifier satisfies all three** (Kleinberg et al. 2016; Chouldechova 2017).]{.lang-en .yellow}[基準率が異なるとき、**三つすべてを満たす分類器は存在しない**（Kleinberg et al. 2016; Chouldechova 2017）。]{.lang-ja .yellow}
 
 ::: {.lang-en}
-This is the COMPAS debate: ProPublica and the vendor were *both right* — they invoked different criteria. Fairness is a **modeling choice**, stated in the language this course taught; the math gives you the menu and the tradeoffs, not the answer.
+- **The COMPAS debate:** ProPublica and the vendor were *both right* — they invoked different criteria.
+- Fairness is a **modeling choice**, stated in this course's language: the math gives you the menu and the tradeoffs, not the answer.
 :::
 ::: {.lang-ja}
-これがCOMPAS論争：ProPublicaとベンダーは*どちらも正しかった* — 異なる基準を持ち出していた。公平性は**モデリングの選択**であり、この講義が教えた言葉で述べられる；数学は選択肢とトレードオフを与えるが、答えは与えない。
+- **COMPAS論争：** ProPublicaとベンダーは*どちらも正しかった* — 持ち出した基準が異なっていた。
+- 公平性は**モデリングの選択**であり、この講義の言葉で述べられる：数学は選択肢とトレードオフを与えるが、答えは与えない。
 :::
+:::
+::::
 
 ::: {.notes}
 The impossibility result (Kleinberg/Chouldechova) is the payoff. With unequal base rates, calibration and equalized odds can't both hold. COMPAS: both sides correct under different definitions. The lesson: fairness is an ethical choice the math can't make for you. Full worked numbers + the runnable impossibility demo: the fairness-formalisms chapter (Part IX).
@@ -147,13 +160,13 @@ A hiring model is **equally accurate** for every group. Is it fair?
 
 ::: {.fragment}
 ::: {.lang-en}
-- **A.** Yes — equal accuracy is exactly what fairness means
-- **B.** Not necessarily — equal accuracy can hide very unequal *errors*
-- **C.** Only if the groups have equal base rates
+- **A.** Yes — that's what fairness means
+- **B.** Not necessarily — it can hide unequal *errors*
+- **C.** Only if base rates are equal across groups
 :::
 ::: {.lang-ja}
-- **A.** はい — 精度が等しいことこそ公平の意味
-- **B.** 必ずしも — 等しい精度は非常に不均等な*誤り*を隠しうる
+- **A.** はい — それこそ公平の意味
+- **B.** 必ずしも — 不均等な*誤り*を隠しうる
 - **C.** 集団の基準率が等しい場合のみ
 :::
 :::
@@ -162,15 +175,17 @@ A hiring model is **equally accurate** for every group. Is it fair?
 Commit before reveal. New for SP26 (no ethics quiz in the SP25 bank). Answer B (and C is a real subtlety). Equal overall accuracy is compatible with wildly different false-positive/false-negative composition — accuracy is not a fairness criterion. Let them sit with it.
 :::
 
-## [Reveal]{.lang-en}[答え]{.lang-ja} {.poll-reveal}
+## [Reveal]{.lang-en}[答え]{.lang-ja} {.poll-reveal .midbig}
 
 [**B — equal accuracy can hide very unequal errors.**]{.lang-en .yellow}[**B — 等しい精度は非常に不均等な誤りを隠しうる。**]{.lang-ja .yellow}
 
 ::: {.lang-en}
-Two groups can share one accuracy number while one suffers all the false denials and the other all the false approvals. *Accuracy is not a fairness criterion* — you have to name the conditional probability you care about.
+- Two groups can share one accuracy number while one suffers all the false denials and the other all the false approvals.
+- *Accuracy is not a fairness criterion* — name the conditional probability you care about.
 :::
 ::: {.lang-ja}
-二つの集団が一つの精度の数値を共有しつつ、一方が誤った却下をすべて、他方が誤った承認をすべて被りうる。*精度は公平性の基準ではない* — 気にかける条件付き確率を名指しせねばならない。
+- 二つの集団が一つの精度の数値を共有しつつ、一方が誤った却下をすべて、他方が誤った承認をすべて被りうる。
+- *精度は公平性の基準ではない* — 気にかける条件付き確率を名指しする。
 :::
 
 ::: {.notes}
@@ -182,10 +197,14 @@ Land it: accuracy hides error composition. This is exactly why you need the cond
 ![](images/adversarial.png){fig-align="center" width="82%"}
 
 ::: {.lang-en}
-A perturbation too small for you to notice flips the kiosk from tonkatsu to hamburger. The attack is the model's own training run in reverse — the **gradient of the loss with respect to the input** (last week's `jax.grad`, now pointed at $\mathbf{x}$ instead of the weights). The learned decision boundary is close to almost every point in high dimensions; a tiny step in the right direction crosses it.
+- A perturbation you can't even see flips the kiosk: tonkatsu → hamburger.
+- The attack is training in reverse: the **gradient of the loss w.r.t. the input** (`jax.grad` at $\mathbf{x}$).
+- In high dimensions the boundary is near almost every point — one tiny step crosses it.
 :::
 ::: {.lang-ja}
-気づけないほど小さな摂動が、キオスクをトンカツからハンバーグへ反転させる。攻撃はモデル自身の訓練を逆に走らせたもの — **入力に関する損失の勾配**（先週の `jax.grad` を、重みではなく $\mathbf{x}$ に向ける）。学習された決定境界は高次元でほぼ全ての点の近くにあり、正しい方向への微小な一歩がそれを越える。
+- 見えないほどの摂動でキオスクが反転：トンカツ → ハンバーグ。
+- 攻撃は訓練の逆走：**入力に関する損失の勾配**（`jax.grad` を $\mathbf{x}$ に）。
+- 高次元では境界がほぼ全点の近くにある — 一歩で越える。
 :::
 
 ::: {.notes}
@@ -195,10 +214,14 @@ The beautiful insight: the attack uses the model's own gradient machinery, point
 ## [Alignment: teaching values is inference]{.lang-en}[アラインメント：価値を教えるのは推論]{.lang-ja}
 
 ::: {.lang-en}
-A pretrained model predicts text; making it **helpful and safe** is a second step — and it's an *inference* problem you already know. **RLHF** (Week 9): fit a reward from human preferences (Bradley–Terry, $P(A \succ B) = \sigma(r_A - r_B)$), then optimize the policy. But the reward is *learned and imperfect*, so the optimizer **hacks** it (Week 8's reward-shaping trap, Goodhart's law).
+- A pretrained model predicts text; making it **helpful and safe** is a second step — an *inference* problem you already know.
+- **RLHF** (Week 9): fit a reward from human preferences (Bradley–Terry, $P(A \succ B) = \sigma(r_A - r_B)$), then optimize the policy.
+- The reward is *learned and imperfect*, so the optimizer **hacks** it (Week 8's reward-shaping trap, Goodhart's law).
 :::
 ::: {.lang-ja}
-事前学習モデルはテキストを予測する；それを**有用で安全**にするのは第2段階 — そしてすでに知っている*推論*問題。**RLHF**（第9週）：人間の選好から報酬を当てはめ（Bradley–Terry, $P(A \succ B) = \sigma(r_A - r_B)$）、方策を最適化。だが報酬は*学習された不完全なもの*なので、最適化器はそれを**ハック**する（第8週の報酬整形の罠、グッドハートの法則）。
+- 事前学習モデルはテキストを予測する；それを**有用で安全**にするのは第2段階 — すでに知っている*推論*問題。
+- **RLHF**（第9週）：人間の選好から報酬を当てはめ（Bradley–Terry, $P(A \succ B) = \sigma(r_A - r_B)$）、方策を最適化。
+- 報酬は*学習された不完全なもの*なので、最適化器はそれを**ハック**する（第8週の報酬整形の罠、グッドハートの法則）。
 :::
 
 [We never observe values directly — we infer the reward from behavior. It's inverse planning (Part VI), with the stakes maxed out.]{.lang-en .dim}[価値を直接観測することはない — 行動から報酬を推論する。逆計画（Part VI）を、賭け金を最大にしたもの。]{.lang-ja .dim}
@@ -207,10 +230,10 @@ A pretrained model predicts text; making it **helpful and safe** is a second ste
 Two verified callbacks: Week 9 taught RLHF/DPO with Bradley-Terry; Week 8 taught reward shaping + the positive-cycle/reward-hacking poll. The unifying frame: alignment is value inference — the inverse-planning problem from Part VI, target underspecified (ill-posed). Full treatment + the reward-hacking demo: the alignment-safety chapter (Part IX, the book's last chapter).
 :::
 
-## [The full treatment is in Part IX]{.lang-en}[詳細はPart IXに]{.lang-ja}
+## [The full treatment is in Part IX]{.lang-en}[詳細はPart IXに]{.lang-ja} {.midbig}
 
 ::: {.lang-en}
-This was the trailer. The textbook's **Part IX — Ethics, Fairness & Safety** carries each with worked numbers, runnable code, and a capstone:
+The trailer ends here — **Part IX: Ethics, Fairness & Safety** carries the full treatment:
 
 - **Adversarial examples** — build FGSM yourself
 - **Fairness, formally** — the impossibility result as runnable code
@@ -218,7 +241,7 @@ This was the trailer. The textbook's **Part IX — Ethics, Fairness & Safety** c
 - **Alignment & safety** — fit a reward, watch it get hacked
 :::
 ::: {.lang-ja}
-これは予告編。教科書の**Part IX — 倫理・公平性・安全性**が、それぞれを具体的な数値・実行可能なコード・キャップストーンとともに扱う：
+予告編はここまで — **Part IX：倫理・公平性・安全性**が本格的に扱う：
 
 - **敵対的事例** — FGSMを自分で作る
 - **公平性の形式化** — 不可能性定理を実行可能なコードで
@@ -274,7 +297,7 @@ Student 3 drives their own slides. ~10 min + Q&A.
 Block 2, ~29 min, the climax. Structure: a 3-min pulse, the 15-min map of the semester, a 7-min cog-sci -> modern-ML bridge, a 4-min close. Slow down here — this is what they walk out remembering.
 :::
 
-## [Pulse — before we map it]{.lang-en}[パルス — 地図にする前に]{.lang-ja} {.bigger}
+## [Pulse — before we map it]{.lang-en}[パルス — 地図にする前に]{.lang-ja} {.biggerplus}
 
 ::: {.lang-en}
 A quick go-around — one answer each, not a discussion:
@@ -335,7 +358,7 @@ Every paper you saw, on two axes: **Marr's level** (what · how · neural) and t
 7 min. The bridge — each classical idea from this course is the seed of something in contemporary AI. Not a claim that they're identical; a claim that the toolkit transfers. The hierarchical-Bayes -> in-context-learning row is the Week 11 flagship; IRL -> RLHF is Week 9. Read it as "you already have the concepts the 2026 papers are built on."
 :::
 
-## [What you leave with]{.lang-en}[持ち帰るもの]{.lang-ja} {.bigger}
+## [What you leave with]{.lang-en}[持ち帰るもの]{.lang-ja} {.midbig}
 
 ::: {.lang-en}
 Not a fixed set of answers — a **toolkit**. A generative model, a prior, an inference, the inversion of planning. You can now open a 2026 paper and see *what problem it is trying to solve*.

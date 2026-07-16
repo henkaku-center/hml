@@ -309,6 +309,88 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
       if (tr.height > 0) titleTopPct = ((tr.top - stageTop) / stageH) * 100;
     }
 
+    // FIGURE metrics (layout-scheme v2). The fill metric alone REWARDS
+    // text-stuffing: a slide whose figure has been flex-crushed to a sliver
+    // still audits ~100% full because the text fills the stage. So measure the
+    // figures themselves:
+    //  - figVisibleH: the LARGEST figure's *visible content* height (as % of
+    //    stage). Under object-fit:contain the painted content can be smaller
+    //    than the img box (letterboxing), so compute the contain-scaled size
+    //    from naturalWidth/naturalHeight rather than trusting the box.
+    //  - figAspectSkew: worst |rendered aspect / natural aspect − 1| among
+    //    figures NOT protected by object-fit:contain — a squished/stretched
+    //    figure. Should be ~0 everywhere now that the theme sets contain;
+    //    kept as a regression guard.
+    // Only "main" figures count (naturalWidth ≥ 400px): icons, badges, and
+    // branding are ignored.
+    let figCount = 0;
+    let figVisibleH = null;        // largest figure's visible height, % of stage
+    let figAspectSkew = 0;
+    {
+      const imgs = present.querySelectorAll('img');
+      for (const img of imgs) {
+        if (!img.naturalWidth || img.naturalWidth < 400) continue;
+        const r = img.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0) continue;
+        const cs = getComputedStyle(img);
+        if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+        if (cs.position === 'fixed') continue;
+        figCount++;
+        const natAspect = img.naturalWidth / img.naturalHeight;
+        let visW = r.width, visH = r.height;
+        if (cs.objectFit === 'contain' || cs.objectFit === 'scale-down') {
+          const scale = Math.min(r.width / img.naturalWidth, r.height / img.naturalHeight);
+          visW = img.naturalWidth * scale;
+          visH = img.naturalHeight * scale;
+        } else {
+          const skew = Math.abs((r.width / r.height) / natAspect - 1);
+          if (skew > figAspectSkew) figAspectSkew = skew;
+        }
+        const hPct = (visH / stageH) * 100;
+        if (figVisibleH === null || hPct > figVisibleH) figVisibleH = hPct;
+      }
+    }
+
+    // PROSE-WALL detection. A continuous paragraph that wraps to 4+ rendered
+    // lines is a wall of text — the recurring authoring defect (Week 11 "it's
+    // just a giant block of text", Week 12 slides 8/11). Slides want bullets,
+    // a two-column split, or speaker notes; the textbook is where prose lives.
+    // Only VISIBLE paragraphs count (the hidden language div is skipped by the
+    // size check), and only real prose (≥ 200 chars) — a 4-line equation or a
+    // wrapped caption of modest length doesn't fire.
+    let proseWall = false;
+    {
+      const paras = present.querySelectorAll('p');
+      for (const p of paras) {
+        if (p.closest('.notes, aside')) continue;
+        const r = p.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0) continue;
+        const cs = getComputedStyle(p);
+        if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+        if (cs.position === 'fixed') continue;
+        if (p.querySelector('img')) continue;
+        const text = (p.innerText || '').trim();
+        if (text.length < 200) continue;
+        const lineH = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.5;
+        const lines = Math.round(r.height / lineH);
+        if (lines >= 4) { proseWall = true; break; }
+      }
+    }
+
+    // LAYOUT ARCHETYPE (for the deck-level layout-mix report). Coarse but
+    // useful: a deck where most content slides classify as "bullets/prose"
+    // is a mono-layout deck — the recurring "not using different layouts
+    // when it would be effective" complaint.
+    let archetype = 'bullets/prose';
+    if (present.classList.contains('poll-slide') || present.classList.contains('poll-reveal')) archetype = 'poll';
+    else if (present.classList.contains('widget-slide')) archetype = 'widget';
+    else if (present.classList.contains('statement')) archetype = 'statement';
+    else if (present.querySelector('.columns')) archetype = 'columns';
+    else if (figCount > 0) archetype = 'figure';
+    else if (present.querySelector('table')) archetype = 'table';
+    else if (present.querySelector('pre')) archetype = 'code';
+    else if (present.querySelector('.note-card')) archetype = 'cards';
+
     // RUN-ON CAPTION detection. A caption/description paragraph that packs 2+
     // parallel bold-led clauses ("**State** = … . **Transition** = … .") onto
     // ONE line is hard to scan — each clause should get its own line (a bullet
@@ -369,6 +451,7 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
       captionVMisalign: hasCaptions ? captionVMisalign : null,
       captionHMisalign: hasCaptions ? captionHMisalign : null,
       runonCaption,
+      figCount, figVisibleH, figAspectSkew, proseWall, archetype,
       contentTop: Math.min(sectionContentTop, innerTopGap * stageH / 100),
       contentBottom: Math.max(sectionContentBottom, stageH - innerBottomGap * stageH / 100),
       title, framed, titleSlide, contentCount, hasTitle, titleTopPct,
@@ -398,6 +481,17 @@ const COLUMN_SKEW_LIMIT = 34;
 // difference (~1.5% V) and a hair of centring slop (~8% H).
 const CAPTION_V_LIMIT = 2.5;   // max caption baseline spread, % of stage height
 const CAPTION_H_LIMIT = 12;    // max caption-vs-figure horizontal offset, % of col width
+// Figure legibility floor (layout-scheme v2): the LARGEST figure on a slide
+// must paint at least this % of the stage height to be readable from the back
+// row. 24% of a 540px stage ≈ 130px — matplotlib axis labels and box text are
+// gone well before that. Calibrated against the Week 12 defects: slide 8's
+// crushed figure measured ~23% (illegible), the same figure given the flex
+// floor measures ~55%+.
+const FIG_MIN_PCT = 24;
+// A figure painted at a wrong aspect (squished/stretched). The theme's
+// object-fit:contain makes this impossible; the check is a regression guard
+// for a deck that overrides it. 12% distortion is clearly visible.
+const FIG_ASPECT_SKEW_LIMIT = 0.12;
 
 function classify(m, threshold) {
   if (!m) return 'NO-DATA';
@@ -423,6 +517,23 @@ function classify(m, threshold) {
   // a real spill beyond that tolerance is a defect.
   const ovTol = m.stageH * 0.015;
   if (m.contentTop < -ovTol || m.contentBottom > m.stageH + ovTol) return 'OVERFLOW';
+  // SQUISHED-FIGURE: a figure painted at the wrong aspect ratio (a flexed
+  // height fighting an inline width, with object-fit:contain overridden).
+  // Regression guard — the theme makes this structurally impossible.
+  if (m.figCount > 0 && m.figAspectSkew > FIG_ASPECT_SKEW_LIMIT) return 'SQUISHED-FIGURE';
+  // TINY-FIGURE: the slide's LARGEST figure paints below the legibility floor.
+  // This is the marquee recurring defect (Weeks 9, 10, 12): a figure starved
+  // of height by the text stacked around it. The fill metric cannot see it —
+  // text fills the stage while the figure dies. Remediation is NEVER "shrink
+  // something else a bit": trim the text to ≤2 caption lines, split to a
+  // two-column, or give the figure its own slide.
+  if (m.figCount > 0 && m.figVisibleH !== null && m.figVisibleH < FIG_MIN_PCT) return 'TINY-FIGURE';
+  // PROSE-WALL: a paragraph wrapping to 4+ rendered lines (~200+ chars) is a
+  // wall of text — slides carry bullets and punchlines, prose belongs in the
+  // textbook or the speaker notes. Rewrite as bullets (one clause per line),
+  // split to columns, or move detail to ::: {.notes}. Statement slides are
+  // exempt: they are deliberate hero prose (short by their own contract).
+  if (m.proseWall && m.archetype !== 'statement') return 'PROSE-WALL';
   // RUNON-CAPTION: a caption paragraph crams 2+ bold-led clauses onto one line,
   // AND the slide has vertical room to spare (bottom gap > 10%), so splitting
   // each clause onto its own line would fit. Checked BEFORE the fill flags: a
@@ -524,7 +635,7 @@ function classify(m, threshold) {
       const m = await measureSlideAtSize(page, i, size, slideIndices);
       const flag = classify(m, args.threshold);
       perSize.push({ size: size.label, ...m, flag });
-      const priority = { 'EMPTY-FRAME': 8, 'JAMMED-TITLE': 7, 'OVERFLOW': 6, 'CAPTION-MISALIGN': 5.5, 'FLOATING': 5, 'RUNON-CAPTION': 4.5, 'BOTTOM-GAP': 4, 'PUSHED-DOWN': 3, 'COLUMN-THIN': 3, 'COLUMN-SKEW': 3, 'SHORT': 2, 'OK': 1, 'SKIP-FRAMED': 0, 'NO-DATA': 0 };
+      const priority = { 'EMPTY-FRAME': 8, 'JAMMED-TITLE': 7, 'SQUISHED-FIGURE': 6.6, 'TINY-FIGURE': 6.5, 'OVERFLOW': 6, 'CAPTION-MISALIGN': 5.5, 'FLOATING': 5, 'PROSE-WALL': 4.8, 'RUNON-CAPTION': 4.5, 'BOTTOM-GAP': 4, 'PUSHED-DOWN': 3, 'COLUMN-THIN': 3, 'COLUMN-SKEW': 3, 'SHORT': 2, 'OK': 1, 'SKIP-FRAMED': 0, 'NO-DATA': 0 };
       if (priority[flag] > priority[worstFlag]) worstFlag = flag;
     }
 
@@ -539,7 +650,10 @@ function classify(m, threshold) {
     const capNote = nominal.hasCaptions
       ? `  (capV=${nominal.captionVMisalign.toFixed(1)}% capH=${nominal.captionHMisalign.toFixed(0)}%)`
       : '';
-    console.log(`${marker} ${String(i).padStart(3)}  [${worstFlag.padEnd(11)}] fill=${nominal.fillPct.toFixed(1).padStart(5)}%  top=${nominal.topGapPct.toFixed(1).padStart(5)}%  bot=${nominal.bottomGapPct.toFixed(1).padStart(5)}%  ${nominal.title}${colNote}${capNote}`);
+    const figNote = nominal.figCount > 0 && nominal.figVisibleH !== null
+      ? `  (fig=${nominal.figVisibleH.toFixed(0)}%)`
+      : '';
+    console.log(`${marker} ${String(i).padStart(3)}  [${worstFlag.padEnd(11)}] fill=${nominal.fillPct.toFixed(1).padStart(5)}%  top=${nominal.topGapPct.toFixed(1).padStart(5)}%  bot=${nominal.bottomGapPct.toFixed(1).padStart(5)}%  ${nominal.title}${colNote}${capNote}${figNote}`);
 
     if ((sizes.length > 1 || args.verbose) && worstFlag !== 'OK' && worstFlag !== 'SKIP-FRAMED') {
       for (const r of perSize) {
@@ -558,6 +672,36 @@ function classify(m, threshold) {
   console.log(`Flagged: ${flagged.length} / ${allResults.length} slides`);
   if (flagged.length > 0) {
     console.log('Flagged slide numbers:', flagged.map((r) => r.slide).join(', '));
+  }
+
+  // LAYOUT-MIX REPORT (layout-scheme v2). A deck that answers every content
+  // slide with "title + bullets" reads flat — the recurring "not using
+  // different layouts when it would be effective" complaint. This is an
+  // ADVISORY, not a per-slide flag: eyeball the histogram, and if bullets/prose
+  // dominates (> ~55% of content slides), look for slides whose content shape
+  // wanted a figure, columns, cards, or a statement (see SLIDE_VISUAL_QA.md
+  // "Choosing the layout").
+  const contentSlides = allResults.filter((r) => {
+    const n = r.perSize[0];
+    return n && !n.framed && !n.titleSlide;
+  });
+  if (contentSlides.length > 0) {
+    const mix = {};
+    for (const r of contentSlides) {
+      const a = r.perSize[0].archetype || 'bullets/prose';
+      mix[a] = (mix[a] || 0) + 1;
+    }
+    console.log('');
+    console.log('Layout mix (content slides):');
+    const entries = Object.entries(mix).sort((a, b) => b[1] - a[1]);
+    for (const [a, n] of entries) {
+      const pct = (n / contentSlides.length) * 100;
+      console.log(`  ${a.padEnd(14)} ${String(n).padStart(3)}  ${pct.toFixed(0)}%`);
+    }
+    const bp = mix['bullets/prose'] || 0;
+    if (bp / contentSlides.length > 0.55) {
+      console.log(`  >> MONO-LAYOUT advisory: ${((bp / contentSlides.length) * 100).toFixed(0)}% of content slides are bullets/prose — look for slides whose content shape wanted columns, a figure, cards, or a statement.`);
+    }
   }
 
   await browser.close();
