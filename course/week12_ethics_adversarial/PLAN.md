@@ -87,7 +87,17 @@ Final thank-you.  End.
 
 ## Status
 **SP26 deck built and QA'd; re-authored onto the layout-scheme v2 theme (2026-07-16).**
-23 slides / lean ethics + retrospective + presentation holders / 1 poll / 4 figures.
+25 slides / lean ethics + retrospective + presentation holders / 1 poll / 4 figures.
+Same-day professor-review pass added: a "Why not C?" nuance slide after the poll
+(two counterexample cards: equal base rates don't make equal accuracy fair, unequal
+ones don't break it); a "The opportunity" slide before the closer (Bayes→AI and
+AI→cognition cards); Goodhart's law defined on-slide + explained in notes; FGSM/WEAT
+spelled out at first use; extensive impossibility-theorem notes (Chouldechova algebra +
+COMPAS numbers) on slide 8; fairness figure remade with per-node conditional-probability
+definitions; adversarial figure remade (real tonkatsu bento + Chibany presenting/sad);
+semester map corrected (Sanborn 2008 + Abbott 2012 at the L1 edge, Vul 2009 added as
+the L2 anchor, Daw 2005 lowest) and the "cog-sci → AI" table given the
+models-stand-on-their-own coda.
 The 2026-07-05 build had shipped the classic silent defects (slide 8's figure crushed
 to 520×124 and distorted; 4–5-line prose walls on slides 8/10/11/12) — the v2 pass
 restructured them (columns split on 8, bullets on 10/11/12, notation line + rebalanced
