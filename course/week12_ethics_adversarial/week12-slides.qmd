@@ -86,37 +86,35 @@ Caliskan is the required reading — anchor here. The WEAT finding: word2vec/Glo
 
 ## [Fairness is a conditional-probability statement]{.lang-en}[公平性は条件付き確率の主張]{.lang-ja}
 
+[Write $\hat{Y}$ = decision, $Y$ = truth, $G$ = group, $\hat{S}$ = score.]{.lang-en .dim}[$\hat{Y}$ = 判定、$Y$ = 真実、$G$ = 集団、$\hat{S}$ = スコア。]{.lang-ja .dim}
+
 :::: {.columns}
-::: {.column width="50%"}
+::: {.column width="58%"}
 ::: {.note-card .ink}
 ::: {.lang-en}
-Write $\hat{Y}$ for the model's decision, $Y$ for the truth, $G$ for group.
-
 - **Demographic parity:** $P(\hat{Y}{=}1 \mid G)$ equal across groups
-- **Equalized odds:** $P(\hat{Y}{=}1 \mid Y, G)$ equal (matched error rates)
-- **Calibration:** $P(Y{=}1 \mid \hat{S}, G)$ equal (a score means the same thing)
+- **Equalized odds:** $P(\hat{Y}{=}1 \mid Y, G)$ equal — matched error rates
+- **Calibration:** $P(Y{=}1 \mid \hat{S}, G)$ equal — a score means the same thing
 :::
 ::: {.lang-ja}
-$\hat{Y}$ をモデルの判定、$Y$ を真実、$G$ を集団とする。
-
 - **人口統計的平等：** $P(\hat{Y}{=}1 \mid G)$ が集団間で等しい
-- **均等化オッズ：** $P(\hat{Y}{=}1 \mid Y, G)$ が等しい（誤り率が一致）
-- **較正：** $P(Y{=}1 \mid \hat{S}, G)$ が等しい（スコアの意味が同一）
+- **均等化オッズ：** $P(\hat{Y}{=}1 \mid Y, G)$ が等しい — 誤り率が一致
+- **較正：** $P(Y{=}1 \mid \hat{S}, G)$ が等しい — スコアの意味が同一
 :::
 :::
 :::
-::: {.column width="50%"}
+::: {.column width="42%"}
 ::: {.lang-en}
-- Each is a precise **conditional-probability equality** — exactly the objects from Part I.
-- Fairness isn't vague: it's *this*, and you must choose *which*.
+- Each is a **conditional-probability equality** — the objects from Part I.
+- Fairness isn't vague: you must choose *which*.
 
-[Next: why no classifier can satisfy all three.]{.dim}
+[Next: they can't all hold.]{.dim}
 :::
 ::: {.lang-ja}
-- それぞれが厳密な**条件付き確率の等式** — まさにPart Iの対象。
-- 公平性は曖昧ではない：*これ*であり、*どれ*かを選ばねばならない。
+- それぞれが**条件付き確率の等式** — Part Iの対象。
+- 公平性は曖昧ではない：*どれ*かを選ぶ。
 
-[次：なぜ三つすべてを満たす分類器はないのか。]{.dim}
+[次：全部は満たせない。]{.dim}
 :::
 :::
 ::::
@@ -175,16 +173,16 @@ A hiring model is **equally accurate** for every group. Is it fair?
 Commit before reveal. New for SP26 (no ethics quiz in the SP25 bank). Answer B (and C is a real subtlety). Equal overall accuracy is compatible with wildly different false-positive/false-negative composition — accuracy is not a fairness criterion. Let them sit with it.
 :::
 
-## [Reveal]{.lang-en}[答え]{.lang-ja} {.poll-reveal .midbig}
+## [Reveal]{.lang-en}[答え]{.lang-ja} {.poll-reveal .bigger}
 
 [**B — equal accuracy can hide very unequal errors.**]{.lang-en .yellow}[**B — 等しい精度は非常に不均等な誤りを隠しうる。**]{.lang-ja .yellow}
 
 ::: {.lang-en}
-- Two groups can share one accuracy number while one suffers all the false denials and the other all the false approvals.
+- One shared accuracy number can hide *who* gets the false denials and *who* gets the false approvals.
 - *Accuracy is not a fairness criterion* — name the conditional probability you care about.
 :::
 ::: {.lang-ja}
-- 二つの集団が一つの精度の数値を共有しつつ、一方が誤った却下をすべて、他方が誤った承認をすべて被りうる。
+- 一つの精度の数値は、誤った却下と誤った承認が*誰に*向かうかを隠しうる。
 - *精度は公平性の基準ではない* — 気にかける条件付き確率を名指しする。
 :::
 
@@ -197,18 +195,16 @@ Land it: accuracy hides error composition. This is exactly why you need the cond
 ![](images/adversarial.png){fig-align="center" width="82%"}
 
 ::: {.lang-en}
-- A perturbation you can't even see flips the kiosk: tonkatsu → hamburger.
-- The attack is training in reverse: the **gradient of the loss w.r.t. the input** (`jax.grad` at $\mathbf{x}$).
-- In high dimensions the boundary is near almost every point — one tiny step crosses it.
+- An invisible nudge flips the kiosk: tonkatsu → hamburger.
+- The attack: the loss gradient w.r.t. the **input** — `jax.grad` at $\mathbf{x}$.
 :::
 ::: {.lang-ja}
 - 見えないほどの摂動でキオスクが反転：トンカツ → ハンバーグ。
-- 攻撃は訓練の逆走：**入力に関する損失の勾配**（`jax.grad` を $\mathbf{x}$ に）。
-- 高次元では境界がほぼ全点の近くにある — 一歩で越える。
+- 攻撃は**入力に関する損失の勾配** — `jax.grad` を $\mathbf{x}$ に。
 :::
 
 ::: {.notes}
-The beautiful insight: the attack uses the model's own gradient machinery, pointed at the input instead of the weights (FGSM, Goodfellow et al. 2015). Callback to the learned geometry from Part VIII. Honest: robustness is unsolved, adversarial training is an arms race, and human perception is robust here in ways we don't fully understand (Lake's critique again). Full runnable FGSM demo: the adversarial-examples chapter (Part IX).
+The beautiful insight: the attack uses the model's own gradient machinery, pointed at the input instead of the weights (FGSM, Goodfellow et al. 2015). Say the why-it-works aloud (it's off the slide): in high dimensions the learned boundary is close to almost every point, so one tiny step in the right direction crosses it. Callback to the learned geometry from Part VIII. Honest: robustness is unsolved, adversarial training is an arms race, and human perception is robust here in ways we don't fully understand (Lake's critique again). Full runnable FGSM demo: the adversarial-examples chapter (Part IX).
 :::
 
 ## [Alignment: teaching values is inference]{.lang-en}[アラインメント：価値を教えるのは推論]{.lang-ja}

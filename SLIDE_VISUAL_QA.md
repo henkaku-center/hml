@@ -11,12 +11,84 @@ The method below was developed iteratively while building the APS-I Week 3
 deck. It converged to "0 flagged slides" after the previous ad-hoc PNG-only
 approach had silently shipped ~40 floating slides.
 
-## Design system (2026-07 refresh — read BEFORE authoring, not just QA'ing)
+## The layout scheme (v2, 2026-07 — read BEFORE authoring, not just QA'ing)
 
-The shared theme (`sds-reveal/sds.scss`) now carries a real design system, and
-the audit exists to protect it. The goal: **clean like a designed deck, while
-using the whole slide** — Claude-design/pptx-skill discipline on the existing
-SDS identity (dark stage, yellow frame, Inter, blue accent).
+v2 exists because three defects kept reaching the professor's eyes on first
+render across Weeks 9–12 despite clean audits: **figures rendered tiny**
+(crushed by the text stacked around them), **prose walls that should have been
+bullets**, and **one default layout for everything**. Root cause: the fill
+metric REWARDS text-stuffing — text is the cheapest filler, so a slide whose
+figure had been flex-crushed to an illegible sliver still audited ~100% full.
+v1 was a strong detection system but a weak authoring system. v2 changes both:
+the theme now makes figures win *by construction*, and the audit measures
+figures and prose directly (TINY-FIGURE / SQUISHED-FIGURE / PROSE-WALL + a
+layout-mix report). The goal is unchanged: **clean like a designed deck, while
+using the whole slide** — on the SDS identity (dark stage, yellow frame,
+Inter, blue accent).
+
+### Rule 0 — pick the layout archetype BEFORE writing the slide
+
+The recurring failure is authoring every slide as "title + text," then
+noticing too late that the content wanted another shape. At outline time (and
+again when writing each slide), match the content's shape to an archetype:
+
+| Content shape | Archetype | How |
+|---|---|---|
+| A figure IS the argument, ≤ 2 caption lines | **Big figure** | `{.big-figure}` — figure auto-grows, ≥300px floor (`.bih`: 340px) |
+| A figure needs ≥ 3 lines of commentary | **Split** | `:::: {.columns .v-center}` — figure column 45–60%, text column with punchline + bullets. NEVER stack ≥3 text lines under a full-width figure |
+| Two things compared/contrasted | **Split or cards** | columns (add `.cmp-cols` for top-aligned parallel panels), or paired `.note-card`s (`.ink`/`.warn`/`.good`/`.bad`) |
+| Definition stack / recipe / claims | **Bullets** | one clause per line; the punchline on its own line |
+| One takeaway that must land | **Statement** | `{.statement}` — hero layout, ≤ ~5 short lines |
+| Concept check | **Poll** | `{.poll-slide}` / `{.poll-reveal}` (boxed options from the theme) |
+| A derivation/result with 3+ beats | **Build-up** | N sibling slides, not N fragments |
+| Live demo | **Widget** | `{.widget-slide}` + visible sized iframe |
+
+The audit prints a **layout-mix histogram** per deck; if >55% of content
+slides classify as bullets/prose it prints a MONO-LAYOUT advisory. That's the
+"not using different layouts when it would be effective" complaint, measured.
+
+### Figure-first mechanics (what the theme now guarantees)
+
+The old scheme let the fill-flex column shrink figures when text ran long —
+silently, and with distortion (a flexed height fighting an inline width).
+Week 12 slide 8 shipped a 1500×975 diagram painted at 520×124. The theme
+(`sds-reveal/sds.scss` + shared `sds-reveal/fig-size.js`, injected
+project-wide via `_quarto.yml`) now enforces:
+
+- **Figures grow, text doesn't.** A standalone figure on a content slide is
+  the slide's flex-grow element: it absorbs whatever height the text doesn't
+  use. Default floor **150px**; `.big-figure` **300px**; `.big-figure.bih`
+  **340px**. Small deliberate images opt out with `.fig-inline`.
+- **Figures can never shrink below the floor or distort.** `object-fit:
+  contain` everywhere; if floor + text exceed the stage, the slide overflows
+  LOUDLY (audit: OVERFLOW / TINY-FIGURE) instead of the figure dying quietly.
+- **The remediation direction is fixed:** when a figure slide overflows, trim
+  the text to caption length, switch to the split archetype, or give the
+  figure its own slide. **Never shrink the figure, never lower the floor.**
+- **`.columns` rows never crush their content either** (`flex: 1 0 auto` —
+  grow-only): an over-tall column spills visibly instead of clipping under
+  the card (the Week 12 slide-7 lesson).
+- The r-stretch/lazy-load strip is now shared (`fig-size.js`); new decks need
+  NO per-deck figure CSS or JS at all.
+
+**Authoring contract for figure slides:** a `.big-figure` slide carries at
+most ~2 caption lines per language; a split slide's text column carries a
+punchline plus 2–3 bullets. Plan the slide around the figure's aspect ratio:
+a 2.4:1 banner wants full width with a bullet caption; a 1.5:1 diagram wants
+the split.
+
+### Bullet discipline (prose belongs in the textbook)
+
+- **A paragraph that wraps to 3+ rendered lines gets rewritten** — as bullets
+  (one clause per line), a two-column split, or moved to `::: {.notes}`. The
+  audit flags 4+ lines as PROSE-WALL; don't author up to the limit.
+- **2+ parallel bold-led clauses never share a line** (the RUNON-CAPTION rule,
+  which also covers poll options: always a bullet list).
+- **The punchline gets its own line** — usually the single `.yellow` span.
+- Exception: `{.statement}` slides are deliberate hero prose, ≤ ~5 short
+  lines, and are exempt from PROSE-WALL.
+
+### Tokens & emphasis (unchanged from the 2026-07 refresh)
 
 **Tokens (in `sds.scss` — never invent new hex values in a deck):**
 `$sds-bg-dark #111111` (stage) · `$sds-bg-panel #191920` (raised panels:
@@ -25,44 +97,39 @@ provenance, asides) · hairline `rgba(255,255,255,.12)` (ALL borders/dividers)
 · accent `#64B5F6` (links, structure, the title tick) · yellow `#FFEB3B`
 (punchline) · green/red/orange (semantic only: correct/wrong/caution).
 
-**The rules the tokens imply:**
 1. **Emphasis discipline.** At most ONE yellow punchline per slide. Bold for
    in-sentence stress; `.dim` for support text. Green/red/orange appear only
-   with their semantic meaning (a correct poll answer, a wrong claim, a
-   contested caveat) — never as decoration. If a slide has three colors of
-   emphasis, it has none.
+   with their semantic meaning. If a slide has three colors of emphasis, it
+   has none.
 2. **The gutter is sacred.** Content slides get a 4.5% horizontal gutter from
    the theme's fill-flex — nothing may run edge-to-edge except a full-bleed
    figure that explicitly earns it. Never restore `padding-left/right: 0`.
 3. **Measure.** Top-level prose is capped (~72ch). If a paragraph still reads
-   as a wall, the fix is AUTHORING (bullets, a two-column split, a card pair)
-   — not a smaller font.
+   as a wall, the fix is AUTHORING (see bullet discipline) — not a smaller
+   font.
 4. **Structure over decoration.** Every content title carries the accent tick
    (automatic). Use `.eyebrow` for a block label above a title on key slides.
-   Cards (`.note-card`, flavors `.ink`/`.warn`/`.good`/`.bad`) are for
-   genuine asides and claim/counter-claim pairs — a two-panel card layout
-   beats a figure that restates the text (and beats a crushed thumbnail:
-   if a figure would render under ~200px tall next to its text, drop the
-   figure or give it its own slide).
 5. **Quiet chrome.** Tables: hairline row separators + accent-underlined
    header, no full cage. Code: raised panel, hairline border, 8px radius.
-   Poll options: panel boxes (from the theme — no per-deck copies).
    Numbers in columns get `tabular-nums` (`.num` cells, `.time` stamps).
 6. **Proximity is grouping.** Related lines sit tight; unrelated blocks are
-   separated by the flex gap. Don't pad lines apart with empty paragraphs —
-   if two blocks need more separation, they're probably two slides.
-7. **Fill without cram.** The fill-audit thresholds still apply (no CLIP, no
-   top-jam under ~70%): the design refresh changes HOW slides fill —
-   fewer, better-shaped elements at comfortable sizes — not whether.
+   separated by the flex gap. If two blocks need more separation, they're
+   probably two slides.
+7. **Fill without cram.** No CLIP, no top-jam under ~70% — fewer,
+   better-shaped elements at comfortable sizes.
 
-**What lives where:** fill-flex (with gutter), poll boxes, widget-slide base,
-big-figure base (px caps), cards, eyebrow, measure caps → the SHARED theme.
-Per-deck style files carry ONLY deck-specific overrides (Week 10/11's pinned
-`bih` figure heights, `codeslide`, `cmp-cols`) and the r-stretch-fix JS.
-New decks should need little or no per-deck CSS. Weeks 3–10 keep their old
-copies — their published HTML is frozen; on any re-render their `!important`
-copies still win locally, so their look changes only where they didn't
-override (acceptable drift, documented here).
+**What lives where:** fill-flex (with gutter), figure-first sizing + floors,
+`.columns` row behavior + `.cmp-cols`, poll boxes, widget-slide base,
+big-figure, `.statement`, cards, eyebrow, measure caps → the SHARED theme;
+the eager-load/r-stretch strip → shared `sds-reveal/fig-size.js` (wired in
+`_quarto.yml`). Per-deck style files carry ONLY deck-specific overrides
+(`codeslide`, `.cite`, `.agenda-roomy`, widget sizing). New decks should need
+little or no per-deck CSS — if you find yourself writing per-deck figure
+rules, fix the theme instead (cross-repo sync rule applies). Weeks 3–11 keep
+their old per-deck copies — their published HTML is frozen, and on a
+re-render their `!important` copies still win over the theme (acceptable
+drift, documented here); Week 12 was re-authored onto the v2 theme as the
+validation deck.
 
 ## Why a PPTX-only audit is insufficient for RevealJS decks
 
@@ -94,7 +161,30 @@ The failure modes you must hunt for:
   (matches both heading levels). A correctly-centered section-break measures
   `top≈bot≈46%`; a jammed one measures `top=0% bot=91%`.
 - **OVERFLOW** — content past slide bounds, clipped, or triggering Reveal's
-  auto-shrink-to-fit. Visible in both engines. Easy to spot in PNGs.
+  auto-shrink-to-fit. Visible in both engines. Easy to spot in PNGs. The audit
+  now ALSO runs the one true clip test directly (`scrollHeight >
+  clientHeight` on the present section after revealing fragments) — this
+  catches spill that the content-bbox test misses, e.g. a card overflowing a
+  `.columns` row whose own box stayed small (Week 12 slide 7).
+- **TINY-FIGURE** — the slide's LARGEST figure paints below the legibility
+  floor (< 24% of stage height, main figures only: naturalWidth ≥ 400). THE
+  marquee recurring defect (Weeks 9, 10, 12): a figure starved of height by
+  the text stacked around it. The fill metric cannot see it — text fills the
+  stage while the figure dies. With the v2 theme this should only fire when
+  an author hard-caps a figure or opts out of the flex rules; remediation is
+  NEVER "shrink something else a bit": trim the text to caption length,
+  switch to the split archetype, or give the figure its own slide. The report
+  line shows `(fig=NN%)` — the largest figure's visible height — on every
+  slide with a figure, so you can watch this without waiting for the flag.
+- **SQUISHED-FIGURE** — a figure painted at the wrong aspect ratio (rendered
+  vs natural aspect off by > 12%). Happens when a flexed height fights an
+  inline width without `object-fit: contain`. The v2 theme makes this
+  structurally impossible; the flag is a regression guard for decks that
+  override the theme.
+- **PROSE-WALL** — a visible paragraph (≥ 200 chars) wrapping to 4+ rendered
+  lines. Slides carry bullets and punchlines; prose belongs in the textbook
+  or the speaker notes. Fix: one clause per line, a split, or `::: {.notes}`.
+  `{.statement}` slides are exempt (deliberate hero prose).
 - **FLOATING** — short content block symmetrically padded by `center: true`.
   Top gap >15% AND bottom gap >15%, fill <55% of stage height.
   **Invisible in PPTX previews.** Only visible in HTML. NOTE: these decks render
@@ -181,24 +271,38 @@ node scripts/audit_slide_fill.js --threshold 75 --all-sizes  # 8 viewports
 1080p, laptop). Catches "works at exactly the design size, breaks at a slightly
 different aspect ratio" bugs.
 
-**Two fixes (2026-06-08) make the audit's numbers trustworthy again** — apply
-the same to any forked copy:
-1. **Fragments are revealed before measuring.** Un-revealed `.fragment` content
-   is `visibility:hidden` (laid out but excluded from the content bbox), so
-   poll options / answers / build-up steps used to be invisible to the
-   measurement and every poll false-flagged as sparse. The audit now adds
-   `.visible` to each `.fragment` (skipping `.fade-out`-style) before measuring,
-   so a flagged poll is now a REAL sparse/clip defect — don't dismiss it.
-2. **The measurement viewport matches the deck's real aspect ratio.** It was
-   hardcoded 1050×700 (3:2); the decks are 960×540 (16:9), so content that fit
-   the real slide overflowed the taller test viewport — phantom OVERFLOW. The
-   audit now auto-reads `Reveal.getConfig()` width/height and measures at that
-   aspect. A small ~1.5%-of-height tolerance also means a slide that *fills to
-   the bottom edge* (good, `fill≈100%`, no clip) is no longer mis-flagged as
-   OVERFLOW — only genuine spill is.
-**The one true-overflow test:** read the present section's `scrollHeight` vs
-`clientHeight` after revealing fragments — `scrollHeight > clientHeight` is a
-real clip (defect); equal is just a full slide (good).
+**Fixes that make the audit's numbers trustworthy** — apply the same to any
+forked copy:
+1. **Fragments are revealed before measuring** (2026-06-08). Un-revealed
+   `.fragment` content is `visibility:hidden` (laid out but excluded from the
+   content bbox), so poll options / answers / build-up steps used to be
+   invisible to the measurement and every poll false-flagged as sparse. The
+   audit adds `.visible` to each `.fragment` (skipping `.fade-out`-style)
+   before measuring, so a flagged poll is a REAL sparse/clip defect — don't
+   dismiss it.
+2. **The measurement viewport is the deck's EXACT logical size** (2026-07,
+   superseding the 2026-06 aspect-ratio fix). Two historical mistakes: a
+   hardcoded 1050×700 (3:2) viewport flagged phantom overflow on 16:9 decks;
+   then measuring at the right aspect but scaled up (×1.3 to 1244×700) let
+   Reveal's zoom change text-wrap rounding, so content that CLIPS at the true
+   960×540 fit the enlarged viewport (the Week 12 slide-7 clip sailed
+   through). The audit now reads `Reveal.getConfig()` and measures at the
+   logical size, exactly. A ~1.5%-of-height tolerance still means a slide
+   that *fills to the bottom edge* (good, `fill≈100%`, no clip) is not
+   mis-flagged — only genuine spill is.
+3. **The one true-overflow test is implemented, not just documented**
+   (2026-07): the audit reads the present section's `scrollHeight` vs
+   `clientHeight` after revealing fragments and flags `clipPx > 3` as
+   OVERFLOW. This catches "unreachable" spill the bbox test misses (content
+   escaping a `.columns` row). Content overflowing the TOP of a centered flex
+   column is NOT counted by scrollHeight — the bbox test still covers that
+   side, which is why both run.
+4. **Figures and prose are measured directly** (2026-07): per-slide, the
+   largest figure's *visible content* height (contain-aware — letterboxing
+   inside a grown flex box doesn't count as figure), the worst rendered-vs-
+   natural aspect skew, and any 4+-line paragraph. These drive TINY-FIGURE /
+   SQUISHED-FIGURE / PROSE-WALL and the `(fig=NN%)` report note, plus the
+   deck-level layout-mix histogram printed after the per-slide report.
 
 ### What the script measures (the trap to avoid)
 
@@ -345,6 +449,17 @@ This converged to zero flagged slides on the APS-I Week 3 deck. Each cycle is
    / SKIP-FRAMED). Writes JSON for later diffs.
 3. **Classify each flagged slide** by its current sizing class (`grep` the
    `## Title {.xxx}` in the qmd):
+   - TINY-FIGURE / SQUISHED-FIGURE → **not a sizing-tier fix, and never a
+     shrink-the-figure fix.** The slide has more text than its archetype
+     allows: trim to caption length, switch to the split archetype
+     (`.columns .v-center`), or give the figure its own slide. If the figure
+     is deliberately small (an icon), mark it `.fig-inline`.
+   - PROSE-WALL → **an authoring fix, not a font fix.** Rewrite the paragraph
+     as bullets (one clause per line), split to columns, or move detail to
+     `::: {.notes}`. If the slide is a deliberate hero takeaway, make it a
+     real `{.statement}` slide instead.
+   - OVERFLOW on a figure slide → the figure floor is doing its job: the TEXT
+     is too long. Trim text or change archetype — do not touch the figure.
    - OVERFLOW + already `.smaller` → trim content (no smaller tier exists).
    - OVERFLOW + `.bigger`/`.midbig` → downgrade one tier.
    - OVERFLOW + no class → try `.smaller` first; if still overflows, trim.
@@ -358,6 +473,9 @@ This converged to zero flagged slides on the APS-I Week 3 deck. Each cycle is
      — add `.v-center` to the `.columns` div. See the "Two-column slides"
      section for the full remediation order. A tier bump won't help — the
      slide as a whole is already fine.
+   - Any flag on an agenda slide → use the agenda-specific classes
+     (`.agenda.dense` for 11+ rows, a `.agenda-roomy`-style spread for 4–6
+     rows), never body tiers.
 4. **Re-render, re-audit.** Loop until flagged = 0.
 5. **All-sizes sanity check:** `node scripts/audit_slide_fill.js --all-sizes`.
    Most failures are size-invariant, but the wobble has caught real cases
@@ -432,20 +550,30 @@ their own quick loop:
 3. **Connector/arrow labels go in their own band.** Never place a label at the
    same `y` as a box — it overlaps the box edge. Put it clearly above the row or
    in the gap between rows (Week 9 `tom-as-irl` was the canonical fix).
-4. **A wide/short figure under a text block renders microscopic.** That's not a
-   figure bug, it's a *layout* bug — the fill-flex starved it of height. Move
-   the figure to its own slide or a real two-column; don't shrink-fix it.
+4. **A wide/short figure under a text block used to render microscopic.**
+   The v2 theme now prevents the silent version (figures grow and hold a
+   floor), so this failure surfaces as OVERFLOW or TINY-FIGURE instead. The
+   *fix* is unchanged and directional: move the figure to its own slide or a
+   real two-column, or trim the text — never shrink the figure.
 
 Aspect matters: a 3:1 figure at `width="90%"` is a fine big banner; the same
-figure stacked under four bullets is a 5%-tall sliver. Decide the slide layout
-*around* the figure's aspect ratio.
+figure stacked under four bullets wants a split or its own slide. Decide the
+slide layout *around* the figure's aspect ratio (Rule 0).
 
 ## Hard truths to internalize
 
 - **Some slides genuinely have only 5-6 lines of real content.** No font-size
   adjustment will make those fill the stage without looking like a
   kindergarten poster. Accepting 60-75% fill on sparse slides is fine; only
-  treat <50% fill as a real defect.
+  treat <50% fill as a real defect. (Or make it an honest `{.statement}`
+  slide.)
+- **A high fill% is NOT a healthy slide.** Fill measures quantity, not
+  layout quality — a 100%-full slide can be a prose wall over a crushed
+  thumbnail. Read the `(fig=NN%)` notes and the layout-mix histogram, not
+  just the flag count.
+- **When a figure slide overflows, the text is the problem.** The floors are
+  deliberate; the loud failure is the feature. Do not "fix" it by opting the
+  figure out of the flex rules or by lowering a floor.
 - **Be skeptical of "all clean" reports.** If the user is asking for a
   thorough pass, they've probably already spotted something. If your audit
   comes back empty, ask them to point at a specific slide before declaring

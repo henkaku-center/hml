@@ -272,6 +272,14 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
     const topGapPct = Math.max(sectionTopGap, innerTopGap);
     const bottomGapPct = Math.max(sectionBottomGap, innerBottomGap);
 
+    // The one TRUE overflow test (finally implemented, not just documented):
+    // after fragments are revealed, a section whose scrollHeight exceeds its
+    // clientHeight is genuinely clipping content. Note: content overflowing
+    // the TOP of a centered flex column is "unreachable overflow" that
+    // scrollHeight does NOT count — the bbox test above still catches that
+    // case, so both tests stay.
+    const clipPx = present.scrollHeight - present.clientHeight;
+
     const titleEl = present.querySelector('h1, h2');
     let title = titleEl ? titleEl.innerText.trim().split('\n')[0] : '';
     if (title.length > 60) title = title.slice(0, 57) + '...';
@@ -451,7 +459,7 @@ async function measureSlideAtSize(page, slideIdx, size, slideIndices) {
       captionVMisalign: hasCaptions ? captionVMisalign : null,
       captionHMisalign: hasCaptions ? captionHMisalign : null,
       runonCaption,
-      figCount, figVisibleH, figAspectSkew, proseWall, archetype,
+      figCount, figVisibleH, figAspectSkew, proseWall, archetype, clipPx,
       contentTop: Math.min(sectionContentTop, innerTopGap * stageH / 100),
       contentBottom: Math.max(sectionContentBottom, stageH - innerBottomGap * stageH / 100),
       title, framed, titleSlide, contentCount, hasTitle, titleTopPct,
@@ -517,6 +525,7 @@ function classify(m, threshold) {
   // a real spill beyond that tolerance is a defect.
   const ovTol = m.stageH * 0.015;
   if (m.contentTop < -ovTol || m.contentBottom > m.stageH + ovTol) return 'OVERFLOW';
+  if (m.clipPx > 3) return 'OVERFLOW';
   // SQUISHED-FIGURE: a figure painted at the wrong aspect ratio (a flexed
   // height fighting an inline width, with object-fit:contain overridden).
   // Regression guard — the theme makes this structurally impossible.
@@ -587,21 +596,22 @@ function classify(m, threshold) {
   await page.goto(DECK, { waitUntil: 'networkidle0' });
   await page.waitForFunction(() => window.Reveal && window.Reveal.isReady && window.Reveal.isReady(), { timeout: 30000 });
 
-  // Match the audit viewport's ASPECT RATIO to the deck's actual logical size
-  // (from Reveal's config: e.g. 960×540 = 16:9). A hardcoded 1050×700 (3:2)
-  // makes content that fits the real 16:9 slide overflow the taller test
-  // viewport — a pure measurement artifact. Scale the deck's logical size up
-  // to a comfortable measurement resolution, preserving aspect.
+  // Measure at the deck's EXACT logical size (from Reveal's config: e.g.
+  // 960×540). Two historical mistakes here: (1) a hardcoded 1050×700 (3:2)
+  // viewport flagged phantom overflow on 16:9 decks; (2) scaling the logical
+  // size up to a "comfortable resolution" (×1.3) let Reveal's zoom change
+  // text-wrap rounding, so content that CLIPS at the true logical size fit
+  // the enlarged viewport — the Week 12 slide-7 clip sailed through at
+  // 1244×700 while overflowing 22px at 960×540. The logical size is the
+  // canonical layout; measure at it, exactly.
   const deckSize = await page.evaluate(() => {
     const c = window.Reveal.getConfig ? window.Reveal.getConfig() : {};
     return { w: c.width || 1050, h: c.height || 700 };
   });
   const aspect = deckSize.w / deckSize.h;
-  const measH = 700;                      // fixed measurement height
-  const measW = Math.round(measH * aspect);
-  NOMINAL.w = measW; NOMINAL.h = measH;
+  NOMINAL.w = deckSize.w; NOMINAL.h = deckSize.h;
   NOMINAL.label = `nominal ${deckSize.w}x${deckSize.h}`;
-  console.log(`Deck logical size ${deckSize.w}x${deckSize.h} (aspect ${aspect.toFixed(3)}) → measuring at ${measW}x${measH}`);
+  console.log(`Deck logical size ${deckSize.w}x${deckSize.h} (aspect ${aspect.toFixed(3)}) → measuring at ${NOMINAL.w}x${NOMINAL.h}`);
   await page.setViewport({ width: NOMINAL.w, height: NOMINAL.h, deviceScaleFactor: 1 });
   await page.evaluate(() => window.Reveal.layout && window.Reveal.layout());
 

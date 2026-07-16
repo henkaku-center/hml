@@ -517,8 +517,12 @@ div.reveal div.slides section.title-slide.section-break h1.title {
 //     about flex collapsing columns applied to the .column children, not the
 //     row). `.column` display is never touched.
 .reveal:not(.print-pdf) .slides section .columns {
-  flex: 1 1 auto;
-  min-height: 0;
+  // flex-shrink MUST stay 0: with `1 1 auto; min-height: 0` the row shrinks
+  // below its own content under space pressure and the columns' cards/text
+  // spill past the slide bottom SILENTLY (the row's box stays small, so bbox
+  // audits see nothing — caught by the scrollHeight clip test on Week 12
+  // slide 7). Grow-only: too-tall content overflows loudly instead.
+  flex: 1 0 auto;
   display: flex;
   align-items: center;
 }
