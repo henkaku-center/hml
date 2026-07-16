@@ -199,7 +199,69 @@ Commit before reveal. New for SP26 (no ethics quiz in the SP25 bank). Answer B (
 :::
 
 ::: {.notes}
-Land it: accuracy hides error composition. This is exactly why you need the conditional-probability definitions — "fair" has to be made precise before it means anything.
+Land it: accuracy hides error composition. This is exactly why you need the conditional-probability definitions — "fair" has to be made precise before it means anything. If students picked C — and some will, it echoes the impossibility theorem they just saw — do NOT litigate it here: the next slide takes C apart with two three-line counterexamples.
+:::
+
+## [Why not C? Base rates are the wrong suspect]{.lang-en}[なぜCではない？— 基準率は真犯人ではない]{.lang-ja}
+
+::: {.lang-en}
+C echoes the impossibility result — but *accuracy isn't one of the three criteria*. Its failure mode is the **error mix**, not base rates:
+:::
+::: {.lang-ja}
+Cは不可能性定理の響きだ — だが*精度は三基準の一つではない*。壊れるのは**誤りの配合**であり、基準率ではない：
+:::
+
+:::: {.columns .cmp-cols}
+::: {.column width="50%"}
+::: {.note-card .bad}
+::: {.lang-en}
+**Equal base rates don't rescue it.**
+
+- Both groups: base rate 50%, accuracy 80%.
+- A is right on **90% of positives, 70% of negatives**; B the reverse.
+- Same blend — but A's innocents are **falsely flagged 3× as often** (30% vs 10%).
+:::
+::: {.lang-ja}
+**基準率が等しくても救われない。**
+
+- 両集団とも：基準率50%、精度80%。
+- Aは**陽性の90%・陰性の70%**を当てる；Bはその逆。
+- 配合は同じ — だがAの無実の人は**3倍の頻度で誤検知**（30%対10%）。
+:::
+:::
+:::
+::: {.column width="50%"}
+::: {.note-card .good}
+::: {.lang-en}
+**Unequal base rates don't doom it.**
+
+- Both groups: right on **80% of positives and 80% of negatives**.
+- Accuracy $= 0.8\,p + 0.8\,(1{-}p) = 80\%$ at **any** base rate $p$.
+- Base rates 30% vs 60% — error rates still match: **equalized odds holds**.
+:::
+::: {.lang-ja}
+**基準率が違っても壊れない。**
+
+- 両集団とも：**陽性の80%・陰性の80%**を当てる。
+- 精度 $= 0.8\,p + 0.8\,(1{-}p) = 80\%$ — 基準率 $p$ が**何でも**。
+- 基準率30%対60%でも誤り率は一致：**均等化オッズ成立**。
+:::
+:::
+:::
+::::
+
+[**Accuracy blends two error rates into one number — unfairness hides in the mix.**]{.lang-en .yellow}[**精度は二つの誤り率を一つの数に混ぜる — 不公平はその配合に隠れる。**]{.lang-ja .yellow}
+
+::: {.notes}
+WHY THIS SLIDE EXISTS: C is where the good students land — it transplants the base-rate condition from the impossibility theorem onto the accuracy question, and that transplant is wrong in BOTH directions. Deploy right after the reveal. If several students picked C, give it the full ~1.5 min; if nobody did, compress to 30 s ("C borrows the last slide's villain — accuracy fails for its own reason") and move on.
+
+THE ALGEBRA TO BOARD (one line): within each group, accuracy = p·(share of positives caught) + (1−p)·(share of negatives caught) — ONE number blending TWO error rates, weighted by the base rate p. "Equal accuracy" equates the blends; fairness-by-error-rates (equalized odds, two slides back) equates the components. Equal blends with unequal components is trivial to build — the left card. And when the components are equal, the p-weights cancel — the right card.
+
+LEFT CARD, spoken: both groups 50% base rate, both 80% accurate. Group A catches 90% of true positives and 70% of true negatives; group B is the mirror image. Accuracy is identical: 0.5·0.9 + 0.5·0.7 = 0.8 for both. But look only at the innocent people: A's are falsely flagged 30% of the time, B's 10% — a 3× disparity hiding behind one shared number, with base rates EQUAL. So equal base rates do NOT make equal accuracy sufficient for fairness.
+
+RIGHT CARD, spoken: now make the components equal — both groups get 80% of positives AND 80% of negatives right. Then accuracy = 0.8p + 0.8(1−p) = 80% no matter what p is. Let the base rates be 30% vs 60%: accuracy still equal, error rates still matched — equalized odds holds. Fair-by-error-rates with UNEQUAL base rates. So equal base rates are not necessary either. C fails both ways.
+
+HANDOFF BACK TO THE THEOREM: base rates DO matter — one slide ago — but for a different pair of criteria: calibration ↔ equalized odds. Calibration ties scores to base rates (a calibrated "60%" must mean 60% in every group), which is exactly why unequal base rates force that trade-off. Accuracy never touches calibration, so base rates are not its problem. The moral, again: name WHICH conditional probability you mean — an aggregate one-number metric can't settle fairness at any base rate.
 :::
 
 ## [Adversarial examples: brittle geometry]{.lang-en}[敵対的事例：脆い幾何]{.lang-ja} {.big-figure}
