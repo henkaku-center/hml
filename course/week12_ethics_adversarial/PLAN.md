@@ -86,9 +86,17 @@ Final thank-you.  End.
 - The retrospective's bridge slide IS the "classical → contemporary" synthesis below.
 
 ## Status
-**SP26 deck built and QA'd (2026-07-05).** 23 slides / lean ethics + retrospective +
-presentation holders / 1 poll / 4 figures. Zero clips (EN presentation state).
-Bilingual EN/JA (51/51). Time-budgeted to the presentation-heavy final session.
+**SP26 deck built and QA'd; re-authored onto the layout-scheme v2 theme (2026-07-16).**
+23 slides / lean ethics + retrospective + presentation holders / 1 poll / 4 figures.
+The 2026-07-05 build had shipped the classic silent defects (slide 8's figure crushed
+to 520×124 and distorted; 4–5-line prose walls on slides 8/10/11/12) — the v2 pass
+restructured them (columns split on 8, bullets on 10/11/12, notation line + rebalanced
+columns on 7, `.agenda-roomy` on 3) and re-audited with the upgraded script: **0 flags
+of any kind at the true 960×540 logical size** (incl. the new TINY-FIGURE /
+SQUISHED-FIGURE / PROSE-WALL checks and the scrollHeight clip test); all figure slides
+paint at 47–63% of stage height. Layout mix: 47% bullets / 20% figure / 13% columns /
+13% poll / 7% table. Bilingual EN/JA verified on the restructured slides (L-toggle).
+Time-budgeted to the presentation-heavy final session.
 
 ## SP26 artifacts
 ```
