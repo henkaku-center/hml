@@ -68,12 +68,13 @@ def fig_semester_map():
     nodes=[
         ("Tenenbaum 1999",        0.40,2.66, ACC, 0.56,2.66,"left","center", False,None),
         ("Tenenbaum & Xu 2000",   0.40,2.26, ACC, 0.56,2.26,"left","center", True,"presented"),
-        ("Tenenbaum et al. 2011", 1.85,2.62, GRN, 2.00,2.62,"left","center", False,None),
+        ("Tenenbaum et al. 2011", 1.85,2.62, GRN, 1.85,2.77,"center","bottom", False,None),
         ("Austerweil et al. 2015",1.05,2.90, GRN, 1.05,3.05,"center","bottom", False,None),
-        ("Baker et al. 2007",     2.30,2.18, ORA, 2.45,2.18,"left","center", False,None),
-        ("Daw et al. 2005",       2.30,1.80, ORA, 2.45,1.80,"left","center", False,None),
-        ("Abbott et al. 2012",    2.30,1.42, ORA, 2.45,1.42,"left","center", False,None),
-        ("Sanborn & Griffiths 2008",2.30,1.05, ORA, 2.45,1.05,"left","center", False,None),
+        ("Baker et al. 2007",     2.30,2.58, ORA, 2.45,2.58,"left","center", False,None),
+        ("Sanborn & Griffiths 2008",2.30,2.28, ORA, 2.45,2.28,"left","center", False,None),
+        ("Abbott et al. 2012",    2.30,2.04, ORA, 2.45,2.04,"left","center", False,None),
+        ("Vul et al. 2009",       2.30,1.55, ORA, 2.45,1.55,"left","center", False,None),
+        ("Daw et al. 2005",       2.30,1.15, ORA, 2.45,1.15,"left","center", False,None),
         ("Lake et al. 2017",      3.55,2.86, PUR, 3.68,2.86,"left","center", False,None),
         ("Caliskan et al. 2017",  3.55,2.50, PUR, 3.68,2.50,"left","center", False,None),
         ("Pereira et al. 2018",   3.55,0.55, PUR, 3.68,0.55,"left","center", False,None),
@@ -174,31 +175,81 @@ def fig_fairness_impossibility():
 
 # ---------------------------------------------------------------- Fig 4: adversarial example
 def _bento(ax,x0,y0,w,h,ec=ORA):
-    """A simple bento icon (rice + tonkatsu) inside a lacquer box."""
+    """A tonkatsu bento that reads as one: lacquer box, rice mound with sesame
+    + umeboshi on the left; shredded-cabbage bed with a fanned, breaded,
+    sauce-drizzled cutlet on the right (2026-07-16 remake, was two flat
+    rectangles)."""
+    from matplotlib.patches import Ellipse
+    # lacquer box + inner tray
     ax.add_patch(FancyBboxPatch((x0,y0),w,h,boxstyle="round,pad=0.02,rounding_size=0.14",
-                 fc="#2a1d14",ec=ec,lw=2.2,zorder=3))
-    # rice compartment (left)
-    ax.add_patch(Rectangle((x0+0.12*w,y0+0.16*h),0.40*w,0.68*h,fc="#efe9dc",
-                 ec="#cbb88f",lw=1.2,zorder=4))
-    # tonkatsu cutlet (right)
-    ax.add_patch(Rectangle((x0+0.58*w,y0+0.20*h),0.30*w,0.60*h,fc="#c8862c",
-                 ec="#9c6a20",lw=1.2,zorder=4))
-    for k in range(3):
-        yy=y0+0.30*h+k*0.18*h
-        ax.plot([x0+0.58*w,x0+0.88*w],[yy,yy],color="#7a5015",lw=1.0,zorder=5)
+                 fc="#241a12",ec=ec,lw=2.4,zorder=3))
+    ax.add_patch(FancyBboxPatch((x0+0.045*w,y0+0.05*h),0.91*w,0.90*h,
+                 boxstyle="round,pad=0.01,rounding_size=0.08",
+                 fc="#33251a",ec="#4a3626",lw=1.0,zorder=3.5))
+    ax.plot([x0+0.475*w]*2,[y0+0.08*h,y0+0.92*h],color="#4a3626",lw=2.0,zorder=4)
+    # rice mound (left) + sesame + umeboshi
+    ax.add_patch(FancyBboxPatch((x0+0.09*w,y0+0.11*h),0.34*w,0.78*h,
+                 boxstyle="round,pad=0.01,rounding_size=0.10",
+                 fc="#f2ede0",ec="#d8cdb4",lw=1.0,zorder=4))
+    for sx,sy in [(0.15,0.70),(0.24,0.55),(0.33,0.74),(0.19,0.34),(0.33,0.40),
+                  (0.26,0.20),(0.14,0.50),(0.37,0.58),(0.28,0.82)]:
+        ax.plot([x0+sx*w,x0+(sx+0.018)*w],[y0+sy*h,y0+(sy+0.014)*h],
+                color="#3b3b3b",lw=1.4,zorder=5)
+    ax.add_patch(Ellipse((x0+0.26*w,y0+0.66*h),0.095*w,0.095*h,
+                 fc="#c0392b",ec="#8e2a20",lw=1.2,zorder=5))
+    # cabbage bed (right)
+    ax.add_patch(FancyBboxPatch((x0+0.53*w,y0+0.11*h),0.38*w,0.78*h,
+                 boxstyle="round,pad=0.01,rounding_size=0.10",
+                 fc="#b9d9a0",ec="#93b87c",lw=1.0,zorder=4))
+    for k in range(8):
+        xx=x0+(0.555+0.042*k)*w
+        ax.plot([xx,xx+0.022*w],[y0+0.135*h,y0+0.26*h],color="#7fa963",lw=1.0,zorder=4.5)
+    # tonkatsu: four fanned slices, golden breading around a pale pork center
+    sw=0.082*w
+    for k in range(4):
+        sx=x0+(0.565+k*0.090)*w
+        ax.add_patch(FancyBboxPatch((sx,y0+0.30*h),sw,0.52*h,
+                     boxstyle="round,pad=0.005,rounding_size=0.04",
+                     fc="#d99a3a",ec="#a86d1f",lw=1.2,zorder=5))
+        ax.add_patch(Rectangle((sx+0.22*sw,y0+0.37*h),0.56*sw,0.38*h,
+                     fc="#f3e3c6",ec="none",zorder=5.5))
+    # sauce drizzle across the slices
+    xs=np.linspace(x0+0.555*w,x0+0.905*w,60)
+    ax.plot(xs,y0+0.60*h+0.05*h*np.sin(30*(xs-x0)/w),color="#4a2a12",lw=1.7,zorder=6)
+
+def _mascot(path):
+    """Load a Chibany PNG and make the WHITE SURROUND transparent (flood fill
+    from the corners) while keeping the white body — for placement on the
+    dark slide background."""
+    from PIL import Image, ImageDraw
+    im=Image.open(path).convert("RGBA")
+    for corner in [(0,0),(im.width-1,0),(0,im.height-1),(im.width-1,im.height-1)]:
+        try: ImageDraw.floodfill(im,corner,(0,0,0,0),thresh=60)
+        except Exception: pass
+    return np.asarray(im)
 
 def fig_adversarial():
-    """bento + tiny sticker (epsilon) -> the kiosk flips tonkatsu -> hamburger."""
+    """Chibany's bento + tiny sticker (epsilon) -> the kiosk flips tonkatsu ->
+    hamburger. Chibany presents the photo on the left; devastated on the right
+    (canon: tonkatsu is Chibany's favorite; hamburger a distant second)."""
+    from matplotlib.offsetbox import OffsetImage, AnnotationBbox
     rng=np.random.default_rng(0)
-    fig,ax=blank_axes((11,4.7),xlim=(0,11),ylim=(0,6.1))
+    fig,ax=blank_axes((12.6,4.7),xlim=(-1.5,12.5),ylim=(0,6.1))
+    # Chibany, proud owner of the bento photo (left) — and crushed by the verdict (right)
+    chib=_mascot("images/chibanyplain.png"); sad=_mascot("images/chibanysad.png")
+    ax.add_artist(AnnotationBbox(OffsetImage(chib,zoom=0.30),(-0.72,3.35),frameon=False,zorder=6))
+    ax.add_artist(AnnotationBbox(OffsetImage(sad,zoom=0.30),(11.72,3.35),frameon=False,zorder=6))
     # panel 1: the bento photo
     _bento(ax,0.7,2.5,2.4,2.4,ec=ORA)
     # panel 2: the adversarial noise (deterministic speckle)
     n=rng.random((18,18))
     ax.imshow(n,extent=[4.5,6.5,2.7,4.7],cmap="gray",zorder=3,aspect="auto")
     ax.add_patch(Rectangle((4.5,2.7),2.0,2.0,fill=False,ec=DIM,lw=1.6,zorder=4))
-    # panel 3: the SAME bento, now misclassified
+    # panel 3: the SAME bento with the tiny sticker applied, now misclassified
     _bento(ax,7.9,2.5,2.4,2.4,ec=RED)
+    st=rng.random((6,6))
+    ax.imshow(st,extent=[9.62,10.12,4.28,4.78],cmap="gray",zorder=7,aspect="auto")
+    ax.add_patch(Rectangle((9.62,4.28),0.5,0.5,fill=False,ec="#e8e8e8",lw=1.2,zorder=8))
     # connectors — own clear band in the gaps, never over a box
     ax.text(3.78,3.7,"+",fontsize=42,color=WHITE,ha="center",va="center")
     ax.text(7.18,3.7,"=",fontsize=42,color=WHITE,ha="center",va="center")

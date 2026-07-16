@@ -204,53 +204,46 @@ Land it: accuracy hides error composition. This is exactly why you need the cond
 
 ## [Why not C? Base rates are the wrong suspect]{.lang-en}[なぜCではない？— 基準率は真犯人ではない]{.lang-ja}
 
-::: {.lang-en}
-C echoes the impossibility result — but *accuracy isn't one of the three criteria*. Its failure mode is the **error mix**, not base rates:
-:::
-::: {.lang-ja}
-Cは不可能性定理の響きだ — だが*精度は三基準の一つではない*。壊れるのは**誤りの配合**であり、基準率ではない：
-:::
-
 :::: {.columns .cmp-cols}
 ::: {.column width="50%"}
 ::: {.note-card .bad}
 ::: {.lang-en}
-**Equal base rates don't rescue it.**
+**Equal base rates: still unfair**
 
 - Both groups: base rate 50%, accuracy 80%.
-- A is right on **90% of positives, 70% of negatives**; B the reverse.
-- Same blend — but A's innocents are **falsely flagged 3× as often** (30% vs 10%).
+- A: **90% / 70%** right on positives / negatives — B the reverse.
+- A's innocents flagged **3× as often**.
 :::
 ::: {.lang-ja}
-**基準率が等しくても救われない。**
+**基準率が等しくても不公平**
 
 - 両集団とも：基準率50%、精度80%。
-- Aは**陽性の90%・陰性の70%**を当てる；Bはその逆。
-- 配合は同じ — だがAの無実の人は**3倍の頻度で誤検知**（30%対10%）。
+- A：陽性/陰性で**90% / 70%**正解 — Bは逆。
+- Aの無実の人は**3倍**誤検知。
 :::
 :::
 :::
 ::: {.column width="50%"}
 ::: {.note-card .good}
 ::: {.lang-en}
-**Unequal base rates don't doom it.**
+**Unequal base rates: still fair**
 
-- Both groups: right on **80% of positives and 80% of negatives**.
-- Accuracy $= 0.8\,p + 0.8\,(1{-}p) = 80\%$ at **any** base rate $p$.
-- Base rates 30% vs 60% — error rates still match: **equalized odds holds**.
+- Both groups: **80% / 80%** right on positives / negatives.
+- So accuracy = **80% at any base rate**.
+- Base rates 30% vs 60%: **equalized odds ✓**.
 :::
 ::: {.lang-ja}
-**基準率が違っても壊れない。**
+**基準率が違っても公平**
 
-- 両集団とも：**陽性の80%・陰性の80%**を当てる。
-- 精度 $= 0.8\,p + 0.8\,(1{-}p) = 80\%$ — 基準率 $p$ が**何でも**。
-- 基準率30%対60%でも誤り率は一致：**均等化オッズ成立**。
+- 両集団とも：陽性/陰性で**80% / 80%**正解。
+- ゆえに精度は**どの基準率でも80%**。
+- 基準率30%対60%でも：**均等化オッズ ✓**。
 :::
 :::
 :::
 ::::
 
-[**Accuracy blends two error rates into one number — unfairness hides in the mix.**]{.lang-en .yellow}[**精度は二つの誤り率を一つの数に混ぜる — 不公平はその配合に隠れる。**]{.lang-ja .yellow}
+[**Unfairness hides in the error mix — not in the base rates.**]{.lang-en .yellow}[**不公平は誤りの配合に隠れる — 基準率にではない。**]{.lang-ja .yellow}
 
 ::: {.notes}
 WHY THIS SLIDE EXISTS: C is where the good students land — it transplants the base-rate condition from the impossibility theorem onto the accuracy question, and that transplant is wrong in BOTH directions. Deploy right after the reveal. If several students picked C, give it the full ~1.5 min; if nobody did, compress to 30 s ("C borrows the last slide's villain — accuracy fails for its own reason") and move on.
@@ -278,44 +271,48 @@ HANDOFF BACK TO THE THEOREM: base rates DO matter — one slide ago — but for 
 :::
 
 ::: {.notes}
-The beautiful insight: the attack uses the model's own gradient machinery, pointed at the input instead of the weights (FGSM, Goodfellow et al. 2015). Say the why-it-works aloud (it's off the slide): in high dimensions the learned boundary is close to almost every point, so one tiny step in the right direction crosses it. Callback to the learned geometry from Part VIII. Honest: robustness is unsolved, adversarial training is an arms race, and human perception is robust here in ways we don't fully understand (Lake's critique again). Full runnable FGSM demo: the adversarial-examples chapter (Part IX).
+The figure now stars Chibany — presenting their bento photo on the left, devastated by the HAMBURGER verdict on the right (canon: tonkatsu is their favorite; hamburger a distant second). Milk the reaction for a beat before the mechanics. The beautiful insight: the attack uses the model's own gradient machinery, pointed at the input instead of the weights (FGSM, Goodfellow et al. 2015). Say the why-it-works aloud (it's off the slide): in high dimensions the learned boundary is close to almost every point, so one tiny step in the right direction crosses it. Callback to the learned geometry from Part VIII. Honest: robustness is unsolved, adversarial training is an arms race, and human perception is robust here in ways we don't fully understand (Lake's critique again). Full runnable FGSM demo: the adversarial-examples chapter (Part IX).
 :::
 
 ## [Alignment: teaching values is inference]{.lang-en}[アラインメント：価値を教えるのは推論]{.lang-ja}
 
 ::: {.lang-en}
-- A pretrained model predicts text; making it **helpful and safe** is a second step — an *inference* problem you already know.
+- Pretraining predicts text; **helpful and safe** is a second step — an *inference* problem you already know.
 - **RLHF** (Week 9): fit a reward from human preferences (Bradley–Terry, $P(A \succ B) = \sigma(r_A - r_B)$), then optimize the policy.
-- The reward is *learned and imperfect*, so the optimizer **hacks** it (Week 8's reward-shaping trap, Goodhart's law).
+- The reward is *learned and imperfect*, so the optimizer **hacks** it — Week 8's reward-shaping trap.
+- That's **Goodhart's law**: *when a measure becomes a target, it stops being a good measure.*
 :::
 ::: {.lang-ja}
-- 事前学習モデルはテキストを予測する；それを**有用で安全**にするのは第2段階 — すでに知っている*推論*問題。
+- 事前学習はテキスト予測；**有用で安全**は第2段階 — すでに知っている*推論*問題。
 - **RLHF**（第9週）：人間の選好から報酬を当てはめ（Bradley–Terry, $P(A \succ B) = \sigma(r_A - r_B)$）、方策を最適化。
-- 報酬は*学習された不完全なもの*なので、最適化器はそれを**ハック**する（第8週の報酬整形の罠、グッドハートの法則）。
+- 報酬は*学習された不完全なもの*なので、最適化器はそれを**ハック**する — 第8週の報酬整形の罠。
+- それが**グッドハートの法則**：*指標が目標になると、良い指標でなくなる。*
 :::
 
-[We never observe values directly — we infer the reward from behavior. It's inverse planning (Part VI), with the stakes maxed out.]{.lang-en .dim}[価値を直接観測することはない — 行動から報酬を推論する。逆計画（Part VI）を、賭け金を最大にしたもの。]{.lang-ja .dim}
+[Value inference is inverse planning (Part VI) with the stakes maxed out.]{.lang-en .dim}[価値の推論は、賭け金を最大にした逆計画（Part VI）。]{.lang-ja .dim}
 
 ::: {.notes}
 Two verified callbacks: Week 9 taught RLHF/DPO with Bradley-Terry; Week 8 taught reward shaping + the positive-cycle/reward-hacking poll. The unifying frame: alignment is value inference — the inverse-planning problem from Part VI, target underspecified (ill-posed). Full treatment + the reward-hacking demo: the alignment-safety chapter (Part IX, the book's last chapter).
+
+GOODHART'S LAW, properly: Charles Goodhart (1975), a Bank of England economist, observed that once the Bank started TARGETING a money-supply measure, the previously reliable relationship between that measure and the economy broke down. The popular phrasing on the slide is Marilyn Strathern's. The mechanism: a measure is a good proxy only while nothing is optimizing against it; put optimization pressure on the proxy and the optimizer finds exactly the places where proxy and true goal come apart. Classic examples to tell (pick one): the cobra bounty (colonial Delhi paid per dead cobra → people bred cobras); Soviet nail quotas by WEIGHT → factories made a few giant useless nails; teaching to the test. THE RLHF INSTANCE: the reward model is a learned proxy for human preference, and policy optimization applies enormous pressure to it — so the policy discovers responses the reward model loves but humans don't: sycophancy, padded verbosity, confident-sounding nonsense. That IS reward hacking. Callback to Week 8: the agent circling the shaped checkpoint reward forever instead of reaching the goal is the same law in a gridworld. The alignment punchline: you can't fully fix this by making the proxy better — any imperfect proxy fails under enough pressure — which is why the field cares about regularization toward the base policy (the KL term), oversight, and uncertainty-aware objectives.
 :::
 
 ## [The full treatment is in Part IX]{.lang-en}[詳細はPart IXに]{.lang-ja} {.midbig}
 
 ::: {.lang-en}
-The trailer ends here — **Part IX: Ethics, Fairness & Safety** carries the full treatment:
+The trailer ends here — **Part IX** carries the full treatment:
 
-- **Adversarial examples** — build FGSM yourself
+- **Adversarial examples** — build the fast gradient sign method (FGSM)
 - **Fairness, formally** — the impossibility result as runnable code
-- **Bias in data** — WEAT on embeddings; the prior as power *and* liability
+- **Bias in data** — the Word-Embedding Association Test (WEAT); the prior as power *and* liability
 - **Alignment & safety** — fit a reward, watch it get hacked
 :::
 ::: {.lang-ja}
-予告編はここまで — **Part IX：倫理・公平性・安全性**が本格的に扱う：
+予告編はここまで — **Part IX**が本格的に扱う：
 
-- **敵対的事例** — FGSMを自分で作る
+- **敵対的事例** — 高速勾配符号法（FGSM）を自分で作る
 - **公平性の形式化** — 不可能性定理を実行可能なコードで
-- **データのバイアス** — 埋め込みのWEAT；力であり負債でもある事前分布
+- **データのバイアス** — 単語埋め込み連想テスト（WEAT）；力であり負債でもある事前分布
 - **アラインメントと安全性** — 報酬を当てはめ、ハックされるのを見る
 :::
 
@@ -398,7 +395,7 @@ Every paper you saw, on two axes: **Marr's level** (what · how · neural) and t
 :::
 
 ::: {.notes}
-15 min — the centerpiece. Walk it one paper at a time, one sentence each: what it contributes and where it sits. Named anchors: Tenenbaum/generalization = pure L1; Abbott 2012 = L2 (memory as a random walk); Pereira 2018 = L3 (decoding meaning from fMRI). Mark Shohei Yoshida's presented paper (Tenenbaum & Xu 2000). The point of the 2D layout: the same inference toolkit shows up at every level and every computation type.
+15 min — the centerpiece. Walk it one paper at a time, one sentence each: what it contributes and where it sits. Named anchors (corrected 2026-07-16): Tenenbaum/generalization = pure L1. Vul et al. 2009 'One and Done' = the true L2 anchor — how many samples should a bounded mind take; the course's process-level paper. Sanborn & Griffiths 2008 (MCMC with People) and Abbott et al. 2012 sit at the L1 EDGE, not deep L2 — both borrow algorithmic machinery (MCMC, random walks) to answer computational-level questions about what the mind represents. Daw et al. 2005 sits lowest — two neural controllers arbitrated by uncertainty, L2 shading into L3. Pereira 2018 = L3 (decoding meaning from fMRI). Mark Shohei Yoshida's presented paper (Tenenbaum & Xu 2000). The point of the 2D layout: the same inference toolkit shows up at every level and every computation type.
 :::
 
 ## [Classical cog-sci → today's AI]{.lang-en}[古典的認知科学 → 今日のAI]{.lang-ja}
@@ -411,7 +408,6 @@ Every paper you saw, on two axes: **Marr's level** (what · how · neural) and t
 | Monte Carlo / variational inference | **diffusion models**, VI in large models |
 | Bayes nets & causality | **alignment** & reward modeling |
 | Bayesian nonparametrics | **open-ended concept learning** |
-| Learned representations + Caliskan | **what alignment has to defeat** |
 :::
 ::: {.lang-ja}
 | この講義が教えたこと… | …の種になっているもの |
@@ -421,11 +417,70 @@ Every paper you saw, on two axes: **Marr's level** (what · how · neural) and t
 | モンテカルロ／変分推論 | **拡散モデル**・大規模モデルのVI |
 | ベイズネットと因果 | **アラインメント**・報酬モデリング |
 | ベイズ・ノンパラメトリクス | **オープンエンドな概念学習** |
-| 学習された表現 + Caliskan | **アラインメントが打ち負かすべきもの** |
 :::
 
+[The left column isn't history — still cog-sci's working tools today.]{.lang-en .dim}[左の列は歴史ではない — 今も認知科学の現役の道具。]{.lang-ja .dim}
+
 ::: {.notes}
+SAY THE DIM LINE OUT LOUD — it's the point students most easily miss: the left column is not a museum. Bayesian models are still how computational cognitive science models human behavior, full stop, with or without the AI connection; the bridge COMPLETES the course's other half (how modeling human learning connects to machine learning), it doesn't replace the first half.
+
 7 min. The bridge — each classical idea from this course is the seed of something in contemporary AI. Not a claim that they're identical; a claim that the toolkit transfers. The hierarchical-Bayes -> in-context-learning row is the Week 11 flagship; IRL -> RLHF is Week 9. Read it as "you already have the concepts the 2026 papers are built on."
+:::
+
+## [The opportunity]{.lang-en}[この機会]{.lang-ja}
+
+::: {.lang-en}
+AI has mostly stopped looking at Bayesian models of minds — an opening:
+:::
+::: {.lang-ja}
+AIは心のベイズモデルをほぼ見なくなった — それは好機：
+:::
+
+:::: {.columns .cmp-cols}
+::: {.column width="50%"}
+::: {.note-card .ink}
+::: {.lang-en}
+**Cognition → AI**
+
+- AI lacks **priors, structure, rational analysis**.
+- Use them to **understand and improve** today's systems.
+:::
+::: {.lang-ja}
+**認知 → AI**
+
+- AIには**事前分布・構造・合理分析**が足りない。
+- それで今日のシステムを**理解し、改善**する。
+:::
+:::
+:::
+::: {.column width="50%"}
+::: {.note-card .ink}
+::: {.lang-en}
+**AI → cognition**
+
+- Classic Bayesian models need small, idealized data.
+- With AI inside, they finally **meet real-world data**.
+:::
+::: {.lang-ja}
+**AI → 認知**
+
+- 古典的ベイズモデルは小さく理想化されたデータを要する。
+- AIを組み込めば、ついに**実世界データに届く**。
+:::
+:::
+:::
+::::
+
+[**Few people can speak both languages. As of this semester, you can.**]{.lang-en .yellow}[**両方の言語を話せる人は少ない。今学期を終えたあなたは話せる。**]{.lang-ja .yellow}
+
+::: {.notes}
+This slide is the professor's own stake in the ground — deliver it personally. The field's attention moved to scale; the Bayes-and-cognition bridge that used to be crowded (the 2000s–2010s Tenenbaum-Griffiths era) is now under-populated. Two concrete directions, one per card.
+
+COGNITION → AI: the toolkit this course taught is exactly what current systems lack an explicit account of — priors, structured hypotheses, rational analysis of the task. Concrete instances already seen: hierarchical Bayes as the lens on in-context learning (Week 11); RLHF as preference inference / inverse planning (Week 9); alignment as value inference under an ill-posed objective (this deck). Using the toolkit to probe, evaluate, and regularize modern systems is a wide-open research lane — and students entering it now face little competition.
+
+AI → COGNITION: the classic embarrassment of Bayesian cognitive modeling is its data diet — conjugate toy stimuli, tiny artificial category structures, idealized psychophysics. Modern models offer representations and likelihoods over REAL data — text, images, naturalistic behavior — so the same rational-analysis discipline can finally be applied at ecological scale: cognitive models whose hypothesis spaces come from foundation models, LLM-derived priors/likelihoods for behavioral experiments, model-based analyses of naturalistic corpora.
+
+The yellow line is the sell: this cohort is bilingual — probabilistic modeling of minds AND modern ML — and that intersection is scarce right now. ~1.5 min; then the closer.
 :::
 
 ## [What you leave with]{.lang-en}[持ち帰るもの]{.lang-ja} {.midbig}
