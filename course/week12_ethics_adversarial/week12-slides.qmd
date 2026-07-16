@@ -126,10 +126,10 @@ The intellectual core — and the thing a probability course can give ethics tha
 ## [You can't have them all]{.lang-en}[全部は満たせない]{.lang-ja}
 
 :::: {.columns .v-center}
-::: {.column width="46%"}
+::: {.column width="43%"}
 ![](images/fairness_impossibility.png){fig-align="center" width="100%"}
 :::
-::: {.column width="54%"}
+::: {.column width="57%"}
 [When base rates differ, **no classifier satisfies all three** (Kleinberg et al. 2016; Chouldechova 2017).]{.lang-en .yellow}[基準率が異なるとき、**三つすべてを満たす分類器は存在しない**（Kleinberg et al. 2016; Chouldechova 2017）。]{.lang-ja .yellow}
 
 ::: {.lang-en}
@@ -144,7 +144,19 @@ The intellectual core — and the thing a probability course can give ethics tha
 ::::
 
 ::: {.notes}
-The impossibility result (Kleinberg/Chouldechova) is the payoff. With unequal base rates, calibration and equalized odds can't both hold. COMPAS: both sides correct under different definitions. The lesson: fairness is an ethical choice the math can't make for you. Full worked numbers + the runnable impossibility demo: the fairness-formalisms chapter (Part IX).
+THE RESULT (Kleinberg, Mullainathan & Raghavan 2016, "Inherent Trade-Offs in the Fair Determination of Risk Scores," ITCS; Chouldechova 2017, "Fair Prediction with Disparate Impact," Big Data): if two groups have different base rates $p_G = P(Y{=}1 \mid G)$, no imperfect classifier or risk score can simultaneously be (a) calibrated within each group and (b) have equal false-positive AND false-negative rates across groups. The only escapes are degenerate: equal base rates, or a perfect predictor. Demographic parity conflicts with calibration under unequal base rates for the same arithmetic reason.
+
+WALK THE FIGURE (~1 min), one clause per box. Calibration: among everyone the model scores 70%, about 70% actually reoffend — in every group ($P(Y{=}1 \mid \hat{S}, G)$ equal). Equalized odds: people who would NOT reoffend get flagged at the same rate in both groups ($P(\hat{Y}{=}1 \mid Y{=}0, G)$ equal — the false-positive rate), and likewise for misses. Demographic parity: the same fraction of each group gets flagged, full stop ($P(\hat{Y}{=}1 \mid G)$ equal). Then the yellow badge: any two can coexist; all three cannot when base rates differ.
+
+WHY — Chouldechova's one-line algebra; say it slowly or board it. From the confusion matrix, within each group: FPR = p/(1−p) × (1−PPV)/PPV × TPR. Calibration forces PPV (the fraction of flagged people who actually reoffend) to be equal across groups. Hold PPV equal and TPR comparable, and the group with the higher base rate p MUST have the higher false-positive rate. The error rates are pushed apart by arithmetic, not by anyone's intent.
+
+COMPAS, WITH NUMBERS (Broward County FL; ProPublica/Angwin et al. 2016 vs Northpointe's response — quote as "roughly"): two-year rearrest base rates ≈ 51% for Black defendants vs ≈ 39% for white. Northpointe's defense: PPV ≈ 0.6 in BOTH groups — the score is (approximately) calibrated; that was their fairness claim. ProPublica's finding: FPR ≈ 45% vs 23% — Black defendants who did NOT go on to reoffend were labeled high-risk at about twice the rate — with FNR running the other way (≈ 28% vs 48%). Both sides computed correctly from the SAME confusion matrices; they invoked different rows of the table, i.e. different fairness definitions. That is the theorem made flesh.
+
+WHICH CRITERION TO WANT depends on where the harm lands: punitive settings (bail, sentencing) — false positives fall on individuals, so error-rate balance matters most; resource allocation (lending, screening) — the decision-maker needs calibrated scores; representation goals — demographic parity. The theorem's lesson: this is an ethical choice; the math only exposes its price.
+
+LIKELY QUESTIONS. (1) "Just use different thresholds per group?" — that can equalize error rates but breaks calibration (the same score then means different things by group) and may constitute disparate treatment legally. (2) "So the model is the problem?" — no: ANY imperfect predictor faces this, including human judges; the tradeoff is in the problem, not the tool. (3) "Aren't the base rates themselves suspect?" — yes, and that's a PRIOR problem: Y here is re-ARREST, not re-offense, so measurement bias enters before any classifier — callback to the embeddings slide (bias in the data) two slides back.
+
+~3 min. Full worked numbers + the runnable impossibility demo: the fairness-formalisms chapter (Part IX).
 :::
 
 ## [Poll — is equal accuracy fair?]{.lang-en}[小テスト — 精度が同じなら公平？]{.lang-ja} {.poll-slide}

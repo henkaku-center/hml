@@ -131,34 +131,38 @@ def fig_embedding_bias():
 
 # ---------------------------------------------------------------- Fig 3: fairness impossibility
 def fig_fairness_impossibility():
-    """Three fairness criteria in a triangle — pick (at most) two."""
-    fig,ax=blank_axes((10,6.5),xlim=(0,10),ylim=(0,6.4))
+    """Three fairness criteria in a triangle — pick (at most) two.
+
+    Sized for its DISPLAY context (2026-07-16 remake): the deck shows this in a
+    ~48%-wide column (~380 slide-px), so the old 1500-px-wide landscape canvas
+    rendered its 11-14pt labels at ~6 slide-px — illegible. Portrait canvas
+    (~960×1010 px), no in-figure title/caption (the slide's title + yellow
+    punchline carry those), and fonts sized so box titles land ≈ slide body
+    size when scaled down.
+    """
+    fig,ax=blank_axes((6.4,6.75),xlim=(0,10),ylim=(0,10.55))
     # (title, cx, cy, box-width, color, gloss)
-    nodes=[("Calibration",       5.0,5.15,2.7,ACC,"scores mean the same\nacross groups"),
-           ("Equalized odds",    2.5,1.90,3.1,ORA,"equal error rates\nacross groups"),
-           ("Demographic parity",7.5,1.90,3.7,GRN,"equal positive rates\nacross groups")]
+    nodes=[("Calibration",       5.0,8.85,4.4,ACC,"a score means the same\nin every group"),
+           ("Equalized\nodds",   2.45,2.95,4.0,ORA,"equal error rates\nacross groups"),
+           ("Demographic\nparity",7.55,2.95,4.0,GRN,"equal positive rates\nacross groups")]
     cen=[(cx,cy) for (_,cx,cy,_,_,_) in nodes]
     # edges first (behind everything)
     for i in range(3):
         for j in range(i+1,3):
-            ax.plot([cen[i][0],cen[j][0]],[cen[i][1],cen[j][1]],color=EDGE,lw=1.6,zorder=1)
-    # title
-    ax.text(5.0,6.05,"Three fairness criteria — you can't have all three",
-            ha="center",va="center",fontsize=14,color=WHITE,weight="bold")
+            ax.plot([cen[i][0],cen[j][0]],[cen[i][1],cen[j][1]],color=EDGE,lw=2.2,zorder=1)
     # nodes + glosses (gloss in its own band, masked over the edge lines)
     for (title,cx,cy,w,col,gloss) in nodes:
-        rbox(ax,cx-w/2,cy-0.42,w,0.84,title,fc="#15161c",ec=col,fs=14,tc=col,
-             weight="bold",rs=0.14)
-        ax.text(cx,cy-0.42-0.30,gloss,ha="center",va="top",fontsize=11,color="#cfcfcf",
-                zorder=6,bbox=dict(boxstyle="round,pad=0.30",fc=BG,ec="none"))
+        h=1.15 if "\n" not in title else 1.85
+        rbox(ax,cx-w/2,cy-h/2,w,h,title,fc="#15161c",ec=col,fs=20,tc=col,
+             weight="bold",rs=0.16)
+        ax.text(cx,cy-h/2-0.32,gloss,ha="center",va="top",fontsize=14.5,color="#cfcfcf",
+                zorder=6,linespacing=1.25,
+                bbox=dict(boxstyle="round,pad=0.30",fc=BG,ec="none"))
     # center badge
-    rbox(ax,4.05,2.63,1.9,0.78,"Pick (at most) 2",fc="#26230f",ec=YEL,fs=13.5,tc=YEL,
-         weight="bold",rs=0.16)
-    # caption band
-    ax.text(5.0,0.42,"When base rates differ across groups, no classifier satisfies all three\n"
-            "(Kleinberg et al. 2016; Chouldechova 2017).",
-            ha="center",va="center",fontsize=11.5,color=DIM,zorder=6)
-    fig.tight_layout(); fig.savefig("images/fairness_impossibility.png",dpi=150); plt.close(fig)
+    rbox(ax,2.9,5.35,4.2,1.15,"Pick (at most) 2",fc="#26230f",ec=YEL,fs=18,tc=YEL,
+         weight="bold",rs=0.18)
+    fig.tight_layout(pad=0.35)
+    fig.savefig("images/fairness_impossibility.png",dpi=150); plt.close(fig)
     print("wrote images/fairness_impossibility.png")
 
 # ---------------------------------------------------------------- Fig 4: adversarial example
