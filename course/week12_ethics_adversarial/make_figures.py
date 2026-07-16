@@ -140,15 +140,15 @@ def fig_fairness_impossibility():
     punchline carry those), and fonts sized so box titles land ≈ slide body
     size when scaled down.
     """
-    fig,ax=blank_axes((6.4,7.55),xlim=(0,10),ylim=(0,11.8))
+    fig,ax=blank_axes((6.4,6.45),xlim=(0,10),ylim=(1.3,11.35))
     # (title, cx, cy, box-width, color, formula, gloss) — the formula is the
     # SAME conditional-probability definition the previous slide's card
     # introduces, so the figure carries the formal statement next to each node.
-    nodes=[("Calibration",        5.0,10.50,4.4,ACC,
+    nodes=[("Calibration",        5.0,10.35,4.4,ACC,
             r"$P(Y{=}1 \mid \hat{S},\,G)$ equal","a score means the same\nin every group"),
-           ("Equalized\nodds",    2.45,3.90,4.0,ORA,
+           ("Equalized\nodds",    2.45,4.15,4.0,ORA,
             r"$P(\hat{Y}{=}1 \mid Y,\,G)$ equal","equal error rates\nacross groups"),
-           ("Demographic\nparity",7.55,3.90,4.0,GRN,
+           ("Demographic\nparity",7.55,4.15,4.0,GRN,
             r"$P(\hat{Y}{=}1 \mid G)$ equal","equal positive rates\nacross groups")]
     cen=[(cx,cy) for (_,cx,cy,_,_,_,_) in nodes]
     # edges first (behind everything)
@@ -166,7 +166,7 @@ def fig_fairness_impossibility():
                 zorder=6,linespacing=1.25,
                 bbox=dict(boxstyle="round,pad=0.30",fc=BG,ec="none"))
     # center badge
-    rbox(ax,2.9,6.32,4.2,1.15,"Pick (at most) 2",fc="#26230f",ec=YEL,fs=18,tc=YEL,
+    rbox(ax,2.9,6.55,4.2,1.15,"Pick (at most) 2",fc="#26230f",ec=YEL,fs=18,tc=YEL,
          weight="bold",rs=0.18)
     fig.tight_layout(pad=0.35)
     fig.savefig("images/fairness_impossibility.png",dpi=150); plt.close(fig)
