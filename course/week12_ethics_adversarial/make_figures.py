@@ -235,10 +235,11 @@ def fig_adversarial():
     from matplotlib.offsetbox import OffsetImage, AnnotationBbox
     rng=np.random.default_rng(0)
     fig,ax=blank_axes((12.6,4.7),xlim=(-1.5,12.5),ylim=(0,6.1))
-    # Chibany, proud owner of the bento photo (left) — and crushed by the verdict (right)
-    chib=_mascot("images/chibanyplain.png"); sad=_mascot("images/chibanysad.png")
+    # Chibany bookends the pipeline — only the official plain pose (IP: no derivative
+    # expressions of the mascot are permitted)
+    chib=_mascot("images/chibanyplain.png")
     ax.add_artist(AnnotationBbox(OffsetImage(chib,zoom=0.30),(-0.72,3.35),frameon=False,zorder=6))
-    ax.add_artist(AnnotationBbox(OffsetImage(sad,zoom=0.30),(11.72,3.35),frameon=False,zorder=6))
+    ax.add_artist(AnnotationBbox(OffsetImage(chib,zoom=0.30),(11.72,3.35),frameon=False,zorder=6))
     # panel 1: the bento photo
     _bento(ax,0.7,2.5,2.4,2.4,ec=ORA)
     # panel 2: the adversarial noise (deterministic speckle)
