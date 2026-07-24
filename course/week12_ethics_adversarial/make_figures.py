@@ -230,8 +230,9 @@ def _mascot(path):
 
 def fig_adversarial():
     """Chibany's bento + tiny sticker (epsilon) -> the kiosk flips tonkatsu ->
-    hamburger. Chibany presents the photo on the left; devastated on the right
-    (canon: tonkatsu is Chibany's favorite; hamburger a distant second)."""
+    hamburger. Chibany bookends the pipeline in the official plain pose on both
+    sides (canon: tonkatsu is Chibany's favorite; hamburger a distant second) —
+    no altered/derivative expression of the mascot is used."""
     from matplotlib.offsetbox import OffsetImage, AnnotationBbox
     rng=np.random.default_rng(0)
     fig,ax=blank_axes((12.6,4.7),xlim=(-1.5,12.5),ylim=(0,6.1))

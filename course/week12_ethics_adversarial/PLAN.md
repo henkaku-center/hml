@@ -94,7 +94,9 @@ ones don't break it); a "The opportunity" slide before the closer (Bayes→AI an
 AI→cognition cards); Goodhart's law defined on-slide + explained in notes; FGSM/WEAT
 spelled out at first use; extensive impossibility-theorem notes (Chouldechova algebra +
 COMPAS numbers) on slide 8; fairness figure remade with per-node conditional-probability
-definitions; adversarial figure remade (real tonkatsu bento + Chibany presenting/sad);
+definitions; adversarial figure remade (real tonkatsu bento + Chibany bookending
+both panels in the official plain pose — a since-removed early draft used a
+sad-expression Chibany, which is not permitted under the mascot's IP terms);
 semester map corrected (Sanborn 2008 + Abbott 2012 at the L1 edge, Vul 2009 added as
 the L2 anchor, Daw 2005 lowest) and the "cog-sci → AI" table given the
 models-stand-on-their-own coda.
