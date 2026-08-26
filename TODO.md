@@ -54,6 +54,29 @@
 - [ ] Verify the Week 7 presenter in `readings_map.yml` (Sanborn & Griffiths / Vul et al. were SP25 presentations); convert MCMCP block to a bridge + handoff if confirmed.
 - [ ] Native-speaker proof of Week 7 JA translations.
 - [x] **Authored the MC / Kemp-sampler assignment (2026-06-10).** `course/assignments/mc/`: `mc_approx.tex`+PDF (P1 MC/IS, P2 hybrid Gibbs-θ + MH on φ/log-κ with a weak proper κ prior, P3 ESS with the IS-vs-MC puzzle), GenJAX/Python/R stencils (all verified to run), README wired (due Fri Jul 10 8pm). Deck edited to align (bridge slide + ESS slide). Verified answer-keys gitignored in `.solution_reference/`.
+- [ ] **Fix two stencil bugs in the MC assignment before it runs again** (found 2026-08-26 by
+  the audit-grading pass over the SP26 submissions; neither was charged to any student, and
+  the "never deduct for following an instruction you gave them" rule was applied).
+  1. **Recorded-sweeps undercount by 500.** `course/assignments/mc/mc_approx.ipynb`
+     (GenJAX), lines 206/214 — **verified 2026-08-26**: the scaffold's comment says "run T = 3000 sweeps (after a few
+     hundred burn-in)" and its worked example does exactly that — but the handout's Problem
+     2(d) asks for "T = 3000 **recorded** sweeps (after discarding burn-in)". Following the
+     stencil literally yields 2500 recorded sweeps. Fix: 3000 total → discard a few hundred →
+     3000 *recorded*, and make the comment and worked example agree with the handout.
+  2. **Acceptance rate counts burn-in in the denominator.** `mc_approx.ipynb` line 227 (and 179)
+     and `mc_approx_python.ipynb` line 155 — **verified 2026-08-26**: both report acceptance as the mean of the
+     accepted-flags array over *all* recorded sweeps including burn-in, rather than
+     post-burn-in only. Fix the denominator in both scaffolds (and check the R stencil for the
+     same pattern — it was not covered by this cohort's submissions).
+  **Both copies need the edit:** `docs/assignments/mc/` is byte-identical to
+  `course/assignments/mc/`, so fixing only the course source leaves the published stencil
+  wrong. Check the R stencil for the same acceptance-rate pattern — no submission in this
+  cohort used it, so it is unverified either way.
+
+  Why this matters beyond the arithmetic: every student working from a scaffold inherits its
+  error identically, so three students making "the same mistake" is the signal to check the
+  scaffold rather than the students. One submission corrected the default on its own (ran
+  T=3500 to get 3000 recorded) and that correction was credited as genuinely earned.
 - [ ] **Follow-on:** expand the T2 GenJAX textbook tutorial (Ch 0–4, 6 today; no MCMC/SMC) to cover MCMC + the Kemp sampler (per chapter-ship checklist: also notebook_guide, glossary, HML homepage card).
 - [ ] `course/quizzes/README.md` Week-7 row maps to the *Bayes Net* quiz (predates the SP26 re-sequence) while the polls mine *Monte Carlo Estimation* + *Markov chains and networks* — reconcile.
 
